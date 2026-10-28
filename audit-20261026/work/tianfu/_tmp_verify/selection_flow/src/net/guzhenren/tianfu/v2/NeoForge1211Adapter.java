@@ -1,0 +1,8 @@
+package net.guzhenren.tianfu.v2;
+public class NeoForge1211Adapter implements VersionAdapter {
+ public static int preflights,settlements; public static boolean failFirst,failAfterBase,throwDuringSettle;
+ public TianfuSelection.Rejection preflight(net.minecraft.server.level.ServerPlayer p,TianfuSelection.Snapshot s){preflights++;return failFirst||(failAfterBase&&p.vars.total>0)||(s.purchased().contains("v2_lifespan_scar")&&p.vars.shouyuan<=400)?TianfuSelection.Rejection.UNSAFE_LIFESPAN:TianfuSelection.Rejection.NONE;}
+ public void settle(net.minecraft.server.level.ServerPlayer p,TianfuSelection.Snapshot s){settlements++;p.vars.total+=50;if(s.purchased().contains("v2_lifespan_scar"))p.vars.shouyuan-=400;net.guzhenren.tianfu.TianfuData.putBoolean(p,"during",true);if(throwDuringSettle){var b=p.getScoreboard();var o=b.getObjective("test");if(o==null)o=b.addObjective("test",net.minecraft.world.scores.criteria.ObjectiveCriteria.DUMMY,net.minecraft.network.chat.Component.literal("test"),net.minecraft.world.scores.criteria.ObjectiveCriteria.RenderType.INTEGER,true,null);b.getOrCreatePlayerScore(net.minecraft.world.scores.ScoreHolder.forNameOnly(p.getScoreboardName()),o).set(999);throw new IllegalStateException("simulated native failure");}}
+ public void maintain(net.minecraft.server.level.ServerPlayer p,TianfuSelection.Snapshot s){}
+ public long extraIncome(net.minecraft.server.level.ServerPlayer p,long n,String k){return 0;}
+}

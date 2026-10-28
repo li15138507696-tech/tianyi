@@ -1,0 +1,1 @@
+package net.minecraft.world.scores; public record ScoreHolder(String name){public static ScoreHolder forNameOnly(String n){return new ScoreHolder(n);}}

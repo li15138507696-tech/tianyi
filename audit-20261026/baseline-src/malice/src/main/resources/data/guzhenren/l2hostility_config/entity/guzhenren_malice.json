@@ -1,0 +1,219 @@
+{
+  "list": [
+    {
+      "entities": "#guzhenren:malice_normal",
+      "difficulty": {
+        "apply_chance": 1.0,
+        "base": 20,
+        "min": 10,
+        "scale": 0.0,
+        "suppression": 0.0,
+        "trait_chance": 1.0,
+        "variation": 8.0
+      },
+      "healthScale": 1.5,
+      "attackScale": 1.5,
+      "maxLevel": 0,
+      "maxTraitCount": 3,
+      "minSpawnLevel": 0,
+      "presetTraitsOnly": false,
+      "blacklist": [
+        "l2hostility:ragnarok",
+        "l2hostility:undying",
+        "l2hostility:dispell",
+        "l2hostility:dementor",
+        "l2hostility:adaptive",
+        "l2hostility:levitation"
+      ],
+      "traits": [
+        {
+          "trait": "l2hostility:speedy",
+          "free": 1,
+          "min": 1,
+          "cap": false,
+          "condition": {
+            "chance": 1.0,
+            "lv": 0
+          }
+        },
+        {
+          "trait": "l2hostility:regenerate",
+          "free": 0,
+          "min": 15,
+          "cap": false,
+          "condition": {
+            "chance": 1.0,
+            "lv": 0
+          }
+        },
+        {
+          "trait": "l2hostility:tank",
+          "free": 0,
+          "min": 20,
+          "cap": false,
+          "condition": {
+            "chance": 1.0,
+            "lv": 0
+          }
+        }
+      ],
+      "items": [],
+      "specialConditions": []
+    },
+    {
+      "entities": "#guzhenren:malice_elite",
+      "difficulty": {
+        "apply_chance": 1.0,
+        "base": 55,
+        "min": 35,
+        "scale": 0.0,
+        "suppression": 0.0,
+        "trait_chance": 1.0,
+        "variation": 15.0
+      },
+      "healthScale": 2.0,
+      "attackScale": 2.0,
+      "maxLevel": 0,
+      "maxTraitCount": 5,
+      "minSpawnLevel": 0,
+      "presetTraitsOnly": false,
+      "blacklist": [
+        "l2hostility:ragnarok",
+        "l2hostility:undying",
+        "l2hostility:dispell",
+        "l2hostility:adaptive",
+        "l2hostility:levitation"
+      ],
+      "traits": [
+        {
+          "trait": "l2hostility:speedy",
+          "free": 1,
+          "min": 1,
+          "cap": false,
+          "condition": {
+            "chance": 1.0,
+            "lv": 0
+          }
+        },
+        {
+          "trait": "l2hostility:tank",
+          "free": 0,
+          "min": 20,
+          "cap": false,
+          "condition": {
+            "chance": 1.0,
+            "lv": 0
+          }
+        },
+        {
+          "trait": "l2hostility:regenerate",
+          "free": 0,
+          "min": 25,
+          "cap": false,
+          "condition": {
+            "chance": 1.0,
+            "lv": 0
+          }
+        },
+        {
+          "trait": "l2hostility:counter_strike",
+          "free": 0,
+          "min": 40,
+          "cap": false,
+          "condition": {
+            "chance": 1.0,
+            "lv": 0
+          }
+        }
+      ],
+      "items": [],
+      "specialConditions": []
+    },
+    {
+      "entities": "#guzhenren:malice_boss",
+      "difficulty": {
+        "apply_chance": 1.0,
+        "base": 120,
+        "min": 90,
+        "scale": 0.0,
+        "suppression": 0.0,
+        "trait_chance": 1.0,
+        "variation": 25.0
+      },
+      "healthScale": 2.5,
+      "attackScale": 2.5,
+      "maxLevel": 0,
+      "maxTraitCount": 8,
+      "minSpawnLevel": 0,
+      "presetTraitsOnly": false,
+      "blacklist": [
+        "l2hostility:adaptive",
+        "l2hostility:levitation"
+      ],
+      "traits": [
+        {
+          "trait": "l2hostility:tank",
+          "free": 1,
+          "min": 1,
+          "cap": false,
+          "condition": {
+            "chance": 1.0,
+            "lv": 0
+          }
+        },
+        {
+          "trait": "l2hostility:regenerate",
+          "free": 0,
+          "min": 100,
+          "cap": false,
+          "condition": {
+            "chance": 1.0,
+            "lv": 0
+          }
+        },
+        {
+          "trait": "l2hostility:undying",
+          "free": 0,
+          "min": 120,
+          "cap": false,
+          "condition": {
+            "chance": 1.0,
+            "lv": 0
+          }
+        },
+        {
+          "trait": "l2hostility:reprint",
+          "free": 0,
+          "min": 150,
+          "cap": false,
+          "condition": {
+            "chance": 1.0,
+            "lv": 0
+          }
+        },
+        {
+          "trait": "l2hostility:killer_aura",
+          "free": 0,
+          "min": 180,
+          "cap": false,
+          "condition": {
+            "chance": 1.0,
+            "lv": 0
+          }
+        },
+        {
+          "trait": "l2hostility:ragnarok",
+          "free": 0,
+          "min": 200,
+          "cap": false,
+          "condition": {
+            "chance": 1.0,
+            "lv": 0
+          }
+        }
+      ],
+      "items": [],
+      "specialConditions": []
+    }
+  ]
+}

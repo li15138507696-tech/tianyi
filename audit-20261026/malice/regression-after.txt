@@ -1,0 +1,20 @@
+Source: D:\daima\mcmod\天意\audit-20261026\malice\staged-src\net\guzhenren\malice\MaliceEvents.java
+PASS INIT 0.6
+PASS WEAPON preserves level 0.6
+PASS COPY preserves inherited level 0.6
+PASS INIT 1.0
+PASS WEAPON preserves level 1.0
+PASS COPY preserves inherited level 1.0
+PASS INIT 1.5
+PASS WEAPON preserves level 1.5
+PASS COPY preserves inherited level 1.5
+PASS INIT 2.2
+PASS WEAPON preserves level 2.2
+PASS COPY preserves inherited level 2.2
+PASS reinit equal to old applied level
+PASS difficulty change affects new INIT only
+PASS owned pet with unloaded owner
+PASS owned pet with loaded owner
+PASS cancelled/zero INIT remains zero
+PASS untiered entity untouched
+PASS client side untouched

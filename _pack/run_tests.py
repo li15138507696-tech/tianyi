@@ -26,7 +26,7 @@ WILL_SRC = [
               'BeastCatalog.java',
               # 3.13.0 宿命蛊重做：保管账本 / 规则查询 / 旧档迁移（全部纯逻辑）
               'DestinyCustody.java', 'DestinyRules.java', 'DestinyMigration.java',
-              # 3.13.0 切片 2：承载物凭证模型（物品自称的凭证 vs 世界账本）
+              # 3.13.0 第二阶段：承载物凭证模型（物品自称的凭证 vs 世界账本）
               'DestinyVessel.java',
               # 3.14 天意强度档位：档位只做乘数/阈值，必须能离线单测
               'WillForce.java')]
@@ -69,7 +69,7 @@ SUITES = [
     'net.guzhenren.tianyi.will.DestinyCustodyTest',
     'net.guzhenren.tianyi.will.DestinyRulesTest',
     'net.guzhenren.tianyi.will.DestinyMigrationTest',
-    # 3.13.0 切片 2：物品↔账本校验、复制检测、旧凭证作废
+    # 3.13.0 第二阶段：物品↔账本校验、复制检测、旧凭证作废
     'net.guzhenren.tianyi.will.DestinyVesselTest',
     # 3.14 天意强度：档位表、阈值单调、幂等窗口、诱饵比例、兽潮不凭空
     'net.guzhenren.tianyi.will.WillForceTest',

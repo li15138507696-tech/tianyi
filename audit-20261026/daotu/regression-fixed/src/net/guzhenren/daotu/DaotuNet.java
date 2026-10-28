@@ -1,0 +1,1 @@
+package net.guzhenren.daotu;public class DaotuNet{public static int prompts;public static void promptChoice(net.minecraft.server.level.ServerPlayer p){prompts++;}public static void sendState(net.minecraft.server.level.ServerPlayer p){}}

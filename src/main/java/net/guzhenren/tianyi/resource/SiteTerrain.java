@@ -16,7 +16,7 @@ import java.util.Map;
  *
  * <h2>群系 id 的来源</h2>
  * 15 个「流派专属地形」来自本体数据包 {@code data/guzhenren/worldgen/biome/}（namespace {@code guzhenren}），
- * 由主代理静态核实后登记在 {@code _pack/refs/finite-resources-main.md} 的同批证据里。
+ * 经静态核实后登记在 {@code _pack/refs/finite-resources-main.md} 的同批证据里。
  * <b>静态 id 不等于实机生成</b>：这些群系在真实世界里到底刷不刷、刷多密，只能进游戏看。
  *
  * <h2>刻意不做的事</h2>

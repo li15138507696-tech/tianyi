@@ -1,6 +1,6 @@
-# 当前有效计划：3.13.0 宿命蛊机制重做（本轮）
+# 当前有效计划：3.13.0 宿命蛊机制重做
 
-## 核对结论（主代理实际读取 3.12.0 源码）
+## 核对结论（本地实际读取 3.12.0 源码）
 
 | 旧模型 | 定义 | 外部调用者 | 游戏事件接线 |
 |---|---|---|---|
@@ -24,7 +24,7 @@
 - 摧毁与后续炼制分发是两个独立事务，各需独立完成事件与证据。
 - 天意预算/感知/灾劫保持独立判断，不因重做宿命被一起关闭。
 
-## 切片
+## 实施阶段
 
 1. 模型与账本（纯逻辑、可离线测）：阶段、保管身份、事务、规则查询、旧档迁移。
 2. 实物与接线：承载物品、事件、命令、见闻、快照纳入。
@@ -33,35 +33,35 @@
 
 # 历史计划：3.10.2 兼容可靠性 + 3.11.0 有限资源点
 
-> 2026-10-25，阶段 A，只规划。原 3.1.0 正文保留在下方作历史；其 NPC 路线、旧版本和“不要跑 Gradle”不再是本轮指令。
+> 2026-10-25，仅规划，未实施。原 3.1.0 正文保留在下方作历史；其 NPC 路线、旧版本和“不要跑 Gradle”不再是当前指令。
 
 ## 基线、范围与验收
 
-本项目 build.gradle 为 java 插件、离线 compileOnly classpath、Java toolchain 21，无 ForgeGradle/MDG；META-INF/neoforge.mods.toml 指向 NeoForge / Minecraft 1.21.1。采用现代 NeoForge 1.21.1、Java 21，不重建工程。实际 NeoForge 小版本须由 profile 核实，不能照抄历史 21.1.263。内层依赖 SHA 由用户确认且 ensure_upstream.py 固定为 b6d314d3810b8bc5fcfdbc4f588db8721f0efdfc14d27a0a06d88143a01fe2bc，A 未重算。
+本项目 build.gradle 为 java 插件、离线 compileOnly classpath、Java toolchain 21，无 ForgeGradle/MDG；META-INF/neoforge.mods.toml 指向 NeoForge / Minecraft 1.21.1。采用现代 NeoForge 1.21.1、Java 21，不重建工程。实际 NeoForge 小版本须由 profile 核实，不能照抄历史 21.1.263。内层依赖 SHA 由用户确认且 ensure_upstream.py 固定为 b6d314d3810b8bc5fcfdbc4f588db8721f0efdfc14d27a0a06d88143a01fe2bc，本次未重新计算。
 
-主代理实际执行的实施前基线：PYTHONIOENCODING=utf-8、PYTHONUTF8=1 下，72 源文件 javac exit0、全部测试套件通过、7 项审计全绿，3.10.1 jar 484500B。此前 GBK 输出 UnicodeEncodeError 不是 Java 编译失败。以上由主代理执行，A 未运行构建，未实机验证。目录非 Git 仓库：B 先备份明确拟改文件及 3.10.1 产物，留时间戳和哈希；不 init、不建 worktree。
+实施前基线（本地实际执行）：PYTHONIOENCODING=utf-8、PYTHONUTF8=1 下，72 源文件 javac exit0、全部测试套件通过、7 项审计全绿，3.10.1 jar 484500B。此前 GBK 输出 UnicodeEncodeError 不是 Java 编译失败。以上均由本地实际执行，规划阶段未运行构建，未实机验证。目录非 Git 仓库：先备份明确拟改文件及 3.10.1 产物，留时间戳和哈希；不 init、不建 worktree。
 
 先交付 3.10.2 兼容可靠性，再交付 3.11.0 蛊材生长地、矿脉露头、守护资源地，少量静态核验守护兽、实物线索和个人见闻。沿用注册 ID、payload ID、旧存档键。天意幕后、无善恶好感；允许建造、陷阱、绕行、偷采及多人争夺。新节点不押注、不传送、不设竞技场边界或离场惩罚。旧斗兽独立配置保留，legacyAutomaticPressure 仍默认 false。不依赖 NPC 对话/关系/任务/势力/追捕；不做新维度、回溯、复杂迁移生态、商城。真实实例仅可读依赖，不安装、不改真实存档、本体 jar；只用隔离实例与存档副本。
 
-项目及 mcmod/daima 范围 AGENTS 搜索未发现，D 盘全树有受保护目录访问错误，不能宣称祖先规则已全部核清。会话未提供相关技能入口，不能虚报已加载技能。
+项目及 mcmod/daima 范围 AGENTS 搜索未发现，D 盘全树有受保护目录访问错误，不能宣称祖先规则已全部核清。未找到可用的技能入口，不能虚报已加载技能。
 
 验收：正常保存/重启、重连、跨维度、卸载不复制库存或守护兽；矿物不恢复；植物条件和有限再生预算明确；个人见闻不越权；旧斗兽不重复奖惩。没有游戏运行证据必须标“未实机验证”。
 
 ## 文件所有权及实施顺序
 
-Java 路径相对 src/main/java/net/guzhenren/tianyi/。B 先交接口再串行交 C，D 审核并修复，不并行覆盖。A 唯一修改 PLAN.md；未列文件只读，额外改动先登记。
+Java 路径相对 src/main/java/net/guzhenren/tianyi/。接口定义先交付，随后串行交付行为实现，最后统一审核并修复，不并行覆盖。PLAN.md 单独维护；未列文件只读，额外改动先登记。
 
-| 所有者 | 文件 | 工作 |
+| 环节 | 文件 | 工作 |
 |---|---|---|
-| B | build.gradle、gradle.properties、_pack/build.py、_pack/javac_check.py、_pack/ensure_upstream.py | 最小构建封装、编码、依赖与备份 |
-| B→C | resource/FiniteSite.java、resource/SiteInventory.java、resource/SiteCatalog.java、world/FiniteSiteState.java、world/SiteSettings.java | B 定模型/NBT接口，C 完成状态机、有限模板，不重构旧 will/ResourceSite |
-| C | world/FiniteSiteService.java、world/SitePlacement.java、world/SiteProtection.java、world/SiteEvidence.java | 共享实物库存、位置、保护、线索及重载对账 |
-| C | world/EncounterService.java、world/EncounterState.java、world/EncounterSettings.java、encounter/EncounterRun.java | 3.10.2 可靠性及旧斗兽开关 |
-| C | TianyiMod.java、TianyiEvents.java、world/WillServer.java、world/WorldSites.java | 最小接线；默认隔离旧靠近吐物、自动归属、物流，不双发 |
-| C | world/JournalStore.java、net/JournalNet.java、net/JournalSyncPayload.java、journal/PlayerJournal.java；client/JournalScreen.java、client/JournalClientState.java、client/JournalClientHandler.java（仅必要改动） | 复用既有见闻及界面，不重做协议 |
-| C | version.properties、src/main/resources/META-INF/neoforge.mods.toml、实际 assets namespace 下 lang 文件、docs/3.10.2-兼容与可靠性.md、docs/3.11.0-有限资源点.md、docs/天意-介绍.md、docs/未完成与技术边界.md | 版本一致和准确文档 |
-| D | _pack/tests/ 下 SiteInventoryTest.java、FiniteSiteTest.java、SiteMigrationTest.java 及现有 EncounterRunTest.java、JournalTest.java；_pack/run_tests.py、_pack/audit_sites.py、_pack/audit_bestiary.py、_pack/verify_jar.py、_pack/verify_version.py、_pack/check_bom.py | 测试登记、字节码审计、校验及必要修复 |
-| D | _pack/refs/ 新证据、docs/3.11.0-验证记录.md、build/libs/ 产物 | 命令、退出码、哈希、限制 |
+| 构建 | build.gradle、gradle.properties、_pack/build.py、_pack/javac_check.py、_pack/ensure_upstream.py | 最小构建封装、编码、依赖与备份 |
+| 接口→实现 | resource/FiniteSite.java、resource/SiteInventory.java、resource/SiteCatalog.java、world/FiniteSiteState.java、world/SiteSettings.java | 先定模型/NBT 接口，再完成状态机、有限模板，不重构旧 will/ResourceSite |
+| 实现 | world/FiniteSiteService.java、world/SitePlacement.java、world/SiteProtection.java、world/SiteEvidence.java | 共享实物库存、位置、保护、线索及重载对账 |
+| 实现 | world/EncounterService.java、world/EncounterState.java、world/EncounterSettings.java、encounter/EncounterRun.java | 3.10.2 可靠性及旧斗兽开关 |
+| 实现 | TianyiMod.java、TianyiEvents.java、world/WillServer.java、world/WorldSites.java | 最小接线；默认隔离旧靠近吐物、自动归属、物流，不双发 |
+| 实现 | world/JournalStore.java、net/JournalNet.java、net/JournalSyncPayload.java、journal/PlayerJournal.java；client/JournalScreen.java、client/JournalClientState.java、client/JournalClientHandler.java（仅必要改动） | 复用既有见闻及界面，不重做协议 |
+| 实现 | version.properties、src/main/resources/META-INF/neoforge.mods.toml、实际 assets namespace 下 lang 文件、docs/3.10.2-兼容与可靠性.md、docs/3.11.0-有限资源点.md、docs/天意-介绍.md、docs/未完成与技术边界.md | 版本一致和准确文档 |
+| 审查 | _pack/tests/ 下 SiteInventoryTest.java、FiniteSiteTest.java、SiteMigrationTest.java 及现有 EncounterRunTest.java、JournalTest.java；_pack/run_tests.py、_pack/audit_sites.py、_pack/audit_bestiary.py、_pack/verify_jar.py、_pack/verify_version.py、_pack/check_bom.py | 测试登记、字节码审计、校验及必要修复 |
+| 审查 | _pack/refs/ 新证据、docs/3.11.0-验证记录.md、build/libs/ 产物 | 命令、退出码、哈希、限制 |
 
 3.10.2 优先检查扣款→生成→startBattle→退款、investigate→give、win/lose→奖惩顺序；spawn false、满背包、损坏记录、死亡/退出/切维度、未加载实体须明确处理。未加载不等于死亡，不能据此发奖励。静态 Map 在退出/停服清理，限流使用统一服务端刻。旧 phase/baseGranted/stakePaid/settled/penaltyPending 保留，迁移不自动奖惩。单独出包通过再做 3.11.0。
 
@@ -87,7 +87,7 @@ initial + verifiedPlantGrowth = unmaterialized + physicalRemaining + transferred
 
 事务 siteId/slot/revision/txnId：PREPARED→APPLIED→COMMITTED，逐槽位进度及物理标识对账。服务端串行校验距离/维度/loaded/方块指纹/库存；两玩家同刻同槽仅一次成功，满背包留容器，未知去向不补货。区块未加载挂起；守护兽仅匹配 UUID 的死亡事件可确认死亡，缺失实体 UNKNOWN、不补生。
 
-SavedData、区块、玩家文件不原子，setDirty 不是 fsync。正常保存/重启须幂等；任意强杀跨文件窗口首版保守隔离、可能损失且不主动复制，不承诺严格 exactly-once。D 注入物化各阶段故障并记录限制。
+SavedData、区块、玩家文件不原子，setDirty 不是 fsync。正常保存/重启须幂等；任意强杀跨文件窗口首版保守隔离、可能损失且不主动复制，不承诺严格 exactly-once。验证时需注入物化各阶段故障并记录限制。
 
 ## 合法位置与保护
 
@@ -99,11 +99,11 @@ SiteProtection 返回 ALLOW/DENY/UNKNOWN。普通原版环境经出生保护、�
 
 2026-10-25 已读 BeastCatalog.java、BeastStats.java、EncounterBeasts.java、docs/3.10.1-奇遇接入蛊兽名录.md、audit_bestiary.py。候选仅 guzhenren:hui_lang 灰狼、guzhenren:tu_lang 土狼，原生 HP/armor/attack 均 20/0/3；两表有条目，历史文档含六兽字节码校准。称“静态核验白名单候选”，不能称实测兽。第三种不默认启用。
 
-现有 audit_bestiary 第一关检查 lang 名字，不足证明 EntityType 注册。D 从锁定 SHA 本体注册初始化字节码记录完整 ID→EntityType→实体类映射及 javap 命令/输出；核 createAttributes、生成/死亡 procedure、loot、繁殖/分裂/召唤再启用。运行时查不到、非合适 Mob、create/addFreshEntity 失败就停点，不随机 fallback。EncounterBeasts 注释 85 与文档 89 的差异按实际表核清，不将全池用于守护。
+现有 audit_bestiary 第一关检查 lang 名字，不足证明 EntityType 注册。审查环节需从锁定 SHA 本体注册初始化字节码记录完整 ID→EntityType→实体类映射及 javap 命令/输出；核 createAttributes、生成/死亡 procedure、loot、繁殖/分裂/召唤再启用。运行时查不到、非合适 Mob、create/addFreshEntity 失败就停点，不随机 fallback。EncounterBeasts 注释 85 与文档 89 的差异按实际表核清，不将全池用于守护。
 
-资源证据逐项列完整 ID、item/block 类型、注册字段/数据文件、loot/procedure、植物语义及数量规则。旧 WorldSites.WILD_GU 含未炼化蛊/元老蛊，不能当植物证据。_pack/refs/INDEX.txt/API_SLIM.txt 主要是外层 NPC 签名，本轮不调用，也不能证明实体/植物/保护接口。
+资源证据逐项列完整 ID、item/block 类型、注册字段/数据文件、loot/procedure、植物语义及数量规则。旧 WorldSites.WILD_GU 含未炼化蛊/元老蛊，不能当植物证据。_pack/refs/INDEX.txt/API_SLIM.txt 主要是外层 NPC 签名，本次不调用，也不能证明实体/植物/保护接口。
 
-复用现有源码调用：EncounterState 的 SavedData.Factory、computeIfAbsent、save(CompoundTag,HolderLookup.Provider)；JournalStore 的 tianyi/journal/entries；JournalNet 的 registrar("2")、playToClient/playToServer、ctx.enqueueWork、PacketDistributor.sendToPlayer。属于现有源码证据，仍需本轮编译，不猜新方法。
+复用现有源码调用：EncounterState 的 SavedData.Factory、computeIfAbsent、save(CompoundTag,HolderLookup.Provider)；JournalStore 的 tianyi/journal/entries；JournalNet 的 registrar("2")、playToClient/playToServer、ctx.enqueueWork、PacketDistributor.sendToPlayer。属于现有源码证据，仍需本次编译，不猜新方法。
 
 外部来源：[NeoForge 1.21.1 SavedData](https://docs.neoforged.net/docs/1.21.1/datastorage/saveddata/)、[1.21.1 payload](https://docs.neoforged.net/docs/1.21.1/networking/payload/)，核对日期 2026-10-25。web_search 返回 SavedData/payload 注册摘要；完整 fetch 分别 404/超时，准确重载仍 UNVERIFIED，以本地 javap/编译为准，不用最新版或 1.21.8 签名替代。
 
@@ -119,15 +119,15 @@ SiteProtection 返回 ALLOW/DENY/UNKNOWN。普通原版环境经出生保护、�
 
 encounter 1→2 仅加诊断/事务字段，保留旧 phase/baseGranted/stakePaid/settled/penaltyPending；升级不自动奖励/退款/罚款/生兽。缺字段保守默认，无版本仅接受已知旧格式，较新 schema 只读隔离、不保存覆盖。坏行保留原 NBT/原因、停奖惩，不能 catch 跳过后写档丢证据。校验 UUID/资源 ID/上限/负数/溢出。关闭旧斗兽保存进行记录并诊断，不伪造 LOST 扣款。仅副本迁移，保留迁移前文件/哈希及 roundtrip/未来版本测试。
 
-## 构建任务及 D 校验
+## 构建任务及校验
 
-项目 glob 无 gradlew* 或 gradle/wrapper；主代理确认 wrapper properties 不存在。不能假定 mc_gradle 可用，不手写 wrapper、不 scaffold、不重建 build.gradle。当前未配 foojay，不能声称自动供 JDK；固定 temurin-21/profile/本地 jar 路径须核对，不改全局环境。
+项目 glob 无 gradlew* 或 gradle/wrapper；已确认 wrapper properties 不存在。不能假定 mc_gradle 可用，不手写 wrapper、不 scaffold、不重建 build.gradle。当前未配 foojay，不能声称自动供 JDK；固定 temurin-21/profile/本地 jar 路径须核对，不改全局环境。
 
-B 可最小追加 Exec 任务 tianyiOfflineBuild→_pack/build.py、tianyiOfflineTests→run_tests.py、tianyiSiteAudit→audit_sites.py，参数化 Python/工作目录、UTF8、传播非零退出码，避免 java jar 覆盖 Python 正式产物。build.py 已有 ensure_upstream→javac→tests→pack→verify_jar/verify_version/check_bom/audit_mixins/audit_bestiary/audit_no_ai/audit_will 七审计，将 audit_sites 纳入同链，不重造打包器，不 --no-tests。
+可最小追加 Exec 任务 tianyiOfflineBuild→_pack/build.py、tianyiOfflineTests→run_tests.py、tianyiSiteAudit→audit_sites.py，参数化 Python/工作目录、UTF8、传播非零退出码，避免 java jar 覆盖 Python 正式产物。build.py 已有 ensure_upstream→javac→tests→pack→verify_jar/verify_version/check_bom/audit_mixins/audit_bestiary/audit_no_ai/audit_will 七审计，将 audit_sites 纳入同链，不重造打包器，不 --no-tests。
 
-无 wrapper 时由 host 用可用执行工具直接 python _pack/build.py（非 wrapper 构建），本次主代理已示范成功。如以后确需 wrapper，必须由可追溯官方 Gradle 标准 wrapper 任务生成并记录版本/校验和，不手写。任何实际 wrapper 构建必须用 mc_gradle：projectDir=D:\daima\mcmod\天意，task=tianyiOfflineBuild，args=[--offline,--no-daemon]，timeoutMs=600000；补测 tianyiOfflineTests/tianyiSiteAudit 各 300000。wrapper 缺失且仅 mc_gradle 可用则明确阻塞并交 host 执行既有脚本，不能填造通过。设置 PYTHONIOENCODING=utf-8、PYTHONUTF8=1。
+无 wrapper 时直接在本地执行 python _pack/build.py（非 wrapper 构建），本次已实际跑通。如以后确需 wrapper，必须由可追溯官方 Gradle 标准 wrapper 任务生成并记录版本/校验和，不手写。任何实际 wrapper 构建必须用 mc_gradle：projectDir=D:\daima\mcmod\天意，task=tianyiOfflineBuild，args=[--offline,--no-daemon]，timeoutMs=600000；补测 tianyiOfflineTests/tianyiSiteAudit 各 300000。wrapper 缺失且仅 mc_gradle 可用则明确阻塞并交人工执行既有脚本，不能填造通过。设置 PYTHONIOENCODING=utf-8、PYTHONUTF8=1。
 
-D 验证顺序：
+验证顺序：
 
 1. 纯逻辑三类状态机、整数守恒、植物条件/预算、矿物 growth=0、双玩家同刻、事务重放、区域/墓碑；resource 加进 run_tests PURE_PKGS 并登记 SUITES。
 2. schema/缺字段/坏行/未来版本、旧键及注册/payload ID diff、旧进行斗兽不重复奖惩、关闭入口不扣款。
@@ -136,44 +136,44 @@ D 验证顺序：
 5. 修改后完整离线链，逐步真实退出码/测试输出/版本/jar SHA，禁止嵌本体/API jar，3.10.2 与 3.11.0 分别留存；不把基线或旧日志当修改后结果。
 6. 环境允许才在隔离实例/副本测三类点、两玩家、陷阱绕行、保护拒绝、漏斗爆炸、保存重启、植物跨日条件/矿物不恢复/见闻隔离。无可启动环境标“未实机验证”；编译/纯逻辑不能证明 AI、procedure、掉落、领地兼容、渲染和性能。
 
-最高风险为名录静态属性不等于真实注册/AI/掉落安全，植物矿石 ID 尚未证实；其余为多文件崩溃窗口、保护 UNKNOWN、无 wrapper/绝对依赖路径及旧吐物物流双发。首版用既有服务/见闻最小接线，真实容器只发一次、载体丢失永久结束；不以大重构或占位模板宣传完成。交付分列本轮离线执行、静态证据、实机未验证、阻塞项。
+最高风险为名录静态属性不等于真实注册/AI/掉落安全，植物矿石 ID 尚未证实；其余为多文件崩溃窗口、保护 UNKNOWN、无 wrapper/绝对依赖路径及旧吐物物流双发。首版用既有服务/见闻最小接线，真实容器只发一次、载体丢失永久结束；不以大重构或占位模板宣传完成。交付分列离线执行、静态证据、实机未验证、阻塞项。
 
-## 阶段 B 实际交接（主代理登记）
+## 骨架交接记录
 
-B 已写入 resource/FiniteSite、SiteInventory、SiteCatalog，world/FiniteSiteState、SiteSettings，_pack/tests 下 SiteInventoryTest，以及 build.gradle、_pack/build.py、_pack/javac_check.py 共9文件。B无命令执行工具，未运行编译。备份由主代理完成，位置 `_backup/finite-sites-20261025-201444`，160文件哈希清单。
+已写入 resource/FiniteSite、SiteInventory、SiteCatalog，world/FiniteSiteState、SiteSettings，_pack/tests 下 SiteInventoryTest，以及 build.gradle、_pack/build.py、_pack/javac_check.py 共9文件。本次未运行编译。备份已完成，位置 `_backup/finite-sites-20261025-201444`，160文件哈希清单。
 
-主代理实际执行 RED：以temurin21 javac编译三个纯模型与SiteInventoryTest成功，然后java运行测试在 growVerified(1) 抛 UnsupportedOperationException，退出码1，符合增长行为尚未实现的预期。输出目录 `_pack/probes/finite-red`。C填行为，D需补审计与测试登记；目前build.py新增audit_sites但该脚本尚待实现，不能称全链通过。
+本地实际执行 RED：以temurin21 javac编译三个纯模型与SiteInventoryTest成功，然后java运行测试在 growVerified(1) 抛 UnsupportedOperationException，退出码1，符合增长行为尚未实现的预期。输出目录 `_pack/probes/finite-red`。行为实现与测试登记待补；目前build.py新增audit_sites但该脚本尚待实现，不能称全链通过。
 
-主代理证据入口 `_pack/refs/finite-resources-main.md`；另有 finite-registry-main.javap.txt、finite-guards-main.javap.txt、finite-guard-procedures-main.javap.txt、finite-soul-procedures-main.javap.txt、finite-runtime-api-main.javap.txt。这些均静态证据，不是实机。主代理实际运行基线profile为21.1.263。
+证据入口 `_pack/refs/finite-resources-main.md`；另有 finite-registry-main.javap.txt、finite-guards-main.javap.txt、finite-guard-procedures-main.javap.txt、finite-soul-procedures-main.javap.txt、finite-runtime-api-main.javap.txt。这些均静态证据，不是实机。实测运行基线profile为21.1.263。
 
-## 3.10.2 切片实际交接（主代理登记）
+## 3.10.2 实施交接记录
 
-C 已完成可靠性、旧资源独立默认关闭、去猎兽损宿命/拾取雷雨、个人见闻待发同步、schema2隔离保留及金额字符串边界，版本3.10.2。D独立审查修复非字符串warning/message/WAITING id被getString静默吞掉的问题，补真实NBT回归。主代理在D小修后实际运行 `_pack/probes/run_encounter_persistence.py` 与 `_pack/build.py`，退出码均0，77源编译/全部已登记离线测试/8审计通过。产物 `build/libs/tianyi-3.10.2.jar` 501457 B，SHA256 `72a0152d84d208e9debddaa19c3dccd1a7b055ebd4592bee116986816eb5364b`。见 `docs/3.10.2-验证记录.md`。未安装、未实机验证。有限资源骨架仍未启用，growth测试RED尚待3.11实现。
+可靠性、旧资源独立默认关闭、去猎兽损宿命/拾取雷雨、个人见闻待发同步、schema2隔离保留及金额字符串边界均已完成，版本3.10.2。审查环节独立修复了非字符串warning/message/WAITING id被getString静默吞掉的问题，补真实NBT回归。小修后本地实际运行 `_pack/probes/run_encounter_persistence.py` 与 `_pack/build.py`，退出码均0，77源编译/全部已登记离线测试/8审计通过。产物 `build/libs/tianyi-3.10.2.jar` 501457 B，SHA256 `72a0152d84d208e9debddaa19c3dccd1a7b055ebd4592bee116986816eb5364b`。见 `docs/3.10.2-验证记录.md`。未安装、未实机验证。有限资源骨架仍未启用，growth测试RED尚待3.11实现。
 
-下一切片C：完整实现3.11世界资源、个人线索、保存/对账，登记测试与更新audit_sites使其验证正式接线而非永久要求未接线。D之后独立审查；没有执行工具时由主代理跑实际命令。新原始签名 `finite-placement-extra-main.javap.txt` 与 `finite-eventhooks-main.javap.txt` 已核实 onBlockPlace返回true表示取消，BlockSnapshot.create/restore及WorldBorder/NBT/植物签名。遵循合法保护段的ALLOW/UNKNOWN区分，避免全局静默禁用。
+下一阶段：完整实现3.11世界资源、个人线索、保存/对账，登记测试与更新audit_sites使其验证正式接线而非永久要求未接线。随后独立审查，结论以实际命令输出为准。新原始签名 `finite-placement-extra-main.javap.txt` 与 `finite-eventhooks-main.javap.txt` 已核实 onBlockPlace返回true表示取消，BlockSnapshot.create/restore及WorldBorder/NBT/植物签名。遵循合法保护段的ALLOW/UNKNOWN区分，避免全局静默禁用。
 
-## 3.11 模型切片实际交接（主代理登记）
+## 3.11 模型交接记录
 
-首个3.11宽切片代理中途失败无报告，未作为完成。重试C完成 SiteInventory/FiniteSite/SiteCatalog/FiniteSiteState、FinitePersistenceProbe.java 与 run_finite_persistence.py。主代理先观察runner因Windows中文绝对类路径找不到已编译测试类，按既有成功probe改runtime classpath为项目内相对路径后实际重跑：SiteInventoryTest PASS（原增长RED转绿），FinitePersistenceProbe 237 checks PASS，退出码0。未运行世界/服务器。3.10.2包未触碰，版本仍3.10.2，模型尚无世界接线。
+首个3.11大范围实施中途失败且无报告，未作为完成。重试后完成 SiteInventory/FiniteSite/SiteCatalog/FiniteSiteState、FinitePersistenceProbe.java 与 run_finite_persistence.py。此前观察到runner因Windows中文绝对类路径找不到已编译测试类，按既有成功probe改runtime classpath为项目内相对路径后重跑：SiteInventoryTest PASS（原增长RED转绿），FinitePersistenceProbe 237 checks PASS，退出码0。未运行世界/服务器。3.10.2包未触碰，版本仍3.10.2，模型尚无世界接线。
 
 当前模型API：reserve→beginMaterialization→replace→prepare→实物操作→advance(APPLIED)→materializeSlot/materializeGrowth→replace→advance(COMMITTED)。库存观察observeRemaining、破坏destroyCarrier；守护绑定不因实体缺失清除。加载任何PREPARED/APPLIED未决事务会隔离原始整账，禁止补货；首版可保守停止而不伪造恢复。实际签名以最新源码为准。
 
-下一有界C切片：只做SitePlacement/SiteProtection、SiteSettings与SiteCatalog正式模板核验入口（原版环境可生成、严格区域可选），生产方块与实体物化方法及取消事件/不补货规则，暂不接tick/版本。之后再C完成FiniteSiteService/SiteEvidence、事件及见闻接线、测试与文档版本，D最终审查。
+下一有界阶段：只做SitePlacement/SiteProtection、SiteSettings与SiteCatalog正式模板核验入口（原版环境可生成、严格区域可选），生产方块与实体物化方法及取消事件/不补货规则，暂不接tick/版本。之后完成FiniteSiteService/SiteEvidence、事件及见闻接线、测试与文档版本，最后统一审查。
 
-### 文档修正（主代理实际执行）
+### 文档修正（本地实际执行）
 
-bump_version.py 会把含“产物/版本/依据/使用（”锚点且带 tianyi-X.Y.Z 的行一律改写成当前版本，导致 3.8.0/3.8.4/3.9.0 三份历史文档的产物声明被改成 3.10.2。主代理已将这三处改为明确的历史表述（不再携带 tianyi-X.Y.Z 令牌，后续 bump 不会再改写），并把 `天意-介绍.md` 的过期字节数（432,391→501,457）、源文件数（63→77）、审计项数（7→8）按实测修正，同时把无法复核的逐组测试项数改为“以 run_tests.py 实际输出为准”。随后单独运行 `python _pack/verify_version.py`，输出“版本一致 OK”。这是文档一致性修正，不改变任何代码或产物。
+bump_version.py 会把含“产物/版本/依据/使用（”锚点且带 tianyi-X.Y.Z 的行一律改写成当前版本，导致 3.8.0/3.8.4/3.9.0 三份历史文档的产物声明被改成 3.10.2。这三处已改为明确的历史表述（不再携带 tianyi-X.Y.Z 令牌，后续 bump 不会再改写），并把 `天意-介绍.md` 的过期字节数（432,391→501,457）、源文件数（63→77）、审计项数（7→8）按实测修正，同时把无法复核的逐组测试项数改为“以 run_tests.py 实际输出为准”。随后单独运行 `python _pack/verify_version.py`，输出“版本一致 OK”。这是文档一致性修正，不改变任何代码或产物。
 
-## 3.11.0 交付记录（主代理实际执行）
+## 3.11.0 交付记录（本地实际执行）
 
-世界服务切片（FiniteSiteService/SiteEvidence/SiteBudget/SiteNotice + 接线）与修复切片（H1 逐站隔离与恢复入口、M1 abandon/retire、M2 瞬时拒绝改 PAUSED、M3 终态 observe 守卫、M4 球壳缓存、M5 自然方块补全、M6 32格几何避让、L1 回填防御）均已落盘。
+世界服务实现（FiniteSiteService/SiteEvidence/SiteBudget/SiteNotice + 接线）与修复项（H1 逐站隔离与恢复入口、M1 abandon/retire、M2 瞬时拒绝改 PAUSED、M3 终态 observe 守卫、M4 球壳缓存、M5 自然方块补全、M6 32格几何避让、L1 回填防御）均已落盘。
 
-主代理实际执行并修复的三处真实缺陷（非子代理报告）：
+本地实际执行并修复的三处真实缺陷（逐项复现，非仅据报告）：
 1. **区域判定反转（致命）**：`SiteBudget.regionAvailable` 把参数当“已占用”再取反，调用方传的是“未占用”，导致区域恒判不可用、资源点永不生成，整个玩法被架空。SiteBudgetTest 抓到；已按调用方语义修正并写明历史坑。
 2. 两个 probe 运行器的 Windows 中文绝对路径放进 `-cp` 导致 ClassNotFoundException（不是测试失败）；改为相对仓库根路径。
 3. 两处审计误报：`audit_sites` 把类注释里“不调用 com.guzhenrenlibrary”当真实依赖（改为去注释后判定）；`audit_will` 把木桶容器 `setItem` 当写玩家背包（改为只禁背包写入 + 要求 setItem 能认出容器）。
 
-最终验证（均为主代理实际执行，退出码0）：
+最终验证（均为本地实际执行，退出码0）：
 - `javac_check.py`：83 源 `javac exit 0`
 - `run_tests.py`：全部套件通过（新登记 SiteInventoryTest / SiteBudgetTest 48项 / SiteNoticeTest 44项）
 - `run_finite_persistence.py`：`FinitePersistenceProbe PASS: 279 checks`
@@ -186,26 +186,26 @@ bump_version.py 会把含“产物/版本/依据/使用（”锚点且带 tianyi
 
 遗留未接线（明确不算完成）：`abandon`/`retire(MATERIALIZING)` 与 `clearTransaction`/`releaseQuarantine` 目前只有模型与账本 API，**尚无游戏内命令/权限入口**；卡死站点退役与隔离恢复仍需管理员命令才能真正使用。`transactions` 无自动修剪（4096 上限），长期生长后需评估。
 
-## 3.12.0 地形资源扩展（主代理实际执行）
+## 3.12.0 地形资源扩展（本地实际执行）
 
 依据用户提供的《蛊真人整合包知识库_AI版》§7.1「部分蛊材只在专属流派地形刷新，找材料先找地形」与 §6.2/§6.3 蛊兽分布，扩展资源点。
 
-主代理静态核实（本体 jar）：15 个流派地形均为真实群系（data/guzhenren/worldgen/biome/）；真实矿石方块与单条目掉落表：`fangkuaiyuanshiyuankuang`→`gucaiyuanshi`、`chilianjinyuankuang`→自身、`wen_ding_shi_kuang`→`wen_ding_shi`；真实实体类名：HaoDianLangEntity / HuEntity / HuoyanxiongEntity / YaoYaQuanEntity（连同既有 HuiLangEntity / TuLangEntity），矿石类名 FangkuaiyuanshiyuankuangBlock / ChilianjinyuankuangBlock / WenDingShiKuangBlock / XuanjinBlock。
+静态核实（本体 jar）：15 个流派地形均为真实群系（data/guzhenren/worldgen/biome/）；真实矿石方块与单条目掉落表：`fangkuaiyuanshiyuankuang`→`gucaiyuanshi`、`chilianjinyuankuang`→自身、`wen_ding_shi_kuang`→`wen_ding_shi`；真实实体类名：HaoDianLangEntity / HuEntity / HuoyanxiongEntity / YaoYaQuanEntity（连同既有 HuiLangEntity / TuLangEntity），矿石类名 FangkuaiyuanshiyuankuangBlock / ChilianjinyuankuangBlock / WenDingShiKuangBlock / XuanjinBlock。
 
 实现：新增 resource/SiteTerrain 纯映射（15 地形、群系白名单、地形→守护）；SiteCatalog 增至 6 模板并加 biomeCandidates；SitePlacement 逐槽位群系门控、方块与掉落物分离、六兽与四矿类名双校验；SiteSettings 增三个默认关闭的露头开关并与 oreEnabled 叠加；FiniteSiteService 改为「先取地形再挑模板」，不匹配只 continue。守护兽不设地形门槛（避免数据包未生成时永不出现），按地形选兽、其余退回灰狼/土狼；不 setTarget，尊重本体转数威压。
 
-主代理实际执行（退出码0）：javac 84 源 exit0；全部测试套件通过（SiteTerrainTest 52 项、SiteBudgetTest 48 项、SiteNoticeTest 44 项）；audit_sites 全绿（含 15 地形、逐槽门控、六兽四矿类名核对）；FinitePersistenceProbe 279 项；build.py 8 项审计全绿。产物 `build/libs/tianyi-3.12.0.jar` 565,735 B，SHA256 `9df11ec28fa4996f5e6f03930d20ec6d7e14ac27cb8414ea18f732d6f2b070d9`。3.11.0（560,826 B）与 3.10.2（501,457 B）均未被覆盖。
+本地实际执行（退出码0）：javac 84 源 exit0；全部测试套件通过（SiteTerrainTest 52 项、SiteBudgetTest 48 项、SiteNoticeTest 44 项）；audit_sites 全绿（含 15 地形、逐槽门控、六兽四矿类名核对）；FinitePersistenceProbe 279 项；build.py 8 项审计全绿。产物 `build/libs/tianyi-3.12.0.jar` 565,735 B，SHA256 `9df11ec28fa4996f5e6f03930d20ec6d7e14ac27cb8414ea18f732d6f2b070d9`。3.11.0（560,826 B）与 3.10.2（501,457 B）均未被覆盖。
 
 **未实机**：15 个群系在真实世界的生成与密度、四只地形守护兽 AI/掉落、guzhenren 群系表层是否为原版土壤（影响蛊材能否落地）、元石露头的「地下」形态（仍只按地表高度找点）。文档 `docs/3.12.0-地形资源扩展.md`。
 
 ---
 
-# 历史归档（保留原文，不作为本轮指令）
+# 历史归档（保留原文，不作为当前指令）
 
 # 天意 3.1.0 —— 一至五转世界补强：实施计划（PLAN）
 
-> 本文件是本轮唯一的实施真相来源。所有子代理只读这一份 + `_pack/refs/`。
-> 基线核对日期：本轮开工时实测。工程版本 **3.0.0**（不是 2.10.0），NeoForge **21.1.263**，MC 1.21.1，JDK 21。
+> 本文件是当前实施的唯一依据；其余材料以 `_pack/refs/` 为补充证据。
+> 基线核对日期：开工时实测。工程版本 **3.0.0**（不是 2.10.0），NeoForge **21.1.263**，MC 1.21.1，JDK 21。
 
 ---
 
@@ -218,7 +218,7 @@ bump_version.py 会把含“产物/版本/依据/使用（”锚点且带 tianyi
 | 外层扩展 | `guzhenren_library` 0.1 | `D:\cxdownload\guzhenrn蛊真人模组本体10.20.jar`（sha256 `3733c20f…`） | **696 个 class，`com.guzhenrenlibrary.*`**：势力、NPC 生活、任务、身份、关系、商贸、RTS、地形、五行域 |
 | 内层本体 | `guzhenren` 0.1 | 上面那包 `META-INF/jarjar/guzhenren-0.1-neoforge-1.21.1.jar`（sha256 `b6d314d3…`，22371 class） | MCreator 产物：蛊虫、炼蛊、道痕、玩家变量 |
 
-**关键结论：需求里点名的 `FactionBrain / FactionTerritory / FactionJourney / JourneyMaterializer / Resident / ResidentService / IdentityManager / QuestLog / QuestLedger / NpcTrade / NpcStock` 全部在外层 `com.guzhenrenlibrary.*`，内层 `net.guzhenren.*` 里一个都没有。**（本轮用 zip 索引逐个核过，0 命中于内层。）
+**关键结论：需求里点名的 `FactionBrain / FactionTerritory / FactionJourney / JourneyMaterializer / Resident / ResidentService / IdentityManager / QuestLog / QuestLedger / NpcTrade / NpcStock` 全部在外层 `com.guzhenrenlibrary.*`，内层 `net.guzhenren.*` 里一个都没有。**（已用 zip 索引逐个核过，0 命中于内层。）
 
 工程此前只把**内层** jar 放上编译 classpath，所以 3.0.0 的代码对势力/NPC/商贸是**零对接**——
 `grep` 全树，`FactionBrain|NpcStock|Resident|IdentityManager|QuestLog` 在 `src/` 下命中数 **0**。
@@ -341,7 +341,7 @@ net.guzhenren.tianyi
 
 `WillState.core() : WillCore` 已存在；`WillServer.onServerTick` → `runDecision` / `advanceJobs` /
 `applyCalamityPhase` / `settleCalamity`；`Observation.observe` 已往 `Knowledge.Store` 写事实。
-**链路是通的，但只喂玩家（`SnapshotService` 读本体玩家变量）。** 本轮要补的是：世界侧的
+**链路是通的，但只喂玩家（`SnapshotService` 读本体玩家变量）。** 本次要补的是：世界侧的
 势力 / NPC / 资源 / 货物 / 兽群事实进来，以及 `InterventionAction` 真的落到这些系统上。
 
 ---
@@ -384,7 +384,7 @@ net.guzhenren.tianyi
 ## 5. 测试与接线分离
 
 `_pack/run_tests.py` 目前只编译 `will/*` + `ledger/*` + `tests/*`。
-本轮**必须**把 `fact/*`、`resource/*`、`trade/*`、`herd/*`、`alchemy/*`、`action/*` 的纯逻辑文件加入
+本次**必须**把 `fact/*`、`resource/*`、`trade/*`、`herd/*`、`alchemy/*`、`action/*` 的纯逻辑文件加入
 `SRC_CORE`，并把新测试套件加入 `SUITES`。测试文件放 `_pack/tests/`，包名与被测类一致。
 
 ---

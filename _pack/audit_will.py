@@ -64,7 +64,7 @@ CORE_CLASSES = [
     'Carrier.java', 'Counter.java', 'History.java',
     # 3.13.0 宿命蛊重做：账本/规则/迁移必须同样与 Minecraft 分离，否则离线测试跑不起来
     'DestinyCustody.java', 'DestinyRules.java', 'DestinyMigration.java',
-    # 3.13.0 切片 2：承载物凭证模型（物品自称的凭证 vs 世界账本）
+    # 3.13.0 第二阶段：承载物凭证模型（物品自称的凭证 vs 世界账本）
     'DestinyVessel.java',
     # 3.14 天意强度：档位只能是乘数/阈值，必须与 Minecraft 分离才能离线测
     'WillForce.java',
@@ -613,7 +613,7 @@ for f in java_files(NETP):
         if not _re.fullmatch(r'[a-z0-9/._-]+', path):
             problems.append(f'{rel} 通道 path 含非法字符：{path}')
 
-# ---------------------------------------------------------------- 21. 宿命蛊实物与账本（3.13.0 切片 2）
+# ---------------------------------------------------------------- 21. 宿命蛊实物与账本（3.13.0 第二阶段）
 # 锁的是「实物只是壳、账本才是权威」这套纪律，而不是玩法数值。
 ITEM_DIR = os.path.join(SRC, 'item')
 DEST_ITEM = os.path.join(ITEM_DIR, 'DestinyGuItem.java')

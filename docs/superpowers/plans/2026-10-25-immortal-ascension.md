@@ -1,6 +1,6 @@
 # 蛊真人升仙机制 Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **执行方式：** 按任务逐项实施，可用 `superpowers:executing-plans`；用复选框（`- [ ]`）跟踪进度。
 
 **Goal:** 基于给定 10.20 本体，在天意附属中实现有原著依据的完整五转升六转过程。
 

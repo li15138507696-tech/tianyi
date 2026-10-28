@@ -1,6 +1,6 @@
 # 宿命蛊物品模型与贴图实施计划
 
-> **For agentic workers:** Use `superpowers:executing-plans` to implement this plan task by task.
+> **执行方式：** 按任务逐项实施，可用 `superpowers:executing-plans`。
 
 **Goal:** 补齐宿命蛊完整态与受损态像素贴图，并让 `K_SCARRED` 驱动物品模型外观。
 

@@ -1,6 +1,6 @@
 # 宿命蛊铁砧修复玩法 Implementation Plan
 
-> **For agentic workers:** Follow this plan task-by-task. Checkboxes record completed work.
+> **执行方式：** 按任务逐项实施；复选框记录已完成的工作。
 
 **Goal:** Add a persistent, resource-backed anvil repair loop for the authentic Destiny Gu item.
 

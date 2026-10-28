@@ -59,8 +59,8 @@ public final class SitePlacement {
     private SitePlacement() {}
 
     /** Real biome id at a position ({@code namespace:path}), or "" when the biome key is unavailable.
-     * Signature evidence: LevelReader#getBiome(BlockPos) and Holder#unwrapKey() were dumped by the
-     * main agent for 1.21.1/21.1.263. A missing key means "unknown terrain", which never matches a
+     * Signature evidence: LevelReader#getBiome(BlockPos) and Holder#unwrapKey() were dumped locally
+     * for 1.21.1/21.1.263. A missing key means "unknown terrain", which never matches a
      * whitelist (we skip the template instead of guessing). */
     public static String biomeId(ServerLevel level, BlockPos pos) {
         return level.getBiome(pos).unwrapKey().map(key -> key.location().toString()).orElse("");

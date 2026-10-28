@@ -1,0 +1,183 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8">
+<title>蛊真人 × 莱特兰恶意 · 适配附属说明</title><style>
+:root{--bg:#f5f6f8;--card:#fff;--text:#1a1d21;--muted:#6b7280;--border:#e3e6ea;--accent:#8b5cf6;--accent2:#6d28d9}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Microsoft YaHei","PingFang SC",-apple-system,"Segoe UI",sans-serif;background:var(--bg);color:var(--text);line-height:1.65;padding:32px 20px}
+.wrap{max-width:1120px;margin:0 auto}
+header{background:linear-gradient(135deg,#7c3aed 0%,#a855f7 55%,#6366f1 100%);color:#fff;padding:34px 36px;border-radius:16px;margin-bottom:24px;box-shadow:0 8px 28px rgba(124,58,237,.22)}
+header h1{font-size:26px;margin-bottom:8px}
+header p{opacity:.93;font-size:14px}
+.pill{display:inline-block;margin:14px 8px 0 0;background:rgba(255,255,255,.19);border:1px solid rgba(255,255,255,.3);padding:7px 16px;border-radius:999px;font-size:13.5px;font-weight:600}
+h2{font-size:18px;margin:30px 0 12px;padding-left:12px;border-left:4px solid var(--accent)}
+.card{background:var(--card);border:1px solid var(--border);border-radius:13px;padding:20px 22px;margin-bottom:16px}
+table{width:100%;border-collapse:collapse;font-size:13.5px;background:var(--card);border-radius:10px;overflow:hidden;border:1px solid var(--border);margin-bottom:8px}
+th{background:#f0f1f4;text-align:left;padding:10px 12px;font-size:12.5px;border-bottom:1px solid var(--border)}
+td{padding:8px 12px;border-bottom:1px solid #f0f1f3}
+tr:hover td{background:#fafafc}
+code{background:#f1f0f8;color:#5b21b6;padding:2px 6px;border-radius:5px;font-size:12.5px;font-family:Consolas,monospace}
+.badge{display:inline-block;padding:2px 10px;border-radius:999px;font-size:11.5px;font-weight:700;color:#fff}
+.b-boss{background:#dc2626}.b-elite{background:#ea580c}.b-normal{background:#0891b2}.b-ex{background:#64748b}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:10px 0}
+.stat{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center}
+.stat .n{font-size:26px;font-weight:800;color:var(--accent2)}
+.stat .l{font-size:12px;color:var(--muted);margin-top:4px}
+.note{background:#fffbeb;border-left:4px solid #f59e0b;padding:12px 15px;border-radius:7px;margin:12px 0;font-size:13.5px}
+.good{background:#f0fdf4;border-left:4px solid #16a34a;padding:12px 15px;border-radius:7px;margin:12px 0;font-size:13.5px}
+ul,ol{padding-left:20px}li{margin:5px 0;font-size:14px}
+details summary{cursor:pointer;font-weight:700;color:var(--accent2);margin:8px 0}
+</style></head><body><div class="wrap">
+<header><h1>蛊真人 × 莱特兰恶意 · 适配附属</h1>
+<p>整合包：转生到蛊界就要拿出真本事 ｜ 实体来源：guzhenren 0.1（jar-in-jar） ｜ 恶意：l2hostility 3.0.18</p>
+<span class="pill">guzhenren_malice-1.0.4</span>
+<span class="pill">MC 1.21.1 / NeoForge 21.1.263</span>
+<span class="pill">不改本体基础属性</span></header>
+<div class="grid">
+<div class="stat"><div class="n">13</div><div class="l">妖王</div></div>
+<div class="stat"><div class="n">55</div><div class="l">精英</div></div>
+<div class="stat"><div class="n">23</div><div class="l">普通妖兽</div></div>
+<div class="stat"><div class="n">22</div><div class="l">排除（NPC/特效）</div></div>
+<div class="stat"><div class="n">4</div><div class="l">可切换难度档</div></div>
+</div>
+<h2>一、它到底改了什么东西</h2><div class="card">
+<p>只做两件事，一行本体代码都没碰：</p><ol>
+<li><b>数据驱动接入</b>：<code>data/guzhenren/l2hostility_config/entity/guzhenren_malice.json</code> 给三档妖兽各自的等级下限、血量/攻击倍率、词条白名单与黑名单。</li>
+<li><b>难度倍率</b>：等恶意把等级算完（<code>HostilityInitEvent.Post</code>），按玩家选的档位再乘一次等级，并补满血。</li>
+</ol>
+<div class="good">强度全部来自恶意自己的等级公式（每级 +3% 血、+2% 伤害，命中时再按 <code>attackScale</code> 放大）。所以卸载本 mod，存档立刻回到「只有恶意」的原状，不会有属性残留。</div>
+<div class="note">为什么不直接抬本体血量？本体妖兽的基础血已经是 760~1024、攻击 65~200，再乘倍率会出现「怪打不死、玩家也没法打」的硬墙；用恶意等级做放大可以随难度档位和玩家等级一起浮动。</div>
+</div>
+<h2>一·五、为什么妖兽头顶原来没有等级</h2><div class="card">
+<p>恶意 3.0.18 决定要不要给一只生物挂 <code>MobTraitCap</code> 的条件写死在 <code>LHMiscs</code> 里：</p>
+<pre style="background:#1e1e28;color:#e6e6ef;padding:14px 16px;border-radius:10px;overflow-x:auto;font-size:12.5px;font-family:Consolas,monospace">isProper(e) = e.getType().is(l2hostility:whitelist)
+           || (e instanceof net.minecraft.world.entity.monster.Enemy
+               &amp;&amp; !e.getType().is(l2hostility:blacklist))</pre>
+<p>本体 450 个实体里<b>只有 7 个继承 <code>Monster</code></b>（也就是 <code>Enemy</code>），其余妖兽全是 <code>TamableAnimal</code> / <code>PathfinderMob</code>。它们既不在白名单、又不是 Enemy，所以恶意<b>根本不挂能力</b> —— 不分配等级、不抽词条、头顶什么都不显示。这跟有没有装适配 mod 无关。</p>
+<div class="good">1.0.1 的修法：把 91 只妖兽写进 <code>data/l2hostility/tags/entity_type/whitelist.json</code>。标签是合并的（<code>replace: false</code>），不会覆盖恶意自己或其它模组写进去的条目。</div>
+<p><b>怎么确认生效：</b>① 进世界看日志里的 <code>数据检查: 普通=23 精英=55 妖王=13 … l2hostility:whitelist=91</code>；② 新刷出的妖兽头顶应有 <code>Lv.N</code>；③ <code>/guzhenren_malice probe &lt;实体&gt;</code> 直接读恶意的血量修饰符。</p>
+</div>
+<h2>二、三档数值</h2><div class="card"><table>
+<tr><th>档位</th><th>标签</th><th>等级下限</th><th>基准等级</th><th>血量倍率</th><th>攻击倍率</th><th>词条上限</th><th>词条池</th></tr>
+<tr><td><span class="badge b-normal">普通</span></td><td><code>#guzhenren:malice_normal</code></td><td>10</td><td>20</td><td>×1.5</td><td>×1.5</td><td>3</td><td>疾行 / 再生 / 血牛</td></tr>
+<tr><td><span class="badge b-elite">精英</span></td><td><code>#guzhenren:malice_elite</code></td><td>35</td><td>55</td><td>×2.0</td><td>×2.0</td><td>5</td><td>疾行 / 血牛 / 再生 / 适应 / 反击</td></tr>
+<tr><td><span class="badge b-boss">妖王</span></td><td><code>#guzhenren:malice_boss</code></td><td>90</td><td>120</td><td>×2.5</td><td>×2.5</td><td>8</td><td>血牛 / 再生 / 不死 / 重印 / 杀戮光环 / 诸神黄昏</td></tr>
+</table><p><small>实际血量加成 = 等级 × 0.03 × healthScale；攻击放大 = 等级 × 0.02 × attackScale（命中时结算）。</small></p></div>
+<div class="note"><b>已禁用词条：适应（adaptive）、升空（levitation）</b> —— 两处同时生效：① 恶意全局配置 <code>config/l2configs/l2hostility-server.toml</code> 里 <code>allow_adaptive = false</code> / <code>allow_levitation = false</code>（对原版怪也生效）；② 本 mod 三档配置的 <code>blacklist</code> 里也写了这两个 id，并从精英档保底词条里删掉「适应」。全局开关只管随机抽取，保底词条是配置直接给的，所以两边都要写。</div>
+<h2>三、四档难度（玩家可改）</h2><div class="card"><table>
+<tr><th>档位</th><th>命令参数</th><th>等级倍率</th><th>说明</th></tr>
+<tr><td>安逸</td><td><code>easy</code> / 安逸</td><td>×0.6</td><td>刚开窍、还在南疆捡蛊材</td></tr>
+<tr><td>标准</td><td><code>normal</code> / 标准</td><td>×1.0</td><td>默认</td></tr>
+<tr><td>凶险</td><td><code>hard</code> / 凶险</td><td>×1.5</td><td>妖兽开始成群压过来</td></tr>
+<tr><td>噩梦</td><td><code>nightmare</code> / 噩梦</td><td>×2.2</td><td>妖王顶到 260 级以上</td></tr>
+</table><p><code>/guzhenren_malice info</code> 查看当前档位，<code>/guzhenren_malice difficulty hard</code> 切换。难度写在存档里（<code>&lt;存档&gt;/data/guzhenren_malice_preset.dat</code>），换存档互不影响。</p></div>
+<div class="card"><p><b>开局选难度：</b>第一次进存档时聊天栏会推四个可点击按钮（安逸 / 标准 / 凶险 / 噩梦），点一下即生效，每张存档只弹一次；想再弹用 <code>/guzhenren_malice choose</code>。</p></div>
+<h2>四、怪物清单</h2>
+<div class="card"><details open><summary><span class="badge b-boss">妖王</span> 13 只</summary>
+<table><tr><th style="width:34%">实体 id</th><th>名称</th><th>基础血</th><th>基础攻</th><th>基类</th></tr>
+<tr><td><code>guzhenren:dilaoleiguantoulang</code></td><td>雷冠头狼(地牢)</td><td>1000</td><td>800</td><td><small>Monster</small></td></tr>
+<tr><td><code>guzhenren:fengleidianlanghuang</code></td><td>风雷电狼皇</td><td>1024</td><td>200</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:hunshou</code></td><td>魂兽.兽皇</td><td>1000</td><td>100</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:hunshou_2</code></td><td>魂兽.百兽王</td><td>1000</td><td>100</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:hunshou_3</code></td><td>魂兽.千兽王</td><td>1000</td><td>100</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:hunshou_4</code></td><td>魂兽.万兽王</td><td>1000</td><td>100</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:jinhuomoyanxiong</code></td><td>烬火魔焰熊</td><td>1000</td><td>250</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:liaoyuanhuoxiong</code></td><td>燎原火熊</td><td>1000</td><td>250</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:liaoyuanhuoxiongdilao</code></td><td>燎原火熊(地牢)</td><td>1000</td><td>800</td><td><small>Monster</small></td></tr>
+<tr><td><code>guzhenren:mumeishujing_2</code></td><td>木魅树精-百兽王</td><td>760</td><td>65</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:mumeishujing_3</code></td><td>木魅树精-千兽王</td><td>760</td><td>65</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:mumeishujing_4</code></td><td>木魅树精-万兽王</td><td>760</td><td>65</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:mumeishujing_5</code></td><td>木魅树精-兽皇</td><td>760</td><td>65</td><td><small>TamableAnimal</small></td></tr>
+</table></details></div>
+<div class="card"><details><summary><span class="badge b-elite">精英</span> 55 只</summary>
+<table><tr><th style="width:34%">实体 id</th><th>名称</th><th>基础血</th><th>基础攻</th><th>基类</th></tr>
+<tr><td><code>guzhenren:anduodiao</code></td><td>暗夺雕</td><td>1024</td><td>200</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:bai_gu_che_lun</code></td><td>白蛊车轮</td><td>1024</td><td>200</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:bai_xiang_xian_she</code></td><td>白相仙蛇</td><td>1024</td><td>200</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:bao</code></td><td>豹</td><td>1000</td><td>100</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:biao</code></td><td>彪</td><td>1000</td><td>100</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:bumiexuanwu</code></td><td>不灭玄武</td><td>1000</td><td>100</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:chuanyuqingbao</code></td><td>穿宇青豹</td><td>1000</td><td>100</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:daochixuefu</code></td><td>刀翅血蝠</td><td>1024</td><td>200</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:feng_huo_ying</code></td><td>风火鹰</td><td>1024</td><td>200</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:fengyun_he</code></td><td>风云鹤</td><td>1024</td><td>200</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:gangjiagui</code></td><td>刚甲龟</td><td>1000</td><td>100</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:huishangao</code></td><td>毁伤鳌</td><td>1000</td><td>100</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:huli_0</code></td><td>赤狐</td><td>1000</td><td>100</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:huli_1</code></td><td>金思狐</td><td>1000</td><td>100</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:huli_2</code></td><td>青思狐</td><td>1000</td><td>100</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:huli_3</code></td><td>妄谋狐</td><td>1000</td><td>100</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:huli_4</code></td><td>绮云幻狐</td><td>1000</td><td>100</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:huli_5</code></td><td>胭霞万象狐</td><td>1000</td><td>100</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:hunshou_1</code></td><td>魂兽</td><td>1000</td><td>100</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:ji_feng_lve_yun_diao</code></td><td>疾风掠云雕</td><td>1024</td><td>200</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:jinfenghu</code></td><td>金锋虎</td><td>1000</td><td>100</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:jinrenwanghu</code></td><td>金刃王虎</td><td>1000</td><td>100</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:ke_wen_she</code></td><td>刻纹蛇</td><td>1024</td><td>200</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:lan_feng_sun</code></td><td>澜风隼</td><td>1024</td><td>200</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:lei_dian_lang</code></td><td>狂电狼</td><td>1000</td><td>90</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:lei_guan_tou_lang</code></td><td>雷冠头狼</td><td>1024</td><td>200</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:lie_gang_feng_ying</code></td><td>雷罡风鹰</td><td>1024</td><td>200</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:lieyanxiong</code></td><td>烈焰熊</td><td>1000</td><td>100</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:lingbohe</code></td><td>凌波鹤</td><td>1024</td><td>200</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:lixuemofu</code></td><td>沥血魔蝠</td><td>1024</td><td>200</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:lueshiying</code></td><td>掠食鹰</td><td>1024</td><td>200</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:qiebaoxuanying</code></td><td>窃宝玄枭</td><td>1024</td><td>200</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:qiliu_he</code></td><td>气流鹤</td><td>1024</td><td>200</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:shan_mai_di_yan_quan</code></td><td>山脉地岩犬</td><td>1024</td><td>200</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:shangjianxuangui</code></td><td>伤坚玄龟</td><td>1000</td><td>100</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:shentouguiduoxiao</code></td><td>神偷诡夺枭</td><td>1024</td><td>200</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:shi_kong_zhen_yu_mang</code></td><td>时空镇狱蟒</td><td>1024</td><td>200</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:shi_ying_she</code></td><td>时影蛇</td><td>1024</td><td>200</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:su_hui_she</code></td><td>溯洄蛇</td><td>1024</td><td>200</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:wang_yi</code></td><td>王蚁</td><td>1024</td><td>200</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:xiongshabaihu</code></td><td>凶煞白虎</td><td>1000</td><td>100</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:xue_he_mang</code></td><td>血河蠎</td><td>1024</td><td>200</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:xuefu</code></td><td>血蝠</td><td>1024</td><td>200</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:xueyingxionghe</code></td><td>血影凶鹤</td><td>1024</td><td>200</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:xueyuxingfu</code></td><td>血雨腥蝠</td><td>1024</td><td>200</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:xunjiejinbao</code></td><td>巡界金豹</td><td>1000</td><td>100</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:xuxuyifu</code></td><td>血翼蝠</td><td>1024</td><td>200</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:yao_guang_feng_sun</code></td><td>曜光风隼</td><td>1024</td><td>200</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:yao_ya_quan</code></td><td>垚犽犬</td><td>800</td><td>100</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:yinyangshengsihe</code></td><td>阴阳生死鹤</td><td>1024</td><td>200</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:yinyangshengsihedilao</code></td><td>阴阳生死鹤</td><td>1024</td><td>200</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:yue_ao_yan_quan</code></td><td>岳獒岩犬</td><td>1024</td><td>200</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:zhou_shi_ling_ran</code></td><td>宙蚀灵蚺</td><td>1024</td><td>200</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:zixiaojiebao</code></td><td>紫霄界豹</td><td>1000</td><td>100</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:ziyaojiexingbao</code></td><td>紫曜界行豹</td><td>1000</td><td>100</td><td><small>TamableAnimal</small></td></tr>
+</table></details></div>
+<div class="card"><details><summary><span class="badge b-normal">普通</span> 23 只</summary>
+<table><tr><th style="width:34%">实体 id</th><th>名称</th><th>基础血</th><th>基础攻</th><th>基类</th></tr>
+<tr><td><code>guzhenren:dian_lang</code></td><td>电狼</td><td>60</td><td>5</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:dian_xiong</code></td><td>电熊</td><td>65</td><td>15</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:gong_bing_yi</code></td><td>工兵蚁</td><td>20</td><td>3</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:hao_dian_lang</code></td><td>豪电狼</td><td>250</td><td>26</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:hong_xiong</code></td><td>红熊</td><td>40</td><td>10</td><td><small>Monster</small></td></tr>
+<tr><td><code>guzhenren:hu</code></td><td>虎</td><td>480</td><td>60</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:hui_lang</code></td><td>灰狼</td><td>20</td><td>3</td><td><small>Monster</small></td></tr>
+<tr><td><code>guzhenren:hui_xiong</code></td><td>灰熊</td><td>40</td><td>10</td><td><small>Monster</small></td></tr>
+<tr><td><code>guzhenren:huoyanxiong</code></td><td>火焰熊</td><td>380</td><td>35</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:jiang_jun_yi</code></td><td>将军蚁</td><td>400</td><td>80</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:lianchenlu</code></td><td>炼尘鹿</td><td>760</td><td>65</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:liandingjielu</code></td><td>炼鼎劫鹿</td><td>760</td><td>65</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:lu</code></td><td>鹿</td><td>760</td><td>65</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:maomin</code></td><td>毛民</td><td>100</td><td>20</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:mumeishujing_1</code></td><td>木魅树精</td><td>760</td><td>65</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:qianlianguichenlu</code></td><td>千炼归尘鹿</td><td>760</td><td>65</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:rongwenlu</code></td><td>熔纹鹿</td><td>760</td><td>65</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:tu_lang</code></td><td>土狼</td><td>20</td><td>3</td><td><small>Monster</small></td></tr>
+<tr><td><code>guzhenren:tu_quan</code></td><td>土犬</td><td>60</td><td>5</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:xing_jun_yi</code></td><td>行军蚁</td><td>100</td><td>30</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:xiong</code></td><td>熊</td><td>40</td><td>10</td><td><small>Monster</small></td></tr>
+<tr><td><code>guzhenren:yan_xu_quan</code></td><td>岩戌犬</td><td>280</td><td>23</td><td><small>TamableAnimal</small></td></tr>
+<tr><td><code>guzhenren:yingkegui</code></td><td>硬壳龟</td><td>20</td><td>10</td><td><small>TamableAnimal</small></td></tr>
+</table></details></div>
+<div class="card"><details><summary><span class="badge b-ex">排除</span> 22 个（剧情 NPC / 商人 / 术法特效）</summary>
+<p><code>dalongjuanfeng</code>, <code>dian_yuan</code>, <code>dianyuan_4</code>, <code>dianyuan_5</code>, <code>dianyuan_6</code>, <code>dianyuan_7</code>, <code>dianyuan_8</code>, <code>dianyuan_9</code>, <code>dianyuanerzhuan</code>, <code>du_shi_fang_dian_yuan</code>, <code>huli_4huanxiang</code>, <code>huli_5huangxiang</code>, <code>jiudaoyicang_shang_ren</code>, <code>long_juan_feng</code>, <code>pai_mai_hang_dian_yuan</code>, <code>pai_mai_hang_gui_yuan</code>, <code>ren_wu_npc_1</code>, <code>ren_wu_npc_2</code>, <code>rong_yan_2</code>, <code>shou_gou_shang_ren</code>, <code>xun_jian_si_zong_guan</code>, <code>yunxing</code></p>
+<p><small>这些实体在 <code>HostilityInitEvent.Pre</code> 里被取消：恶意不给它们分配等级、也不抽词条。取消后 <code>lv = 0</code>，而「自然刷出但等级不足就丢弃」只在实体配置里写了 <code>minSpawnLevel &gt; 0</code> 时才触发 —— 我们的配置里全是 0，所以 NPC 不会被恶意吞掉。</small></p></details></div>
+<h2>四·五、显示调整：词条挤成一坨</h2><div class="card"><p>恶意的名字牌是一次性画的一整块文字：等级和所有词条拼在同一个组件里。一只妖王 8 个词条就会横着拉出一大条，几只怪凑一起就糊成一片、把怪本身盖住。</p><div class="good">调的不是词条数量（那会削弱强度），而是显示位置：<code>showTraitOverHead = false</code> —— 头顶只留 <code>Lv.N</code>，词条不再堆在怪身上。</div><p>词条没有消失：<b>Jade</b> 的实体面板会列出这只怪的全部词条（恶意自带 <code>TraitInfo</code> 兼容），准星指过去就看得到。</p><p>想要「平时不显示、瞄准谁就显示谁」，改成 <code>showTraitOverHead = true</code> + <code>showOnlyWhenHovered = true</code> 即可。</p><p><small>同款配置已复制到 <code>defaultconfigs/l2configs/l2hostility-client.toml</code>，重置 config 也不会丢。</small></p></div>
+<div class="note"><b>1.0.3 审查修复：</b>恶意的 <code>HostilityInitEvent.Post</code> 在 <code>init()</code> / <code>tick()</code> / <code>copyFrom()</code> 三处各发一次，每只怪至少收到两次 —— 旧版每次都乘倍率，凶险档 Lv20 会变成 20→30→45、噩梦档 20→44→97。现在把「恶意原始等级」记进实体 PersistentData，重复回调变成空操作。详见 <code>docs/审查记录.md</code>。</div>
+<h2>五、已验证 / 未验证</h2><div class="card">
+<div class="good"><b>已验证</b>：javac 编译通过（6 个类）；jar 结构齐全；mods.toml 无 BOM 且能被真正的 TOML 解析器读出；113 个实体 id 全部命中本体注册表（656 个注册 id）；分档无重复；命令与存档数据结构对齐 NeoForge 21.1.263 API。</div>
+<div class="note"><b>未验证</b>：没有进游戏。实际刷怪时等级是否按档位翻倍、词条是否按白名单抽、NPC 是否真的不受影响、命令文案是否正常 —— 这些只有实机能看到。进游戏后建议先 <code>/guzhenren_malice difficulty hard</code>，再刷新一次区块看怪的名字前面等级数字。</div></div>
+<p style="text-align:center;color:#9ca3af;font-size:12.5px;margin:24px 0">guzhenren_malice 1.0.0 ｜ 由离线 javac 流程打包（不走 Gradle）</p>
+</div></body></html>

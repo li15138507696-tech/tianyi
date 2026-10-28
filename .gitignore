@@ -23,3 +23,13 @@ _pack/reviews/**/compiled/
 *.iml
 Thumbs.db
 desktop.ini
+
+# 其它模组残留，不属于本工程
+_tianfu_1.3.6/
+_pack/_decomp_*/
+
+
+# 其它模组残留
+_tianfu_1.3.1/
+_tianfu_1.3.6/
+

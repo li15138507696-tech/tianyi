@@ -1,0 +1,236 @@
+Compiled from "DaotuOpening.java"
+public final class net.guzhenren.daotu.DaotuOpening {
+  public static final java.lang.String KAIQIAO_SCORE;
+
+  private net.guzhenren.daotu.DaotuOpening();
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: return
+
+  public static boolean hasOpenedQiao(net.minecraft.world.entity.player.Player);
+    Code:
+       0: aload_0
+       1: instanceof    #7                  // class net/minecraft/server/level/ServerPlayer
+       4: ifeq          15
+       7: aload_0
+       8: checkcast     #7                  // class net/minecraft/server/level/ServerPlayer
+      11: astore_1
+      12: goto          17
+      15: iconst_0
+      16: ireturn
+      17: aload_1
+      18: invokevirtual #9                  // Method net/minecraft/server/level/ServerPlayer.getServer:()Lnet/minecraft/server/MinecraftServer;
+      21: invokevirtual #13                 // Method net/minecraft/server/MinecraftServer.getScoreboard:()Lnet/minecraft/server/ServerScoreboard;
+      24: astore_2
+      25: aload_2
+      26: ldc           #21                 // String kaiqiao
+      28: invokevirtual #23                 // Method net/minecraft/server/ServerScoreboard.getObjective:(Ljava/lang/String;)Lnet/minecraft/world/scores/Objective;
+      31: astore_3
+      32: aload_3
+      33: ifnonnull     38
+      36: iconst_0
+      37: ireturn
+      38: aload_2
+      39: aload_1
+      40: aload_3
+      41: invokevirtual #29                 // Method net/minecraft/server/ServerScoreboard.getOrCreatePlayerScore:(Lnet/minecraft/world/scores/ScoreHolder;Lnet/minecraft/world/scores/Objective;)Lnet/minecraft/world/scores/ScoreAccess;
+      44: invokeinterface #33,  1           // InterfaceMethod net/minecraft/world/scores/ScoreAccess.get:()I
+      49: ifeq          56
+      52: iconst_1
+      53: goto          57
+      56: iconst_0
+      57: ireturn
+
+  public static void onCloseOpenQiao(net.minecraft.world.entity.Entity);
+    Code:
+       0: aload_0
+       1: instanceof    #7                  // class net/minecraft/server/level/ServerPlayer
+       4: ifeq          22
+       7: aload_0
+       8: checkcast     #7                  // class net/minecraft/server/level/ServerPlayer
+      11: astore_1
+      12: aload_1
+      13: invokevirtual #39                 // Method net/minecraft/server/level/ServerPlayer.level:()Lnet/minecraft/world/level/Level;
+      16: invokevirtual #43                 // Method net/minecraft/world/level/Level.isClientSide:()Z
+      19: ifeq          23
+      22: return
+      23: aload_1
+      24: invokestatic  #49                 // Method hasOpenedQiao:(Lnet/minecraft/world/entity/player/Player;)Z
+      27: ifne          31
+      30: return
+      31: aload_1
+      32: invokestatic  #53                 // Method net/guzhenren/daotu/DaotuData.isApplied:(Lnet/minecraft/world/entity/player/Player;)Z
+      35: ifeq          39
+      38: return
+      39: aload_1
+      40: invokestatic  #58                 // Method net/guzhenren/daotu/DaotuData.markApplied:(Lnet/minecraft/world/entity/player/Player;)V
+      43: aload_1
+      44: ldc           #62                 // String ��b[��;] ��;�������� ��eM ��b�򿪵�;������ĳɳ�֮·��
+      46: invokestatic  #64                 // InterfaceMethod net/minecraft/network/chat/Component.literal:(Ljava/lang/String;)Lnet/minecraft/network/chat/MutableComponent;
+      49: iconst_0
+      50: invokevirtual #70                 // Method net/minecraft/server/level/ServerPlayer.displayClientMessage:(Lnet/minecraft/network/chat/Component;Z)V
+      53: goto          68
+      56: astore_1
+      57: getstatic     #76                 // Field net/guzhenren/daotu/DaotuMod.LOGGER:Lorg/slf4j/Logger;
+      60: ldc           #82                 // String daotu onCloseOpenQiao ʧ�ܣ��Ѻ��ԣ�
+      62: aload_1
+      63: invokeinterface #84,  3           // InterfaceMethod org/slf4j/Logger.warn:(Ljava/lang/String;Ljava/lang/Throwable;)V
+      68: return
+    Exception table:
+       from    to  target type
+           0    22    56   Class java/lang/Throwable
+          23    30    56   Class java/lang/Throwable
+          31    38    56   Class java/lang/Throwable
+          39    53    56   Class java/lang/Throwable
+
+  public static void onLogin(net.minecraft.server.level.ServerPlayer);
+    Code:
+       0: aload_0
+       1: ldc           #90                 // String ��6��l[��;] ��r��e�� ��f��lM ��e�򿪵�;����
+       3: invokestatic  #64                 // InterfaceMethod net/minecraft/network/chat/Component.literal:(Ljava/lang/String;)Lnet/minecraft/network/chat/MutableComponent;
+       6: iconst_0
+       7: invokevirtual #70                 // Method net/minecraft/server/level/ServerPlayer.displayClientMessage:(Lnet/minecraft/network/chat/Component;Z)V
+      10: aload_0
+      11: invokestatic  #49                 // Method hasOpenedQiao:(Lnet/minecraft/world/entity/player/Player;)Z
+      14: ifne          18
+      17: return
+      18: aload_0
+      19: invokestatic  #53                 // Method net/guzhenren/daotu/DaotuData.isApplied:(Lnet/minecraft/world/entity/player/Player;)Z
+      22: ifne          29
+      25: aload_0
+      26: invokestatic  #58                 // Method net/guzhenren/daotu/DaotuData.markApplied:(Lnet/minecraft/world/entity/player/Player;)V
+      29: aload_0
+      30: invokestatic  #92                 // Method net/guzhenren/daotu/DaotuMigrate.migrateIfNeeded:(Lnet/minecraft/server/level/ServerPlayer;)Z
+      33: pop
+      34: aload_0
+      35: invokestatic  #98                 // Method net/guzhenren/daotu/DaotuGrowthApply.refreshTitles:(Lnet/minecraft/world/entity/player/Player;)V
+      38: aload_0
+      39: invokestatic  #103                // Method net/guzhenren/daotu/DaotuAttributes.sync:(Lnet/minecraft/world/entity/player/Player;)V
+      42: aload_0
+      43: invokestatic  #108                // Method net/guzhenren/daotu/DaotuRun.draws:(Lnet/minecraft/world/entity/player/Player;)I
+      46: ifne          59
+      49: aload_0
+      50: ldc           #114                // String ��b[��;] ��;��������ɱ�������������Ի�������������������ѡ�񡣰� ��eM ��b�鿴��
+      52: invokestatic  #64                 // InterfaceMethod net/minecraft/network/chat/Component.literal:(Ljava/lang/String;)Lnet/minecraft/network/chat/MutableComponent;
+      55: iconst_0
+      56: invokevirtual #70                 // Method net/minecraft/server/level/ServerPlayer.displayClientMessage:(Lnet/minecraft/network/chat/Component;Z)V
+      59: goto          74
+      62: astore_1
+      63: getstatic     #76                 // Field net/guzhenren/daotu/DaotuMod.LOGGER:Lorg/slf4j/Logger;
+      66: ldc           #116                // String daotu onLogin ʧ�ܣ��Ѻ��ԣ�
+      68: aload_1
+      69: invokeinterface #84,  3           // InterfaceMethod org/slf4j/Logger.warn:(Ljava/lang/String;Ljava/lang/Throwable;)V
+      74: return
+    Exception table:
+       from    to  target type
+           0    17    62   Class java/lang/Throwable
+          18    59    62   Class java/lang/Throwable
+
+  public static void onClone(net.minecraft.server.level.ServerPlayer, net.minecraft.server.level.ServerPlayer);
+    Code:
+       0: aload_0
+       1: invokestatic  #103                // Method net/guzhenren/daotu/DaotuAttributes.sync:(Lnet/minecraft/world/entity/player/Player;)V
+       4: goto          19
+       7: astore_2
+       8: getstatic     #76                 // Field net/guzhenren/daotu/DaotuMod.LOGGER:Lorg/slf4j/Logger;
+      11: ldc           #118                // String daotu onClone ʧ�ܣ��Ѻ��ԣ�
+      13: aload_2
+      14: invokeinterface #84,  3           // InterfaceMethod org/slf4j/Logger.warn:(Ljava/lang/String;Ljava/lang/Throwable;)V
+      19: return
+    Exception table:
+       from    to  target type
+           0     4     7   Class java/lang/Throwable
+
+  public static void onReincarnation(net.minecraft.server.level.ServerPlayer);
+    Code:
+       0: aload_0
+       1: invokestatic  #120                // Method net/guzhenren/daotu/DaotuRun.ledger:(Lnet/minecraft/world/entity/player/Player;)Ljava/util/Map;
+       4: astore_1
+       5: aload_0
+       6: invokestatic  #124                // Method net/guzhenren/daotu/DaotuRun.runId:(Lnet/minecraft/world/entity/player/Player;)I
+       9: istore_2
+      10: aload_0
+      11: invokestatic  #108                // Method net/guzhenren/daotu/DaotuRun.draws:(Lnet/minecraft/world/entity/player/Player;)I
+      14: istore_3
+      15: aload_1
+      16: invokeinterface #127,  1          // InterfaceMethod java/util/Map.isEmpty:()Z
+      21: ifne          127
+      24: aload_0
+      25: getstatic     #132                // Field net/guzhenren/network/GuzhenrenModVariables.PLAYER_VARIABLES:Ljava/util/function/Supplier;
+      28: invokevirtual #138                // Method net/minecraft/server/level/ServerPlayer.getData:(Ljava/util/function/Supplier;)Ljava/lang/Object;
+      31: checkcast     #142                // class net/guzhenren/network/GuzhenrenModVariables$PlayerVariables
+      34: astore        4
+      36: aload_1
+      37: invokeinterface #144,  1          // InterfaceMethod java/util/Map.entrySet:()Ljava/util/Set;
+      42: invokeinterface #148,  1          // InterfaceMethod java/util/Set.iterator:()Ljava/util/Iterator;
+      47: astore        5
+      49: aload         5
+      51: invokeinterface #154,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+      56: ifeq          122
+      59: aload         5
+      61: invokeinterface #159,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      66: checkcast     #163                // class java/util/Map$Entry
+      69: astore        6
+      71: aload         4
+      73: aload         6
+      75: invokeinterface #165,  1          // InterfaceMethod java/util/Map$Entry.getKey:()Ljava/lang/Object;
+      80: checkcast     #168                // class java/lang/String
+      83: aload         6
+      85: invokeinterface #170,  1          // InterfaceMethod java/util/Map$Entry.getValue:()Ljava/lang/Object;
+      90: checkcast     #173                // class java/lang/Double
+      93: invokevirtual #175                // Method java/lang/Double.doubleValue:()D
+      96: invokestatic  #179                // Method net/guzhenren/daotu/DaotuGrowthApply.subDaohen:(Lnet/guzhenren/network/GuzhenrenModVariables$PlayerVariables;Ljava/lang/String;D)Z
+      99: ifne          119
+     102: getstatic     #76                 // Field net/guzhenren/daotu/DaotuMod.LOGGER:Lorg/slf4j/Logger;
+     105: ldc           #183                // String ת���۵��ۣ�δ֪�ֶ� {}
+     107: aload         6
+     109: invokeinterface #165,  1          // InterfaceMethod java/util/Map$Entry.getKey:()Ljava/lang/Object;
+     114: invokeinterface #185,  3          // InterfaceMethod org/slf4j/Logger.warn:(Ljava/lang/String;Ljava/lang/Object;)V
+     119: goto          49
+     122: aload         4
+     124: invokevirtual #188                // Method net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.markSyncDirty:()V
+     127: aload_0
+     128: invokestatic  #191                // Method net/guzhenren/daotu/DaotuRun.autoPrompt:(Lnet/minecraft/world/entity/player/Player;)Z
+     131: istore        4
+     133: aload_0
+     134: invokestatic  #194                // Method net/guzhenren/daotu/DaotuMainDao.of:(Lnet/minecraft/world/entity/player/Player;)Ljava/lang/String;
+     137: astore        5
+     139: aload_0
+     140: invokestatic  #200                // Method net/guzhenren/daotu/DaotuData.wipeAll:(Lnet/minecraft/world/entity/player/Player;)V
+     143: aload_0
+     144: iload_2
+     145: iconst_1
+     146: iadd
+     147: invokestatic  #203                // Method net/guzhenren/daotu/DaotuRun.beginRun:(Lnet/minecraft/world/entity/player/Player;I)V
+     150: aload_0
+     151: iload         4
+     153: invokestatic  #207                // Method net/guzhenren/daotu/DaotuRun.setAutoPrompt:(Lnet/minecraft/world/entity/player/Player;Z)V
+     156: aload         5
+     158: invokevirtual #211                // Method java/lang/String.isEmpty:()Z
+     161: ifne          171
+     164: aload_0
+     165: aload         5
+     167: invokestatic  #212                // Method net/guzhenren/daotu/DaotuMainDao.set:(Lnet/minecraft/world/entity/player/Player;Ljava/lang/String;)Z
+     170: pop
+     171: aload_0
+     172: invokestatic  #58                 // Method net/guzhenren/daotu/DaotuData.markApplied:(Lnet/minecraft/world/entity/player/Player;)V
+     175: aload_0
+     176: invokestatic  #103                // Method net/guzhenren/daotu/DaotuAttributes.sync:(Lnet/minecraft/world/entity/player/Player;)V
+     179: aload_0
+     180: iload_3
+     181: invokedynamic #216,  0            // InvokeDynamic #0:makeConcatWithConstants:(I)Ljava/lang/String;
+     186: invokestatic  #64                 // InterfaceMethod net/minecraft/network/chat/Component.literal:(Ljava/lang/String;)Lnet/minecraft/network/chat/MutableComponent;
+     189: iconst_0
+     190: invokevirtual #70                 // Method net/minecraft/server/level/ServerPlayer.displayClientMessage:(Lnet/minecraft/network/chat/Component;Z)V
+     193: goto          208
+     196: astore_1
+     197: getstatic     #76                 // Field net/guzhenren/daotu/DaotuMod.LOGGER:Lorg/slf4j/Logger;
+     200: ldc           #220                // String daotu onReincarnation ʧ�ܣ��Ѻ��ԣ�
+     202: aload_1
+     203: invokeinterface #84,  3           // InterfaceMethod org/slf4j/Logger.warn:(Ljava/lang/String;Ljava/lang/Throwable;)V
+     208: return
+    Exception table:
+       from    to  target type
+           0   193   196   Class java/lang/Throwable
+}

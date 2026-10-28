@@ -1,0 +1,11 @@
+{
+  "src/main/java/net/guzhenren/malice/Difficulty.java": "cb27073046158bb8c6fd542c781c81af2e0182400d6a436794a264a180ab11c1",
+  "src/main/java/net/guzhenren/malice/DifficultyState.java": "b8b9ac3174af62361a8596d12302aa48c4577fe5f687c86cd8be9fc91942b110",
+  "src/main/java/net/guzhenren/malice/GuzhenrenMalice.java": "9e7ab10678ae23a34b7d64f21c2b28beb1555da9ec1e8db5d889363f92e421fe",
+  "src/main/java/net/guzhenren/malice/GuzhenrenVersion.java": "f922af275e76f215c3b88727f0040d21af2e8e726e14df9e985dd72a1a1e0594",
+  "src/main/java/net/guzhenren/malice/MaliceCommands.java": "6aaf3ef5177ff4dfc745bfd066cd693959b4e10076ddff7f04ea06b3930f986e",
+  "src/main/java/net/guzhenren/malice/MaliceDiagnostics.java": "d1e2d859cb18a8b43138c3a8b8f10b46730d2b4ea65d6c55a99685f7d7b5a05b",
+  "src/main/java/net/guzhenren/malice/MaliceEvents.java": "4edb496b04a2f10be032114afe65c76e3e5541c9876533fe884172721747d155",
+  "src/main/java/net/guzhenren/malice/MaliceTags.java": "9027e44ded28ee55201db7b0bd87ad8218adeae7196cef9e56624a797b992457",
+  "src/main/java/net/guzhenren/malice/MaliceWelcome.java": "125144da87c683e13122bcbdf0caecf53a482ab1d7cfa329d15a274c05b71116"
+}

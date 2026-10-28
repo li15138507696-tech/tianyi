@@ -1,0 +1,43 @@
+PASS clone retains draw count
+PASS clone retains attrs
+PASS clone retains rollback ledger
+PASS clone retains main dao
+PASS clone retains popup preference
+PASS clone retains pending choice
+PASS clone deep copy does not alias original
+PASS unopened combat earns no pool
+PASS unopened draw produces no offer
+PASS unopened forged choice cannot spend/grant
+PASS opened player still gains pool and choice
+PASS opened player chooses normally
+PASS rank 1 caps at 100
+PASS rank 2 caps at 100
+PASS rank 3 caps at 100
+PASS rank 4 caps at 100
+PASS rank 5 caps at 100
+PASS rank 6 remains unlimited
+PASS rank 5 at cap cannot accrue or draw
+PASS legacy migration runs
+PASS 8 migration rewards count as 8 draws
+PASS migration history starts at draw 1
+PASS migration is idempotent
+PASS talent candidate restores Chinese label
+PASS stored offer decodes with Chinese label
+PASS chronicle first commit
+PASS merit unlocked round trip
+PASS reputation unlocked round trip
+PASS faction pairs round trip
+PASS chronicle clone retains merit achievements
+PASS new run committed after all modules
+PASS one revision per sample
+PASS merit new run establishes baseline only
+PASS reputation new run establishes baseline only
+PASS first sample establishes counter baselines only
+PASS unchanged baseline never backfills old merit milestones
+PASS unchanged baseline never backfills old reputation milestones
+PASS new peak unlocks only newly crossed merit milestone
+PASS new peak unlocks only newly crossed reputation milestone
+PASS negative initial reputation keeps real peak
+PASS negative-to-positive crossing unlocks on first crossing sample
+PASS normal first merit crossing unlocks
+CHECKS=42 FAILURES=0

@@ -1,0 +1,39 @@
+--- a/src/main/java/net/guzhenren/tianfu/TianfuCombat.java
++++ b/src/main/java/net/guzhenren/tianfu/TianfuCombat.java
+@@ -367,6 +367,17 @@
+                 net.minecraft.network.chat.Component.literal("§d[天赋] 不死之身：免于一死"), true);
+     }
+ 
++    /** Ordinary respawns preserve the cooldown; a wiped new life starts fresh. */
++    public static void copyCooldownOnClone(ServerPlayer player, Entity original) {
++        if (!TianfuData.isConfirmed(player)) {
++            return;
++        }
++        var oldData = original.getPersistentData();
++        if (oldData.contains(TAG_UNDYING_READY, net.minecraft.nbt.Tag.TAG_LONG)) {
++            player.getPersistentData().putLong(TAG_UNDYING_READY, oldData.getLong(TAG_UNDYING_READY));
++        }
++    }
++
+     /** 玩家下线：清掉恶意联动的内存状态，避免长期残留。 */
+     public static void forget(java.util.UUID id) {
+         COUNTER_TICK.remove(id);
+--- a/src/main/java/net/guzhenren/tianfu/TianfuEvents.java
++++ b/src/main/java/net/guzhenren/tianfu/TianfuEvents.java
+@@ -30,6 +30,8 @@
+     public static void onClone(PlayerEvent.Clone event) {
+         if (event.getEntity() instanceof ServerPlayer player) {
+             TianfuOpening.onClone(player, event.getOriginal());
++            TianfuCombat.copyCooldownOnClone(player, event.getOriginal());
++            TianfuCombat.forget(player.getUUID());
+         }
+     }
+ 
+@@ -46,6 +48,7 @@
+         // 玩家死亡：清掉他的装饰实体（否则会留在死亡点）
+         if (event.getEntity() instanceof ServerPlayer sp) {
+             TianfuVfxEntity.forget(sp);
++            TianfuCombat.forget(sp.getUUID());
+         }
+     }
+ 

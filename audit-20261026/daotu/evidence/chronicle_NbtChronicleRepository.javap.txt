@@ -1,0 +1,516 @@
+Compiled from "NbtChronicleRepository.java"
+public final class net.guzhenren.daotu.chronicle.NbtChronicleRepository implements net.guzhenren.daotu.chronicle.ChronicleRepository {
+  private static final java.lang.String ROOT;
+
+  private static final java.lang.String K_SCHEMA;
+
+  private static final java.lang.String K_REVISION;
+
+  private static final java.lang.String K_RUN;
+
+  private static final java.lang.String K_FACTION;
+
+  private static final java.lang.String K_MERIT;
+
+  private static final java.lang.String K_REPUTATION;
+
+  public net.guzhenren.daotu.chronicle.NbtChronicleRepository();
+    Code:
+       0: aload_0
+       1: invokespecial #3                  // Method java/lang/Object."<init>":()V
+       4: return
+
+  private static void writeJournal(net.minecraft.nbt.CompoundTag, java.lang.String, java.util.Set<java.lang.String>, java.lang.String, java.lang.String, long);
+    Code:
+       0: new           #9                  // class net/minecraft/nbt/CompoundTag
+       3: dup
+       4: invokespecial #11                 // Method net/minecraft/nbt/CompoundTag."<init>":()V
+       7: astore        7
+       9: new           #12                 // class net/minecraft/nbt/ListTag
+      12: dup
+      13: invokespecial #14                 // Method net/minecraft/nbt/ListTag."<init>":()V
+      16: astore        8
+      18: aload_2
+      19: invokeinterface #15,  1           // InterfaceMethod java/util/Set.iterator:()Ljava/util/Iterator;
+      24: astore        9
+      26: aload         9
+      28: invokeinterface #21,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      33: ifeq          62
+      36: aload         9
+      38: invokeinterface #27,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      43: checkcast     #31                 // class java/lang/String
+      46: astore        10
+      48: aload         8
+      50: aload         10
+      52: invokestatic  #33                 // Method net/minecraft/nbt/StringTag.valueOf:(Ljava/lang/String;)Lnet/minecraft/nbt/StringTag;
+      55: invokevirtual #39                 // Method net/minecraft/nbt/ListTag.add:(Ljava/lang/Object;)Z
+      58: pop
+      59: goto          26
+      62: aload         7
+      64: ldc           #43                 // String pairs
+      66: aload         8
+      68: invokevirtual #45                 // Method net/minecraft/nbt/CompoundTag.put:(Ljava/lang/String;Lnet/minecraft/nbt/Tag;)Lnet/minecraft/nbt/Tag;
+      71: pop
+      72: aload         7
+      74: ldc           #49                 // String lastA
+      76: aload_3
+      77: ifnonnull     85
+      80: ldc           #51                 // String
+      82: goto          86
+      85: aload_3
+      86: invokevirtual #53                 // Method net/minecraft/nbt/CompoundTag.putString:(Ljava/lang/String;Ljava/lang/String;)V
+      89: aload         7
+      91: ldc           #57                 // String lastB
+      93: aload         4
+      95: ifnonnull     103
+      98: ldc           #51                 // String
+     100: goto          105
+     103: aload         4
+     105: invokevirtual #53                 // Method net/minecraft/nbt/CompoundTag.putString:(Ljava/lang/String;Ljava/lang/String;)V
+     108: aload         7
+     110: ldc           #59                 // String tick
+     112: lload         5
+     114: invokevirtual #61                 // Method net/minecraft/nbt/CompoundTag.putLong:(Ljava/lang/String;J)V
+     117: aload_0
+     118: aload_1
+     119: aload         7
+     121: invokevirtual #45                 // Method net/minecraft/nbt/CompoundTag.put:(Ljava/lang/String;Lnet/minecraft/nbt/Tag;)Lnet/minecraft/nbt/Tag;
+     124: pop
+     125: return
+
+  private static java.util.Set<java.lang.String> readPairs(net.minecraft.nbt.CompoundTag);
+    Code:
+       0: new           #65                 // class java/util/LinkedHashSet
+       3: dup
+       4: invokespecial #67                 // Method java/util/LinkedHashSet."<init>":()V
+       7: astore_1
+       8: aload_0
+       9: ldc           #43                 // String pairs
+      11: bipush        8
+      13: invokevirtual #70                 // Method net/minecraft/nbt/CompoundTag.getList:(Ljava/lang/String;I)Lnet/minecraft/nbt/ListTag;
+      16: astore_2
+      17: iconst_0
+      18: istore_3
+      19: iload_3
+      20: aload_2
+      21: invokevirtual #74                 // Method net/minecraft/nbt/ListTag.size:()I
+      24: if_icmpge     45
+      27: aload_1
+      28: aload_2
+      29: iload_3
+      30: invokevirtual #78                 // Method net/minecraft/nbt/ListTag.getString:(I)Ljava/lang/String;
+      33: invokeinterface #82,  2           // InterfaceMethod java/util/Set.add:(Ljava/lang/Object;)Z
+      38: pop
+      39: iinc          3, 1
+      42: goto          19
+      45: aload_1
+      46: areturn
+
+  private static void writeCounter(net.minecraft.nbt.CompoundTag, java.lang.String, double, double, java.util.Set<java.lang.String>, long);
+    Code:
+       0: new           #9                  // class net/minecraft/nbt/CompoundTag
+       3: dup
+       4: invokespecial #11                 // Method net/minecraft/nbt/CompoundTag."<init>":()V
+       7: astore        9
+       9: aload         9
+      11: ldc           #83                 // String last
+      13: dload_2
+      14: invokevirtual #85                 // Method net/minecraft/nbt/CompoundTag.putDouble:(Ljava/lang/String;D)V
+      17: aload         9
+      19: ldc           #89                 // String peak
+      21: dload         4
+      23: invokevirtual #85                 // Method net/minecraft/nbt/CompoundTag.putDouble:(Ljava/lang/String;D)V
+      26: new           #12                 // class net/minecraft/nbt/ListTag
+      29: dup
+      30: invokespecial #14                 // Method net/minecraft/nbt/ListTag."<init>":()V
+      33: astore        10
+      35: aload         6
+      37: invokeinterface #15,  1           // InterfaceMethod java/util/Set.iterator:()Ljava/util/Iterator;
+      42: astore        11
+      44: aload         11
+      46: invokeinterface #21,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      51: ifeq          80
+      54: aload         11
+      56: invokeinterface #27,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      61: checkcast     #31                 // class java/lang/String
+      64: astore        12
+      66: aload         10
+      68: aload         12
+      70: invokestatic  #33                 // Method net/minecraft/nbt/StringTag.valueOf:(Ljava/lang/String;)Lnet/minecraft/nbt/StringTag;
+      73: invokevirtual #39                 // Method net/minecraft/nbt/ListTag.add:(Ljava/lang/Object;)Z
+      76: pop
+      77: goto          44
+      80: aload         9
+      82: ldc           #91                 // String unlocked
+      84: aload         10
+      86: invokevirtual #45                 // Method net/minecraft/nbt/CompoundTag.put:(Ljava/lang/String;Lnet/minecraft/nbt/Tag;)Lnet/minecraft/nbt/Tag;
+      89: pop
+      90: aload         9
+      92: ldc           #59                 // String tick
+      94: lload         7
+      96: invokevirtual #61                 // Method net/minecraft/nbt/CompoundTag.putLong:(Ljava/lang/String;J)V
+      99: aload_0
+     100: aload_1
+     101: aload         9
+     103: invokevirtual #45                 // Method net/minecraft/nbt/CompoundTag.put:(Ljava/lang/String;Lnet/minecraft/nbt/Tag;)Lnet/minecraft/nbt/Tag;
+     106: pop
+     107: return
+
+  private static net.guzhenren.daotu.chronicle.ChronicleModels$MeritArchive readMerit(net.minecraft.nbt.CompoundTag);
+    Code:
+       0: aload_0
+       1: ldc           #95                 // String merit
+       3: bipush        10
+       5: invokevirtual #97                 // Method net/minecraft/nbt/CompoundTag.contains:(Ljava/lang/String;I)Z
+       8: ifne          29
+      11: new           #101                // class net/guzhenren/daotu/chronicle/ChronicleModels$MeritArchive
+      14: dup
+      15: ldc2_w        #103                // double -1.0d
+      18: ldc2_w        #103                // double -1.0d
+      21: invokestatic  #105                // InterfaceMethod java/util/Set.of:()Ljava/util/Set;
+      24: lconst_0
+      25: invokespecial #109                // Method net/guzhenren/daotu/chronicle/ChronicleModels$MeritArchive."<init>":(DDLjava/util/Set;J)V
+      28: areturn
+      29: aload_0
+      30: ldc           #95                 // String merit
+      32: invokevirtual #112                // Method net/minecraft/nbt/CompoundTag.getCompound:(Ljava/lang/String;)Lnet/minecraft/nbt/CompoundTag;
+      35: astore_1
+      36: new           #101                // class net/guzhenren/daotu/chronicle/ChronicleModels$MeritArchive
+      39: dup
+      40: aload_1
+      41: ldc           #83                 // String last
+      43: invokevirtual #116                // Method net/minecraft/nbt/CompoundTag.getDouble:(Ljava/lang/String;)D
+      46: aload_1
+      47: ldc           #89                 // String peak
+      49: invokevirtual #116                // Method net/minecraft/nbt/CompoundTag.getDouble:(Ljava/lang/String;)D
+      52: aload_1
+      53: invokestatic  #120                // Method readPairs:(Lnet/minecraft/nbt/CompoundTag;)Ljava/util/Set;
+      56: invokestatic  #124                // InterfaceMethod java/util/Set.copyOf:(Ljava/util/Collection;)Ljava/util/Set;
+      59: aload_1
+      60: ldc           #59                 // String tick
+      62: invokevirtual #128                // Method net/minecraft/nbt/CompoundTag.getLong:(Ljava/lang/String;)J
+      65: invokespecial #109                // Method net/guzhenren/daotu/chronicle/ChronicleModels$MeritArchive."<init>":(DDLjava/util/Set;J)V
+      68: areturn
+
+  private static net.guzhenren.daotu.chronicle.ChronicleModels$ReputationJournal readReputation(net.minecraft.nbt.CompoundTag);
+    Code:
+       0: aload_0
+       1: ldc           #132                // String reputation
+       3: bipush        10
+       5: invokevirtual #97                 // Method net/minecraft/nbt/CompoundTag.contains:(Ljava/lang/String;I)Z
+       8: ifne          29
+      11: new           #134                // class net/guzhenren/daotu/chronicle/ChronicleModels$ReputationJournal
+      14: dup
+      15: ldc2_w        #103                // double -1.0d
+      18: ldc2_w        #103                // double -1.0d
+      21: invokestatic  #105                // InterfaceMethod java/util/Set.of:()Ljava/util/Set;
+      24: lconst_0
+      25: invokespecial #136                // Method net/guzhenren/daotu/chronicle/ChronicleModels$ReputationJournal."<init>":(DDLjava/util/Set;J)V
+      28: areturn
+      29: aload_0
+      30: ldc           #132                // String reputation
+      32: invokevirtual #112                // Method net/minecraft/nbt/CompoundTag.getCompound:(Ljava/lang/String;)Lnet/minecraft/nbt/CompoundTag;
+      35: astore_1
+      36: new           #134                // class net/guzhenren/daotu/chronicle/ChronicleModels$ReputationJournal
+      39: dup
+      40: aload_1
+      41: ldc           #83                 // String last
+      43: invokevirtual #116                // Method net/minecraft/nbt/CompoundTag.getDouble:(Ljava/lang/String;)D
+      46: aload_1
+      47: ldc           #89                 // String peak
+      49: invokevirtual #116                // Method net/minecraft/nbt/CompoundTag.getDouble:(Ljava/lang/String;)D
+      52: aload_1
+      53: invokestatic  #120                // Method readPairs:(Lnet/minecraft/nbt/CompoundTag;)Ljava/util/Set;
+      56: invokestatic  #124                // InterfaceMethod java/util/Set.copyOf:(Ljava/util/Collection;)Ljava/util/Set;
+      59: aload_1
+      60: ldc           #59                 // String tick
+      62: invokevirtual #128                // Method net/minecraft/nbt/CompoundTag.getLong:(Ljava/lang/String;)J
+      65: invokespecial #136                // Method net/guzhenren/daotu/chronicle/ChronicleModels$ReputationJournal."<init>":(DDLjava/util/Set;J)V
+      68: areturn
+
+  public java.util.Optional<net.guzhenren.daotu.chronicle.ChronicleModels$ChronicleState> load(net.minecraft.server.level.ServerPlayer);
+    Code:
+       0: aload_1
+       1: ldc           #137                // String player
+       3: invokestatic  #139                // Method java/util/Objects.requireNonNull:(Ljava/lang/Object;Ljava/lang/String;)Ljava/lang/Object;
+       6: pop
+       7: aload_1
+       8: invokevirtual #145                // Method net/minecraft/server/level/ServerPlayer.getPersistentData:()Lnet/minecraft/nbt/CompoundTag;
+      11: astore_2
+      12: aload_2
+      13: ldc           #151                // String daotu_chronicle
+      15: bipush        10
+      17: invokevirtual #97                 // Method net/minecraft/nbt/CompoundTag.contains:(Ljava/lang/String;I)Z
+      20: ifne          27
+      23: invokestatic  #153                // Method java/util/Optional.empty:()Ljava/util/Optional;
+      26: areturn
+      27: aload_2
+      28: ldc           #151                // String daotu_chronicle
+      30: invokevirtual #112                // Method net/minecraft/nbt/CompoundTag.getCompound:(Ljava/lang/String;)Lnet/minecraft/nbt/CompoundTag;
+      33: astore_3
+      34: aload_3
+      35: ldc           #159                // String schema
+      37: invokevirtual #161                // Method net/minecraft/nbt/CompoundTag.getInt:(Ljava/lang/String;)I
+      40: istore        4
+      42: iload         4
+      44: iconst_1
+      45: if_icmple     63
+      48: new           #165                // class java/lang/IllegalStateException
+      51: dup
+      52: iload         4
+      54: invokedynamic #167,  0            // InvokeDynamic #0:makeConcatWithConstants:(I)Ljava/lang/String;
+      59: invokespecial #170                // Method java/lang/IllegalStateException."<init>":(Ljava/lang/String;)V
+      62: athrow
+      63: iload         4
+      65: ifge          83
+      68: new           #165                // class java/lang/IllegalStateException
+      71: dup
+      72: iload         4
+      74: invokedynamic #173,  0            // InvokeDynamic #1:makeConcatWithConstants:(I)Ljava/lang/String;
+      79: invokespecial #170                // Method java/lang/IllegalStateException."<init>":(Ljava/lang/String;)V
+      82: athrow
+      83: aload_3
+      84: ldc           #174                // String faction
+      86: bipush        10
+      88: invokevirtual #97                 // Method net/minecraft/nbt/CompoundTag.contains:(Ljava/lang/String;I)Z
+      91: ifeq          103
+      94: aload_3
+      95: ldc           #174                // String faction
+      97: invokevirtual #112                // Method net/minecraft/nbt/CompoundTag.getCompound:(Ljava/lang/String;)Lnet/minecraft/nbt/CompoundTag;
+     100: goto          110
+     103: new           #9                  // class net/minecraft/nbt/CompoundTag
+     106: dup
+     107: invokespecial #11                 // Method net/minecraft/nbt/CompoundTag."<init>":()V
+     110: astore        5
+     112: new           #176                // class net/guzhenren/daotu/chronicle/ChronicleModels$FactionJournal
+     115: dup
+     116: aload         5
+     118: invokestatic  #120                // Method readPairs:(Lnet/minecraft/nbt/CompoundTag;)Ljava/util/Set;
+     121: invokestatic  #124                // InterfaceMethod java/util/Set.copyOf:(Ljava/util/Collection;)Ljava/util/Set;
+     124: aload         5
+     126: ldc           #49                 // String lastA
+     128: invokevirtual #178                // Method net/minecraft/nbt/CompoundTag.getString:(Ljava/lang/String;)Ljava/lang/String;
+     131: aload         5
+     133: ldc           #57                 // String lastB
+     135: invokevirtual #178                // Method net/minecraft/nbt/CompoundTag.getString:(Ljava/lang/String;)Ljava/lang/String;
+     138: aload         5
+     140: ldc           #59                 // String tick
+     142: invokevirtual #128                // Method net/minecraft/nbt/CompoundTag.getLong:(Ljava/lang/String;)J
+     145: invokespecial #181                // Method net/guzhenren/daotu/chronicle/ChronicleModels$FactionJournal."<init>":(Ljava/util/Set;Ljava/lang/String;Ljava/lang/String;J)V
+     148: astore        6
+     150: new           #184                // class net/guzhenren/daotu/chronicle/ChronicleModels$ChronicleState
+     153: dup
+     154: aload_1
+     155: invokevirtual #186                // Method net/minecraft/server/level/ServerPlayer.getUUID:()Ljava/util/UUID;
+     158: iload         4
+     160: aload_3
+     161: ldc           #190                // String revision
+     163: invokevirtual #128                // Method net/minecraft/nbt/CompoundTag.getLong:(Ljava/lang/String;)J
+     166: aload_3
+     167: ldc           #192                // String run
+     169: invokevirtual #161                // Method net/minecraft/nbt/CompoundTag.getInt:(Ljava/lang/String;)I
+     172: aload         6
+     174: aload_3
+     175: invokestatic  #194                // Method readMerit:(Lnet/minecraft/nbt/CompoundTag;)Lnet/guzhenren/daotu/chronicle/ChronicleModels$MeritArchive;
+     178: aload_3
+     179: invokestatic  #198                // Method readReputation:(Lnet/minecraft/nbt/CompoundTag;)Lnet/guzhenren/daotu/chronicle/ChronicleModels$ReputationJournal;
+     182: invokespecial #202                // Method net/guzhenren/daotu/chronicle/ChronicleModels$ChronicleState."<init>":(Ljava/util/UUID;IJILnet/guzhenren/daotu/chronicle/ChronicleModels$FactionJournal;Lnet/guzhenren/daotu/chronicle/ChronicleModels$MeritArchive;Lnet/guzhenren/daotu/chronicle/ChronicleModels$ReputationJournal;)V
+     185: invokestatic  #205                // Method java/util/Optional.of:(Ljava/lang/Object;)Ljava/util/Optional;
+     188: areturn
+
+  public boolean save(net.minecraft.server.level.ServerPlayer, long, net.guzhenren.daotu.chronicle.ChronicleModels$ChronicleState);
+    Code:
+       0: aload_1
+       1: ldc           #137                // String player
+       3: invokestatic  #139                // Method java/util/Objects.requireNonNull:(Ljava/lang/Object;Ljava/lang/String;)Ljava/lang/Object;
+       6: pop
+       7: aload         4
+       9: ldc           #208                // String next
+      11: invokestatic  #139                // Method java/util/Objects.requireNonNull:(Ljava/lang/Object;Ljava/lang/String;)Ljava/lang/Object;
+      14: pop
+      15: aload_1
+      16: invokevirtual #186                // Method net/minecraft/server/level/ServerPlayer.getUUID:()Ljava/util/UUID;
+      19: aload         4
+      21: invokevirtual #209                // Method net/guzhenren/daotu/chronicle/ChronicleModels$ChronicleState.playerId:()Ljava/util/UUID;
+      24: invokevirtual #212                // Method java/util/UUID.equals:(Ljava/lang/Object;)Z
+      27: ifne          40
+      30: new           #217                // class java/lang/IllegalArgumentException
+      33: dup
+      34: ldc           #219                // String �����߲�ƥ��
+      36: invokespecial #221                // Method java/lang/IllegalArgumentException."<init>":(Ljava/lang/String;)V
+      39: athrow
+      40: aload         4
+      42: invokevirtual #222                // Method net/guzhenren/daotu/chronicle/ChronicleModels$ChronicleState.revision:()J
+      45: lload_2
+      46: lconst_1
+      47: ladd
+      48: lcmp
+      49: ifeq          62
+      52: new           #217                // class java/lang/IllegalArgumentException
+      55: dup
+      56: ldc           #225                // String revision ����Ϊ expectedRevision + 1
+      58: invokespecial #221                // Method java/lang/IllegalArgumentException."<init>":(Ljava/lang/String;)V
+      61: athrow
+      62: aload         4
+      64: invokevirtual #227                // Method net/guzhenren/daotu/chronicle/ChronicleModels$ChronicleState.faction:()Lnet/guzhenren/daotu/chronicle/ChronicleModels$FactionJournal;
+      67: invokevirtual #230                // Method net/guzhenren/daotu/chronicle/ChronicleModels$FactionJournal.discoveredPairs:()Ljava/util/Set;
+      70: invokeinterface #233,  1          // InterfaceMethod java/util/Set.size:()I
+      75: sipush        128
+      78: if_icmple     91
+      81: new           #217                // class java/lang/IllegalArgumentException
+      84: dup
+      85: ldc           #236                // String ���ż�����ϳ�������
+      87: invokespecial #221                // Method java/lang/IllegalArgumentException."<init>":(Ljava/lang/String;)V
+      90: athrow
+      91: aload_0
+      92: aload_1
+      93: invokevirtual #238                // Method load:(Lnet/minecraft/server/level/ServerPlayer;)Ljava/util/Optional;
+      96: invokedynamic #242,  0            // InvokeDynamic #2:apply:()Ljava/util/function/Function;
+     101: invokevirtual #246                // Method java/util/Optional.map:(Ljava/util/function/Function;)Ljava/util/Optional;
+     104: ldc2_w        #250                // long -1l
+     107: invokestatic  #252                // Method java/lang/Long.valueOf:(J)Ljava/lang/Long;
+     110: invokevirtual #257                // Method java/util/Optional.orElse:(Ljava/lang/Object;)Ljava/lang/Object;
+     113: checkcast     #253                // class java/lang/Long
+     116: invokevirtual #261                // Method java/lang/Long.longValue:()J
+     119: lstore        5
+     121: lload         5
+     123: lload_2
+     124: lcmp
+     125: ifeq          130
+     128: iconst_0
+     129: ireturn
+     130: new           #9                  // class net/minecraft/nbt/CompoundTag
+     133: dup
+     134: invokespecial #11                 // Method net/minecraft/nbt/CompoundTag."<init>":()V
+     137: astore        7
+     139: aload         7
+     141: ldc           #159                // String schema
+     143: iconst_1
+     144: invokevirtual #264                // Method net/minecraft/nbt/CompoundTag.putInt:(Ljava/lang/String;I)V
+     147: aload         7
+     149: ldc           #190                // String revision
+     151: aload         4
+     153: invokevirtual #222                // Method net/guzhenren/daotu/chronicle/ChronicleModels$ChronicleState.revision:()J
+     156: invokevirtual #61                 // Method net/minecraft/nbt/CompoundTag.putLong:(Ljava/lang/String;J)V
+     159: aload         7
+     161: ldc           #192                // String run
+     163: aload         4
+     165: invokevirtual #268                // Method net/guzhenren/daotu/chronicle/ChronicleModels$ChronicleState.runId:()I
+     168: invokevirtual #264                // Method net/minecraft/nbt/CompoundTag.putInt:(Ljava/lang/String;I)V
+     171: aload         7
+     173: ldc           #174                // String faction
+     175: aload         4
+     177: invokevirtual #227                // Method net/guzhenren/daotu/chronicle/ChronicleModels$ChronicleState.faction:()Lnet/guzhenren/daotu/chronicle/ChronicleModels$FactionJournal;
+     180: invokevirtual #230                // Method net/guzhenren/daotu/chronicle/ChronicleModels$FactionJournal.discoveredPairs:()Ljava/util/Set;
+     183: aload         4
+     185: invokevirtual #227                // Method net/guzhenren/daotu/chronicle/ChronicleModels$ChronicleState.faction:()Lnet/guzhenren/daotu/chronicle/ChronicleModels$FactionJournal;
+     188: invokevirtual #271                // Method net/guzhenren/daotu/chronicle/ChronicleModels$FactionJournal.lastFaction:()Ljava/lang/String;
+     191: aload         4
+     193: invokevirtual #227                // Method net/guzhenren/daotu/chronicle/ChronicleModels$ChronicleState.faction:()Lnet/guzhenren/daotu/chronicle/ChronicleModels$FactionJournal;
+     196: invokevirtual #275                // Method net/guzhenren/daotu/chronicle/ChronicleModels$FactionJournal.lastIdentity:()Ljava/lang/String;
+     199: aload         4
+     201: invokevirtual #227                // Method net/guzhenren/daotu/chronicle/ChronicleModels$ChronicleState.faction:()Lnet/guzhenren/daotu/chronicle/ChronicleModels$FactionJournal;
+     204: invokevirtual #278                // Method net/guzhenren/daotu/chronicle/ChronicleModels$FactionJournal.lastObservedTick:()J
+     207: invokestatic  #281                // Method writeJournal:(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;Ljava/util/Set;Ljava/lang/String;Ljava/lang/String;J)V
+     210: aload         7
+     212: ldc           #95                 // String merit
+     214: aload         4
+     216: invokevirtual #285                // Method net/guzhenren/daotu/chronicle/ChronicleModels$ChronicleState.merit:()Lnet/guzhenren/daotu/chronicle/ChronicleModels$MeritArchive;
+     219: invokevirtual #288                // Method net/guzhenren/daotu/chronicle/ChronicleModels$MeritArchive.lastObserved:()D
+     222: aload         4
+     224: invokevirtual #285                // Method net/guzhenren/daotu/chronicle/ChronicleModels$ChronicleState.merit:()Lnet/guzhenren/daotu/chronicle/ChronicleModels$MeritArchive;
+     227: invokevirtual #292                // Method net/guzhenren/daotu/chronicle/ChronicleModels$MeritArchive.peakObserved:()D
+     230: aload         4
+     232: invokevirtual #285                // Method net/guzhenren/daotu/chronicle/ChronicleModels$ChronicleState.merit:()Lnet/guzhenren/daotu/chronicle/ChronicleModels$MeritArchive;
+     235: invokevirtual #295                // Method net/guzhenren/daotu/chronicle/ChronicleModels$MeritArchive.unlockedEntries:()Ljava/util/Set;
+     238: aload         4
+     240: invokevirtual #285                // Method net/guzhenren/daotu/chronicle/ChronicleModels$ChronicleState.merit:()Lnet/guzhenren/daotu/chronicle/ChronicleModels$MeritArchive;
+     243: invokevirtual #298                // Method net/guzhenren/daotu/chronicle/ChronicleModels$MeritArchive.lastObservedTick:()J
+     246: invokestatic  #299                // Method writeCounter:(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;DDLjava/util/Set;J)V
+     249: aload         7
+     251: ldc           #132                // String reputation
+     253: aload         4
+     255: invokevirtual #303                // Method net/guzhenren/daotu/chronicle/ChronicleModels$ChronicleState.reputation:()Lnet/guzhenren/daotu/chronicle/ChronicleModels$ReputationJournal;
+     258: invokevirtual #306                // Method net/guzhenren/daotu/chronicle/ChronicleModels$ReputationJournal.lastObserved:()D
+     261: aload         4
+     263: invokevirtual #303                // Method net/guzhenren/daotu/chronicle/ChronicleModels$ChronicleState.reputation:()Lnet/guzhenren/daotu/chronicle/ChronicleModels$ReputationJournal;
+     266: invokevirtual #307                // Method net/guzhenren/daotu/chronicle/ChronicleModels$ReputationJournal.peakObserved:()D
+     269: aload         4
+     271: invokevirtual #303                // Method net/guzhenren/daotu/chronicle/ChronicleModels$ChronicleState.reputation:()Lnet/guzhenren/daotu/chronicle/ChronicleModels$ReputationJournal;
+     274: invokevirtual #308                // Method net/guzhenren/daotu/chronicle/ChronicleModels$ReputationJournal.unlockedEntries:()Ljava/util/Set;
+     277: aload         4
+     279: invokevirtual #303                // Method net/guzhenren/daotu/chronicle/ChronicleModels$ChronicleState.reputation:()Lnet/guzhenren/daotu/chronicle/ChronicleModels$ReputationJournal;
+     282: invokevirtual #309                // Method net/guzhenren/daotu/chronicle/ChronicleModels$ReputationJournal.lastObservedTick:()J
+     285: invokestatic  #299                // Method writeCounter:(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;DDLjava/util/Set;J)V
+     288: aload_1
+     289: invokevirtual #145                // Method net/minecraft/server/level/ServerPlayer.getPersistentData:()Lnet/minecraft/nbt/CompoundTag;
+     292: ldc           #151                // String daotu_chronicle
+     294: aload         7
+     296: invokevirtual #45                 // Method net/minecraft/nbt/CompoundTag.put:(Ljava/lang/String;Lnet/minecraft/nbt/Tag;)Lnet/minecraft/nbt/Tag;
+     299: pop
+     300: iconst_1
+     301: ireturn
+
+  public void copyForClone(net.minecraft.server.level.ServerPlayer, net.minecraft.server.level.ServerPlayer);
+    Code:
+       0: aload_1
+       1: ldc_w         #310                // String original
+       4: invokestatic  #139                // Method java/util/Objects.requireNonNull:(Ljava/lang/Object;Ljava/lang/String;)Ljava/lang/Object;
+       7: pop
+       8: aload_2
+       9: ldc_w         #312                // String replacement
+      12: invokestatic  #139                // Method java/util/Objects.requireNonNull:(Ljava/lang/Object;Ljava/lang/String;)Ljava/lang/Object;
+      15: pop
+      16: aload_1
+      17: invokevirtual #186                // Method net/minecraft/server/level/ServerPlayer.getUUID:()Ljava/util/UUID;
+      20: aload_2
+      21: invokevirtual #186                // Method net/minecraft/server/level/ServerPlayer.getUUID:()Ljava/util/UUID;
+      24: invokevirtual #212                // Method java/util/UUID.equals:(Ljava/lang/Object;)Z
+      27: ifne          41
+      30: new           #217                // class java/lang/IllegalArgumentException
+      33: dup
+      34: ldc_w         #314                // String ��¡˫�� UUID ��ͬ
+      37: invokespecial #221                // Method java/lang/IllegalArgumentException."<init>":(Ljava/lang/String;)V
+      40: athrow
+      41: aload_1
+      42: invokevirtual #145                // Method net/minecraft/server/level/ServerPlayer.getPersistentData:()Lnet/minecraft/nbt/CompoundTag;
+      45: astore_3
+      46: aload_3
+      47: ldc           #151                // String daotu_chronicle
+      49: bipush        10
+      51: invokevirtual #97                 // Method net/minecraft/nbt/CompoundTag.contains:(Ljava/lang/String;I)Z
+      54: ifne          58
+      57: return
+      58: aload_3
+      59: ldc           #151                // String daotu_chronicle
+      61: invokevirtual #112                // Method net/minecraft/nbt/CompoundTag.getCompound:(Ljava/lang/String;)Lnet/minecraft/nbt/CompoundTag;
+      64: invokevirtual #316                // Method net/minecraft/nbt/CompoundTag.copy:()Lnet/minecraft/nbt/CompoundTag;
+      67: astore        4
+      69: aload_2
+      70: invokevirtual #145                // Method net/minecraft/server/level/ServerPlayer.getPersistentData:()Lnet/minecraft/nbt/CompoundTag;
+      73: astore        5
+      75: aload         5
+      77: ldc           #151                // String daotu_chronicle
+      79: bipush        10
+      81: invokevirtual #97                 // Method net/minecraft/nbt/CompoundTag.contains:(Ljava/lang/String;I)Z
+      84: ifeq          115
+      87: aload         5
+      89: ldc           #151                // String daotu_chronicle
+      91: invokevirtual #112                // Method net/minecraft/nbt/CompoundTag.getCompound:(Ljava/lang/String;)Lnet/minecraft/nbt/CompoundTag;
+      94: astore        6
+      96: aload         6
+      98: ldc           #190                // String revision
+     100: invokevirtual #128                // Method net/minecraft/nbt/CompoundTag.getLong:(Ljava/lang/String;)J
+     103: aload         4
+     105: ldc           #190                // String revision
+     107: invokevirtual #128                // Method net/minecraft/nbt/CompoundTag.getLong:(Ljava/lang/String;)J
+     110: lcmp
+     111: iflt          115
+     114: return
+     115: aload         5
+     117: ldc           #151                // String daotu_chronicle
+     119: aload         4
+     121: invokevirtual #45                 // Method net/minecraft/nbt/CompoundTag.put:(Ljava/lang/String;Lnet/minecraft/nbt/Tag;)Lnet/minecraft/nbt/Tag;
+     124: pop
+     125: return
+}

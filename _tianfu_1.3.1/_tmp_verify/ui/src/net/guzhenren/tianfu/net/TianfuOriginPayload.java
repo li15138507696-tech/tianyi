@@ -1,1 +1,0 @@
-package net.guzhenren.tianfu.net;public record TianfuOriginPayload(String region,String background,long revision){}

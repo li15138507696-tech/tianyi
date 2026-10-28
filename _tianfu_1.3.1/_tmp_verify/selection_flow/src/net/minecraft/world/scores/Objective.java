@@ -1,1 +1,0 @@
-package net.minecraft.world.scores; public record Objective(String name){}

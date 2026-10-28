@@ -1,1 +1,0 @@
-package net.neoforged.neoforge.network;public class PacketDistributor{public static final java.util.List<Object> sent=new java.util.ArrayList<>();public static void sendToServer(Object o){sent.add(o);}}

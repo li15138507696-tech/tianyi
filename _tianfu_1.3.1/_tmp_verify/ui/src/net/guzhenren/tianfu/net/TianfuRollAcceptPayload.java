@@ -1,1 +1,0 @@
-package net.guzhenren.tianfu.net;public record TianfuRollAcceptPayload(){}

@@ -1,1 +1,0 @@
-package net.minecraft.network.chat;public record Component(String text){public static Component literal(String s){return new Component(s);}public String getString(){return text;}}

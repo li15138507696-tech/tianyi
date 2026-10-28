@@ -1,0 +1,9 @@
+{
+  "item.tianyi.suminggu": "Destiny Gu",
+  "item.tianyi.suminggu.tip.empty": "No credential. This is an empty shell.",
+  "item.tianyi.suminggu.tip.claim": "Credential: generation %s · custody revision %s",
+  "item.tianyi.suminggu.tip.scarred": "Crimson scars split its carapace; its breath is unsteady.",
+  "item.tianyi.suminggu.tip.repair": "Authentic ledger-approved copies only: hold it at an anvil; each offering uses 4 Gu Material Primordial Stones and 4 amethyst shards.",
+  "item.tianyi.suminggu.tip.ledger": "It remembers the ledger state at its last check: %s",
+  "item.tianyi.suminggu.tip.verify": "Whether it is real is not for it to say - the world ledger decides."
+}

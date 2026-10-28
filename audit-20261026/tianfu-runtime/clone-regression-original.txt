@@ -1,0 +1,8 @@
+PASS counter initially active
+FAIL death clears old counter memory
+PASS ordinary clone retains confirmed talents
+FAIL ordinary clone retains future undying cooldown
+FAIL respawn counter not permanently active
+FAIL end return clears stale counter memory
+FAIL end return retains undying cooldown
+PASS new life does not inherit old cooldown

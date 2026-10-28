@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Specification-Title: tianyi
+Specification-Vendor: tianyi
+Specification-Version: 1
+Implementation-Title: tianyi
+Implementation-Version: 3.14.0
+Implementation-Vendor: tianyi

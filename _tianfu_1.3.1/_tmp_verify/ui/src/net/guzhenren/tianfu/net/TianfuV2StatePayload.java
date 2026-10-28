@@ -1,0 +1,1 @@
+package net.guzhenren.tianfu.net;public class TianfuV2StatePayload{public static net.guzhenren.tianfu.v2.TianfuSelection.Snapshot value;public static net.guzhenren.tianfu.v2.TianfuSelection.Snapshot latest(){return value;}}

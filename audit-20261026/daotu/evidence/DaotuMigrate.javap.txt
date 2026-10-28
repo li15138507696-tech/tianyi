@@ -1,0 +1,276 @@
+Compiled from "DaotuMigrate.java"
+public final class net.guzhenren.daotu.DaotuMigrate {
+  private static final java.util.Map<java.lang.String, java.lang.Integer> ORIGIN_TO_DRAWS;
+
+  private static final int[] RANK_TO_DRAWS;
+
+  private net.guzhenren.daotu.DaotuMigrate();
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: return
+
+  public static boolean migrateIfNeeded(net.minecraft.server.level.ServerPlayer);
+    Code:
+       0: aload_0
+       1: invokestatic  #7                  // Method net/guzhenren/daotu/DaotuData.migrated:(Lnet/minecraft/world/entity/player/Player;)Z
+       4: ifeq          9
+       7: iconst_0
+       8: ireturn
+       9: iconst_0
+      10: istore_1
+      11: aload_0
+      12: invokestatic  #13                 // Method net/guzhenren/daotu/DaotuData.origin:(Lnet/minecraft/world/entity/player/Player;)Ljava/lang/String;
+      15: astore_3
+      16: aload_0
+      17: invokestatic  #17                 // Method highestLegacyRank:(Lnet/minecraft/server/level/ServerPlayer;)I
+      20: istore        4
+      22: iload         4
+      24: ifle          54
+      27: getstatic     #23                 // Field RANK_TO_DRAWS:[I
+      30: iload         4
+      32: getstatic     #23                 // Field RANK_TO_DRAWS:[I
+      35: arraylength
+      36: iconst_1
+      37: isub
+      38: invokestatic  #27                 // Method java/lang/Math.min:(II)I
+      41: iaload
+      42: istore_1
+      43: iload         4
+      45: invokedynamic #33,  0             // InvokeDynamic #0:makeConcatWithConstants:(I)Ljava/lang/String;
+      50: astore_2
+      51: goto          97
+      54: aload_3
+      55: invokevirtual #37                 // Method java/lang/String.isEmpty:()Z
+      58: ifne          91
+      61: getstatic     #43                 // Field ORIGIN_TO_DRAWS:Ljava/util/Map;
+      64: aload_3
+      65: iconst_4
+      66: invokestatic  #47                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      69: invokeinterface #53,  3           // InterfaceMethod java/util/Map.getOrDefault:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+      74: checkcast     #48                 // class java/lang/Integer
+      77: invokevirtual #59                 // Method java/lang/Integer.intValue:()I
+      80: istore_1
+      81: aload_3
+      82: invokedynamic #63,  0             // InvokeDynamic #1:makeConcatWithConstants:(Ljava/lang/String;)Ljava/lang/String;
+      87: astore_2
+      88: goto          97
+      91: aload_0
+      92: invokestatic  #66                 // Method net/guzhenren/daotu/DaotuData.markMigrated:(Lnet/minecraft/world/entity/player/Player;)V
+      95: iconst_0
+      96: ireturn
+      97: aload_0
+      98: invokestatic  #70                 // Method net/guzhenren/daotu/DaotuData.clearOrigin:(Lnet/minecraft/world/entity/player/Player;)V
+     101: aload_0
+     102: invokestatic  #66                 // Method net/guzhenren/daotu/DaotuData.markMigrated:(Lnet/minecraft/world/entity/player/Player;)V
+     105: aload_0
+     106: iload_1
+     107: invokestatic  #73                 // Method net/guzhenren/daotu/DaotuRun.setDraws:(Lnet/minecraft/world/entity/player/Player;I)V
+     110: aload_0
+     111: iload_1
+     112: invokestatic  #79                 // Method net/guzhenren/daotu/DaotuDraw.replayForMigration:(Lnet/minecraft/server/level/ServerPlayer;I)V
+     115: aload_0
+     116: invokestatic  #85                 // Method net/guzhenren/daotu/DaotuGrowthApply.refreshTitles:(Lnet/minecraft/world/entity/player/Player;)V
+     119: aload_0
+     120: invokestatic  #90                 // Method net/guzhenren/daotu/DaotuAttributes.sync:(Lnet/minecraft/world/entity/player/Player;)V
+     123: aload_0
+     124: aload_2
+     125: iload_1
+     126: invokedynamic #95,  0             // InvokeDynamic #2:makeConcatWithConstants:(Ljava/lang/String;I)Ljava/lang/String;
+     131: invokestatic  #98                 // InterfaceMethod net/minecraft/network/chat/Component.literal:(Ljava/lang/String;)Lnet/minecraft/network/chat/MutableComponent;
+     134: iconst_0
+     135: invokevirtual #104                // Method net/minecraft/server/level/ServerPlayer.displayClientMessage:(Lnet/minecraft/network/chat/Component;Z)V
+     138: iconst_1
+     139: ireturn
+
+  private static int highestLegacyRank(net.minecraft.server.level.ServerPlayer);
+    Code:
+       0: aload_0
+       1: iconst_0
+       2: invokestatic  #110                // Method net/guzhenren/daotu/DaotuData.root:(Lnet/minecraft/world/entity/player/Player;Z)Lnet/minecraft/nbt/CompoundTag;
+       5: astore_1
+       6: aload_1
+       7: ifnull        21
+      10: aload_1
+      11: ldc           #114                // String rank
+      13: bipush        10
+      15: invokevirtual #118                // Method net/minecraft/nbt/CompoundTag.contains:(Ljava/lang/String;I)Z
+      18: ifne          23
+      21: iconst_0
+      22: ireturn
+      23: aload_1
+      24: ldc           #114                // String rank
+      26: invokevirtual #124                // Method net/minecraft/nbt/CompoundTag.getCompound:(Ljava/lang/String;)Lnet/minecraft/nbt/CompoundTag;
+      29: astore_2
+      30: iconst_0
+      31: istore_3
+      32: aload_2
+      33: invokevirtual #128                // Method net/minecraft/nbt/CompoundTag.getAllKeys:()Ljava/util/Set;
+      36: invokeinterface #132,  1          // InterfaceMethod java/util/Set.iterator:()Ljava/util/Iterator;
+      41: astore        4
+      43: aload         4
+      45: invokeinterface #138,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+      50: ifeq          79
+      53: aload         4
+      55: invokeinterface #143,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      60: checkcast     #38                 // class java/lang/String
+      63: astore        5
+      65: iload_3
+      66: aload_2
+      67: aload         5
+      69: invokevirtual #147                // Method net/minecraft/nbt/CompoundTag.getInt:(Ljava/lang/String;)I
+      72: invokestatic  #151                // Method java/lang/Math.max:(II)I
+      75: istore_3
+      76: goto          43
+      79: iload_3
+      80: iconst_5
+      81: invokestatic  #27                 // Method java/lang/Math.min:(II)I
+      84: ireturn
+
+  static {};
+    Code:
+       0: bipush        16
+       2: anewarray     #154                // class java/util/Map$Entry
+       5: dup
+       6: iconst_0
+       7: ldc           #156                // String xiongjia_kuangtu
+       9: iconst_4
+      10: invokestatic  #47                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      13: invokestatic  #158                // InterfaceMethod java/util/Map.entry:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/util/Map$Entry;
+      16: aastore
+      17: dup
+      18: iconst_1
+      19: ldc           #162                // String zuitu
+      21: iconst_4
+      22: invokestatic  #47                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      25: invokestatic  #158                // InterfaceMethod java/util/Map.entry:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/util/Map$Entry;
+      28: aastore
+      29: dup
+      30: iconst_2
+      31: ldc           #164                // String tianwai_yigu
+      33: iconst_4
+      34: invokestatic  #47                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      37: invokestatic  #158                // InterfaceMethod java/util/Map.entry:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/util/Map$Entry;
+      40: aastore
+      41: dup
+      42: iconst_3
+      43: ldc           #166                // String baijia_liehu
+      45: bipush        8
+      47: invokestatic  #47                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      50: invokestatic  #158                // InterfaceMethod java/util/Map.entry:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/util/Map$Entry;
+      53: aastore
+      54: dup
+      55: iconst_4
+      56: ldc           #168                // String shangdui_yigu
+      58: bipush        8
+      60: invokestatic  #47                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      63: invokestatic  #158                // InterfaceMethod java/util/Map.entry:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/util/Map$Entry;
+      66: aastore
+      67: dup
+      68: iconst_5
+      69: ldc           #170                // String guyue_pangzhi
+      71: bipush        8
+      73: invokestatic  #47                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      76: invokestatic  #158                // InterfaceMethod java/util/Map.entry:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/util/Map$Entry;
+      79: aastore
+      80: dup
+      81: bipush        6
+      83: ldc           #172                // String dushi_fang
+      85: bipush        8
+      87: invokestatic  #47                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      90: invokestatic  #158                // InterfaceMethod java/util/Map.entry:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/util/Map$Entry;
+      93: aastore
+      94: dup
+      95: bipush        7
+      97: ldc           #174                // String guyue_dixi
+      99: bipush        8
+     101: invokestatic  #47                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     104: invokestatic  #158                // InterfaceMethod java/util/Map.entry:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/util/Map$Entry;
+     107: aastore
+     108: dup
+     109: bipush        8
+     111: ldc           #176                // String baijia_shaozhu
+     113: bipush        8
+     115: invokestatic  #47                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     118: invokestatic  #158                // InterfaceMethod java/util/Map.entry:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/util/Map$Entry;
+     121: aastore
+     122: dup
+     123: bipush        9
+     125: ldc           #178                // String lianxuan_xuetu
+     127: bipush        8
+     129: invokestatic  #47                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     132: invokestatic  #158                // InterfaceMethod java/util/Map.entry:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/util/Map$Entry;
+     135: aastore
+     136: dup
+     137: bipush        10
+     139: ldc           #180                // String jianmen_zhujian
+     141: bipush        8
+     143: invokestatic  #47                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     146: invokestatic  #158                // InterfaceMethod java/util/Map.entry:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/util/Map$Entry;
+     149: aastore
+     150: dup
+     151: bipush        11
+     153: ldc           #182                // String bingxue_waimen
+     155: bipush        8
+     157: invokestatic  #47                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     160: invokestatic  #158                // InterfaceMethod java/util/Map.entry:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/util/Map$Entry;
+     163: aastore
+     164: dup
+     165: bipush        12
+     167: ldc           #184                // String sanxiu
+     169: bipush        8
+     171: invokestatic  #47                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     174: invokestatic  #158                // InterfaceMethod java/util/Map.entry:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/util/Map$Entry;
+     177: aastore
+     178: dup
+     179: bipush        13
+     181: ldc           #186                // String hundao_yishi
+     183: bipush        12
+     185: invokestatic  #47                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     188: invokestatic  #158                // InterfaceMethod java/util/Map.entry:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/util/Map$Entry;
+     191: aastore
+     192: dup
+     193: bipush        14
+     195: ldc           #188                // String daoyou
+     197: bipush        12
+     199: invokestatic  #47                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     202: invokestatic  #158                // InterfaceMethod java/util/Map.entry:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/util/Map$Entry;
+     205: aastore
+     206: dup
+     207: bipush        15
+     209: ldc           #190                // String qiankun_sanyi
+     211: bipush        12
+     213: invokestatic  #47                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     216: invokestatic  #158                // InterfaceMethod java/util/Map.entry:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/util/Map$Entry;
+     219: aastore
+     220: invokestatic  #192                // InterfaceMethod java/util/Map.ofEntries:([Ljava/util/Map$Entry;)Ljava/util/Map;
+     223: putstatic     #43                 // Field ORIGIN_TO_DRAWS:Ljava/util/Map;
+     226: bipush        6
+     228: newarray       int
+     230: dup
+     231: iconst_0
+     232: iconst_0
+     233: iastore
+     234: dup
+     235: iconst_1
+     236: iconst_4
+     237: iastore
+     238: dup
+     239: iconst_2
+     240: bipush        8
+     242: iastore
+     243: dup
+     244: iconst_3
+     245: bipush        12
+     247: iastore
+     248: dup
+     249: iconst_4
+     250: bipush        16
+     252: iastore
+     253: dup
+     254: iconst_5
+     255: bipush        20
+     257: iastore
+     258: putstatic     #23                 // Field RANK_TO_DRAWS:[I
+     261: return
+}

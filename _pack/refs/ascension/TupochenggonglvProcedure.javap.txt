@@ -1,0 +1,127 @@
+Compiled from "TupochenggonglvProcedure.java"
+public class net.guzhenren.procedures.TupochenggonglvProcedure {
+  public net.guzhenren.procedures.TupochenggonglvProcedure();
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: return
+
+  public static java.lang.String execute(net.minecraft.world.entity.Entity);
+    Code:
+       0: aload_0
+       1: ifnonnull     7
+       4: ldc           #7                  // String
+       6: areturn
+       7: aload_0
+       8: getstatic     #9                  // Field net/guzhenren/network/GuzhenrenModVariables.PLAYER_VARIABLES:Ljava/util/function/Supplier;
+      11: invokevirtual #15                 // Method net/minecraft/world/entity/Entity.getData:(Ljava/util/function/Supplier;)Ljava/lang/Object;
+      14: checkcast     #21                 // class net/guzhenren/network/GuzhenrenModVariables$PlayerVariables
+      17: getfield      #23                 // Field net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.mingge:D
+      20: ldc2_w        #27                 // double 5.0d
+      23: dcmpl
+      24: ifne          145
+      27: dconst_1
+      28: aload_0
+      29: getstatic     #9                  // Field net/guzhenren/network/GuzhenrenModVariables.PLAYER_VARIABLES:Ljava/util/function/Supplier;
+      32: invokevirtual #15                 // Method net/minecraft/world/entity/Entity.getData:(Ljava/util/function/Supplier;)Ljava/lang/Object;
+      35: checkcast     #21                 // class net/guzhenren/network/GuzhenrenModVariables$PlayerVariables
+      38: getfield      #29                 // Field net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.zhuanshu:D
+      41: ldc2_w        #32                 // double 0.1d
+      44: dmul
+      45: dsub
+      46: aload_0
+      47: getstatic     #9                  // Field net/guzhenren/network/GuzhenrenModVariables.PLAYER_VARIABLES:Ljava/util/function/Supplier;
+      50: invokevirtual #15                 // Method net/minecraft/world/entity/Entity.getData:(Ljava/util/function/Supplier;)Ljava/lang/Object;
+      53: checkcast     #21                 // class net/guzhenren/network/GuzhenrenModVariables$PlayerVariables
+      56: getfield      #34                 // Field net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.renqi:D
+      59: ldc2_w        #37                 // double 7.5E-4d
+      62: dmul
+      63: dadd
+      64: aload_0
+      65: getstatic     #9                  // Field net/guzhenren/network/GuzhenrenModVariables.PLAYER_VARIABLES:Ljava/util/function/Supplier;
+      68: invokevirtual #15                 // Method net/minecraft/world/entity/Entity.getData:(Ljava/util/function/Supplier;)Ljava/lang/Object;
+      71: checkcast     #21                 // class net/guzhenren/network/GuzhenrenModVariables$PlayerVariables
+      74: getfield      #29                 // Field net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.zhuanshu:D
+      77: aload_0
+      78: getstatic     #9                  // Field net/guzhenren/network/GuzhenrenModVariables.PLAYER_VARIABLES:Ljava/util/function/Supplier;
+      81: invokevirtual #15                 // Method net/minecraft/world/entity/Entity.getData:(Ljava/util/function/Supplier;)Ljava/lang/Object;
+      84: checkcast     #21                 // class net/guzhenren/network/GuzhenrenModVariables$PlayerVariables
+      87: getfield      #29                 // Field net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.zhuanshu:D
+      90: dmul
+      91: ldc2_w        #32                 // double 0.1d
+      94: dmul
+      95: dsub
+      96: aload_0
+      97: getstatic     #9                  // Field net/guzhenren/network/GuzhenrenModVariables.PLAYER_VARIABLES:Ljava/util/function/Supplier;
+     100: invokevirtual #15                 // Method net/minecraft/world/entity/Entity.getData:(Ljava/util/function/Supplier;)Ljava/lang/Object;
+     103: checkcast     #21                 // class net/guzhenren/network/GuzhenrenModVariables$PlayerVariables
+     106: getfield      #39                 // Field net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.zuida_zhenyuan:D
+     109: ldc2_w        #42                 // double 2.0E-4d
+     112: dmul
+     113: dadd
+     114: aload_0
+     115: getstatic     #9                  // Field net/guzhenren/network/GuzhenrenModVariables.PLAYER_VARIABLES:Ljava/util/function/Supplier;
+     118: invokevirtual #15                 // Method net/minecraft/world/entity/Entity.getData:(Ljava/util/function/Supplier;)Ljava/lang/Object;
+     121: checkcast     #21                 // class net/guzhenren/network/GuzhenrenModVariables$PlayerVariables
+     124: getfield      #44                 // Field net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.qiyun:D
+     127: ldc2_w        #47                 // double 0.01d
+     130: dmul
+     131: dadd
+     132: ldc2_w        #49                 // double 100.0d
+     135: dmul
+     136: invokestatic  #51                 // Method java/lang/Math.round:(D)J
+     139: invokedynamic #57,  0             // InvokeDynamic #0:makeConcatWithConstants:(J)Ljava/lang/String;
+     144: areturn
+     145: dconst_1
+     146: aload_0
+     147: getstatic     #9                  // Field net/guzhenren/network/GuzhenrenModVariables.PLAYER_VARIABLES:Ljava/util/function/Supplier;
+     150: invokevirtual #15                 // Method net/minecraft/world/entity/Entity.getData:(Ljava/util/function/Supplier;)Ljava/lang/Object;
+     153: checkcast     #21                 // class net/guzhenren/network/GuzhenrenModVariables$PlayerVariables
+     156: getfield      #29                 // Field net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.zhuanshu:D
+     159: ldc2_w        #32                 // double 0.1d
+     162: dmul
+     163: dsub
+     164: aload_0
+     165: getstatic     #9                  // Field net/guzhenren/network/GuzhenrenModVariables.PLAYER_VARIABLES:Ljava/util/function/Supplier;
+     168: invokevirtual #15                 // Method net/minecraft/world/entity/Entity.getData:(Ljava/util/function/Supplier;)Ljava/lang/Object;
+     171: checkcast     #21                 // class net/guzhenren/network/GuzhenrenModVariables$PlayerVariables
+     174: getfield      #34                 // Field net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.renqi:D
+     177: ldc2_w        #61                 // double 5.0E-4d
+     180: dmul
+     181: dadd
+     182: aload_0
+     183: getstatic     #9                  // Field net/guzhenren/network/GuzhenrenModVariables.PLAYER_VARIABLES:Ljava/util/function/Supplier;
+     186: invokevirtual #15                 // Method net/minecraft/world/entity/Entity.getData:(Ljava/util/function/Supplier;)Ljava/lang/Object;
+     189: checkcast     #21                 // class net/guzhenren/network/GuzhenrenModVariables$PlayerVariables
+     192: getfield      #29                 // Field net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.zhuanshu:D
+     195: aload_0
+     196: getstatic     #9                  // Field net/guzhenren/network/GuzhenrenModVariables.PLAYER_VARIABLES:Ljava/util/function/Supplier;
+     199: invokevirtual #15                 // Method net/minecraft/world/entity/Entity.getData:(Ljava/util/function/Supplier;)Ljava/lang/Object;
+     202: checkcast     #21                 // class net/guzhenren/network/GuzhenrenModVariables$PlayerVariables
+     205: getfield      #29                 // Field net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.zhuanshu:D
+     208: dmul
+     209: ldc2_w        #32                 // double 0.1d
+     212: dmul
+     213: dsub
+     214: aload_0
+     215: getstatic     #9                  // Field net/guzhenren/network/GuzhenrenModVariables.PLAYER_VARIABLES:Ljava/util/function/Supplier;
+     218: invokevirtual #15                 // Method net/minecraft/world/entity/Entity.getData:(Ljava/util/function/Supplier;)Ljava/lang/Object;
+     221: checkcast     #21                 // class net/guzhenren/network/GuzhenrenModVariables$PlayerVariables
+     224: getfield      #39                 // Field net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.zuida_zhenyuan:D
+     227: ldc2_w        #42                 // double 2.0E-4d
+     230: dmul
+     231: dadd
+     232: aload_0
+     233: getstatic     #9                  // Field net/guzhenren/network/GuzhenrenModVariables.PLAYER_VARIABLES:Ljava/util/function/Supplier;
+     236: invokevirtual #15                 // Method net/minecraft/world/entity/Entity.getData:(Ljava/util/function/Supplier;)Ljava/lang/Object;
+     239: checkcast     #21                 // class net/guzhenren/network/GuzhenrenModVariables$PlayerVariables
+     242: getfield      #44                 // Field net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.qiyun:D
+     245: ldc2_w        #47                 // double 0.01d
+     248: dmul
+     249: dadd
+     250: ldc2_w        #49                 // double 100.0d
+     253: dmul
+     254: invokestatic  #51                 // Method java/lang/Math.round:(D)J
+     257: invokedynamic #57,  0             // InvokeDynamic #0:makeConcatWithConstants:(J)Ljava/lang/String;
+     262: areturn
+}

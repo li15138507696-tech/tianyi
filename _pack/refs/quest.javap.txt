@@ -1,0 +1,65 @@
+### com.guzhenrenlibrary.quest.QuestLog   [outer]
+Compiled from "QuestLog.java"
+public final class com.guzhenrenlibrary.quest.QuestLog {
+  private com.guzhenrenlibrary.quest.QuestLog();
+  public static com.guzhenrenlibrary.quest.QuestLedger ledger(net.minecraft.world.entity.player.Player);
+  public static void set(net.minecraft.world.entity.player.Player, com.guzhenrenlibrary.quest.QuestLedger);
+  public static java.util.List<java.util.Map$Entry<com.guzhenrenlibrary.quest.QuestDef, com.guzhenrenlibrary.quest.QuestDef$QuestState>> activeDefs(net.minecraft.server.level.ServerPlayer);
+  public static com.guzhenrenlibrary.quest.QuestDef$QuestState stateOf(net.minecraft.server.level.ServerPlayer, java.lang.String);
+  public static void store(net.minecraft.server.level.ServerPlayer, com.guzhenrenlibrary.quest.QuestDef$QuestState);
+  public static java.lang.String accept(net.minecraft.server.level.ServerPlayer, com.guzhenrenlibrary.quest.QuestDef, net.minecraft.world.entity.Entity);
+  public static java.lang.String accept(net.minecraft.server.level.ServerPlayer, com.guzhenrenlibrary.quest.QuestDef, net.minecraft.world.entity.Entity, com.guzhenrenlibrary.faction.FactionDef);
+  public static java.lang.String acceptForced(net.minecraft.server.level.ServerPlayer, com.guzhenrenlibrary.quest.QuestDef, com.guzhenrenlibrary.faction.FactionDef);
+  public static java.lang.String accept(net.minecraft.server.level.ServerPlayer, com.guzhenrenlibrary.quest.QuestDef, net.minecraft.world.entity.Entity, com.guzhenrenlibrary.faction.FactionDef, boolean);
+  public static java.lang.String acceptHall(net.minecraft.server.level.ServerPlayer, com.guzhenrenlibrary.quest.QuestDef, com.guzhenrenlibrary.faction.FactionDef);
+  static java.lang.String giverKeyOf(com.guzhenrenlibrary.quest.QuestDef, java.util.UUID, com.guzhenrenlibrary.faction.FactionDef);
+  static java.lang.String giverNameOf(com.guzhenrenlibrary.quest.QuestDef, net.minecraft.world.entity.Entity, com.guzhenrenlibrary.faction.FactionDef);
+  public static java.lang.String giverName(net.minecraft.world.entity.Entity, com.guzhenrenlibrary.quest.QuestDef);
+  public static java.lang.String cooldownLeft(net.minecraft.server.level.ServerPlayer, com.guzhenrenlibrary.quest.QuestDef);
+  public static java.lang.String turnIn(net.minecraft.server.level.ServerPlayer, java.lang.String);
+  public static java.lang.String abandon(net.minecraft.server.level.ServerPlayer, java.lang.String);
+  public static java.lang.String revokeForced(net.minecraft.server.level.ServerPlayer);
+  public static java.lang.String forcedId(net.minecraft.server.level.ServerPlayer);
+  public static java.lang.String describeForProbe(net.minecraft.server.level.ServerPlayer);
+  public static java.lang.String debugForce(net.minecraft.server.level.ServerPlayer, java.lang.String);
+  public static int tickGarrison(net.minecraft.server.level.ServerPlayer);
+}
+
+### com.guzhenrenlibrary.quest.QuestLedger   [outer]
+Compiled from "QuestLedger.java"
+public final class com.guzhenrenlibrary.quest.QuestLedger {
+  public static final int MAX_ACTIVE;
+  public static final int MAX_COMPLETED;
+  public static final com.guzhenrenlibrary.quest.QuestLedger EMPTY;
+  public static final com.mojang.serialization.Codec<com.guzhenrenlibrary.quest.QuestLedger> CODEC;
+  private final java.util.Map<java.lang.String, com.guzhenrenlibrary.quest.QuestDef$QuestState> active;
+  private final java.util.Map<java.lang.String, java.lang.Long> completed;
+  private com.guzhenrenlibrary.quest.QuestLedger(java.util.Map<java.lang.String, com.guzhenrenlibrary.quest.QuestDef$QuestState>, java.util.Map<java.lang.String, java.lang.Long>);
+  public java.util.Collection<com.guzhenrenlibrary.quest.QuestDef$QuestState> states();
+  public com.guzhenrenlibrary.quest.QuestDef$QuestState state(java.lang.String);
+  public boolean has(java.lang.String);
+  public int activeCount();
+  public boolean full();
+  public boolean everCompleted(java.lang.String);
+  public long completedAt(java.lang.String);
+  public java.util.List<java.util.Map$Entry<com.guzhenrenlibrary.quest.QuestDef, com.guzhenrenlibrary.quest.QuestDef$QuestState>> activeDefs();
+  public com.guzhenrenlibrary.quest.QuestLedger with(com.guzhenrenlibrary.quest.QuestDef$QuestState);
+  public com.guzhenrenlibrary.quest.QuestLedger without(java.lang.String);
+  public com.guzhenrenlibrary.quest.QuestLedger completedAt(java.lang.String, long);
+  public int completedCount();
+  public net.minecraft.nbt.CompoundTag toTag();
+  public static com.guzhenrenlibrary.quest.QuestLedger fromTag(net.minecraft.nbt.CompoundTag);
+  public java.lang.String toString();
+  static {};
+}
+
+### com.guzhenrenlibrary.quest.QuestLedgerData   [outer]
+Compiled from "QuestLedgerData.java"
+public final class com.guzhenrenlibrary.quest.QuestLedgerData {
+  public static final net.neoforged.neoforge.registries.DeferredRegister<net.neoforged.neoforge.attachment.AttachmentType<?>> ATTACHMENTS;
+  public static final net.neoforged.neoforge.registries.DeferredHolder<net.neoforged.neoforge.attachment.AttachmentType<?>, net.neoforged.neoforge.attachment.AttachmentType<com.guzhenrenlibrary.quest.QuestLedger>> LEDGER;
+  private com.guzhenrenlibrary.quest.QuestLedgerData();
+  private static net.neoforged.neoforge.attachment.AttachmentType lambda$static$1();
+  private static com.guzhenrenlibrary.quest.QuestLedger lambda$static$0();
+  static {};
+}

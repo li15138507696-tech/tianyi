@@ -1,0 +1,115 @@
+Compiled from "KongqiaoProcedure.java"
+public class net.guzhenren.procedures.KongqiaoProcedure {
+  public net.guzhenren.procedures.KongqiaoProcedure();
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: return
+
+  public static java.lang.String execute(net.minecraft.world.entity.Entity);
+    Code:
+       0: aload_0
+       1: ifnonnull     7
+       4: ldc           #7                  // String
+       6: areturn
+       7: aload_0
+       8: getstatic     #9                  // Field net/guzhenren/network/GuzhenrenModVariables.PLAYER_VARIABLES:Ljava/util/function/Supplier;
+      11: invokevirtual #15                 // Method net/minecraft/world/entity/Entity.getData:(Ljava/util/function/Supplier;)Ljava/lang/Object;
+      14: checkcast     #21                 // class net/guzhenren/network/GuzhenrenModVariables$PlayerVariables
+      17: getfield      #23                 // Field net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.kongqiao:D
+      20: ldc2_w        #27                 // double 3.0d
+      23: dcmpl
+      24: ifne          42
+      27: ldc           #29                 // String **
+      29: ldc           #29                 // String **
+      31: ldc           #31                 // String ʮ����
+      33: invokevirtual #33                 // Method java/lang/String.replace:(Ljava/lang/CharSequence;Ljava/lang/CharSequence;)Ljava/lang/String;
+      36: invokedynamic #39,  0             // InvokeDynamic #0:makeConcatWithConstants:(Ljava/lang/String;)Ljava/lang/String;
+      41: areturn
+      42: aload_0
+      43: getstatic     #9                  // Field net/guzhenren/network/GuzhenrenModVariables.PLAYER_VARIABLES:Ljava/util/function/Supplier;
+      46: invokevirtual #15                 // Method net/minecraft/world/entity/Entity.getData:(Ljava/util/function/Supplier;)Ljava/lang/Object;
+      49: checkcast     #21                 // class net/guzhenren/network/GuzhenrenModVariables$PlayerVariables
+      52: getfield      #23                 // Field net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.kongqiao:D
+      55: ldc2_w        #43                 // double 2.0d
+      58: dcmpl
+      59: ifne          77
+      62: ldc           #29                 // String **
+      64: ldc           #29                 // String **
+      66: ldc           #45                 // String �׵�
+      68: invokevirtual #33                 // Method java/lang/String.replace:(Ljava/lang/CharSequence;Ljava/lang/CharSequence;)Ljava/lang/String;
+      71: invokedynamic #39,  0             // InvokeDynamic #0:makeConcatWithConstants:(Ljava/lang/String;)Ljava/lang/String;
+      76: areturn
+      77: aload_0
+      78: getstatic     #9                  // Field net/guzhenren/network/GuzhenrenModVariables.PLAYER_VARIABLES:Ljava/util/function/Supplier;
+      81: invokevirtual #15                 // Method net/minecraft/world/entity/Entity.getData:(Ljava/util/function/Supplier;)Ljava/lang/Object;
+      84: checkcast     #21                 // class net/guzhenren/network/GuzhenrenModVariables$PlayerVariables
+      87: getfield      #23                 // Field net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.kongqiao:D
+      90: dconst_1
+      91: dcmpl
+      92: ifeq          115
+      95: aload_0
+      96: getstatic     #9                  // Field net/guzhenren/network/GuzhenrenModVariables.PLAYER_VARIABLES:Ljava/util/function/Supplier;
+      99: invokevirtual #15                 // Method net/minecraft/world/entity/Entity.getData:(Ljava/util/function/Supplier;)Ljava/lang/Object;
+     102: checkcast     #21                 // class net/guzhenren/network/GuzhenrenModVariables$PlayerVariables
+     105: getfield      #23                 // Field net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.kongqiao:D
+     108: ldc2_w        #47                 // double 4.0d
+     111: dcmpl
+     112: ifne          130
+     115: ldc           #29                 // String **
+     117: ldc           #29                 // String **
+     119: ldc           #49                 // String �ҵ�
+     121: invokevirtual #33                 // Method java/lang/String.replace:(Ljava/lang/CharSequence;Ljava/lang/CharSequence;)Ljava/lang/String;
+     124: invokedynamic #39,  0             // InvokeDynamic #0:makeConcatWithConstants:(Ljava/lang/String;)Ljava/lang/String;
+     129: areturn
+     130: aload_0
+     131: getstatic     #9                  // Field net/guzhenren/network/GuzhenrenModVariables.PLAYER_VARIABLES:Ljava/util/function/Supplier;
+     134: invokevirtual #15                 // Method net/minecraft/world/entity/Entity.getData:(Ljava/util/function/Supplier;)Ljava/lang/Object;
+     137: checkcast     #21                 // class net/guzhenren/network/GuzhenrenModVariables$PlayerVariables
+     140: getfield      #23                 // Field net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.kongqiao:D
+     143: ldc2_w        #51                 // double 5.0d
+     146: dcmpl
+     147: iflt          185
+     150: aload_0
+     151: getstatic     #9                  // Field net/guzhenren/network/GuzhenrenModVariables.PLAYER_VARIABLES:Ljava/util/function/Supplier;
+     154: invokevirtual #15                 // Method net/minecraft/world/entity/Entity.getData:(Ljava/util/function/Supplier;)Ljava/lang/Object;
+     157: checkcast     #21                 // class net/guzhenren/network/GuzhenrenModVariables$PlayerVariables
+     160: getfield      #23                 // Field net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.kongqiao:D
+     163: ldc2_w        #53                 // double 7.0d
+     166: dcmpg
+     167: ifgt          185
+     170: ldc           #29                 // String **
+     172: ldc           #29                 // String **
+     174: ldc           #55                 // String ����
+     176: invokevirtual #33                 // Method java/lang/String.replace:(Ljava/lang/CharSequence;Ljava/lang/CharSequence;)Ljava/lang/String;
+     179: invokedynamic #39,  0             // InvokeDynamic #0:makeConcatWithConstants:(Ljava/lang/String;)Ljava/lang/String;
+     184: areturn
+     185: aload_0
+     186: getstatic     #9                  // Field net/guzhenren/network/GuzhenrenModVariables.PLAYER_VARIABLES:Ljava/util/function/Supplier;
+     189: invokevirtual #15                 // Method net/minecraft/world/entity/Entity.getData:(Ljava/util/function/Supplier;)Ljava/lang/Object;
+     192: checkcast     #21                 // class net/guzhenren/network/GuzhenrenModVariables$PlayerVariables
+     195: getfield      #23                 // Field net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.kongqiao:D
+     198: ldc2_w        #57                 // double 8.0d
+     201: dcmpl
+     202: iflt          240
+     205: aload_0
+     206: getstatic     #9                  // Field net/guzhenren/network/GuzhenrenModVariables.PLAYER_VARIABLES:Ljava/util/function/Supplier;
+     209: invokevirtual #15                 // Method net/minecraft/world/entity/Entity.getData:(Ljava/util/function/Supplier;)Ljava/lang/Object;
+     212: checkcast     #21                 // class net/guzhenren/network/GuzhenrenModVariables$PlayerVariables
+     215: getfield      #23                 // Field net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.kongqiao:D
+     218: ldc2_w        #59                 // double 10.0d
+     221: dcmpg
+     222: ifgt          240
+     225: ldc           #29                 // String **
+     227: ldc           #29                 // String **
+     229: ldc           #61                 // String ����
+     231: invokevirtual #33                 // Method java/lang/String.replace:(Ljava/lang/CharSequence;Ljava/lang/CharSequence;)Ljava/lang/String;
+     234: invokedynamic #39,  0             // InvokeDynamic #0:makeConcatWithConstants:(Ljava/lang/String;)Ljava/lang/String;
+     239: areturn
+     240: ldc           #29                 // String **
+     242: ldc           #29                 // String **
+     244: ldc           #63                 // String δ����
+     246: invokevirtual #33                 // Method java/lang/String.replace:(Ljava/lang/CharSequence;Ljava/lang/CharSequence;)Ljava/lang/String;
+     249: invokedynamic #39,  0             // InvokeDynamic #0:makeConcatWithConstants:(Ljava/lang/String;)Ljava/lang/String;
+     254: areturn
+}

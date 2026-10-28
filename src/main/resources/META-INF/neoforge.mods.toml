@@ -1,0 +1,57 @@
+modLoader = "javafml"
+loaderVersion = "[4,)"
+license = "All Rights Reserved"
+
+[[mods]]
+modId = "tianyi"
+version = "3.14.0"
+displayName = "蛊真人·天意"
+description = '''
+蛊真人整合附属「天意」：让原著里的天意作为世界背后的意志运行 —— 感知、判断、布局、扶持、压制，
+并受原著的条件与反制约束（暗渡、神不知、天消意散、炼道清除、天机手段、天外之魔）。
+
+天意机缘：寻找微光木桶、调查获得本体元石，再自愿押注挑战六种本体妖兽。
+机缘直接展示奖励与处罚；旧后台自动压制默认暂停。按 J（可改绑）查看机缘方位、下一步、倒计时与结果。
+后台好感度、威胁评分与布局依然不公开，见闻录保留观象、察局、藏识、行藏四页。
+
+另含配套仙道机制：三气升仙与师法自然、仙窍与仙元与内部时间、地灾天劫浩劫万劫、
+天道封锁、寿蛊的自然供给演化，以及春秋蝉的全存档回溯（受控停机 + 离线校验交换）。
+
+与三个旧附属 jar（tianfu / daotu / shenshang）不可同装（同名注册 id 冲突）。
+'''
+authors = "tianyi"
+
+[[dependencies.tianyi]]
+modId = "neoforge"
+type = "required"
+versionRange = "[21.1.232,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.tianyi]]
+modId = "minecraft"
+type = "required"
+versionRange = "[1.21.1,1.22)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.tianyi]]
+modId = "guzhenren"
+type = "required"
+versionRange = "[0.1,)"
+ordering = "AFTER"
+side = "BOTH"
+
+# guzhenren_library：本体自带的势力 / NPC / 任务 / 身份扩展层（com.guzhenrenlibrary.*）。
+# 3.0.0 的「势力牵制」渠道直接调用它的 FactionTerritory / FactionBrain / FactionRegistry，
+# 因此是硬依赖；缺了它这条渠道会被 try/catch 跳过，其余玩法照常。
+# 它自己已声明 required guzhenren。
+[[dependencies.tianyi]]
+modId = "guzhenren_library"
+type = "required"
+versionRange = "[0.1,)"
+ordering = "AFTER"
+side = "BOTH"
+
+# 3.0.0：本模组不注入本体任何类，因此没有任何 mixin。
+# 旧玩法骨架（天机积分 / 签到 / 摇命 / 永久词条商城 / 命契商店 / 百世书奖励 / 面板）已全部退场。

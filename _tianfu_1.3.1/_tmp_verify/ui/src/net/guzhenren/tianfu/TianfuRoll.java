@@ -1,0 +1,1 @@
+package net.guzhenren.tianfu;public class TianfuRoll{public static final int MAX_ROLLS=3;}

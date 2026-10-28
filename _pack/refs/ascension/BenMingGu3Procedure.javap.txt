@@ -1,0 +1,95 @@
+Compiled from "BenMingGu3Procedure.java"
+public class net.guzhenren.procedures.BenMingGu3Procedure {
+  public net.guzhenren.procedures.BenMingGu3Procedure();
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: return
+
+  public static void onPlayerTick(net.neoforged.neoforge.event.tick.PlayerTickEvent$Post);
+    Code:
+       0: aload_0
+       1: aload_0
+       2: invokevirtual #7                  // Method net/neoforged/neoforge/event/tick/PlayerTickEvent$Post.getEntity:()Lnet/minecraft/world/entity/player/Player;
+       5: invokestatic  #13                 // Method execute:(Lnet/neoforged/bus/api/Event;Lnet/minecraft/world/entity/Entity;)V
+       8: return
+
+  public static void execute(net.minecraft.world.entity.Entity);
+    Code:
+       0: aconst_null
+       1: aload_0
+       2: invokestatic  #13                 // Method execute:(Lnet/neoforged/bus/api/Event;Lnet/minecraft/world/entity/Entity;)V
+       5: return
+
+  private static void execute(net.neoforged.bus.api.Event, net.minecraft.world.entity.Entity);
+    Code:
+       0: aload_1
+       1: ifnonnull     5
+       4: return
+       5: aload_1
+       6: invokevirtual #19                 // Method net/minecraft/world/entity/Entity.getPersistentData:()Lnet/minecraft/nbt/CompoundTag;
+       9: ldc           #25                 // String �����ƻָ�ke
+      11: aload_1
+      12: invokevirtual #19                 // Method net/minecraft/world/entity/Entity.getPersistentData:()Lnet/minecraft/nbt/CompoundTag;
+      15: ldc           #25                 // String �����ƻָ�ke
+      17: invokevirtual #27                 // Method net/minecraft/nbt/CompoundTag.getDouble:(Ljava/lang/String;)D
+      20: dconst_1
+      21: dadd
+      22: invokevirtual #33                 // Method net/minecraft/nbt/CompoundTag.putDouble:(Ljava/lang/String;D)V
+      25: aload_1
+      26: getstatic     #37                 // Field net/guzhenren/network/GuzhenrenModVariables.PLAYER_VARIABLES:Ljava/util/function/Supplier;
+      29: invokevirtual #43                 // Method net/minecraft/world/entity/Entity.getData:(Ljava/util/function/Supplier;)Ljava/lang/Object;
+      32: checkcast     #47                 // class net/guzhenren/network/GuzhenrenModVariables$PlayerVariables
+      35: getfield      #49                 // Field net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.BenMingGu:Lnet/minecraft/world/item/ItemStack;
+      38: getstatic     #53                 // Field net/minecraft/core/component/DataComponents.CUSTOM_DATA:Lnet/minecraft/core/component/DataComponentType;
+      41: getstatic     #59                 // Field net/minecraft/world/item/component/CustomData.EMPTY:Lnet/minecraft/world/item/component/CustomData;
+      44: invokevirtual #65                 // Method net/minecraft/world/item/ItemStack.getOrDefault:(Lnet/minecraft/core/component/DataComponentType;Ljava/lang/Object;)Ljava/lang/Object;
+      47: checkcast     #60                 // class net/minecraft/world/item/component/CustomData
+      50: invokevirtual #71                 // Method net/minecraft/world/item/component/CustomData.copyTag:()Lnet/minecraft/nbt/CompoundTag;
+      53: ldc           #74                 // String ����������
+      55: invokevirtual #76                 // Method net/minecraft/nbt/CompoundTag.getString:(Ljava/lang/String;)Ljava/lang/String;
+      58: aload_1
+      59: invokevirtual #80                 // Method net/minecraft/world/entity/Entity.getStringUUID:()Ljava/lang/String;
+      62: invokevirtual #84                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+      65: ifeq          161
+      68: aload_1
+      69: invokevirtual #19                 // Method net/minecraft/world/entity/Entity.getPersistentData:()Lnet/minecraft/nbt/CompoundTag;
+      72: ldc           #25                 // String �����ƻָ�ke
+      74: invokevirtual #27                 // Method net/minecraft/nbt/CompoundTag.getDouble:(Ljava/lang/String;)D
+      77: ldc2_w        #90                 // double 1200.0d
+      80: dcmpl
+      81: iflt          161
+      84: aload_1
+      85: invokevirtual #19                 // Method net/minecraft/world/entity/Entity.getPersistentData:()Lnet/minecraft/nbt/CompoundTag;
+      88: ldc           #25                 // String �����ƻָ�ke
+      90: dconst_0
+      91: invokevirtual #33                 // Method net/minecraft/nbt/CompoundTag.putDouble:(Ljava/lang/String;D)V
+      94: aload_1
+      95: getstatic     #37                 // Field net/guzhenren/network/GuzhenrenModVariables.PLAYER_VARIABLES:Ljava/util/function/Supplier;
+      98: invokevirtual #43                 // Method net/minecraft/world/entity/Entity.getData:(Ljava/util/function/Supplier;)Ljava/lang/Object;
+     101: checkcast     #47                 // class net/guzhenren/network/GuzhenrenModVariables$PlayerVariables
+     104: getfield      #49                 // Field net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.BenMingGu:Lnet/minecraft/world/item/ItemStack;
+     107: invokevirtual #92                 // Method net/minecraft/world/item/ItemStack.getItem:()Lnet/minecraft/world/item/Item;
+     110: getstatic     #96                 // Field net/guzhenren/init/GuzhenrenModItems.JIAN_QIAO_GU:Lnet/neoforged/neoforge/registries/DeferredItem;
+     113: invokevirtual #102                // Method net/neoforged/neoforge/registries/DeferredItem.get:()Ljava/lang/Object;
+     116: if_acmpne     123
+     119: iconst_1
+     120: goto          124
+     123: iconst_0
+     124: ifne          161
+     127: aload_1
+     128: getstatic     #37                 // Field net/guzhenren/network/GuzhenrenModVariables.PLAYER_VARIABLES:Ljava/util/function/Supplier;
+     131: invokevirtual #43                 // Method net/minecraft/world/entity/Entity.getData:(Ljava/util/function/Supplier;)Ljava/lang/Object;
+     134: checkcast     #47                 // class net/guzhenren/network/GuzhenrenModVariables$PlayerVariables
+     137: getfield      #49                 // Field net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.BenMingGu:Lnet/minecraft/world/item/ItemStack;
+     140: aload_1
+     141: getstatic     #37                 // Field net/guzhenren/network/GuzhenrenModVariables.PLAYER_VARIABLES:Ljava/util/function/Supplier;
+     144: invokevirtual #43                 // Method net/minecraft/world/entity/Entity.getData:(Ljava/util/function/Supplier;)Ljava/lang/Object;
+     147: checkcast     #47                 // class net/guzhenren/network/GuzhenrenModVariables$PlayerVariables
+     150: getfield      #49                 // Field net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.BenMingGu:Lnet/minecraft/world/item/ItemStack;
+     153: invokevirtual #108                // Method net/minecraft/world/item/ItemStack.getDamageValue:()I
+     156: iconst_1
+     157: isub
+     158: invokevirtual #112                // Method net/minecraft/world/item/ItemStack.setDamageValue:(I)V
+     161: return
+}

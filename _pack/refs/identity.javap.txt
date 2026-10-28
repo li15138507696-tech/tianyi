@@ -1,0 +1,24 @@
+### com.guzhenrenlibrary.identity.IdentityManager   [outer]
+Compiled from "IdentityManager.java"
+public final class com.guzhenrenlibrary.identity.IdentityManager {
+  public static final java.lang.String FALLBACK_TITLE;
+  private com.guzhenrenlibrary.identity.IdentityManager();
+  public static com.guzhenrenlibrary.identity.IdentityBook book(net.minecraft.world.entity.player.Player);
+  public static java.util.List<com.guzhenrenlibrary.identity.PlayerIdentity> identities(net.minecraft.world.entity.player.Player);
+  public static com.guzhenrenlibrary.identity.PlayerIdentity active(net.minecraft.world.entity.player.Player);
+  public static java.util.UUID activeId(net.minecraft.world.entity.player.Player);
+  public static java.lang.String activeTitle(net.minecraft.world.entity.player.Player);
+  public static boolean hasIdentity(net.minecraft.world.entity.player.Player);
+  public static com.guzhenrenlibrary.identity.PlayerIdentity find(net.minecraft.world.entity.player.Player, java.util.UUID);
+  public static com.guzhenrenlibrary.identity.PlayerIdentity findByName(net.minecraft.world.entity.player.Player, java.lang.String);
+  public static com.guzhenrenlibrary.identity.PlayerIdentity ensureActive(net.minecraft.server.level.ServerPlayer);
+  public static com.guzhenrenlibrary.identity.PlayerIdentity create(net.minecraft.server.level.ServerPlayer, java.lang.String, com.guzhenrenlibrary.character.CharacterGender, com.guzhenrenlibrary.character.CharacterOrigin);
+  public static boolean switchTo(net.minecraft.server.level.ServerPlayer, java.util.UUID);
+  public static boolean switchToName(net.minecraft.server.level.ServerPlayer, java.lang.String);
+  public static boolean replace(net.minecraft.server.level.ServerPlayer, com.guzhenrenlibrary.identity.PlayerIdentity);
+  public static boolean rename(net.minecraft.server.level.ServerPlayer, java.util.UUID, java.lang.String);
+  public static boolean delete(net.minecraft.server.level.ServerPlayer, java.util.UUID);
+  public static void onTitleChanged(net.minecraft.server.level.ServerPlayer, java.lang.String);
+  private static void save(net.minecraft.server.level.ServerPlayer, com.guzhenrenlibrary.identity.IdentityBook, boolean);
+  private static void pushProfile(net.minecraft.server.level.ServerPlayer, com.guzhenrenlibrary.identity.PlayerIdentity);
+}

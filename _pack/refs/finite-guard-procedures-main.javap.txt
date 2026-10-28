@@ -1,0 +1,594 @@
+﻿Compiled from "HuiLangDangShiTiSiWangShiProcedure.java"
+public class net.guzhenren.procedures.HuiLangDangShiTiSiWangShiProcedure {
+  public net.guzhenren.procedures.HuiLangDangShiTiSiWangShiProcedure();
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: return
+
+  public static void execute(net.minecraft.world.level.LevelAccessor, double, double, double);
+    Code:
+       0: iconst_0
+       1: istore        7
+       3: iload         7
+       5: invokestatic  #7                  // InterfaceMethod net/minecraft/util/RandomSource.create:()Lnet/minecraft/util/RandomSource;
+       8: iconst_5
+       9: bipush        10
+      11: invokestatic  #13                 // Method net/minecraft/util/Mth.nextInt:(Lnet/minecraft/util/RandomSource;II)I
+      14: if_icmpge     82
+      17: aload_0
+      18: instanceof    #19                 // class net/minecraft/server/level/ServerLevel
+      21: ifeq          76
+      24: aload_0
+      25: checkcast     #19                 // class net/minecraft/server/level/ServerLevel
+      28: astore        8
+      30: new           #21                 // class net/minecraft/world/entity/item/ItemEntity
+      33: dup
+      34: aload         8
+      36: dload_1
+      37: dload_3
+      38: dload         5
+      40: new           #23                 // class net/minecraft/world/item/ItemStack
+      43: dup
+      44: getstatic     #25                 // Field net/guzhenren/init/GuzhenrenModItems.GUCAIXIANXUE:Lnet/neoforged/neoforge/registries/DeferredItem;
+      47: invokevirtual #31                 // Method net/neoforged/neoforge/registries/DeferredItem.get:()Ljava/lang/Object;
+      50: checkcast     #37                 // class net/minecraft/world/level/ItemLike
+      53: invokespecial #39                 // Method net/minecraft/world/item/ItemStack."<init>":(Lnet/minecraft/world/level/ItemLike;)V
+      56: invokespecial #42                 // Method net/minecraft/world/entity/item/ItemEntity."<init>":(Lnet/minecraft/world/level/Level;DDDLnet/minecraft/world/item/ItemStack;)V
+      59: astore        9
+      61: aload         9
+      63: bipush        10
+      65: invokevirtual #45                 // Method net/minecraft/world/entity/item/ItemEntity.setPickUpDelay:(I)V
+      68: aload         8
+      70: aload         9
+      72: invokevirtual #49                 // Method net/minecraft/server/level/ServerLevel.addFreshEntity:(Lnet/minecraft/world/entity/Entity;)Z
+      75: pop
+      76: iinc          7, 1
+      79: goto          3
+      82: iconst_0
+      83: istore        7
+      85: iload         7
+      87: invokestatic  #7                  // InterfaceMethod net/minecraft/util/RandomSource.create:()Lnet/minecraft/util/RandomSource;
+      90: iconst_5
+      91: bipush        10
+      93: invokestatic  #13                 // Method net/minecraft/util/Mth.nextInt:(Lnet/minecraft/util/RandomSource;II)I
+      96: if_icmpge     158
+      99: aload_0
+     100: instanceof    #19                 // class net/minecraft/server/level/ServerLevel
+     103: ifeq          152
+     106: aload_0
+     107: checkcast     #19                 // class net/minecraft/server/level/ServerLevel
+     110: astore        8
+     112: new           #21                 // class net/minecraft/world/entity/item/ItemEntity
+     115: dup
+     116: aload         8
+     118: dload_1
+     119: dload_3
+     120: dload         5
+     122: new           #23                 // class net/minecraft/world/item/ItemStack
+     125: dup
+     126: getstatic     #53                 // Field net/minecraft/world/item/Items.BONE:Lnet/minecraft/world/item/Item;
+     129: invokespecial #39                 // Method net/minecraft/world/item/ItemStack."<init>":(Lnet/minecraft/world/level/ItemLike;)V
+     132: invokespecial #42                 // Method net/minecraft/world/entity/item/ItemEntity."<init>":(Lnet/minecraft/world/level/Level;DDDLnet/minecraft/world/item/ItemStack;)V
+     135: astore        9
+     137: aload         9
+     139: bipush        10
+     141: invokevirtual #45                 // Method net/minecraft/world/entity/item/ItemEntity.setPickUpDelay:(I)V
+     144: aload         8
+     146: aload         9
+     148: invokevirtual #49                 // Method net/minecraft/server/level/ServerLevel.addFreshEntity:(Lnet/minecraft/world/entity/Entity;)Z
+     151: pop
+     152: iinc          7, 1
+     155: goto          85
+     158: invokestatic  #7                  // InterfaceMethod net/minecraft/util/RandomSource.create:()Lnet/minecraft/util/RandomSource;
+     161: iconst_1
+     162: bipush        10
+     164: invokestatic  #13                 // Method net/minecraft/util/Mth.nextInt:(Lnet/minecraft/util/RandomSource;II)I
+     167: iconst_1
+     168: if_icmpne     230
+     171: aload_0
+     172: instanceof    #19                 // class net/minecraft/server/level/ServerLevel
+     175: ifeq          230
+     178: aload_0
+     179: checkcast     #19                 // class net/minecraft/server/level/ServerLevel
+     182: astore        7
+     184: new           #21                 // class net/minecraft/world/entity/item/ItemEntity
+     187: dup
+     188: aload         7
+     190: dload_1
+     191: dload_3
+     192: dload         5
+     194: new           #23                 // class net/minecraft/world/item/ItemStack
+     197: dup
+     198: getstatic     #59                 // Field net/guzhenren/init/GuzhenrenModItems.WEI_LIAN_HUA_FAN_DAI_CAO_GU:Lnet/neoforged/neoforge/registries/DeferredItem;
+     201: invokevirtual #31                 // Method net/neoforged/neoforge/registries/DeferredItem.get:()Ljava/lang/Object;
+     204: checkcast     #37                 // class net/minecraft/world/level/ItemLike
+     207: invokespecial #39                 // Method net/minecraft/world/item/ItemStack."<init>":(Lnet/minecraft/world/level/ItemLike;)V
+     210: invokespecial #42                 // Method net/minecraft/world/entity/item/ItemEntity."<init>":(Lnet/minecraft/world/level/Level;DDDLnet/minecraft/world/item/ItemStack;)V
+     213: astore        8
+     215: aload         8
+     217: bipush        10
+     219: invokevirtual #45                 // Method net/minecraft/world/entity/item/ItemEntity.setPickUpDelay:(I)V
+     222: aload         7
+     224: aload         8
+     226: invokevirtual #49                 // Method net/minecraft/server/level/ServerLevel.addFreshEntity:(Lnet/minecraft/world/entity/Entity;)Z
+     229: pop
+     230: invokestatic  #7                  // InterfaceMethod net/minecraft/util/RandomSource.create:()Lnet/minecraft/util/RandomSource;
+     233: iconst_1
+     234: bipush        40
+     236: invokestatic  #13                 // Method net/minecraft/util/Mth.nextInt:(Lnet/minecraft/util/RandomSource;II)I
+     239: iconst_1
+     240: if_icmpne     302
+     243: aload_0
+     244: instanceof    #19                 // class net/minecraft/server/level/ServerLevel
+     247: ifeq          302
+     250: aload_0
+     251: checkcast     #19                 // class net/minecraft/server/level/ServerLevel
+     254: astore        7
+     256: new           #21                 // class net/minecraft/world/entity/item/ItemEntity
+     259: dup
+     260: aload         7
+     262: dload_1
+     263: dload_3
+     264: dload         5
+     266: new           #23                 // class net/minecraft/world/item/ItemStack
+     269: dup
+     270: getstatic     #62                 // Field net/guzhenren/init/GuzhenrenModItems.WEI_LIAN_HUA_SHOU_PI_GU:Lnet/neoforged/neoforge/registries/DeferredItem;
+     273: invokevirtual #31                 // Method net/neoforged/neoforge/registries/DeferredItem.get:()Ljava/lang/Object;
+     276: checkcast     #37                 // class net/minecraft/world/level/ItemLike
+     279: invokespecial #39                 // Method net/minecraft/world/item/ItemStack."<init>":(Lnet/minecraft/world/level/ItemLike;)V
+     282: invokespecial #42                 // Method net/minecraft/world/entity/item/ItemEntity."<init>":(Lnet/minecraft/world/level/Level;DDDLnet/minecraft/world/item/ItemStack;)V
+     285: astore        8
+     287: aload         8
+     289: bipush        10
+     291: invokevirtual #45                 // Method net/minecraft/world/entity/item/ItemEntity.setPickUpDelay:(I)V
+     294: aload         7
+     296: aload         8
+     298: invokevirtual #49                 // Method net/minecraft/server/level/ServerLevel.addFreshEntity:(Lnet/minecraft/world/entity/Entity;)Z
+     301: pop
+     302: invokestatic  #7                  // InterfaceMethod net/minecraft/util/RandomSource.create:()Lnet/minecraft/util/RandomSource;
+     305: iconst_1
+     306: bipush        40
+     308: invokestatic  #13                 // Method net/minecraft/util/Mth.nextInt:(Lnet/minecraft/util/RandomSource;II)I
+     311: iconst_1
+     312: if_icmpne     374
+     315: aload_0
+     316: instanceof    #19                 // class net/minecraft/server/level/ServerLevel
+     319: ifeq          374
+     322: aload_0
+     323: checkcast     #19                 // class net/minecraft/server/level/ServerLevel
+     326: astore        7
+     328: new           #21                 // class net/minecraft/world/entity/item/ItemEntity
+     331: dup
+     332: aload         7
+     334: dload_1
+     335: dload_3
+     336: dload         5
+     338: new           #23                 // class net/minecraft/world/item/ItemStack
+     341: dup
+     342: getstatic     #65                 // Field net/guzhenren/init/GuzhenrenModItems.WEI_LIAN_HUA_YU_JUN_GU:Lnet/neoforged/neoforge/registries/DeferredItem;
+     345: invokevirtual #31                 // Method net/neoforged/neoforge/registries/DeferredItem.get:()Ljava/lang/Object;
+     348: checkcast     #37                 // class net/minecraft/world/level/ItemLike
+     351: invokespecial #39                 // Method net/minecraft/world/item/ItemStack."<init>":(Lnet/minecraft/world/level/ItemLike;)V
+     354: invokespecial #42                 // Method net/minecraft/world/entity/item/ItemEntity."<init>":(Lnet/minecraft/world/level/Level;DDDLnet/minecraft/world/item/ItemStack;)V
+     357: astore        8
+     359: aload         8
+     361: bipush        10
+     363: invokevirtual #45                 // Method net/minecraft/world/entity/item/ItemEntity.setPickUpDelay:(I)V
+     366: aload         7
+     368: aload         8
+     370: invokevirtual #49                 // Method net/minecraft/server/level/ServerLevel.addFreshEntity:(Lnet/minecraft/world/entity/Entity;)Z
+     373: pop
+     374: invokestatic  #7                  // InterfaceMethod net/minecraft/util/RandomSource.create:()Lnet/minecraft/util/RandomSource;
+     377: iconst_1
+     378: bipush        40
+     380: invokestatic  #13                 // Method net/minecraft/util/Mth.nextInt:(Lnet/minecraft/util/RandomSource;II)I
+     383: iconst_1
+     384: if_icmpne     446
+     387: aload_0
+     388: instanceof    #19                 // class net/minecraft/server/level/ServerLevel
+     391: ifeq          446
+     394: aload_0
+     395: checkcast     #19                 // class net/minecraft/server/level/ServerLevel
+     398: astore        7
+     400: new           #21                 // class net/minecraft/world/entity/item/ItemEntity
+     403: dup
+     404: aload         7
+     406: dload_1
+     407: dload_3
+     408: dload         5
+     410: new           #23                 // class net/minecraft/world/item/ItemStack
+     413: dup
+     414: getstatic     #68                 // Field net/guzhenren/init/GuzhenrenModItems.WEI_LIAN_HUA_YU_LANG_GU:Lnet/neoforged/neoforge/registries/DeferredItem;
+     417: invokevirtual #31                 // Method net/neoforged/neoforge/registries/DeferredItem.get:()Ljava/lang/Object;
+     420: checkcast     #37                 // class net/minecraft/world/level/ItemLike
+     423: invokespecial #39                 // Method net/minecraft/world/item/ItemStack."<init>":(Lnet/minecraft/world/level/ItemLike;)V
+     426: invokespecial #42                 // Method net/minecraft/world/entity/item/ItemEntity."<init>":(Lnet/minecraft/world/level/Level;DDDLnet/minecraft/world/item/ItemStack;)V
+     429: astore        8
+     431: aload         8
+     433: bipush        10
+     435: invokevirtual #45                 // Method net/minecraft/world/entity/item/ItemEntity.setPickUpDelay:(I)V
+     438: aload         7
+     440: aload         8
+     442: invokevirtual #49                 // Method net/minecraft/server/level/ServerLevel.addFreshEntity:(Lnet/minecraft/world/entity/Entity;)Z
+     445: pop
+     446: invokestatic  #7                  // InterfaceMethod net/minecraft/util/RandomSource.create:()Lnet/minecraft/util/RandomSource;
+     449: iconst_1
+     450: bipush        40
+     452: invokestatic  #13                 // Method net/minecraft/util/Mth.nextInt:(Lnet/minecraft/util/RandomSource;II)I
+     455: iconst_1
+     456: if_icmpne     518
+     459: aload_0
+     460: instanceof    #19                 // class net/minecraft/server/level/ServerLevel
+     463: ifeq          518
+     466: aload_0
+     467: checkcast     #19                 // class net/minecraft/server/level/ServerLevel
+     470: astore        7
+     472: new           #21                 // class net/minecraft/world/entity/item/ItemEntity
+     475: dup
+     476: aload         7
+     478: dload_1
+     479: dload_3
+     480: dload         5
+     482: new           #23                 // class net/minecraft/world/item/ItemStack
+     485: dup
+     486: getstatic     #71                 // Field net/guzhenren/init/GuzhenrenModItems.WEI_LIAN_HUA_XIONG_SHOU_YIN_XIE_GU:Lnet/neoforged/neoforge/registries/DeferredItem;
+     489: invokevirtual #31                 // Method net/neoforged/neoforge/registries/DeferredItem.get:()Ljava/lang/Object;
+     492: checkcast     #37                 // class net/minecraft/world/level/ItemLike
+     495: invokespecial #39                 // Method net/minecraft/world/item/ItemStack."<init>":(Lnet/minecraft/world/level/ItemLike;)V
+     498: invokespecial #42                 // Method net/minecraft/world/entity/item/ItemEntity."<init>":(Lnet/minecraft/world/level/Level;DDDLnet/minecraft/world/item/ItemStack;)V
+     501: astore        8
+     503: aload         8
+     505: bipush        10
+     507: invokevirtual #45                 // Method net/minecraft/world/entity/item/ItemEntity.setPickUpDelay:(I)V
+     510: aload         7
+     512: aload         8
+     514: invokevirtual #49                 // Method net/minecraft/server/level/ServerLevel.addFreshEntity:(Lnet/minecraft/world/entity/Entity;)Z
+     517: pop
+     518: return
+}
+Compiled from "HuiLangShiTiChuShiShengChengShiProcedure.java"
+public class net.guzhenren.procedures.HuiLangShiTiChuShiShengChengShiProcedure {
+  public net.guzhenren.procedures.HuiLangShiTiChuShiShengChengShiProcedure();
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: return
+
+  public static void execute(net.minecraft.world.entity.Entity);
+    Code:
+       0: aload_0
+       1: ifnonnull     5
+       4: return
+       5: aload_0
+       6: invokestatic  #7                  // Method net/guzhenren/procedures/ChushishengchenghunpoProcedure.execute:(Lnet/minecraft/world/entity/Entity;)V
+       9: return
+}
+Compiled from "HuiLangShiTiYouXiKeGengXinShiProcedure.java"
+public class net.guzhenren.procedures.HuiLangShiTiYouXiKeGengXinShiProcedure {
+  public net.guzhenren.procedures.HuiLangShiTiYouXiKeGengXinShiProcedure();
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: return
+
+  public static void execute(net.minecraft.world.level.LevelAccessor, double, double, double, net.minecraft.world.entity.Entity);
+    Code:
+       0: aload         7
+       2: ifnonnull     6
+       5: return
+       6: aload_0
+       7: dload_1
+       8: dload_3
+       9: dload         5
+      11: aload         7
+      13: invokestatic  #7                  // Method net/guzhenren/procedures/HunposiwangProcedure.execute:(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V
+      16: return
+}
+Compiled from "TuLangDangShiTiSiWangShiProcedure.java"
+public class net.guzhenren.procedures.TuLangDangShiTiSiWangShiProcedure {
+  public net.guzhenren.procedures.TuLangDangShiTiSiWangShiProcedure();
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: return
+
+  public static void execute(net.minecraft.world.level.LevelAccessor, double, double, double);
+    Code:
+       0: iconst_0
+       1: istore        7
+       3: iload         7
+       5: invokestatic  #7                  // InterfaceMethod net/minecraft/util/RandomSource.create:()Lnet/minecraft/util/RandomSource;
+       8: invokestatic  #7                  // InterfaceMethod net/minecraft/util/RandomSource.create:()Lnet/minecraft/util/RandomSource;
+      11: iconst_1
+      12: iconst_5
+      13: invokestatic  #13                 // Method net/minecraft/util/Mth.nextInt:(Lnet/minecraft/util/RandomSource;II)I
+      16: i2d
+      17: ldc2_w        #19                 // double 10.0d
+      20: invokestatic  #21                 // Method net/minecraft/util/Mth.nextDouble:(Lnet/minecraft/util/RandomSource;DD)D
+      23: d2i
+      24: if_icmpge     92
+      27: aload_0
+      28: instanceof    #25                 // class net/minecraft/server/level/ServerLevel
+      31: ifeq          86
+      34: aload_0
+      35: checkcast     #25                 // class net/minecraft/server/level/ServerLevel
+      38: astore        8
+      40: new           #27                 // class net/minecraft/world/entity/item/ItemEntity
+      43: dup
+      44: aload         8
+      46: dload_1
+      47: dload_3
+      48: dload         5
+      50: new           #29                 // class net/minecraft/world/item/ItemStack
+      53: dup
+      54: getstatic     #31                 // Field net/guzhenren/init/GuzhenrenModItems.GUCAIXIANXUE:Lnet/neoforged/neoforge/registries/DeferredItem;
+      57: invokevirtual #37                 // Method net/neoforged/neoforge/registries/DeferredItem.get:()Ljava/lang/Object;
+      60: checkcast     #43                 // class net/minecraft/world/level/ItemLike
+      63: invokespecial #45                 // Method net/minecraft/world/item/ItemStack."<init>":(Lnet/minecraft/world/level/ItemLike;)V
+      66: invokespecial #48                 // Method net/minecraft/world/entity/item/ItemEntity."<init>":(Lnet/minecraft/world/level/Level;DDDLnet/minecraft/world/item/ItemStack;)V
+      69: astore        9
+      71: aload         9
+      73: bipush        10
+      75: invokevirtual #51                 // Method net/minecraft/world/entity/item/ItemEntity.setPickUpDelay:(I)V
+      78: aload         8
+      80: aload         9
+      82: invokevirtual #55                 // Method net/minecraft/server/level/ServerLevel.addFreshEntity:(Lnet/minecraft/world/entity/Entity;)Z
+      85: pop
+      86: iinc          7, 1
+      89: goto          3
+      92: iconst_0
+      93: istore        7
+      95: iload         7
+      97: invokestatic  #7                  // InterfaceMethod net/minecraft/util/RandomSource.create:()Lnet/minecraft/util/RandomSource;
+     100: iconst_1
+     101: iconst_5
+     102: invokestatic  #13                 // Method net/minecraft/util/Mth.nextInt:(Lnet/minecraft/util/RandomSource;II)I
+     105: if_icmpge     167
+     108: aload_0
+     109: instanceof    #25                 // class net/minecraft/server/level/ServerLevel
+     112: ifeq          161
+     115: aload_0
+     116: checkcast     #25                 // class net/minecraft/server/level/ServerLevel
+     119: astore        8
+     121: new           #27                 // class net/minecraft/world/entity/item/ItemEntity
+     124: dup
+     125: aload         8
+     127: dload_1
+     128: dload_3
+     129: dload         5
+     131: new           #29                 // class net/minecraft/world/item/ItemStack
+     134: dup
+     135: getstatic     #59                 // Field net/minecraft/world/item/Items.BONE:Lnet/minecraft/world/item/Item;
+     138: invokespecial #45                 // Method net/minecraft/world/item/ItemStack."<init>":(Lnet/minecraft/world/level/ItemLike;)V
+     141: invokespecial #48                 // Method net/minecraft/world/entity/item/ItemEntity."<init>":(Lnet/minecraft/world/level/Level;DDDLnet/minecraft/world/item/ItemStack;)V
+     144: astore        9
+     146: aload         9
+     148: bipush        10
+     150: invokevirtual #51                 // Method net/minecraft/world/entity/item/ItemEntity.setPickUpDelay:(I)V
+     153: aload         8
+     155: aload         9
+     157: invokevirtual #55                 // Method net/minecraft/server/level/ServerLevel.addFreshEntity:(Lnet/minecraft/world/entity/Entity;)Z
+     160: pop
+     161: iinc          7, 1
+     164: goto          95
+     167: invokestatic  #7                  // InterfaceMethod net/minecraft/util/RandomSource.create:()Lnet/minecraft/util/RandomSource;
+     170: iconst_1
+     171: bipush        60
+     173: invokestatic  #13                 // Method net/minecraft/util/Mth.nextInt:(Lnet/minecraft/util/RandomSource;II)I
+     176: iconst_1
+     177: if_icmpne     239
+     180: aload_0
+     181: instanceof    #25                 // class net/minecraft/server/level/ServerLevel
+     184: ifeq          239
+     187: aload_0
+     188: checkcast     #25                 // class net/minecraft/server/level/ServerLevel
+     191: astore        7
+     193: new           #27                 // class net/minecraft/world/entity/item/ItemEntity
+     196: dup
+     197: aload         7
+     199: dload_1
+     200: dload_3
+     201: dload         5
+     203: new           #29                 // class net/minecraft/world/item/ItemStack
+     206: dup
+     207: getstatic     #65                 // Field net/guzhenren/init/GuzhenrenModItems.WEI_LIAN_HUA_GU_ZHU_GU:Lnet/neoforged/neoforge/registries/DeferredItem;
+     210: invokevirtual #37                 // Method net/neoforged/neoforge/registries/DeferredItem.get:()Ljava/lang/Object;
+     213: checkcast     #43                 // class net/minecraft/world/level/ItemLike
+     216: invokespecial #45                 // Method net/minecraft/world/item/ItemStack."<init>":(Lnet/minecraft/world/level/ItemLike;)V
+     219: invokespecial #48                 // Method net/minecraft/world/entity/item/ItemEntity."<init>":(Lnet/minecraft/world/level/Level;DDDLnet/minecraft/world/item/ItemStack;)V
+     222: astore        8
+     224: aload         8
+     226: bipush        10
+     228: invokevirtual #51                 // Method net/minecraft/world/entity/item/ItemEntity.setPickUpDelay:(I)V
+     231: aload         7
+     233: aload         8
+     235: invokevirtual #55                 // Method net/minecraft/server/level/ServerLevel.addFreshEntity:(Lnet/minecraft/world/entity/Entity;)Z
+     238: pop
+     239: invokestatic  #7                  // InterfaceMethod net/minecraft/util/RandomSource.create:()Lnet/minecraft/util/RandomSource;
+     242: iconst_1
+     243: bipush        40
+     245: invokestatic  #13                 // Method net/minecraft/util/Mth.nextInt:(Lnet/minecraft/util/RandomSource;II)I
+     248: iconst_1
+     249: if_icmpne     311
+     252: aload_0
+     253: instanceof    #25                 // class net/minecraft/server/level/ServerLevel
+     256: ifeq          311
+     259: aload_0
+     260: checkcast     #25                 // class net/minecraft/server/level/ServerLevel
+     263: astore        7
+     265: new           #27                 // class net/minecraft/world/entity/item/ItemEntity
+     268: dup
+     269: aload         7
+     271: dload_1
+     272: dload_3
+     273: dload         5
+     275: new           #29                 // class net/minecraft/world/item/ItemStack
+     278: dup
+     279: getstatic     #68                 // Field net/guzhenren/init/GuzhenrenModItems.WEI_LIAN_HUA_GU_QIANG_GU:Lnet/neoforged/neoforge/registries/DeferredItem;
+     282: invokevirtual #37                 // Method net/neoforged/neoforge/registries/DeferredItem.get:()Ljava/lang/Object;
+     285: checkcast     #43                 // class net/minecraft/world/level/ItemLike
+     288: invokespecial #45                 // Method net/minecraft/world/item/ItemStack."<init>":(Lnet/minecraft/world/level/ItemLike;)V
+     291: invokespecial #48                 // Method net/minecraft/world/entity/item/ItemEntity."<init>":(Lnet/minecraft/world/level/Level;DDDLnet/minecraft/world/item/ItemStack;)V
+     294: astore        8
+     296: aload         8
+     298: bipush        10
+     300: invokevirtual #51                 // Method net/minecraft/world/entity/item/ItemEntity.setPickUpDelay:(I)V
+     303: aload         7
+     305: aload         8
+     307: invokevirtual #55                 // Method net/minecraft/server/level/ServerLevel.addFreshEntity:(Lnet/minecraft/world/entity/Entity;)Z
+     310: pop
+     311: invokestatic  #7                  // InterfaceMethod net/minecraft/util/RandomSource.create:()Lnet/minecraft/util/RandomSource;
+     314: iconst_1
+     315: bipush        40
+     317: invokestatic  #13                 // Method net/minecraft/util/Mth.nextInt:(Lnet/minecraft/util/RandomSource;II)I
+     320: iconst_1
+     321: if_icmpne     383
+     324: aload_0
+     325: instanceof    #25                 // class net/minecraft/server/level/ServerLevel
+     328: ifeq          383
+     331: aload_0
+     332: checkcast     #25                 // class net/minecraft/server/level/ServerLevel
+     335: astore        7
+     337: new           #27                 // class net/minecraft/world/entity/item/ItemEntity
+     340: dup
+     341: aload         7
+     343: dload_1
+     344: dload_3
+     345: dload         5
+     347: new           #29                 // class net/minecraft/world/item/ItemStack
+     350: dup
+     351: getstatic     #71                 // Field net/guzhenren/init/GuzhenrenModItems.WEI_LIAN_HUA_YU_JUN_GU:Lnet/neoforged/neoforge/registries/DeferredItem;
+     354: invokevirtual #37                 // Method net/neoforged/neoforge/registries/DeferredItem.get:()Ljava/lang/Object;
+     357: checkcast     #43                 // class net/minecraft/world/level/ItemLike
+     360: invokespecial #45                 // Method net/minecraft/world/item/ItemStack."<init>":(Lnet/minecraft/world/level/ItemLike;)V
+     363: invokespecial #48                 // Method net/minecraft/world/entity/item/ItemEntity."<init>":(Lnet/minecraft/world/level/Level;DDDLnet/minecraft/world/item/ItemStack;)V
+     366: astore        8
+     368: aload         8
+     370: bipush        10
+     372: invokevirtual #51                 // Method net/minecraft/world/entity/item/ItemEntity.setPickUpDelay:(I)V
+     375: aload         7
+     377: aload         8
+     379: invokevirtual #55                 // Method net/minecraft/server/level/ServerLevel.addFreshEntity:(Lnet/minecraft/world/entity/Entity;)Z
+     382: pop
+     383: invokestatic  #7                  // InterfaceMethod net/minecraft/util/RandomSource.create:()Lnet/minecraft/util/RandomSource;
+     386: iconst_1
+     387: bipush        40
+     389: invokestatic  #13                 // Method net/minecraft/util/Mth.nextInt:(Lnet/minecraft/util/RandomSource;II)I
+     392: iconst_1
+     393: if_icmpne     455
+     396: aload_0
+     397: instanceof    #25                 // class net/minecraft/server/level/ServerLevel
+     400: ifeq          455
+     403: aload_0
+     404: checkcast     #25                 // class net/minecraft/server/level/ServerLevel
+     407: astore        7
+     409: new           #27                 // class net/minecraft/world/entity/item/ItemEntity
+     412: dup
+     413: aload         7
+     415: dload_1
+     416: dload_3
+     417: dload         5
+     419: new           #29                 // class net/minecraft/world/item/ItemStack
+     422: dup
+     423: getstatic     #74                 // Field net/guzhenren/init/GuzhenrenModItems.WEI_LIAN_HUA_YU_LANG_GU:Lnet/neoforged/neoforge/registries/DeferredItem;
+     426: invokevirtual #37                 // Method net/neoforged/neoforge/registries/DeferredItem.get:()Ljava/lang/Object;
+     429: checkcast     #43                 // class net/minecraft/world/level/ItemLike
+     432: invokespecial #45                 // Method net/minecraft/world/item/ItemStack."<init>":(Lnet/minecraft/world/level/ItemLike;)V
+     435: invokespecial #48                 // Method net/minecraft/world/entity/item/ItemEntity."<init>":(Lnet/minecraft/world/level/Level;DDDLnet/minecraft/world/item/ItemStack;)V
+     438: astore        8
+     440: aload         8
+     442: bipush        10
+     444: invokevirtual #51                 // Method net/minecraft/world/entity/item/ItemEntity.setPickUpDelay:(I)V
+     447: aload         7
+     449: aload         8
+     451: invokevirtual #55                 // Method net/minecraft/server/level/ServerLevel.addFreshEntity:(Lnet/minecraft/world/entity/Entity;)Z
+     454: pop
+     455: invokestatic  #7                  // InterfaceMethod net/minecraft/util/RandomSource.create:()Lnet/minecraft/util/RandomSource;
+     458: iconst_1
+     459: bipush        40
+     461: invokestatic  #13                 // Method net/minecraft/util/Mth.nextInt:(Lnet/minecraft/util/RandomSource;II)I
+     464: iconst_1
+     465: if_icmpne     527
+     468: aload_0
+     469: instanceof    #25                 // class net/minecraft/server/level/ServerLevel
+     472: ifeq          527
+     475: aload_0
+     476: checkcast     #25                 // class net/minecraft/server/level/ServerLevel
+     479: astore        7
+     481: new           #27                 // class net/minecraft/world/entity/item/ItemEntity
+     484: dup
+     485: aload         7
+     487: dload_1
+     488: dload_3
+     489: dload         5
+     491: new           #29                 // class net/minecraft/world/item/ItemStack
+     494: dup
+     495: getstatic     #77                 // Field net/guzhenren/init/GuzhenrenModItems.WEI_LIAN_HUA_XIONG_SHOU_YIN_XIE_GU:Lnet/neoforged/neoforge/registries/DeferredItem;
+     498: invokevirtual #37                 // Method net/neoforged/neoforge/registries/DeferredItem.get:()Ljava/lang/Object;
+     501: checkcast     #43                 // class net/minecraft/world/level/ItemLike
+     504: invokespecial #45                 // Method net/minecraft/world/item/ItemStack."<init>":(Lnet/minecraft/world/level/ItemLike;)V
+     507: invokespecial #48                 // Method net/minecraft/world/entity/item/ItemEntity."<init>":(Lnet/minecraft/world/level/Level;DDDLnet/minecraft/world/item/ItemStack;)V
+     510: astore        8
+     512: aload         8
+     514: bipush        10
+     516: invokevirtual #51                 // Method net/minecraft/world/entity/item/ItemEntity.setPickUpDelay:(I)V
+     519: aload         7
+     521: aload         8
+     523: invokevirtual #55                 // Method net/minecraft/server/level/ServerLevel.addFreshEntity:(Lnet/minecraft/world/entity/Entity;)Z
+     526: pop
+     527: return
+}
+Compiled from "TuLangShiTiChuShiShengChengShiProcedure.java"
+public class net.guzhenren.procedures.TuLangShiTiChuShiShengChengShiProcedure {
+  public net.guzhenren.procedures.TuLangShiTiChuShiShengChengShiProcedure();
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: return
+
+  public static void execute(net.minecraft.world.entity.Entity);
+    Code:
+       0: aload_0
+       1: ifnonnull     5
+       4: return
+       5: aload_0
+       6: invokevirtual #7                  // Method net/minecraft/world/entity/Entity.getPersistentData:()Lnet/minecraft/nbt/CompoundTag;
+       9: ldc           #13                 // String zhuanshu
+      11: dconst_1
+      12: invokevirtual #15                 // Method net/minecraft/nbt/CompoundTag.putDouble:(Ljava/lang/String;D)V
+      15: aload_0
+      16: getstatic     #21                 // Field net/guzhenren/network/GuzhenrenModVariables.PLAYER_VARIABLES:Ljava/util/function/Supplier;
+      19: invokevirtual #27                 // Method net/minecraft/world/entity/Entity.getData:(Ljava/util/function/Supplier;)Ljava/lang/Object;
+      22: checkcast     #31                 // class net/guzhenren/network/GuzhenrenModVariables$PlayerVariables
+      25: astore_1
+      26: aload_1
+      27: dconst_1
+      28: putfield      #33                 // Field net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.zhuanshu:D
+      31: aload_1
+      32: invokevirtual #36                 // Method net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.markSyncDirty:()V
+      35: aload_0
+      36: invokestatic  #39                 // Method net/guzhenren/procedures/ChushishengchenghunpoProcedure.execute:(Lnet/minecraft/world/entity/Entity;)V
+      39: return
+}
+Compiled from "TuLangShiTiYouXiKeGengXinShiProcedure.java"
+public class net.guzhenren.procedures.TuLangShiTiYouXiKeGengXinShiProcedure {
+  public net.guzhenren.procedures.TuLangShiTiYouXiKeGengXinShiProcedure();
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: return
+
+  public static void execute(net.minecraft.world.level.LevelAccessor, double, double, double, net.minecraft.world.entity.Entity);
+    Code:
+       0: aload         7
+       2: ifnonnull     6
+       5: return
+       6: aload_0
+       7: dload_1
+       8: dload_3
+       9: dload         5
+      11: aload         7
+      13: invokestatic  #7                  // Method net/guzhenren/procedures/HunposiwangProcedure.execute:(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V
+      16: return
+}

@@ -1,0 +1,1 @@
+package net.guzhenren.daotu;public class DaotuTalentApply{public static void apply(net.minecraft.server.level.ServerPlayer p,DaotuTalent.Entry e,double d){}public static void markOwned(net.minecraft.server.level.ServerPlayer p,String s){}}

@@ -1,0 +1,1 @@
+package net.neoforged.neoforge.event.entity.living;public class LivingIncomingDamageEvent {}

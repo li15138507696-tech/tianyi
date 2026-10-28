@@ -1,0 +1,2245 @@
+﻿Compiled from "EventHooks.java"
+public class net.neoforged.neoforge.event.EventHooks {
+  private static final net.minecraft.util.random.WeightedRandomList<net.minecraft.world.level.biome.MobSpawnSettings$SpawnerData> NO_SPAWNS;
+
+  public net.neoforged.neoforge.event.EventHooks();
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: return
+
+  public static boolean onMultiBlockPlace(net.minecraft.world.entity.Entity, java.util.List<net.neoforged.neoforge.common.util.BlockSnapshot>, net.minecraft.core.Direction);
+    Code:
+       0: aload_1
+       1: iconst_0
+       2: invokeinterface #7,  2            // InterfaceMethod java/util/List.get:(I)Ljava/lang/Object;
+       7: checkcast     #13                 // class net/neoforged/neoforge/common/util/BlockSnapshot
+      10: astore_3
+      11: aload_3
+      12: invokevirtual #15                 // Method net/neoforged/neoforge/common/util/BlockSnapshot.getLevel:()Lnet/minecraft/world/level/LevelAccessor;
+      15: aload_3
+      16: invokevirtual #19                 // Method net/neoforged/neoforge/common/util/BlockSnapshot.getPos:()Lnet/minecraft/core/BlockPos;
+      19: aload_2
+      20: invokevirtual #23                 // Method net/minecraft/core/Direction.getOpposite:()Lnet/minecraft/core/Direction;
+      23: invokevirtual #29                 // Method net/minecraft/core/BlockPos.relative:(Lnet/minecraft/core/Direction;)Lnet/minecraft/core/BlockPos;
+      26: invokeinterface #35,  2           // InterfaceMethod net/minecraft/world/level/LevelAccessor.getBlockState:(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;
+      31: astore        4
+      33: new           #41                 // class net/neoforged/neoforge/event/level/BlockEvent$EntityMultiPlaceEvent
+      36: dup
+      37: aload_1
+      38: aload         4
+      40: aload_0
+      41: invokespecial #43                 // Method net/neoforged/neoforge/event/level/BlockEvent$EntityMultiPlaceEvent."<init>":(Ljava/util/List;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/entity/Entity;)V
+      44: astore        5
+      46: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      49: aload         5
+      51: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      56: checkcast     #41                 // class net/neoforged/neoforge/event/level/BlockEvent$EntityMultiPlaceEvent
+      59: invokevirtual #58                 // Method net/neoforged/neoforge/event/level/BlockEvent$EntityMultiPlaceEvent.isCanceled:()Z
+      62: ireturn
+
+  public static boolean onBlockPlace(net.minecraft.world.entity.Entity, net.neoforged.neoforge.common.util.BlockSnapshot, net.minecraft.core.Direction);
+    Code:
+       0: aload_1
+       1: invokevirtual #15                 // Method net/neoforged/neoforge/common/util/BlockSnapshot.getLevel:()Lnet/minecraft/world/level/LevelAccessor;
+       4: aload_1
+       5: invokevirtual #19                 // Method net/neoforged/neoforge/common/util/BlockSnapshot.getPos:()Lnet/minecraft/core/BlockPos;
+       8: aload_2
+       9: invokevirtual #23                 // Method net/minecraft/core/Direction.getOpposite:()Lnet/minecraft/core/Direction;
+      12: invokevirtual #29                 // Method net/minecraft/core/BlockPos.relative:(Lnet/minecraft/core/Direction;)Lnet/minecraft/core/BlockPos;
+      15: invokeinterface #35,  2           // InterfaceMethod net/minecraft/world/level/LevelAccessor.getBlockState:(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;
+      20: astore_3
+      21: new           #62                 // class net/neoforged/neoforge/event/level/BlockEvent$EntityPlaceEvent
+      24: dup
+      25: aload_1
+      26: aload_3
+      27: aload_0
+      28: invokespecial #64                 // Method net/neoforged/neoforge/event/level/BlockEvent$EntityPlaceEvent."<init>":(Lnet/neoforged/neoforge/common/util/BlockSnapshot;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/entity/Entity;)V
+      31: astore        4
+      33: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      36: aload         4
+      38: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      43: checkcast     #62                 // class net/neoforged/neoforge/event/level/BlockEvent$EntityPlaceEvent
+      46: invokevirtual #67                 // Method net/neoforged/neoforge/event/level/BlockEvent$EntityPlaceEvent.isCanceled:()Z
+      49: ireturn
+
+  public static net.neoforged.neoforge.event.level.BlockEvent$NeighborNotifyEvent onNeighborNotify(net.minecraft.world.level.Level, net.minecraft.core.BlockPos, net.minecraft.world.level.block.state.BlockState, java.util.EnumSet<net.minecraft.core.Direction>, boolean);
+    Code:
+       0: new           #68                 // class net/neoforged/neoforge/event/level/BlockEvent$NeighborNotifyEvent
+       3: dup
+       4: aload_0
+       5: aload_1
+       6: aload_2
+       7: aload_3
+       8: iload         4
+      10: invokespecial #70                 // Method net/neoforged/neoforge/event/level/BlockEvent$NeighborNotifyEvent."<init>":(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Ljava/util/EnumSet;Z)V
+      13: astore        5
+      15: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      18: aload         5
+      20: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      25: pop
+      26: aload         5
+      28: areturn
+
+  public static boolean doPlayerHarvestCheck(net.minecraft.world.entity.player.Player, net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokevirtual #73                 // Method net/minecraft/world/entity/player/Player.hasCorrectToolForDrops:(Lnet/minecraft/world/level/block/state/BlockState;)Z
+       5: istore        4
+       7: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      10: new           #79                 // class net/neoforged/neoforge/event/entity/player/PlayerEvent$HarvestCheck
+      13: dup
+      14: aload_0
+      15: aload_1
+      16: aload_2
+      17: aload_3
+      18: iload         4
+      20: invokespecial #81                 // Method net/neoforged/neoforge/event/entity/player/PlayerEvent$HarvestCheck."<init>":(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Z)V
+      23: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      28: checkcast     #79                 // class net/neoforged/neoforge/event/entity/player/PlayerEvent$HarvestCheck
+      31: astore        5
+      33: aload         5
+      35: invokevirtual #84                 // Method net/neoforged/neoforge/event/entity/player/PlayerEvent$HarvestCheck.canHarvest:()Z
+      38: ireturn
+
+  public static float getBreakSpeed(net.minecraft.world.entity.player.Player, net.minecraft.world.level.block.state.BlockState, float, net.minecraft.core.BlockPos);
+    Code:
+       0: new           #87                 // class net/neoforged/neoforge/event/entity/player/PlayerEvent$BreakSpeed
+       3: dup
+       4: aload_0
+       5: aload_1
+       6: fload_2
+       7: aload_3
+       8: invokespecial #89                 // Method net/neoforged/neoforge/event/entity/player/PlayerEvent$BreakSpeed."<init>":(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/level/block/state/BlockState;FLnet/minecraft/core/BlockPos;)V
+      11: astore        4
+      13: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      16: aload         4
+      18: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      23: checkcast     #87                 // class net/neoforged/neoforge/event/entity/player/PlayerEvent$BreakSpeed
+      26: invokevirtual #92                 // Method net/neoforged/neoforge/event/entity/player/PlayerEvent$BreakSpeed.isCanceled:()Z
+      29: ifeq          37
+      32: ldc           #93                 // float -1.0f
+      34: goto          42
+      37: aload         4
+      39: invokevirtual #94                 // Method net/neoforged/neoforge/event/entity/player/PlayerEvent$BreakSpeed.getNewSpeed:()F
+      42: freturn
+
+  public static void onPlayerDestroyItem(net.minecraft.world.entity.player.Player, net.minecraft.world.item.ItemStack, net.minecraft.world.InteractionHand);
+    Code:
+       0: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #98                 // class net/neoforged/neoforge/event/entity/player/PlayerDestroyItemEvent
+       6: dup
+       7: aload_0
+       8: aload_1
+       9: aload_2
+      10: invokespecial #100                // Method net/neoforged/neoforge/event/entity/player/PlayerDestroyItemEvent."<init>":(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/InteractionHand;)V
+      13: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      18: pop
+      19: return
+
+  public static boolean checkSpawnPlacements(net.minecraft.world.entity.EntityType<?>, net.minecraft.world.level.ServerLevelAccessor, net.minecraft.world.entity.MobSpawnType, net.minecraft.core.BlockPos, net.minecraft.util.RandomSource, boolean);
+    Code:
+       0: new           #103                // class net/neoforged/neoforge/event/entity/living/MobSpawnEvent$SpawnPlacementCheck
+       3: dup
+       4: aload_0
+       5: aload_1
+       6: aload_2
+       7: aload_3
+       8: aload         4
+      10: iload         5
+      12: invokespecial #105                // Method net/neoforged/neoforge/event/entity/living/MobSpawnEvent$SpawnPlacementCheck."<init>":(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/entity/MobSpawnType;Lnet/minecraft/core/BlockPos;Lnet/minecraft/util/RandomSource;Z)V
+      15: astore        6
+      17: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      20: aload         6
+      22: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      27: checkcast     #103                // class net/neoforged/neoforge/event/entity/living/MobSpawnEvent$SpawnPlacementCheck
+      30: invokevirtual #108                // Method net/neoforged/neoforge/event/entity/living/MobSpawnEvent$SpawnPlacementCheck.getPlacementCheckResult:()Z
+      33: ireturn
+
+  public static boolean checkSpawnPosition(net.minecraft.world.entity.Mob, net.minecraft.world.level.ServerLevelAccessor, net.minecraft.world.entity.MobSpawnType);
+    Code:
+       0: new           #111                // class net/neoforged/neoforge/event/entity/living/MobSpawnEvent$PositionCheck
+       3: dup
+       4: aload_0
+       5: aload_1
+       6: aload_2
+       7: aconst_null
+       8: invokespecial #113                // Method net/neoforged/neoforge/event/entity/living/MobSpawnEvent$PositionCheck."<init>":(Lnet/minecraft/world/entity/Mob;Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/entity/MobSpawnType;Lnet/minecraft/world/level/BaseSpawner;)V
+      11: astore_3
+      12: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      15: aload_3
+      16: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      21: pop
+      22: aload_3
+      23: invokevirtual #116                // Method net/neoforged/neoforge/event/entity/living/MobSpawnEvent$PositionCheck.getResult:()Lnet/neoforged/neoforge/event/entity/living/MobSpawnEvent$PositionCheck$Result;
+      26: getstatic     #120                // Field net/neoforged/neoforge/event/entity/living/MobSpawnEvent$PositionCheck$Result.DEFAULT:Lnet/neoforged/neoforge/event/entity/living/MobSpawnEvent$PositionCheck$Result;
+      29: if_acmpne     55
+      32: aload_0
+      33: aload_1
+      34: aload_2
+      35: invokevirtual #126                // Method net/minecraft/world/entity/Mob.checkSpawnRules:(Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/world/entity/MobSpawnType;)Z
+      38: ifeq          53
+      41: aload_0
+      42: aload_1
+      43: invokevirtual #132                // Method net/minecraft/world/entity/Mob.checkSpawnObstruction:(Lnet/minecraft/world/level/LevelReader;)Z
+      46: ifeq          53
+      49: iconst_1
+      50: goto          54
+      53: iconst_0
+      54: ireturn
+      55: aload_3
+      56: invokevirtual #116                // Method net/neoforged/neoforge/event/entity/living/MobSpawnEvent$PositionCheck.getResult:()Lnet/neoforged/neoforge/event/entity/living/MobSpawnEvent$PositionCheck$Result;
+      59: getstatic     #136                // Field net/neoforged/neoforge/event/entity/living/MobSpawnEvent$PositionCheck$Result.SUCCEED:Lnet/neoforged/neoforge/event/entity/living/MobSpawnEvent$PositionCheck$Result;
+      62: if_acmpne     69
+      65: iconst_1
+      66: goto          70
+      69: iconst_0
+      70: ireturn
+
+  public static boolean checkSpawnPositionSpawner(net.minecraft.world.entity.Mob, net.minecraft.world.level.ServerLevelAccessor, net.minecraft.world.entity.MobSpawnType, net.minecraft.world.level.SpawnData, net.minecraft.world.level.BaseSpawner);
+    Code:
+       0: new           #111                // class net/neoforged/neoforge/event/entity/living/MobSpawnEvent$PositionCheck
+       3: dup
+       4: aload_0
+       5: aload_1
+       6: aload_2
+       7: aload         4
+       9: invokespecial #113                // Method net/neoforged/neoforge/event/entity/living/MobSpawnEvent$PositionCheck."<init>":(Lnet/minecraft/world/entity/Mob;Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/entity/MobSpawnType;Lnet/minecraft/world/level/BaseSpawner;)V
+      12: astore        5
+      14: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      17: aload         5
+      19: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      24: pop
+      25: aload         5
+      27: invokevirtual #116                // Method net/neoforged/neoforge/event/entity/living/MobSpawnEvent$PositionCheck.getResult:()Lnet/neoforged/neoforge/event/entity/living/MobSpawnEvent$PositionCheck$Result;
+      30: getstatic     #120                // Field net/neoforged/neoforge/event/entity/living/MobSpawnEvent$PositionCheck$Result.DEFAULT:Lnet/neoforged/neoforge/event/entity/living/MobSpawnEvent$PositionCheck$Result;
+      33: if_acmpne     69
+      36: aload_3
+      37: invokevirtual #139                // Method net/minecraft/world/level/SpawnData.getCustomSpawnRules:()Ljava/util/Optional;
+      40: invokevirtual #145                // Method java/util/Optional.isPresent:()Z
+      43: ifne          55
+      46: aload_0
+      47: aload_1
+      48: aload_2
+      49: invokevirtual #126                // Method net/minecraft/world/entity/Mob.checkSpawnRules:(Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/world/entity/MobSpawnType;)Z
+      52: ifeq          67
+      55: aload_0
+      56: aload_1
+      57: invokevirtual #132                // Method net/minecraft/world/entity/Mob.checkSpawnObstruction:(Lnet/minecraft/world/level/LevelReader;)Z
+      60: ifeq          67
+      63: iconst_1
+      64: goto          68
+      67: iconst_0
+      68: ireturn
+      69: aload         5
+      71: invokevirtual #116                // Method net/neoforged/neoforge/event/entity/living/MobSpawnEvent$PositionCheck.getResult:()Lnet/neoforged/neoforge/event/entity/living/MobSpawnEvent$PositionCheck$Result;
+      74: getstatic     #136                // Field net/neoforged/neoforge/event/entity/living/MobSpawnEvent$PositionCheck$Result.SUCCEED:Lnet/neoforged/neoforge/event/entity/living/MobSpawnEvent$PositionCheck$Result;
+      77: if_acmpne     84
+      80: iconst_1
+      81: goto          85
+      84: iconst_0
+      85: ireturn
+
+  public static net.minecraft.world.entity.SpawnGroupData finalizeMobSpawn(net.minecraft.world.entity.Mob, net.minecraft.world.level.ServerLevelAccessor, net.minecraft.world.DifficultyInstance, net.minecraft.world.entity.MobSpawnType, net.minecraft.world.entity.SpawnGroupData);
+    Code:
+       0: new           #150                // class net/neoforged/neoforge/event/entity/living/FinalizeSpawnEvent
+       3: dup
+       4: aload_0
+       5: aload_1
+       6: aload_0
+       7: invokevirtual #152                // Method net/minecraft/world/entity/Mob.getX:()D
+      10: aload_0
+      11: invokevirtual #156                // Method net/minecraft/world/entity/Mob.getY:()D
+      14: aload_0
+      15: invokevirtual #159                // Method net/minecraft/world/entity/Mob.getZ:()D
+      18: aload_2
+      19: aload_3
+      20: aload         4
+      22: aconst_null
+      23: invokespecial #162                // Method net/neoforged/neoforge/event/entity/living/FinalizeSpawnEvent."<init>":(Lnet/minecraft/world/entity/Mob;Lnet/minecraft/world/level/ServerLevelAccessor;DDDLnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/MobSpawnType;Lnet/minecraft/world/entity/SpawnGroupData;Lcom/mojang/datafixers/util/Either;)V
+      26: astore        5
+      28: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      31: aload         5
+      33: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      38: pop
+      39: aload         5
+      41: invokevirtual #165                // Method net/neoforged/neoforge/event/entity/living/FinalizeSpawnEvent.isCanceled:()Z
+      44: ifne          68
+      47: aload_0
+      48: aload_1
+      49: aload         5
+      51: invokevirtual #166                // Method net/neoforged/neoforge/event/entity/living/FinalizeSpawnEvent.getDifficulty:()Lnet/minecraft/world/DifficultyInstance;
+      54: aload         5
+      56: invokevirtual #170                // Method net/neoforged/neoforge/event/entity/living/FinalizeSpawnEvent.getSpawnType:()Lnet/minecraft/world/entity/MobSpawnType;
+      59: aload         5
+      61: invokevirtual #174                // Method net/neoforged/neoforge/event/entity/living/FinalizeSpawnEvent.getSpawnData:()Lnet/minecraft/world/entity/SpawnGroupData;
+      64: invokevirtual #178                // Method net/minecraft/world/entity/Mob.finalizeSpawn:(Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/MobSpawnType;Lnet/minecraft/world/entity/SpawnGroupData;)Lnet/minecraft/world/entity/SpawnGroupData;
+      67: areturn
+      68: aconst_null
+      69: areturn
+
+  public static net.neoforged.neoforge.event.entity.living.FinalizeSpawnEvent finalizeMobSpawnSpawner(net.minecraft.world.entity.Mob, net.minecraft.world.level.ServerLevelAccessor, net.minecraft.world.DifficultyInstance, net.minecraft.world.entity.MobSpawnType, net.minecraft.world.entity.SpawnGroupData, net.neoforged.neoforge.common.extensions.IOwnedSpawner, boolean);
+    Code:
+       0: new           #150                // class net/neoforged/neoforge/event/entity/living/FinalizeSpawnEvent
+       3: dup
+       4: aload_0
+       5: aload_1
+       6: aload_0
+       7: invokevirtual #152                // Method net/minecraft/world/entity/Mob.getX:()D
+      10: aload_0
+      11: invokevirtual #156                // Method net/minecraft/world/entity/Mob.getY:()D
+      14: aload_0
+      15: invokevirtual #159                // Method net/minecraft/world/entity/Mob.getZ:()D
+      18: aload_2
+      19: aload_3
+      20: aload         4
+      22: aload         5
+      24: invokeinterface #182,  1          // InterfaceMethod net/neoforged/neoforge/common/extensions/IOwnedSpawner.getOwner:()Lcom/mojang/datafixers/util/Either;
+      29: invokespecial #162                // Method net/neoforged/neoforge/event/entity/living/FinalizeSpawnEvent."<init>":(Lnet/minecraft/world/entity/Mob;Lnet/minecraft/world/level/ServerLevelAccessor;DDDLnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/MobSpawnType;Lnet/minecraft/world/entity/SpawnGroupData;Lcom/mojang/datafixers/util/Either;)V
+      32: astore        7
+      34: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      37: aload         7
+      39: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      44: pop
+      45: aload         7
+      47: invokevirtual #165                // Method net/neoforged/neoforge/event/entity/living/FinalizeSpawnEvent.isCanceled:()Z
+      50: ifne          79
+      53: iload         6
+      55: ifeq          79
+      58: aload_0
+      59: aload_1
+      60: aload         7
+      62: invokevirtual #166                // Method net/neoforged/neoforge/event/entity/living/FinalizeSpawnEvent.getDifficulty:()Lnet/minecraft/world/DifficultyInstance;
+      65: aload         7
+      67: invokevirtual #170                // Method net/neoforged/neoforge/event/entity/living/FinalizeSpawnEvent.getSpawnType:()Lnet/minecraft/world/entity/MobSpawnType;
+      70: aload         7
+      72: invokevirtual #174                // Method net/neoforged/neoforge/event/entity/living/FinalizeSpawnEvent.getSpawnData:()Lnet/minecraft/world/entity/SpawnGroupData;
+      75: invokevirtual #178                // Method net/minecraft/world/entity/Mob.finalizeSpawn:(Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/MobSpawnType;Lnet/minecraft/world/entity/SpawnGroupData;)Lnet/minecraft/world/entity/SpawnGroupData;
+      78: pop
+      79: aload         7
+      81: areturn
+
+  public static net.neoforged.neoforge.event.entity.player.PlayerSpawnPhantomsEvent firePlayerSpawnPhantoms(net.minecraft.server.level.ServerPlayer, net.minecraft.server.level.ServerLevel, net.minecraft.core.BlockPos);
+    Code:
+       0: aload_1
+       1: aload_2
+       2: invokevirtual #188                // Method net/minecraft/server/level/ServerLevel.getCurrentDifficultyAt:(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/DifficultyInstance;
+       5: invokevirtual #194                // Method net/minecraft/world/DifficultyInstance.getDifficulty:()Lnet/minecraft/world/Difficulty;
+       8: astore_3
+       9: new           #199                // class net/neoforged/neoforge/event/entity/player/PlayerSpawnPhantomsEvent
+      12: dup
+      13: aload_0
+      14: iconst_1
+      15: aload_1
+      16: getfield      #201                // Field net/minecraft/server/level/ServerLevel.random:Lnet/minecraft/util/RandomSource;
+      19: aload_3
+      20: invokevirtual #205                // Method net/minecraft/world/Difficulty.getId:()I
+      23: iconst_1
+      24: iadd
+      25: invokeinterface #211,  2          // InterfaceMethod net/minecraft/util/RandomSource.nextInt:(I)I
+      30: iadd
+      31: invokespecial #217                // Method net/neoforged/neoforge/event/entity/player/PlayerSpawnPhantomsEvent."<init>":(Lnet/minecraft/world/entity/player/Player;I)V
+      34: astore        4
+      36: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      39: aload         4
+      41: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      46: pop
+      47: aload         4
+      49: areturn
+
+  public static boolean checkMobDespawn(net.minecraft.world.entity.Mob);
+    Code:
+       0: new           #220                // class net/neoforged/neoforge/event/entity/living/MobDespawnEvent
+       3: dup
+       4: aload_0
+       5: aload_0
+       6: invokevirtual #222                // Method net/minecraft/world/entity/Mob.level:()Lnet/minecraft/world/level/Level;
+       9: checkcast     #189                // class net/minecraft/server/level/ServerLevel
+      12: invokespecial #226                // Method net/neoforged/neoforge/event/entity/living/MobDespawnEvent."<init>":(Lnet/minecraft/world/entity/Mob;Lnet/minecraft/world/level/ServerLevelAccessor;)V
+      15: astore_1
+      16: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      19: aload_1
+      20: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      25: pop
+      26: getstatic     #229                // Field net/neoforged/neoforge/event/EventHooks$1.$SwitchMap$net$neoforged$neoforge$event$entity$living$MobDespawnEvent$Result:[I
+      29: aload_1
+      30: invokevirtual #235                // Method net/neoforged/neoforge/event/entity/living/MobDespawnEvent.getResult:()Lnet/neoforged/neoforge/event/entity/living/MobDespawnEvent$Result;
+      33: invokevirtual #238                // Method net/neoforged/neoforge/event/entity/living/MobDespawnEvent$Result.ordinal:()I
+      36: iaload
+      37: tableswitch   { // 1 to 3
+
+                     1: 64
+
+                     2: 71
+
+                     3: 74
+               default: 79
+          }
+      64: aload_0
+      65: invokevirtual #243                // Method net/minecraft/world/entity/Mob.discard:()V
+      68: goto          79
+      71: goto          79
+      74: aload_0
+      75: iconst_0
+      76: invokevirtual #246                // Method net/minecraft/world/entity/Mob.setNoActionTime:(I)V
+      79: aload_1
+      80: invokevirtual #235                // Method net/neoforged/neoforge/event/entity/living/MobDespawnEvent.getResult:()Lnet/neoforged/neoforge/event/entity/living/MobDespawnEvent$Result;
+      83: getstatic     #250                // Field net/neoforged/neoforge/event/entity/living/MobDespawnEvent$Result.DEFAULT:Lnet/neoforged/neoforge/event/entity/living/MobDespawnEvent$Result;
+      86: if_acmpeq     93
+      89: iconst_1
+      90: goto          94
+      93: iconst_0
+      94: ireturn
+
+  public static int getItemBurnTime(net.minecraft.world.item.ItemStack, int, net.minecraft.world.item.crafting.RecipeType<?>);
+    Code:
+       0: new           #253                // class net/neoforged/neoforge/event/furnace/FurnaceFuelBurnTimeEvent
+       3: dup
+       4: aload_0
+       5: iload_1
+       6: aload_2
+       7: invokespecial #255                // Method net/neoforged/neoforge/event/furnace/FurnaceFuelBurnTimeEvent."<init>":(Lnet/minecraft/world/item/ItemStack;ILnet/minecraft/world/item/crafting/RecipeType;)V
+      10: astore_3
+      11: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      14: aload_3
+      15: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      20: pop
+      21: aload_3
+      22: invokevirtual #258                // Method net/neoforged/neoforge/event/furnace/FurnaceFuelBurnTimeEvent.getBurnTime:()I
+      25: ireturn
+
+  public static int getExperienceDrop(net.minecraft.world.entity.LivingEntity, net.minecraft.world.entity.player.Player, int);
+    Code:
+       0: new           #261                // class net/neoforged/neoforge/event/entity/living/LivingExperienceDropEvent
+       3: dup
+       4: aload_0
+       5: aload_1
+       6: iload_2
+       7: invokespecial #263                // Method net/neoforged/neoforge/event/entity/living/LivingExperienceDropEvent."<init>":(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/player/Player;I)V
+      10: astore_3
+      11: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      14: aload_3
+      15: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      20: checkcast     #261                // class net/neoforged/neoforge/event/entity/living/LivingExperienceDropEvent
+      23: invokevirtual #266                // Method net/neoforged/neoforge/event/entity/living/LivingExperienceDropEvent.isCanceled:()Z
+      26: ifeq          31
+      29: iconst_0
+      30: ireturn
+      31: aload_3
+      32: invokevirtual #267                // Method net/neoforged/neoforge/event/entity/living/LivingExperienceDropEvent.getDroppedExperience:()I
+      35: ireturn
+
+  public static int getMaxSpawnClusterSize(net.minecraft.world.entity.Mob);
+    Code:
+       0: new           #270                // class net/neoforged/neoforge/event/entity/living/SpawnClusterSizeEvent
+       3: dup
+       4: aload_0
+       5: invokespecial #272                // Method net/neoforged/neoforge/event/entity/living/SpawnClusterSizeEvent."<init>":(Lnet/minecraft/world/entity/Mob;)V
+       8: astore_1
+       9: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      12: aload_1
+      13: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      18: pop
+      19: aload_1
+      20: invokevirtual #275                // Method net/neoforged/neoforge/event/entity/living/SpawnClusterSizeEvent.getSize:()I
+      23: ireturn
+
+  public static net.minecraft.network.chat.Component getPlayerDisplayName(net.minecraft.world.entity.player.Player, net.minecraft.network.chat.Component);
+    Code:
+       0: new           #278                // class net/neoforged/neoforge/event/entity/player/PlayerEvent$NameFormat
+       3: dup
+       4: aload_0
+       5: aload_1
+       6: invokespecial #280                // Method net/neoforged/neoforge/event/entity/player/PlayerEvent$NameFormat."<init>":(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/network/chat/Component;)V
+       9: astore_2
+      10: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      13: aload_2
+      14: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      19: pop
+      20: aload_2
+      21: invokevirtual #283                // Method net/neoforged/neoforge/event/entity/player/PlayerEvent$NameFormat.getDisplayname:()Lnet/minecraft/network/chat/Component;
+      24: areturn
+
+  public static net.minecraft.network.chat.Component getPlayerTabListDisplayName(net.minecraft.world.entity.player.Player);
+    Code:
+       0: new           #287                // class net/neoforged/neoforge/event/entity/player/PlayerEvent$TabListNameFormat
+       3: dup
+       4: aload_0
+       5: invokespecial #289                // Method net/neoforged/neoforge/event/entity/player/PlayerEvent$TabListNameFormat."<init>":(Lnet/minecraft/world/entity/player/Player;)V
+       8: astore_1
+       9: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      12: aload_1
+      13: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      18: pop
+      19: aload_1
+      20: invokevirtual #292                // Method net/neoforged/neoforge/event/entity/player/PlayerEvent$TabListNameFormat.getDisplayName:()Lnet/minecraft/network/chat/Component;
+      23: areturn
+
+  public static net.minecraft.world.level.block.state.BlockState fireFluidPlaceBlockEvent(net.minecraft.world.level.LevelAccessor, net.minecraft.core.BlockPos, net.minecraft.core.BlockPos, net.minecraft.world.level.block.state.BlockState);
+    Code:
+       0: new           #295                // class net/neoforged/neoforge/event/level/BlockEvent$FluidPlaceBlockEvent
+       3: dup
+       4: aload_0
+       5: aload_1
+       6: aload_2
+       7: aload_3
+       8: invokespecial #297                // Method net/neoforged/neoforge/event/level/BlockEvent$FluidPlaceBlockEvent."<init>":(Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)V
+      11: astore        4
+      13: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      16: aload         4
+      18: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      23: pop
+      24: aload         4
+      26: invokevirtual #300                // Method net/neoforged/neoforge/event/level/BlockEvent$FluidPlaceBlockEvent.getNewState:()Lnet/minecraft/world/level/block/state/BlockState;
+      29: areturn
+
+  public static net.neoforged.neoforge.event.entity.player.ItemTooltipEvent onItemTooltip(net.minecraft.world.item.ItemStack, net.minecraft.world.entity.player.Player, java.util.List<net.minecraft.network.chat.Component>, net.minecraft.world.item.TooltipFlag, net.minecraft.world.item.Item$TooltipContext);
+    Code:
+       0: new           #304                // class net/neoforged/neoforge/event/entity/player/ItemTooltipEvent
+       3: dup
+       4: aload_0
+       5: aload_1
+       6: aload_2
+       7: aload_3
+       8: aload         4
+      10: invokespecial #306                // Method net/neoforged/neoforge/event/entity/player/ItemTooltipEvent."<init>":(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/player/Player;Ljava/util/List;Lnet/minecraft/world/item/TooltipFlag;Lnet/minecraft/world/item/Item$TooltipContext;)V
+      13: astore        5
+      15: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      18: aload         5
+      20: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      25: pop
+      26: aload         5
+      28: areturn
+
+  public static boolean onEntityStruckByLightning(net.minecraft.world.entity.Entity, net.minecraft.world.entity.LightningBolt);
+    Code:
+       0: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #309                // class net/neoforged/neoforge/event/entity/EntityStruckByLightningEvent
+       6: dup
+       7: aload_0
+       8: aload_1
+       9: invokespecial #311                // Method net/neoforged/neoforge/event/entity/EntityStruckByLightningEvent."<init>":(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/LightningBolt;)V
+      12: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      17: checkcast     #309                // class net/neoforged/neoforge/event/entity/EntityStruckByLightningEvent
+      20: invokevirtual #314                // Method net/neoforged/neoforge/event/entity/EntityStruckByLightningEvent.isCanceled:()Z
+      23: ireturn
+
+  public static int onItemUseStart(net.minecraft.world.entity.LivingEntity, net.minecraft.world.item.ItemStack, int);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: aload_0
+       3: getstatic     #315                // Field net/minecraft/world/InteractionHand.MAIN_HAND:Lnet/minecraft/world/InteractionHand;
+       6: invokevirtual #321                // Method net/minecraft/world/entity/LivingEntity.getItemInHand:(Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/item/ItemStack;
+       9: aload_1
+      10: if_acmpne     19
+      13: getstatic     #315                // Field net/minecraft/world/InteractionHand.MAIN_HAND:Lnet/minecraft/world/InteractionHand;
+      16: goto          22
+      19: getstatic     #327                // Field net/minecraft/world/InteractionHand.OFF_HAND:Lnet/minecraft/world/InteractionHand;
+      22: iload_2
+      23: invokestatic  #330                // Method onItemUseStart:(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/InteractionHand;I)I
+      26: ireturn
+
+  public static int onItemUseStart(net.minecraft.world.entity.LivingEntity, net.minecraft.world.item.ItemStack, net.minecraft.world.InteractionHand, int);
+    Code:
+       0: new           #336                // class net/neoforged/neoforge/event/entity/living/LivingEntityUseItemEvent$Start
+       3: dup
+       4: aload_0
+       5: aload_1
+       6: aload_2
+       7: iload_3
+       8: invokespecial #338                // Method net/neoforged/neoforge/event/entity/living/LivingEntityUseItemEvent$Start."<init>":(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/InteractionHand;I)V
+      11: astore        4
+      13: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      16: aload         4
+      18: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      23: checkcast     #336                // class net/neoforged/neoforge/event/entity/living/LivingEntityUseItemEvent$Start
+      26: invokevirtual #341                // Method net/neoforged/neoforge/event/entity/living/LivingEntityUseItemEvent$Start.isCanceled:()Z
+      29: ifeq          36
+      32: iconst_m1
+      33: goto          41
+      36: aload         4
+      38: invokevirtual #342                // Method net/neoforged/neoforge/event/entity/living/LivingEntityUseItemEvent$Start.getDuration:()I
+      41: ireturn
+
+  public static int onItemUseTick(net.minecraft.world.entity.LivingEntity, net.minecraft.world.item.ItemStack, int);
+    Code:
+       0: new           #345                // class net/neoforged/neoforge/event/entity/living/LivingEntityUseItemEvent$Tick
+       3: dup
+       4: aload_0
+       5: aload_1
+       6: iload_2
+       7: invokespecial #347                // Method net/neoforged/neoforge/event/entity/living/LivingEntityUseItemEvent$Tick."<init>":(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;I)V
+      10: astore_3
+      11: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      14: aload_3
+      15: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      20: checkcast     #345                // class net/neoforged/neoforge/event/entity/living/LivingEntityUseItemEvent$Tick
+      23: invokevirtual #350                // Method net/neoforged/neoforge/event/entity/living/LivingEntityUseItemEvent$Tick.isCanceled:()Z
+      26: ifeq          33
+      29: iconst_m1
+      30: goto          37
+      33: aload_3
+      34: invokevirtual #351                // Method net/neoforged/neoforge/event/entity/living/LivingEntityUseItemEvent$Tick.getDuration:()I
+      37: ireturn
+
+  public static boolean onUseItemStop(net.minecraft.world.entity.LivingEntity, net.minecraft.world.item.ItemStack, int);
+    Code:
+       0: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #352                // class net/neoforged/neoforge/event/entity/living/LivingEntityUseItemEvent$Stop
+       6: dup
+       7: aload_0
+       8: aload_1
+       9: iload_2
+      10: invokespecial #354                // Method net/neoforged/neoforge/event/entity/living/LivingEntityUseItemEvent$Stop."<init>":(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;I)V
+      13: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      18: checkcast     #352                // class net/neoforged/neoforge/event/entity/living/LivingEntityUseItemEvent$Stop
+      21: invokevirtual #355                // Method net/neoforged/neoforge/event/entity/living/LivingEntityUseItemEvent$Stop.isCanceled:()Z
+      24: ireturn
+
+  public static net.minecraft.world.item.ItemStack onItemUseFinish(net.minecraft.world.entity.LivingEntity, net.minecraft.world.item.ItemStack, int, net.minecraft.world.item.ItemStack);
+    Code:
+       0: new           #356                // class net/neoforged/neoforge/event/entity/living/LivingEntityUseItemEvent$Finish
+       3: dup
+       4: aload_0
+       5: aload_1
+       6: iload_2
+       7: aload_3
+       8: invokespecial #358                // Method net/neoforged/neoforge/event/entity/living/LivingEntityUseItemEvent$Finish."<init>":(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;ILnet/minecraft/world/item/ItemStack;)V
+      11: astore        4
+      13: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      16: aload         4
+      18: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      23: pop
+      24: aload         4
+      26: invokevirtual #361                // Method net/neoforged/neoforge/event/entity/living/LivingEntityUseItemEvent$Finish.getResultStack:()Lnet/minecraft/world/item/ItemStack;
+      29: areturn
+
+  public static void onStartEntityTracking(net.minecraft.world.entity.Entity, net.minecraft.world.entity.player.Player);
+    Code:
+       0: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #365                // class net/neoforged/neoforge/event/entity/player/PlayerEvent$StartTracking
+       6: dup
+       7: aload_1
+       8: aload_0
+       9: invokespecial #367                // Method net/neoforged/neoforge/event/entity/player/PlayerEvent$StartTracking."<init>":(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/entity/Entity;)V
+      12: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      17: pop
+      18: return
+
+  public static void onStopEntityTracking(net.minecraft.world.entity.Entity, net.minecraft.world.entity.player.Player);
+    Code:
+       0: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #370                // class net/neoforged/neoforge/event/entity/player/PlayerEvent$StopTracking
+       6: dup
+       7: aload_1
+       8: aload_0
+       9: invokespecial #372                // Method net/neoforged/neoforge/event/entity/player/PlayerEvent$StopTracking."<init>":(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/entity/Entity;)V
+      12: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      17: pop
+      18: return
+
+  public static void firePlayerLoadingEvent(net.minecraft.world.entity.player.Player, java.io.File, java.lang.String);
+    Code:
+       0: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #373                // class net/neoforged/neoforge/event/entity/player/PlayerEvent$LoadFromFile
+       6: dup
+       7: aload_0
+       8: aload_1
+       9: aload_2
+      10: invokespecial #375                // Method net/neoforged/neoforge/event/entity/player/PlayerEvent$LoadFromFile."<init>":(Lnet/minecraft/world/entity/player/Player;Ljava/io/File;Ljava/lang/String;)V
+      13: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      18: pop
+      19: return
+
+  public static void firePlayerSavingEvent(net.minecraft.world.entity.player.Player, java.io.File, java.lang.String);
+    Code:
+       0: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #378                // class net/neoforged/neoforge/event/entity/player/PlayerEvent$SaveToFile
+       6: dup
+       7: aload_0
+       8: aload_1
+       9: aload_2
+      10: invokespecial #380                // Method net/neoforged/neoforge/event/entity/player/PlayerEvent$SaveToFile."<init>":(Lnet/minecraft/world/entity/player/Player;Ljava/io/File;Ljava/lang/String;)V
+      13: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      18: pop
+      19: return
+
+  public static void firePlayerLoadingEvent(net.minecraft.world.entity.player.Player, net.minecraft.world.level.storage.PlayerDataStorage, java.lang.String);
+    Code:
+       0: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #373                // class net/neoforged/neoforge/event/entity/player/PlayerEvent$LoadFromFile
+       6: dup
+       7: aload_0
+       8: aload_1
+       9: invokevirtual #381                // Method net/minecraft/world/level/storage/PlayerDataStorage.getPlayerDir:()Ljava/io/File;
+      12: aload_2
+      13: invokespecial #375                // Method net/neoforged/neoforge/event/entity/player/PlayerEvent$LoadFromFile."<init>":(Lnet/minecraft/world/entity/player/Player;Ljava/io/File;Ljava/lang/String;)V
+      16: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      21: pop
+      22: return
+
+  public static net.minecraft.world.level.block.state.BlockState onToolUse(net.minecraft.world.level.block.state.BlockState, net.minecraft.world.item.context.UseOnContext, net.neoforged.neoforge.common.ItemAbility, boolean);
+    Code:
+       0: new           #387                // class net/neoforged/neoforge/event/level/BlockEvent$BlockToolModificationEvent
+       3: dup
+       4: aload_0
+       5: aload_1
+       6: aload_2
+       7: iload_3
+       8: invokespecial #389                // Method net/neoforged/neoforge/event/level/BlockEvent$BlockToolModificationEvent."<init>":(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/item/context/UseOnContext;Lnet/neoforged/neoforge/common/ItemAbility;Z)V
+      11: astore        4
+      13: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      16: aload         4
+      18: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      23: checkcast     #387                // class net/neoforged/neoforge/event/level/BlockEvent$BlockToolModificationEvent
+      26: invokevirtual #392                // Method net/neoforged/neoforge/event/level/BlockEvent$BlockToolModificationEvent.isCanceled:()Z
+      29: ifeq          36
+      32: aconst_null
+      33: goto          41
+      36: aload         4
+      38: invokevirtual #393                // Method net/neoforged/neoforge/event/level/BlockEvent$BlockToolModificationEvent.getFinalState:()Lnet/minecraft/world/level/block/state/BlockState;
+      41: areturn
+
+  public static net.neoforged.neoforge.event.entity.player.BonemealEvent fireBonemealEvent(net.minecraft.world.entity.player.Player, net.minecraft.world.level.Level, net.minecraft.core.BlockPos, net.minecraft.world.level.block.state.BlockState, net.minecraft.world.item.ItemStack);
+    Code:
+       0: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #396                // class net/neoforged/neoforge/event/entity/player/BonemealEvent
+       6: dup
+       7: aload_0
+       8: aload_1
+       9: aload_2
+      10: aload_3
+      11: aload         4
+      13: invokespecial #398                // Method net/neoforged/neoforge/event/entity/player/BonemealEvent."<init>":(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/item/ItemStack;)V
+      16: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      21: checkcast     #396                // class net/neoforged/neoforge/event/entity/player/BonemealEvent
+      24: areturn
+
+  public static net.neoforged.neoforge.event.PlayLevelSoundEvent$AtEntity onPlaySoundAtEntity(net.minecraft.world.entity.Entity, net.minecraft.core.Holder<net.minecraft.sounds.SoundEvent>, net.minecraft.sounds.SoundSource, float, float);
+    Code:
+       0: new           #401                // class net/neoforged/neoforge/event/PlayLevelSoundEvent$AtEntity
+       3: dup
+       4: aload_0
+       5: aload_1
+       6: aload_2
+       7: fload_3
+       8: fload         4
+      10: invokespecial #403                // Method net/neoforged/neoforge/event/PlayLevelSoundEvent$AtEntity."<init>":(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/core/Holder;Lnet/minecraft/sounds/SoundSource;FF)V
+      13: astore        5
+      15: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      18: aload         5
+      20: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      25: pop
+      26: aload         5
+      28: areturn
+
+  public static net.neoforged.neoforge.event.PlayLevelSoundEvent$AtPosition onPlaySoundAtPosition(net.minecraft.world.level.Level, double, double, double, net.minecraft.core.Holder<net.minecraft.sounds.SoundEvent>, net.minecraft.sounds.SoundSource, float, float);
+    Code:
+       0: new           #406                // class net/neoforged/neoforge/event/PlayLevelSoundEvent$AtPosition
+       3: dup
+       4: aload_0
+       5: new           #408                // class net/minecraft/world/phys/Vec3
+       8: dup
+       9: dload_1
+      10: dload_3
+      11: dload         5
+      13: invokespecial #410                // Method net/minecraft/world/phys/Vec3."<init>":(DDD)V
+      16: aload         7
+      18: aload         8
+      20: fload         9
+      22: fload         10
+      24: invokespecial #413                // Method net/neoforged/neoforge/event/PlayLevelSoundEvent$AtPosition."<init>":(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/core/Holder;Lnet/minecraft/sounds/SoundSource;FF)V
+      27: astore        11
+      29: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      32: aload         11
+      34: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      39: pop
+      40: aload         11
+      42: areturn
+
+  public static int onItemExpire(net.minecraft.world.entity.item.ItemEntity);
+    Code:
+       0: new           #416                // class net/neoforged/neoforge/event/entity/item/ItemExpireEvent
+       3: dup
+       4: aload_0
+       5: invokespecial #418                // Method net/neoforged/neoforge/event/entity/item/ItemExpireEvent."<init>":(Lnet/minecraft/world/entity/item/ItemEntity;)V
+       8: astore_1
+       9: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      12: aload_1
+      13: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      18: pop
+      19: aload_1
+      20: invokevirtual #421                // Method net/neoforged/neoforge/event/entity/item/ItemExpireEvent.getExtraLife:()I
+      23: ireturn
+
+  public static net.neoforged.neoforge.event.entity.player.ItemEntityPickupEvent$Pre fireItemPickupPre(net.minecraft.world.entity.item.ItemEntity, net.minecraft.world.entity.player.Player);
+    Code:
+       0: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #424                // class net/neoforged/neoforge/event/entity/player/ItemEntityPickupEvent$Pre
+       6: dup
+       7: aload_1
+       8: aload_0
+       9: invokespecial #426                // Method net/neoforged/neoforge/event/entity/player/ItemEntityPickupEvent$Pre."<init>":(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/entity/item/ItemEntity;)V
+      12: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      17: checkcast     #424                // class net/neoforged/neoforge/event/entity/player/ItemEntityPickupEvent$Pre
+      20: areturn
+
+  public static void fireItemPickupPost(net.minecraft.world.entity.item.ItemEntity, net.minecraft.world.entity.player.Player, net.minecraft.world.item.ItemStack);
+    Code:
+       0: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #429                // class net/neoforged/neoforge/event/entity/player/ItemEntityPickupEvent$Post
+       6: dup
+       7: aload_1
+       8: aload_0
+       9: aload_2
+      10: invokespecial #431                // Method net/neoforged/neoforge/event/entity/player/ItemEntityPickupEvent$Post."<init>":(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/entity/item/ItemEntity;Lnet/minecraft/world/item/ItemStack;)V
+      13: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      18: pop
+      19: return
+
+  public static boolean canMountEntity(net.minecraft.world.entity.Entity, net.minecraft.world.entity.Entity, boolean);
+    Code:
+       0: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #434                // class net/neoforged/neoforge/event/entity/EntityMountEvent
+       6: dup
+       7: aload_0
+       8: aload_1
+       9: aload_0
+      10: invokevirtual #436                // Method net/minecraft/world/entity/Entity.level:()Lnet/minecraft/world/level/Level;
+      13: iload_2
+      14: invokespecial #439                // Method net/neoforged/neoforge/event/entity/EntityMountEvent."<init>":(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/level/Level;Z)V
+      17: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      22: checkcast     #434                // class net/neoforged/neoforge/event/entity/EntityMountEvent
+      25: invokevirtual #442                // Method net/neoforged/neoforge/event/entity/EntityMountEvent.isCanceled:()Z
+      28: istore_3
+      29: iload_3
+      30: ifeq          59
+      33: aload_0
+      34: aload_0
+      35: invokevirtual #443                // Method net/minecraft/world/entity/Entity.getX:()D
+      38: aload_0
+      39: invokevirtual #444                // Method net/minecraft/world/entity/Entity.getY:()D
+      42: aload_0
+      43: invokevirtual #445                // Method net/minecraft/world/entity/Entity.getZ:()D
+      46: aload_0
+      47: getfield      #446                // Field net/minecraft/world/entity/Entity.yRotO:F
+      50: aload_0
+      51: getfield      #450                // Field net/minecraft/world/entity/Entity.xRotO:F
+      54: invokevirtual #453                // Method net/minecraft/world/entity/Entity.absMoveTo:(DDDFF)V
+      57: iconst_0
+      58: ireturn
+      59: iconst_1
+      60: ireturn
+
+  public static boolean onAnimalTame(net.minecraft.world.entity.animal.Animal, net.minecraft.world.entity.player.Player);
+    Code:
+       0: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #457                // class net/neoforged/neoforge/event/entity/living/AnimalTameEvent
+       6: dup
+       7: aload_0
+       8: aload_1
+       9: invokespecial #459                // Method net/neoforged/neoforge/event/entity/living/AnimalTameEvent."<init>":(Lnet/minecraft/world/entity/animal/Animal;Lnet/minecraft/world/entity/player/Player;)V
+      12: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      17: checkcast     #457                // class net/neoforged/neoforge/event/entity/living/AnimalTameEvent
+      20: invokevirtual #462                // Method net/neoforged/neoforge/event/entity/living/AnimalTameEvent.isCanceled:()Z
+      23: ireturn
+
+  public static com.mojang.datafixers.util.Either<net.minecraft.world.entity.player.Player$BedSleepingProblem, net.minecraft.util.Unit> canPlayerStartSleeping(net.minecraft.server.level.ServerPlayer, net.minecraft.core.BlockPos, com.mojang.datafixers.util.Either<net.minecraft.world.entity.player.Player$BedSleepingProblem, net.minecraft.util.Unit>);
+    Code:
+       0: new           #463                // class net/neoforged/neoforge/event/entity/player/CanPlayerSleepEvent
+       3: dup
+       4: aload_0
+       5: aload_1
+       6: aload_2
+       7: invokevirtual #465                // Method com/mojang/datafixers/util/Either.left:()Ljava/util/Optional;
+      10: aconst_null
+      11: invokevirtual #470                // Method java/util/Optional.orElse:(Ljava/lang/Object;)Ljava/lang/Object;
+      14: checkcast     #474                // class net/minecraft/world/entity/player/Player$BedSleepingProblem
+      17: invokespecial #476                // Method net/neoforged/neoforge/event/entity/player/CanPlayerSleepEvent."<init>":(Lnet/minecraft/server/level/ServerPlayer;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/player/Player$BedSleepingProblem;)V
+      20: astore_3
+      21: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      24: aload_3
+      25: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      30: pop
+      31: aload_3
+      32: invokevirtual #479                // Method net/neoforged/neoforge/event/entity/player/CanPlayerSleepEvent.getProblem:()Lnet/minecraft/world/entity/player/Player$BedSleepingProblem;
+      35: ifnull        48
+      38: aload_3
+      39: invokevirtual #479                // Method net/neoforged/neoforge/event/entity/player/CanPlayerSleepEvent.getProblem:()Lnet/minecraft/world/entity/player/Player$BedSleepingProblem;
+      42: invokestatic  #483                // Method com/mojang/datafixers/util/Either.left:(Ljava/lang/Object;)Lcom/mojang/datafixers/util/Either;
+      45: goto          54
+      48: getstatic     #486                // Field net/minecraft/util/Unit.INSTANCE:Lnet/minecraft/util/Unit;
+      51: invokestatic  #492                // Method com/mojang/datafixers/util/Either.right:(Ljava/lang/Object;)Lcom/mojang/datafixers/util/Either;
+      54: areturn
+
+  public static void onPlayerWakeup(net.minecraft.world.entity.player.Player, boolean, boolean);
+    Code:
+       0: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #495                // class net/neoforged/neoforge/event/entity/player/PlayerWakeUpEvent
+       6: dup
+       7: aload_0
+       8: iload_1
+       9: iload_2
+      10: invokespecial #497                // Method net/neoforged/neoforge/event/entity/player/PlayerWakeUpEvent."<init>":(Lnet/minecraft/world/entity/player/Player;ZZ)V
+      13: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      18: pop
+      19: return
+
+  public static void onPlayerFall(net.minecraft.world.entity.player.Player, float, float);
+    Code:
+       0: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #500                // class net/neoforged/neoforge/event/entity/player/PlayerFlyableFallEvent
+       6: dup
+       7: aload_0
+       8: fload_1
+       9: fload_2
+      10: invokespecial #502                // Method net/neoforged/neoforge/event/entity/player/PlayerFlyableFallEvent."<init>":(Lnet/minecraft/world/entity/player/Player;FF)V
+      13: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      18: pop
+      19: return
+
+  public static boolean onPlayerSpawnSet(net.minecraft.world.entity.player.Player, net.minecraft.resources.ResourceKey<net.minecraft.world.level.Level>, net.minecraft.core.BlockPos, boolean);
+    Code:
+       0: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #505                // class net/neoforged/neoforge/event/entity/player/PlayerSetSpawnEvent
+       6: dup
+       7: aload_0
+       8: aload_1
+       9: aload_2
+      10: iload_3
+      11: invokespecial #507                // Method net/neoforged/neoforge/event/entity/player/PlayerSetSpawnEvent."<init>":(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/core/BlockPos;Z)V
+      14: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      19: checkcast     #505                // class net/neoforged/neoforge/event/entity/player/PlayerSetSpawnEvent
+      22: invokevirtual #510                // Method net/neoforged/neoforge/event/entity/player/PlayerSetSpawnEvent.isCanceled:()Z
+      25: ireturn
+
+  public static void onPlayerClone(net.minecraft.world.entity.player.Player, net.minecraft.world.entity.player.Player, boolean);
+    Code:
+       0: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #511                // class net/neoforged/neoforge/event/entity/player/PlayerEvent$Clone
+       6: dup
+       7: aload_0
+       8: aload_1
+       9: iload_2
+      10: invokespecial #513                // Method net/neoforged/neoforge/event/entity/player/PlayerEvent$Clone."<init>":(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/entity/player/Player;Z)V
+      13: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      18: pop
+      19: return
+
+  public static boolean onExplosionStart(net.minecraft.world.level.Level, net.minecraft.world.level.Explosion);
+    Code:
+       0: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #516                // class net/neoforged/neoforge/event/level/ExplosionEvent$Start
+       6: dup
+       7: aload_0
+       8: aload_1
+       9: invokespecial #518                // Method net/neoforged/neoforge/event/level/ExplosionEvent$Start."<init>":(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/level/Explosion;)V
+      12: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      17: checkcast     #516                // class net/neoforged/neoforge/event/level/ExplosionEvent$Start
+      20: invokevirtual #521                // Method net/neoforged/neoforge/event/level/ExplosionEvent$Start.isCanceled:()Z
+      23: ireturn
+
+  public static void onExplosionDetonate(net.minecraft.world.level.Level, net.minecraft.world.level.Explosion, java.util.List<net.minecraft.world.entity.Entity>, double);
+    Code:
+       0: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #522                // class net/neoforged/neoforge/event/level/ExplosionEvent$Detonate
+       6: dup
+       7: aload_0
+       8: aload_1
+       9: aload_2
+      10: invokespecial #524                // Method net/neoforged/neoforge/event/level/ExplosionEvent$Detonate."<init>":(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/level/Explosion;Ljava/util/List;)V
+      13: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      18: pop
+      19: return
+
+  public static net.minecraft.world.phys.Vec3 getExplosionKnockback(net.minecraft.world.level.Level, net.minecraft.world.level.Explosion, net.minecraft.world.entity.Entity, net.minecraft.world.phys.Vec3);
+    Code:
+       0: new           #527                // class net/neoforged/neoforge/event/level/ExplosionKnockbackEvent
+       3: dup
+       4: aload_0
+       5: aload_1
+       6: aload_2
+       7: aload_3
+       8: invokespecial #529                // Method net/neoforged/neoforge/event/level/ExplosionKnockbackEvent."<init>":(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/level/Explosion;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/Vec3;)V
+      11: astore        4
+      13: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      16: aload         4
+      18: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      23: pop
+      24: aload         4
+      26: invokevirtual #532                // Method net/neoforged/neoforge/event/level/ExplosionKnockbackEvent.getKnockbackVelocity:()Lnet/minecraft/world/phys/Vec3;
+      29: areturn
+
+  public static boolean onCreateWorldSpawn(net.minecraft.world.level.Level, net.minecraft.world.level.storage.ServerLevelData);
+    Code:
+       0: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #536                // class net/neoforged/neoforge/event/level/LevelEvent$CreateSpawnPosition
+       6: dup
+       7: aload_0
+       8: aload_1
+       9: invokespecial #538                // Method net/neoforged/neoforge/event/level/LevelEvent$CreateSpawnPosition."<init>":(Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/world/level/storage/ServerLevelData;)V
+      12: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      17: checkcast     #536                // class net/neoforged/neoforge/event/level/LevelEvent$CreateSpawnPosition
+      20: invokevirtual #541                // Method net/neoforged/neoforge/event/level/LevelEvent$CreateSpawnPosition.isCanceled:()Z
+      23: ireturn
+
+  public static float onLivingHeal(net.minecraft.world.entity.LivingEntity, float);
+    Code:
+       0: new           #542                // class net/neoforged/neoforge/event/entity/living/LivingHealEvent
+       3: dup
+       4: aload_0
+       5: fload_1
+       6: invokespecial #544                // Method net/neoforged/neoforge/event/entity/living/LivingHealEvent."<init>":(Lnet/minecraft/world/entity/LivingEntity;F)V
+       9: astore_2
+      10: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      13: aload_2
+      14: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      19: checkcast     #542                // class net/neoforged/neoforge/event/entity/living/LivingHealEvent
+      22: invokevirtual #547                // Method net/neoforged/neoforge/event/entity/living/LivingHealEvent.isCanceled:()Z
+      25: ifeq          32
+      28: fconst_0
+      29: goto          36
+      32: aload_2
+      33: invokevirtual #548                // Method net/neoforged/neoforge/event/entity/living/LivingHealEvent.getAmount:()F
+      36: freturn
+
+  public static boolean onPotionAttemptBrew(net.minecraft.core.NonNullList<net.minecraft.world.item.ItemStack>);
+    Code:
+       0: aload_0
+       1: invokevirtual #551                // Method net/minecraft/core/NonNullList.size:()I
+       4: getstatic     #556                // Field net/minecraft/world/item/ItemStack.EMPTY:Lnet/minecraft/world/item/ItemStack;
+       7: invokestatic  #562                // Method net/minecraft/core/NonNullList.withSize:(ILjava/lang/Object;)Lnet/minecraft/core/NonNullList;
+      10: astore_1
+      11: iconst_0
+      12: istore_2
+      13: iload_2
+      14: aload_1
+      15: invokevirtual #551                // Method net/minecraft/core/NonNullList.size:()I
+      18: if_icmpge     44
+      21: aload_1
+      22: iload_2
+      23: aload_0
+      24: iload_2
+      25: invokevirtual #566                // Method net/minecraft/core/NonNullList.get:(I)Ljava/lang/Object;
+      28: checkcast     #557                // class net/minecraft/world/item/ItemStack
+      31: invokevirtual #567                // Method net/minecraft/world/item/ItemStack.copy:()Lnet/minecraft/world/item/ItemStack;
+      34: invokevirtual #570                // Method net/minecraft/core/NonNullList.set:(ILjava/lang/Object;)Ljava/lang/Object;
+      37: pop
+      38: iinc          2, 1
+      41: goto          13
+      44: new           #574                // class net/neoforged/neoforge/event/brewing/PotionBrewEvent$Pre
+      47: dup
+      48: aload_1
+      49: invokespecial #576                // Method net/neoforged/neoforge/event/brewing/PotionBrewEvent$Pre."<init>":(Lnet/minecraft/core/NonNullList;)V
+      52: astore_2
+      53: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      56: aload_2
+      57: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      62: checkcast     #574                // class net/neoforged/neoforge/event/brewing/PotionBrewEvent$Pre
+      65: invokevirtual #579                // Method net/neoforged/neoforge/event/brewing/PotionBrewEvent$Pre.isCanceled:()Z
+      68: ifeq          138
+      71: iconst_0
+      72: istore_3
+      73: iconst_0
+      74: istore        4
+      76: iload         4
+      78: aload_0
+      79: invokevirtual #551                // Method net/minecraft/core/NonNullList.size:()I
+      82: if_icmpge     128
+      85: iload_3
+      86: aload_1
+      87: iload         4
+      89: invokevirtual #566                // Method net/minecraft/core/NonNullList.get:(I)Ljava/lang/Object;
+      92: checkcast     #557                // class net/minecraft/world/item/ItemStack
+      95: aload_0
+      96: iload         4
+      98: invokevirtual #566                // Method net/minecraft/core/NonNullList.get:(I)Ljava/lang/Object;
+     101: checkcast     #557                // class net/minecraft/world/item/ItemStack
+     104: invokestatic  #580                // Method net/minecraft/world/item/ItemStack.matches:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)Z
+     107: ior
+     108: istore_3
+     109: aload_0
+     110: iload         4
+     112: aload_2
+     113: iload         4
+     115: invokevirtual #584                // Method net/neoforged/neoforge/event/brewing/PotionBrewEvent$Pre.getItem:(I)Lnet/minecraft/world/item/ItemStack;
+     118: invokevirtual #570                // Method net/minecraft/core/NonNullList.set:(ILjava/lang/Object;)Ljava/lang/Object;
+     121: pop
+     122: iinc          4, 1
+     125: goto          76
+     128: iload_3
+     129: ifeq          136
+     132: aload_0
+     133: invokestatic  #588                // Method onPotionBrewed:(Lnet/minecraft/core/NonNullList;)V
+     136: iconst_1
+     137: ireturn
+     138: iconst_0
+     139: ireturn
+
+  public static void onPotionBrewed(net.minecraft.core.NonNullList<net.minecraft.world.item.ItemStack>);
+    Code:
+       0: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #591                // class net/neoforged/neoforge/event/brewing/PotionBrewEvent$Post
+       6: dup
+       7: aload_0
+       8: invokespecial #593                // Method net/neoforged/neoforge/event/brewing/PotionBrewEvent$Post."<init>":(Lnet/minecraft/core/NonNullList;)V
+      11: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      16: pop
+      17: return
+
+  public static void onPlayerBrewedPotion(net.minecraft.world.entity.player.Player, net.minecraft.world.item.ItemStack);
+    Code:
+       0: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #594                // class net/neoforged/neoforge/event/brewing/PlayerBrewedPotionEvent
+       6: dup
+       7: aload_0
+       8: aload_1
+       9: invokespecial #596                // Method net/neoforged/neoforge/event/brewing/PlayerBrewedPotionEvent."<init>":(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/ItemStack;)V
+      12: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      17: pop
+      18: return
+
+  public static boolean canEntityContinueSleeping(net.minecraft.world.entity.LivingEntity, net.minecraft.world.entity.player.Player$BedSleepingProblem);
+    Code:
+       0: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #599                // class net/neoforged/neoforge/event/entity/player/CanContinueSleepingEvent
+       6: dup
+       7: aload_0
+       8: aload_1
+       9: invokespecial #601                // Method net/neoforged/neoforge/event/entity/player/CanContinueSleepingEvent."<init>":(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/player/Player$BedSleepingProblem;)V
+      12: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      17: checkcast     #599                // class net/neoforged/neoforge/event/entity/player/CanContinueSleepingEvent
+      20: invokevirtual #604                // Method net/neoforged/neoforge/event/entity/player/CanContinueSleepingEvent.mayContinueSleeping:()Z
+      23: ireturn
+
+  public static net.minecraft.world.InteractionResultHolder<net.minecraft.world.item.ItemStack> onArrowNock(net.minecraft.world.item.ItemStack, net.minecraft.world.level.Level, net.minecraft.world.entity.player.Player, net.minecraft.world.InteractionHand, boolean);
+    Code:
+       0: new           #607                // class net/neoforged/neoforge/event/entity/player/ArrowNockEvent
+       3: dup
+       4: aload_2
+       5: aload_0
+       6: aload_3
+       7: aload_1
+       8: iload         4
+      10: invokespecial #609                // Method net/neoforged/neoforge/event/entity/player/ArrowNockEvent."<init>":(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/InteractionHand;Lnet/minecraft/world/level/Level;Z)V
+      13: astore        5
+      15: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      18: aload         5
+      20: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      25: checkcast     #607                // class net/neoforged/neoforge/event/entity/player/ArrowNockEvent
+      28: invokevirtual #612                // Method net/neoforged/neoforge/event/entity/player/ArrowNockEvent.isCanceled:()Z
+      31: ifeq          46
+      34: new           #613                // class net/minecraft/world/InteractionResultHolder
+      37: dup
+      38: getstatic     #615                // Field net/minecraft/world/InteractionResult.FAIL:Lnet/minecraft/world/InteractionResult;
+      41: aload_0
+      42: invokespecial #621                // Method net/minecraft/world/InteractionResultHolder."<init>":(Lnet/minecraft/world/InteractionResult;Ljava/lang/Object;)V
+      45: areturn
+      46: aload         5
+      48: invokevirtual #624                // Method net/neoforged/neoforge/event/entity/player/ArrowNockEvent.getAction:()Lnet/minecraft/world/InteractionResultHolder;
+      51: areturn
+
+  public static int onArrowLoose(net.minecraft.world.item.ItemStack, net.minecraft.world.level.Level, net.minecraft.world.entity.player.Player, int, boolean);
+    Code:
+       0: new           #628                // class net/neoforged/neoforge/event/entity/player/ArrowLooseEvent
+       3: dup
+       4: aload_2
+       5: aload_0
+       6: aload_1
+       7: iload_3
+       8: iload         4
+      10: invokespecial #630                // Method net/neoforged/neoforge/event/entity/player/ArrowLooseEvent."<init>":(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;IZ)V
+      13: astore        5
+      15: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      18: aload         5
+      20: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      25: checkcast     #628                // class net/neoforged/neoforge/event/entity/player/ArrowLooseEvent
+      28: invokevirtual #633                // Method net/neoforged/neoforge/event/entity/player/ArrowLooseEvent.isCanceled:()Z
+      31: ifeq          36
+      34: iconst_m1
+      35: ireturn
+      36: aload         5
+      38: invokevirtual #634                // Method net/neoforged/neoforge/event/entity/player/ArrowLooseEvent.getCharge:()I
+      41: ireturn
+
+  public static boolean onProjectileImpact(net.minecraft.world.entity.projectile.Projectile, net.minecraft.world.phys.HitResult);
+    Code:
+       0: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #637                // class net/neoforged/neoforge/event/entity/ProjectileImpactEvent
+       6: dup
+       7: aload_0
+       8: aload_1
+       9: invokespecial #639                // Method net/neoforged/neoforge/event/entity/ProjectileImpactEvent."<init>":(Lnet/minecraft/world/entity/projectile/Projectile;Lnet/minecraft/world/phys/HitResult;)V
+      12: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      17: checkcast     #637                // class net/neoforged/neoforge/event/entity/ProjectileImpactEvent
+      20: invokevirtual #642                // Method net/neoforged/neoforge/event/entity/ProjectileImpactEvent.isCanceled:()Z
+      23: ireturn
+
+  public static net.minecraft.world.level.storage.loot.LootTable loadLootTable(net.minecraft.resources.ResourceLocation, net.minecraft.world.level.storage.loot.LootTable);
+    Code:
+       0: getstatic     #643                // Field net/minecraft/core/RegistryAccess.EMPTY:Lnet/minecraft/core/RegistryAccess$Frozen;
+       3: aload_0
+       4: aload_1
+       5: invokestatic  #648                // Method loadLootTable:(Lnet/minecraft/core/HolderLookup$Provider;Lnet/minecraft/resources/ResourceLocation;Lnet/minecraft/world/level/storage/loot/LootTable;)Lnet/minecraft/world/level/storage/loot/LootTable;
+       8: areturn
+
+  public static net.minecraft.world.level.storage.loot.LootTable loadLootTable(net.minecraft.core.HolderLookup$Provider, net.minecraft.resources.ResourceLocation, net.minecraft.world.level.storage.loot.LootTable);
+    Code:
+       0: aload_2
+       1: getstatic     #652                // Field net/minecraft/world/level/storage/loot/LootTable.EMPTY:Lnet/minecraft/world/level/storage/loot/LootTable;
+       4: if_acmpne     9
+       7: aconst_null
+       8: areturn
+       9: new           #657                // class net/neoforged/neoforge/event/LootTableLoadEvent
+      12: dup
+      13: aload_0
+      14: aload_1
+      15: aload_2
+      16: invokespecial #659                // Method net/neoforged/neoforge/event/LootTableLoadEvent."<init>":(Lnet/minecraft/core/HolderLookup$Provider;Lnet/minecraft/resources/ResourceLocation;Lnet/minecraft/world/level/storage/loot/LootTable;)V
+      19: astore_3
+      20: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      23: aload_3
+      24: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      29: checkcast     #657                // class net/neoforged/neoforge/event/LootTableLoadEvent
+      32: invokevirtual #662                // Method net/neoforged/neoforge/event/LootTableLoadEvent.isCanceled:()Z
+      35: ifne          48
+      38: aload_3
+      39: invokevirtual #663                // Method net/neoforged/neoforge/event/LootTableLoadEvent.getTable:()Lnet/minecraft/world/level/storage/loot/LootTable;
+      42: getstatic     #652                // Field net/minecraft/world/level/storage/loot/LootTable.EMPTY:Lnet/minecraft/world/level/storage/loot/LootTable;
+      45: if_acmpne     50
+      48: aconst_null
+      49: areturn
+      50: aload_3
+      51: invokevirtual #663                // Method net/neoforged/neoforge/event/LootTableLoadEvent.getTable:()Lnet/minecraft/world/level/storage/loot/LootTable;
+      54: areturn
+
+  public static boolean canCreateFluidSource(net.minecraft.world.level.Level, net.minecraft.core.BlockPos, net.minecraft.world.level.block.state.BlockState);
+    Code:
+       0: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #667                // class net/neoforged/neoforge/event/level/block/CreateFluidSourceEvent
+       6: dup
+       7: aload_0
+       8: aload_1
+       9: aload_2
+      10: invokespecial #669                // Method net/neoforged/neoforge/event/level/block/CreateFluidSourceEvent."<init>":(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)V
+      13: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      18: checkcast     #667                // class net/neoforged/neoforge/event/level/block/CreateFluidSourceEvent
+      21: invokevirtual #672                // Method net/neoforged/neoforge/event/level/block/CreateFluidSourceEvent.canConvert:()Z
+      24: ireturn
+
+  public static java.util.Optional<net.minecraft.world.level.portal.PortalShape> onTrySpawnPortal(net.minecraft.world.level.LevelAccessor, net.minecraft.core.BlockPos, java.util.Optional<net.minecraft.world.level.portal.PortalShape>);
+    Code:
+       0: aload_2
+       1: invokevirtual #145                // Method java/util/Optional.isPresent:()Z
+       4: ifne          9
+       7: aload_2
+       8: areturn
+       9: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      12: new           #675                // class net/neoforged/neoforge/event/level/BlockEvent$PortalSpawnEvent
+      15: dup
+      16: aload_0
+      17: aload_1
+      18: aload_0
+      19: aload_1
+      20: invokeinterface #35,  2           // InterfaceMethod net/minecraft/world/level/LevelAccessor.getBlockState:(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;
+      25: aload_2
+      26: invokevirtual #677                // Method java/util/Optional.get:()Ljava/lang/Object;
+      29: checkcast     #680                // class net/minecraft/world/level/portal/PortalShape
+      32: invokespecial #682                // Method net/neoforged/neoforge/event/level/BlockEvent$PortalSpawnEvent."<init>":(Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/portal/PortalShape;)V
+      35: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      40: checkcast     #675                // class net/neoforged/neoforge/event/level/BlockEvent$PortalSpawnEvent
+      43: invokevirtual #685                // Method net/neoforged/neoforge/event/level/BlockEvent$PortalSpawnEvent.isCanceled:()Z
+      46: ifne          53
+      49: aload_2
+      50: goto          56
+      53: invokestatic  #686                // Method java/util/Optional.empty:()Ljava/util/Optional;
+      56: areturn
+
+  public static int onEnchantmentLevelSet(net.minecraft.world.level.Level, net.minecraft.core.BlockPos, int, int, net.minecraft.world.item.ItemStack, int);
+    Code:
+       0: new           #689                // class net/neoforged/neoforge/event/enchanting/EnchantmentLevelSetEvent
+       3: dup
+       4: aload_0
+       5: aload_1
+       6: iload_2
+       7: iload_3
+       8: aload         4
+      10: iload         5
+      12: invokespecial #691                // Method net/neoforged/neoforge/event/enchanting/EnchantmentLevelSetEvent."<init>":(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;IILnet/minecraft/world/item/ItemStack;I)V
+      15: astore        6
+      17: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      20: aload         6
+      22: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      27: pop
+      28: aload         6
+      30: invokevirtual #694                // Method net/neoforged/neoforge/event/enchanting/EnchantmentLevelSetEvent.getEnchantLevel:()I
+      33: ireturn
+
+  public static boolean onEntityDestroyBlock(net.minecraft.world.entity.LivingEntity, net.minecraft.core.BlockPos, net.minecraft.world.level.block.state.BlockState);
+    Code:
+       0: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #697                // class net/neoforged/neoforge/event/entity/living/LivingDestroyBlockEvent
+       6: dup
+       7: aload_0
+       8: aload_1
+       9: aload_2
+      10: invokespecial #699                // Method net/neoforged/neoforge/event/entity/living/LivingDestroyBlockEvent."<init>":(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)V
+      13: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      18: checkcast     #697                // class net/neoforged/neoforge/event/entity/living/LivingDestroyBlockEvent
+      21: invokevirtual #702                // Method net/neoforged/neoforge/event/entity/living/LivingDestroyBlockEvent.isCanceled:()Z
+      24: ifne          31
+      27: iconst_1
+      28: goto          32
+      31: iconst_0
+      32: ireturn
+
+  public static boolean canEntityGrief(net.minecraft.world.level.Level, net.minecraft.world.entity.Entity);
+    Code:
+       0: aload_1
+       1: ifnonnull     15
+       4: aload_0
+       5: invokevirtual #703                // Method net/minecraft/world/level/Level.getGameRules:()Lnet/minecraft/world/level/GameRules;
+       8: getstatic     #709                // Field net/minecraft/world/level/GameRules.RULE_MOBGRIEFING:Lnet/minecraft/world/level/GameRules$Key;
+      11: invokevirtual #715                // Method net/minecraft/world/level/GameRules.getBoolean:(Lnet/minecraft/world/level/GameRules$Key;)Z
+      14: ireturn
+      15: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      18: new           #719                // class net/neoforged/neoforge/event/entity/EntityMobGriefingEvent
+      21: dup
+      22: aload_0
+      23: aload_1
+      24: invokespecial #721                // Method net/neoforged/neoforge/event/entity/EntityMobGriefingEvent."<init>":(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;)V
+      27: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      32: checkcast     #719                // class net/neoforged/neoforge/event/entity/EntityMobGriefingEvent
+      35: invokevirtual #724                // Method net/neoforged/neoforge/event/entity/EntityMobGriefingEvent.canGrief:()Z
+      38: ireturn
+
+  public static net.neoforged.neoforge.event.level.BlockGrowFeatureEvent fireBlockGrowFeature(net.minecraft.world.level.LevelAccessor, net.minecraft.util.RandomSource, net.minecraft.core.BlockPos, net.minecraft.core.Holder<net.minecraft.world.level.levelgen.feature.ConfiguredFeature<?, ?>>);
+    Code:
+       0: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #727                // class net/neoforged/neoforge/event/level/BlockGrowFeatureEvent
+       6: dup
+       7: aload_0
+       8: aload_1
+       9: aload_2
+      10: aload_3
+      11: invokespecial #729                // Method net/neoforged/neoforge/event/level/BlockGrowFeatureEvent."<init>":(Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/util/RandomSource;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Holder;)V
+      14: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      19: checkcast     #727                // class net/neoforged/neoforge/event/level/BlockGrowFeatureEvent
+      22: areturn
+
+  public static net.neoforged.neoforge.event.level.AlterGroundEvent$StateProvider alterGround(net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecorator$Context, java.util.List<net.minecraft.core.BlockPos>, net.neoforged.neoforge.event.level.AlterGroundEvent$StateProvider);
+    Code:
+       0: aload_1
+       1: invokeinterface #732,  1          // InterfaceMethod java/util/List.isEmpty:()Z
+       6: ifeq          11
+       9: aload_2
+      10: areturn
+      11: new           #735                // class net/neoforged/neoforge/event/level/AlterGroundEvent
+      14: dup
+      15: aload_0
+      16: aload_1
+      17: aload_2
+      18: invokespecial #737                // Method net/neoforged/neoforge/event/level/AlterGroundEvent."<init>":(Lnet/minecraft/world/level/levelgen/feature/treedecorators/TreeDecorator$Context;Ljava/util/List;Lnet/neoforged/neoforge/event/level/AlterGroundEvent$StateProvider;)V
+      21: astore_3
+      22: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      25: aload_3
+      26: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      31: pop
+      32: aload_3
+      33: invokevirtual #740                // Method net/neoforged/neoforge/event/level/AlterGroundEvent.getStateProvider:()Lnet/neoforged/neoforge/event/level/AlterGroundEvent$StateProvider;
+      36: areturn
+
+  public static void fireChunkTicketLevelUpdated(net.minecraft.server.level.ServerLevel, long, int, int, net.minecraft.server.level.ChunkHolder);
+    Code:
+       0: iload_3
+       1: iload         4
+       3: if_icmpeq     29
+       6: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       9: new           #744                // class net/neoforged/neoforge/event/level/ChunkTicketLevelUpdatedEvent
+      12: dup
+      13: aload_0
+      14: lload_1
+      15: iload_3
+      16: iload         4
+      18: aload         5
+      20: invokespecial #746                // Method net/neoforged/neoforge/event/level/ChunkTicketLevelUpdatedEvent."<init>":(Lnet/minecraft/server/level/ServerLevel;JIILnet/minecraft/server/level/ChunkHolder;)V
+      23: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      28: pop
+      29: return
+
+  public static void fireChunkWatch(net.minecraft.server.level.ServerPlayer, net.minecraft.world.level.chunk.LevelChunk, net.minecraft.server.level.ServerLevel);
+    Code:
+       0: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #749                // class net/neoforged/neoforge/event/level/ChunkWatchEvent$Watch
+       6: dup
+       7: aload_0
+       8: aload_1
+       9: aload_2
+      10: invokespecial #751                // Method net/neoforged/neoforge/event/level/ChunkWatchEvent$Watch."<init>":(Lnet/minecraft/server/level/ServerPlayer;Lnet/minecraft/world/level/chunk/LevelChunk;Lnet/minecraft/server/level/ServerLevel;)V
+      13: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      18: pop
+      19: return
+
+  public static void fireChunkSent(net.minecraft.server.level.ServerPlayer, net.minecraft.world.level.chunk.LevelChunk, net.minecraft.server.level.ServerLevel);
+    Code:
+       0: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #754                // class net/neoforged/neoforge/event/level/ChunkWatchEvent$Sent
+       6: dup
+       7: aload_0
+       8: aload_1
+       9: aload_2
+      10: invokespecial #756                // Method net/neoforged/neoforge/event/level/ChunkWatchEvent$Sent."<init>":(Lnet/minecraft/server/level/ServerPlayer;Lnet/minecraft/world/level/chunk/LevelChunk;Lnet/minecraft/server/level/ServerLevel;)V
+      13: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      18: pop
+      19: return
+
+  public static void fireChunkUnWatch(net.minecraft.server.level.ServerPlayer, net.minecraft.world.level.ChunkPos, net.minecraft.server.level.ServerLevel);
+    Code:
+       0: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #757                // class net/neoforged/neoforge/event/level/ChunkWatchEvent$UnWatch
+       6: dup
+       7: aload_0
+       8: aload_1
+       9: aload_2
+      10: invokespecial #759                // Method net/neoforged/neoforge/event/level/ChunkWatchEvent$UnWatch."<init>":(Lnet/minecraft/server/level/ServerPlayer;Lnet/minecraft/world/level/ChunkPos;Lnet/minecraft/server/level/ServerLevel;)V
+      13: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      18: pop
+      19: return
+
+  public static boolean onPistonMovePre(net.minecraft.world.level.Level, net.minecraft.core.BlockPos, net.minecraft.core.Direction, boolean);
+    Code:
+       0: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #762                // class net/neoforged/neoforge/event/level/PistonEvent$Pre
+       6: dup
+       7: aload_0
+       8: aload_1
+       9: aload_2
+      10: iload_3
+      11: ifeq          20
+      14: getstatic     #764                // Field net/neoforged/neoforge/event/level/PistonEvent$PistonMoveType.EXTEND:Lnet/neoforged/neoforge/event/level/PistonEvent$PistonMoveType;
+      17: goto          23
+      20: getstatic     #770                // Field net/neoforged/neoforge/event/level/PistonEvent$PistonMoveType.RETRACT:Lnet/neoforged/neoforge/event/level/PistonEvent$PistonMoveType;
+      23: invokespecial #773                // Method net/neoforged/neoforge/event/level/PistonEvent$Pre."<init>":(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;Lnet/neoforged/neoforge/event/level/PistonEvent$PistonMoveType;)V
+      26: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      31: checkcast     #762                // class net/neoforged/neoforge/event/level/PistonEvent$Pre
+      34: invokevirtual #776                // Method net/neoforged/neoforge/event/level/PistonEvent$Pre.isCanceled:()Z
+      37: ireturn
+
+  public static void onPistonMovePost(net.minecraft.world.level.Level, net.minecraft.core.BlockPos, net.minecraft.core.Direction, boolean);
+    Code:
+       0: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #777                // class net/neoforged/neoforge/event/level/PistonEvent$Post
+       6: dup
+       7: aload_0
+       8: aload_1
+       9: aload_2
+      10: iload_3
+      11: ifeq          20
+      14: getstatic     #764                // Field net/neoforged/neoforge/event/level/PistonEvent$PistonMoveType.EXTEND:Lnet/neoforged/neoforge/event/level/PistonEvent$PistonMoveType;
+      17: goto          23
+      20: getstatic     #770                // Field net/neoforged/neoforge/event/level/PistonEvent$PistonMoveType.RETRACT:Lnet/neoforged/neoforge/event/level/PistonEvent$PistonMoveType;
+      23: invokespecial #779                // Method net/neoforged/neoforge/event/level/PistonEvent$Post."<init>":(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;Lnet/neoforged/neoforge/event/level/PistonEvent$PistonMoveType;)V
+      26: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      31: pop
+      32: return
+
+  public static long onSleepFinished(net.minecraft.server.level.ServerLevel, long, long);
+    Code:
+       0: new           #780                // class net/neoforged/neoforge/event/level/SleepFinishedTimeEvent
+       3: dup
+       4: aload_0
+       5: lload_1
+       6: lload_3
+       7: invokespecial #782                // Method net/neoforged/neoforge/event/level/SleepFinishedTimeEvent."<init>":(Lnet/minecraft/server/level/ServerLevel;JJ)V
+      10: astore        5
+      12: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      15: aload         5
+      17: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      22: pop
+      23: aload         5
+      25: invokevirtual #785                // Method net/neoforged/neoforge/event/level/SleepFinishedTimeEvent.getNewTime:()J
+      28: lreturn
+
+  public static java.util.List<net.minecraft.server.packs.resources.PreparableReloadListener> onResourceReload(net.minecraft.server.ReloadableServerResources, net.minecraft.core.RegistryAccess);
+    Code:
+       0: new           #789                // class net/neoforged/neoforge/event/AddReloadListenerEvent
+       3: dup
+       4: aload_0
+       5: aload_1
+       6: invokespecial #791                // Method net/neoforged/neoforge/event/AddReloadListenerEvent."<init>":(Lnet/minecraft/server/ReloadableServerResources;Lnet/minecraft/core/RegistryAccess;)V
+       9: astore_2
+      10: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      13: aload_2
+      14: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      19: pop
+      20: aload_2
+      21: invokevirtual #794                // Method net/neoforged/neoforge/event/AddReloadListenerEvent.getListeners:()Ljava/util/List;
+      24: areturn
+
+  public static void onCommandRegister(com.mojang.brigadier.CommandDispatcher<net.minecraft.commands.CommandSourceStack>, net.minecraft.commands.Commands$CommandSelection, net.minecraft.commands.CommandBuildContext);
+    Code:
+       0: new           #798                // class net/neoforged/neoforge/event/RegisterCommandsEvent
+       3: dup
+       4: aload_0
+       5: aload_1
+       6: aload_2
+       7: invokespecial #800                // Method net/neoforged/neoforge/event/RegisterCommandsEvent."<init>":(Lcom/mojang/brigadier/CommandDispatcher;Lnet/minecraft/commands/Commands$CommandSelection;Lnet/minecraft/commands/CommandBuildContext;)V
+      10: astore_3
+      11: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      14: aload_3
+      15: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      20: pop
+      21: return
+
+  public static net.neoforged.neoforge.event.entity.EntityEvent$Size getEntitySizeForge(net.minecraft.world.entity.Entity, net.minecraft.world.entity.Pose, net.minecraft.world.entity.EntityDimensions);
+    Code:
+       0: new           #803                // class net/neoforged/neoforge/event/entity/EntityEvent$Size
+       3: dup
+       4: aload_0
+       5: aload_1
+       6: aload_2
+       7: invokespecial #805                // Method net/neoforged/neoforge/event/entity/EntityEvent$Size."<init>":(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/Pose;Lnet/minecraft/world/entity/EntityDimensions;)V
+      10: astore_3
+      11: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      14: aload_3
+      15: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      20: pop
+      21: aload_3
+      22: areturn
+
+  public static net.neoforged.neoforge.event.entity.EntityEvent$Size getEntitySizeForge(net.minecraft.world.entity.Entity, net.minecraft.world.entity.Pose, net.minecraft.world.entity.EntityDimensions, net.minecraft.world.entity.EntityDimensions);
+    Code:
+       0: new           #803                // class net/neoforged/neoforge/event/entity/EntityEvent$Size
+       3: dup
+       4: aload_0
+       5: aload_1
+       6: aload_2
+       7: aload_3
+       8: invokespecial #808                // Method net/neoforged/neoforge/event/entity/EntityEvent$Size."<init>":(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/Pose;Lnet/minecraft/world/entity/EntityDimensions;Lnet/minecraft/world/entity/EntityDimensions;)V
+      11: astore        4
+      13: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      16: aload         4
+      18: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      23: pop
+      24: aload         4
+      26: areturn
+
+  public static boolean canLivingConvert(net.minecraft.world.entity.LivingEntity, net.minecraft.world.entity.EntityType<? extends net.minecraft.world.entity.LivingEntity>, java.util.function.Consumer<java.lang.Integer>);
+    Code:
+       0: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #811                // class net/neoforged/neoforge/event/entity/living/LivingConversionEvent$Pre
+       6: dup
+       7: aload_0
+       8: aload_1
+       9: aload_2
+      10: invokespecial #813                // Method net/neoforged/neoforge/event/entity/living/LivingConversionEvent$Pre."<init>":(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/EntityType;Ljava/util/function/Consumer;)V
+      13: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      18: checkcast     #811                // class net/neoforged/neoforge/event/entity/living/LivingConversionEvent$Pre
+      21: invokevirtual #816                // Method net/neoforged/neoforge/event/entity/living/LivingConversionEvent$Pre.isCanceled:()Z
+      24: ifne          31
+      27: iconst_1
+      28: goto          32
+      31: iconst_0
+      32: ireturn
+
+  public static void onLivingConvert(net.minecraft.world.entity.LivingEntity, net.minecraft.world.entity.LivingEntity);
+    Code:
+       0: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #817                // class net/neoforged/neoforge/event/entity/living/LivingConversionEvent$Post
+       6: dup
+       7: aload_0
+       8: aload_1
+       9: invokespecial #819                // Method net/neoforged/neoforge/event/entity/living/LivingConversionEvent$Post."<init>":(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;)V
+      12: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      17: pop
+      18: return
+
+  public static net.neoforged.neoforge.event.entity.EntityTeleportEvent$TeleportCommand onEntityTeleportCommand(net.minecraft.world.entity.Entity, double, double, double);
+    Code:
+       0: new           #822                // class net/neoforged/neoforge/event/entity/EntityTeleportEvent$TeleportCommand
+       3: dup
+       4: aload_0
+       5: dload_1
+       6: dload_3
+       7: dload         5
+       9: invokespecial #824                // Method net/neoforged/neoforge/event/entity/EntityTeleportEvent$TeleportCommand."<init>":(Lnet/minecraft/world/entity/Entity;DDD)V
+      12: astore        7
+      14: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      17: aload         7
+      19: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      24: pop
+      25: aload         7
+      27: areturn
+
+  public static net.neoforged.neoforge.event.entity.EntityTeleportEvent$SpreadPlayersCommand onEntityTeleportSpreadPlayersCommand(net.minecraft.world.entity.Entity, double, double, double);
+    Code:
+       0: new           #827                // class net/neoforged/neoforge/event/entity/EntityTeleportEvent$SpreadPlayersCommand
+       3: dup
+       4: aload_0
+       5: dload_1
+       6: dload_3
+       7: dload         5
+       9: invokespecial #829                // Method net/neoforged/neoforge/event/entity/EntityTeleportEvent$SpreadPlayersCommand."<init>":(Lnet/minecraft/world/entity/Entity;DDD)V
+      12: astore        7
+      14: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      17: aload         7
+      19: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      24: pop
+      25: aload         7
+      27: areturn
+
+  public static net.neoforged.neoforge.event.entity.EntityTeleportEvent$EnderEntity onEnderTeleport(net.minecraft.world.entity.LivingEntity, double, double, double);
+    Code:
+       0: new           #830                // class net/neoforged/neoforge/event/entity/EntityTeleportEvent$EnderEntity
+       3: dup
+       4: aload_0
+       5: dload_1
+       6: dload_3
+       7: dload         5
+       9: invokespecial #832                // Method net/neoforged/neoforge/event/entity/EntityTeleportEvent$EnderEntity."<init>":(Lnet/minecraft/world/entity/LivingEntity;DDD)V
+      12: astore        7
+      14: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      17: aload         7
+      19: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      24: pop
+      25: aload         7
+      27: areturn
+
+  public static net.neoforged.neoforge.event.entity.EntityTeleportEvent$EnderPearl onEnderPearlLand(net.minecraft.server.level.ServerPlayer, double, double, double, net.minecraft.world.entity.projectile.ThrownEnderpearl, float, net.minecraft.world.phys.HitResult);
+    Code:
+       0: new           #835                // class net/neoforged/neoforge/event/entity/EntityTeleportEvent$EnderPearl
+       3: dup
+       4: aload_0
+       5: dload_1
+       6: dload_3
+       7: dload         5
+       9: aload         7
+      11: fload         8
+      13: aload         9
+      15: invokespecial #837                // Method net/neoforged/neoforge/event/entity/EntityTeleportEvent$EnderPearl."<init>":(Lnet/minecraft/server/level/ServerPlayer;DDDLnet/minecraft/world/entity/projectile/ThrownEnderpearl;FLnet/minecraft/world/phys/HitResult;)V
+      18: astore        10
+      20: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      23: aload         10
+      25: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      30: pop
+      31: aload         10
+      33: areturn
+
+  public static net.neoforged.neoforge.event.entity.EntityTeleportEvent$ChorusFruit onChorusFruitTeleport(net.minecraft.world.entity.LivingEntity, double, double, double);
+    Code:
+       0: new           #840                // class net/neoforged/neoforge/event/entity/EntityTeleportEvent$ChorusFruit
+       3: dup
+       4: aload_0
+       5: dload_1
+       6: dload_3
+       7: dload         5
+       9: invokespecial #842                // Method net/neoforged/neoforge/event/entity/EntityTeleportEvent$ChorusFruit."<init>":(Lnet/minecraft/world/entity/LivingEntity;DDD)V
+      12: astore        7
+      14: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      17: aload         7
+      19: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      24: pop
+      25: aload         7
+      27: areturn
+
+  public static boolean onPermissionChanged(com.mojang.authlib.GameProfile, int, net.minecraft.server.players.PlayerList);
+    Code:
+       0: aload_2
+       1: invokevirtual #843                // Method net/minecraft/server/players/PlayerList.getServer:()Lnet/minecraft/server/MinecraftServer;
+       4: aload_0
+       5: invokevirtual #849                // Method net/minecraft/server/MinecraftServer.getProfilePermissions:(Lcom/mojang/authlib/GameProfile;)I
+       8: istore_3
+       9: aload_2
+      10: aload_0
+      11: invokevirtual #855                // Method com/mojang/authlib/GameProfile.getId:()Ljava/util/UUID;
+      14: invokevirtual #860                // Method net/minecraft/server/players/PlayerList.getPlayer:(Ljava/util/UUID;)Lnet/minecraft/server/level/ServerPlayer;
+      17: astore        4
+      19: iload_1
+      20: iload_3
+      21: if_icmpeq     55
+      24: aload         4
+      26: ifnull        55
+      29: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      32: new           #864                // class net/neoforged/neoforge/event/entity/player/PermissionsChangedEvent
+      35: dup
+      36: aload         4
+      38: iload_1
+      39: iload_3
+      40: invokespecial #866                // Method net/neoforged/neoforge/event/entity/player/PermissionsChangedEvent."<init>":(Lnet/minecraft/server/level/ServerPlayer;II)V
+      43: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      48: checkcast     #864                // class net/neoforged/neoforge/event/entity/player/PermissionsChangedEvent
+      51: invokevirtual #869                // Method net/neoforged/neoforge/event/entity/player/PermissionsChangedEvent.isCanceled:()Z
+      54: ireturn
+      55: iconst_0
+      56: ireturn
+
+  public static void firePlayerChangedDimensionEvent(net.minecraft.world.entity.player.Player, net.minecraft.resources.ResourceKey<net.minecraft.world.level.Level>, net.minecraft.resources.ResourceKey<net.minecraft.world.level.Level>);
+    Code:
+       0: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #870                // class net/neoforged/neoforge/event/entity/player/PlayerEvent$PlayerChangedDimensionEvent
+       6: dup
+       7: aload_0
+       8: aload_1
+       9: aload_2
+      10: invokespecial #872                // Method net/neoforged/neoforge/event/entity/player/PlayerEvent$PlayerChangedDimensionEvent."<init>":(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/resources/ResourceKey;)V
+      13: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      18: pop
+      19: return
+
+  public static void firePlayerLoggedIn(net.minecraft.world.entity.player.Player);
+    Code:
+       0: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #875                // class net/neoforged/neoforge/event/entity/player/PlayerEvent$PlayerLoggedInEvent
+       6: dup
+       7: aload_0
+       8: invokespecial #877                // Method net/neoforged/neoforge/event/entity/player/PlayerEvent$PlayerLoggedInEvent."<init>":(Lnet/minecraft/world/entity/player/Player;)V
+      11: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      16: pop
+      17: return
+
+  public static void firePlayerLoggedOut(net.minecraft.world.entity.player.Player);
+    Code:
+       0: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #878                // class net/neoforged/neoforge/event/entity/player/PlayerEvent$PlayerLoggedOutEvent
+       6: dup
+       7: aload_0
+       8: invokespecial #880                // Method net/neoforged/neoforge/event/entity/player/PlayerEvent$PlayerLoggedOutEvent."<init>":(Lnet/minecraft/world/entity/player/Player;)V
+      11: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      16: pop
+      17: return
+
+  public static net.neoforged.neoforge.event.entity.player.PlayerRespawnPositionEvent firePlayerRespawnPositionEvent(net.minecraft.server.level.ServerPlayer, net.minecraft.world.level.portal.DimensionTransition, boolean);
+    Code:
+       0: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #881                // class net/neoforged/neoforge/event/entity/player/PlayerRespawnPositionEvent
+       6: dup
+       7: aload_0
+       8: aload_1
+       9: iload_2
+      10: invokespecial #883                // Method net/neoforged/neoforge/event/entity/player/PlayerRespawnPositionEvent."<init>":(Lnet/minecraft/server/level/ServerPlayer;Lnet/minecraft/world/level/portal/DimensionTransition;Z)V
+      13: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      18: checkcast     #881                // class net/neoforged/neoforge/event/entity/player/PlayerRespawnPositionEvent
+      21: areturn
+
+  public static void firePlayerRespawnEvent(net.minecraft.server.level.ServerPlayer, boolean);
+    Code:
+       0: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #886                // class net/neoforged/neoforge/event/entity/player/PlayerEvent$PlayerRespawnEvent
+       6: dup
+       7: aload_0
+       8: iload_1
+       9: invokespecial #888                // Method net/neoforged/neoforge/event/entity/player/PlayerEvent$PlayerRespawnEvent."<init>":(Lnet/minecraft/world/entity/player/Player;Z)V
+      12: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      17: pop
+      18: return
+
+  public static void firePlayerCraftingEvent(net.minecraft.world.entity.player.Player, net.minecraft.world.item.ItemStack, net.minecraft.world.Container);
+    Code:
+       0: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #891                // class net/neoforged/neoforge/event/entity/player/PlayerEvent$ItemCraftedEvent
+       6: dup
+       7: aload_0
+       8: aload_1
+       9: aload_2
+      10: invokespecial #893                // Method net/neoforged/neoforge/event/entity/player/PlayerEvent$ItemCraftedEvent."<init>":(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/Container;)V
+      13: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      18: pop
+      19: return
+
+  public static void firePlayerSmeltedEvent(net.minecraft.world.entity.player.Player, net.minecraft.world.item.ItemStack);
+    Code:
+       0: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #896                // class net/neoforged/neoforge/event/entity/player/PlayerEvent$ItemSmeltedEvent
+       6: dup
+       7: aload_0
+       8: aload_1
+       9: invokespecial #898                // Method net/neoforged/neoforge/event/entity/player/PlayerEvent$ItemSmeltedEvent."<init>":(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/ItemStack;)V
+      12: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      17: pop
+      18: return
+
+  public static net.minecraft.client.gui.Gui$HeartType firePlayerHeartTypeEvent(net.minecraft.world.entity.player.Player, net.minecraft.client.gui.Gui$HeartType);
+    Code:
+       0: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #899                // class net/neoforged/neoforge/event/entity/player/PlayerHeartTypeEvent
+       6: dup
+       7: aload_0
+       8: aload_1
+       9: invokespecial #901                // Method net/neoforged/neoforge/event/entity/player/PlayerHeartTypeEvent."<init>":(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/client/gui/Gui$HeartType;)V
+      12: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      17: checkcast     #899                // class net/neoforged/neoforge/event/entity/player/PlayerHeartTypeEvent
+      20: invokevirtual #904                // Method net/neoforged/neoforge/event/entity/player/PlayerHeartTypeEvent.getType:()Lnet/minecraft/client/gui/Gui$HeartType;
+      23: areturn
+
+  public static net.neoforged.neoforge.event.tick.EntityTickEvent$Pre fireEntityTickPre(net.minecraft.world.entity.Entity);
+    Code:
+       0: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #908                // class net/neoforged/neoforge/event/tick/EntityTickEvent$Pre
+       6: dup
+       7: aload_0
+       8: invokespecial #910                // Method net/neoforged/neoforge/event/tick/EntityTickEvent$Pre."<init>":(Lnet/minecraft/world/entity/Entity;)V
+      11: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      16: checkcast     #908                // class net/neoforged/neoforge/event/tick/EntityTickEvent$Pre
+      19: areturn
+
+  public static void fireEntityTickPost(net.minecraft.world.entity.Entity);
+    Code:
+       0: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #913                // class net/neoforged/neoforge/event/tick/EntityTickEvent$Post
+       6: dup
+       7: aload_0
+       8: invokespecial #915                // Method net/neoforged/neoforge/event/tick/EntityTickEvent$Post."<init>":(Lnet/minecraft/world/entity/Entity;)V
+      11: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      16: pop
+      17: return
+
+  public static void firePlayerTickPre(net.minecraft.world.entity.player.Player);
+    Code:
+       0: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #916                // class net/neoforged/neoforge/event/tick/PlayerTickEvent$Pre
+       6: dup
+       7: aload_0
+       8: invokespecial #918                // Method net/neoforged/neoforge/event/tick/PlayerTickEvent$Pre."<init>":(Lnet/minecraft/world/entity/player/Player;)V
+      11: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      16: pop
+      17: return
+
+  public static void firePlayerTickPost(net.minecraft.world.entity.player.Player);
+    Code:
+       0: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #919                // class net/neoforged/neoforge/event/tick/PlayerTickEvent$Post
+       6: dup
+       7: aload_0
+       8: invokespecial #921                // Method net/neoforged/neoforge/event/tick/PlayerTickEvent$Post."<init>":(Lnet/minecraft/world/entity/player/Player;)V
+      11: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      16: pop
+      17: return
+
+  public static void fireLevelTickPre(net.minecraft.world.level.Level, java.util.function.BooleanSupplier);
+    Code:
+       0: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #922                // class net/neoforged/neoforge/event/tick/LevelTickEvent$Pre
+       6: dup
+       7: aload_1
+       8: aload_0
+       9: invokespecial #924                // Method net/neoforged/neoforge/event/tick/LevelTickEvent$Pre."<init>":(Ljava/util/function/BooleanSupplier;Lnet/minecraft/world/level/Level;)V
+      12: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      17: pop
+      18: return
+
+  public static void fireLevelTickPost(net.minecraft.world.level.Level, java.util.function.BooleanSupplier);
+    Code:
+       0: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #927                // class net/neoforged/neoforge/event/tick/LevelTickEvent$Post
+       6: dup
+       7: aload_1
+       8: aload_0
+       9: invokespecial #929                // Method net/neoforged/neoforge/event/tick/LevelTickEvent$Post."<init>":(Ljava/util/function/BooleanSupplier;Lnet/minecraft/world/level/Level;)V
+      12: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      17: pop
+      18: return
+
+  public static void fireServerTickPre(java.util.function.BooleanSupplier, net.minecraft.server.MinecraftServer);
+    Code:
+       0: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #930                // class net/neoforged/neoforge/event/tick/ServerTickEvent$Pre
+       6: dup
+       7: aload_0
+       8: aload_1
+       9: invokespecial #932                // Method net/neoforged/neoforge/event/tick/ServerTickEvent$Pre."<init>":(Ljava/util/function/BooleanSupplier;Lnet/minecraft/server/MinecraftServer;)V
+      12: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      17: pop
+      18: return
+
+  public static void fireServerTickPost(java.util.function.BooleanSupplier, net.minecraft.server.MinecraftServer);
+    Code:
+       0: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #935                // class net/neoforged/neoforge/event/tick/ServerTickEvent$Post
+       6: dup
+       7: aload_0
+       8: aload_1
+       9: invokespecial #937                // Method net/neoforged/neoforge/event/tick/ServerTickEvent$Post."<init>":(Ljava/util/function/BooleanSupplier;Lnet/minecraft/server/MinecraftServer;)V
+      12: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      17: pop
+      18: return
+
+  public static net.minecraft.util.random.WeightedRandomList<net.minecraft.world.level.biome.MobSpawnSettings$SpawnerData> getPotentialSpawns(net.minecraft.world.level.LevelAccessor, net.minecraft.world.entity.MobCategory, net.minecraft.core.BlockPos, net.minecraft.util.random.WeightedRandomList<net.minecraft.world.level.biome.MobSpawnSettings$SpawnerData>);
+    Code:
+       0: new           #938                // class net/neoforged/neoforge/event/level/LevelEvent$PotentialSpawns
+       3: dup
+       4: aload_0
+       5: aload_1
+       6: aload_2
+       7: aload_3
+       8: invokespecial #940                // Method net/neoforged/neoforge/event/level/LevelEvent$PotentialSpawns."<init>":(Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/world/entity/MobCategory;Lnet/minecraft/core/BlockPos;Lnet/minecraft/util/random/WeightedRandomList;)V
+      11: astore        4
+      13: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      16: aload         4
+      18: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      23: checkcast     #938                // class net/neoforged/neoforge/event/level/LevelEvent$PotentialSpawns
+      26: invokevirtual #943                // Method net/neoforged/neoforge/event/level/LevelEvent$PotentialSpawns.isCanceled:()Z
+      29: ifeq          36
+      32: getstatic     #944                // Field NO_SPAWNS:Lnet/minecraft/util/random/WeightedRandomList;
+      35: areturn
+      36: aload         4
+      38: invokevirtual #948                // Method net/neoforged/neoforge/event/level/LevelEvent$PotentialSpawns.getSpawnerDataList:()Ljava/util/List;
+      41: aload_3
+      42: invokevirtual #951                // Method net/minecraft/util/random/WeightedRandomList.unwrap:()Ljava/util/List;
+      45: if_acmpne     50
+      48: aload_3
+      49: areturn
+      50: aload         4
+      52: invokevirtual #948                // Method net/neoforged/neoforge/event/level/LevelEvent$PotentialSpawns.getSpawnerDataList:()Ljava/util/List;
+      55: invokestatic  #956                // Method net/minecraft/util/random/WeightedRandomList.create:(Ljava/util/List;)Lnet/minecraft/util/random/WeightedRandomList;
+      58: areturn
+
+  public static net.neoforged.neoforge.event.StatAwardEvent onStatAward(net.minecraft.world.entity.player.Player, net.minecraft.stats.Stat<?>, int);
+    Code:
+       0: new           #960                // class net/neoforged/neoforge/event/StatAwardEvent
+       3: dup
+       4: aload_0
+       5: aload_1
+       6: iload_2
+       7: invokespecial #962                // Method net/neoforged/neoforge/event/StatAwardEvent."<init>":(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/stats/Stat;I)V
+      10: astore_3
+      11: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      14: aload_3
+      15: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      20: pop
+      21: aload_3
+      22: areturn
+
+  public static void onAdvancementEarnedEvent(net.minecraft.world.entity.player.Player, net.minecraft.advancements.AdvancementHolder);
+    Code:
+       0: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #965                // class net/neoforged/neoforge/event/entity/player/AdvancementEvent$AdvancementEarnEvent
+       6: dup
+       7: aload_0
+       8: aload_1
+       9: invokespecial #967                // Method net/neoforged/neoforge/event/entity/player/AdvancementEvent$AdvancementEarnEvent."<init>":(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/advancements/AdvancementHolder;)V
+      12: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      17: pop
+      18: return
+
+  public static void onAdvancementProgressedEvent(net.minecraft.world.entity.player.Player, net.minecraft.advancements.AdvancementHolder, net.minecraft.advancements.AdvancementProgress, java.lang.String, net.neoforged.neoforge.event.entity.player.AdvancementEvent$AdvancementProgressEvent$ProgressType);
+    Code:
+       0: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #970                // class net/neoforged/neoforge/event/entity/player/AdvancementEvent$AdvancementProgressEvent
+       6: dup
+       7: aload_0
+       8: aload_1
+       9: aload_2
+      10: aload_3
+      11: aload         4
+      13: invokespecial #972                // Method net/neoforged/neoforge/event/entity/player/AdvancementEvent$AdvancementProgressEvent."<init>":(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/advancements/AdvancementHolder;Lnet/minecraft/advancements/AdvancementProgress;Ljava/lang/String;Lnet/neoforged/neoforge/event/entity/player/AdvancementEvent$AdvancementProgressEvent$ProgressType;)V
+      16: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      21: pop
+      22: return
+
+  public static boolean onEffectRemoved(net.minecraft.world.entity.LivingEntity, net.minecraft.core.Holder<net.minecraft.world.effect.MobEffect>, net.neoforged.neoforge.common.EffectCure);
+    Code:
+       0: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #975                // class net/neoforged/neoforge/event/entity/living/MobEffectEvent$Remove
+       6: dup
+       7: aload_0
+       8: aload_1
+       9: aload_2
+      10: invokespecial #977                // Method net/neoforged/neoforge/event/entity/living/MobEffectEvent$Remove."<init>":(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/core/Holder;Lnet/neoforged/neoforge/common/EffectCure;)V
+      13: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      18: checkcast     #975                // class net/neoforged/neoforge/event/entity/living/MobEffectEvent$Remove
+      21: invokevirtual #980                // Method net/neoforged/neoforge/event/entity/living/MobEffectEvent$Remove.isCanceled:()Z
+      24: ireturn
+
+  public static boolean onEffectRemoved(net.minecraft.world.entity.LivingEntity, net.minecraft.world.effect.MobEffectInstance, net.neoforged.neoforge.common.EffectCure);
+    Code:
+       0: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #975                // class net/neoforged/neoforge/event/entity/living/MobEffectEvent$Remove
+       6: dup
+       7: aload_0
+       8: aload_1
+       9: aload_2
+      10: invokespecial #981                // Method net/neoforged/neoforge/event/entity/living/MobEffectEvent$Remove."<init>":(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/effect/MobEffectInstance;Lnet/neoforged/neoforge/common/EffectCure;)V
+      13: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      18: checkcast     #975                // class net/neoforged/neoforge/event/entity/living/MobEffectEvent$Remove
+      21: invokevirtual #980                // Method net/neoforged/neoforge/event/entity/living/MobEffectEvent$Remove.isCanceled:()Z
+      24: ireturn
+
+  public static int getEnchantmentLevelSpecific(int, net.minecraft.world.item.ItemStack, net.minecraft.core.Holder<net.minecraft.world.item.enchantment.Enchantment>);
+    Code:
+       0: aload_2
+       1: invokeinterface #984,  1          // InterfaceMethod net/minecraft/core/Holder.unwrapLookup:()Lnet/minecraft/core/HolderLookup$RegistryLookup;
+       6: astore_3
+       7: aload_3
+       8: ifnonnull     13
+      11: iload_0
+      12: ireturn
+      13: new           #990                // class net/minecraft/world/item/enchantment/ItemEnchantments$Mutable
+      16: dup
+      17: getstatic     #992                // Field net/minecraft/world/item/enchantment/ItemEnchantments.EMPTY:Lnet/minecraft/world/item/enchantment/ItemEnchantments;
+      20: invokespecial #997                // Method net/minecraft/world/item/enchantment/ItemEnchantments$Mutable."<init>":(Lnet/minecraft/world/item/enchantment/ItemEnchantments;)V
+      23: astore        4
+      25: aload         4
+      27: aload_2
+      28: iload_0
+      29: invokevirtual #1000               // Method net/minecraft/world/item/enchantment/ItemEnchantments$Mutable.set:(Lnet/minecraft/core/Holder;I)V
+      32: new           #1003               // class net/neoforged/neoforge/event/enchanting/GetEnchantmentLevelEvent
+      35: dup
+      36: aload_1
+      37: aload         4
+      39: aload_2
+      40: aload_2
+      41: invokeinterface #984,  1          // InterfaceMethod net/minecraft/core/Holder.unwrapLookup:()Lnet/minecraft/core/HolderLookup$RegistryLookup;
+      46: invokespecial #1005               // Method net/neoforged/neoforge/event/enchanting/GetEnchantmentLevelEvent."<init>":(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/enchantment/ItemEnchantments$Mutable;Lnet/minecraft/core/Holder;Lnet/minecraft/core/HolderLookup$RegistryLookup;)V
+      49: astore        5
+      51: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      54: aload         5
+      56: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      61: pop
+      62: aload         4
+      64: aload_2
+      65: invokevirtual #1008               // Method net/minecraft/world/item/enchantment/ItemEnchantments$Mutable.getLevel:(Lnet/minecraft/core/Holder;)I
+      68: ireturn
+
+  public static net.minecraft.world.item.enchantment.ItemEnchantments getAllEnchantmentLevels(net.minecraft.world.item.enchantment.ItemEnchantments, net.minecraft.world.item.ItemStack, net.minecraft.core.HolderLookup$RegistryLookup<net.minecraft.world.item.enchantment.Enchantment>);
+    Code:
+       0: new           #990                // class net/minecraft/world/item/enchantment/ItemEnchantments$Mutable
+       3: dup
+       4: aload_0
+       5: invokespecial #997                // Method net/minecraft/world/item/enchantment/ItemEnchantments$Mutable."<init>":(Lnet/minecraft/world/item/enchantment/ItemEnchantments;)V
+       8: astore_3
+       9: new           #1003               // class net/neoforged/neoforge/event/enchanting/GetEnchantmentLevelEvent
+      12: dup
+      13: aload_1
+      14: aload_3
+      15: aconst_null
+      16: aload_2
+      17: invokespecial #1005               // Method net/neoforged/neoforge/event/enchanting/GetEnchantmentLevelEvent."<init>":(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/enchantment/ItemEnchantments$Mutable;Lnet/minecraft/core/Holder;Lnet/minecraft/core/HolderLookup$RegistryLookup;)V
+      20: astore        4
+      22: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      25: aload         4
+      27: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      32: pop
+      33: aload_3
+      34: invokevirtual #1011               // Method net/minecraft/world/item/enchantment/ItemEnchantments$Mutable.toImmutable:()Lnet/minecraft/world/item/enchantment/ItemEnchantments;
+      37: areturn
+
+  public static void onCreativeModeTabBuildContents(net.minecraft.world.item.CreativeModeTab, net.minecraft.resources.ResourceKey<net.minecraft.world.item.CreativeModeTab>, net.minecraft.world.item.CreativeModeTab$DisplayItemsGenerator, net.minecraft.world.item.CreativeModeTab$ItemDisplayParameters, net.minecraft.world.item.CreativeModeTab$Output);
+    Code:
+       0: new           #1015               // class net/neoforged/neoforge/common/util/InsertableLinkedOpenCustomHashSet
+       3: dup
+       4: getstatic     #1017               // Field net/minecraft/world/item/ItemStackLinkedSet.TYPE_AND_TAG:Lit/unimi/dsi/fastutil/Hash$Strategy;
+       7: invokespecial #1023               // Method net/neoforged/neoforge/common/util/InsertableLinkedOpenCustomHashSet."<init>":(Lit/unimi/dsi/fastutil/Hash$Strategy;)V
+      10: astore        5
+      12: new           #1015               // class net/neoforged/neoforge/common/util/InsertableLinkedOpenCustomHashSet
+      15: dup
+      16: getstatic     #1017               // Field net/minecraft/world/item/ItemStackLinkedSet.TYPE_AND_TAG:Lit/unimi/dsi/fastutil/Hash$Strategy;
+      19: invokespecial #1023               // Method net/neoforged/neoforge/common/util/InsertableLinkedOpenCustomHashSet."<init>":(Lit/unimi/dsi/fastutil/Hash$Strategy;)V
+      22: astore        6
+      24: aload_2
+      25: aload_3
+      26: aload         5
+      28: aload         6
+      30: invokedynamic #1026,  0           // InvokeDynamic #0:accept:(Lnet/neoforged/neoforge/common/util/InsertableLinkedOpenCustomHashSet;Lnet/neoforged/neoforge/common/util/InsertableLinkedOpenCustomHashSet;)Lnet/minecraft/world/item/CreativeModeTab$Output;
+      35: invokeinterface #1030,  3         // InterfaceMethod net/minecraft/world/item/CreativeModeTab$DisplayItemsGenerator.accept:(Lnet/minecraft/world/item/CreativeModeTab$ItemDisplayParameters;Lnet/minecraft/world/item/CreativeModeTab$Output;)V
+      40: new           #1035               // class net/neoforged/neoforge/event/BuildCreativeModeTabContentsEvent
+      43: dup
+      44: aload_0
+      45: aload_1
+      46: aload_3
+      47: aload         5
+      49: aload         6
+      51: invokespecial #1037               // Method net/neoforged/neoforge/event/BuildCreativeModeTabContentsEvent."<init>":(Lnet/minecraft/world/item/CreativeModeTab;Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/world/item/CreativeModeTab$ItemDisplayParameters;Lnet/neoforged/neoforge/common/util/InsertableLinkedOpenCustomHashSet;Lnet/neoforged/neoforge/common/util/InsertableLinkedOpenCustomHashSet;)V
+      54: invokestatic  #1040               // Method net/neoforged/fml/ModLoader.postEvent:(Lnet/neoforged/bus/api/Event;)V
+      57: aload         5
+      59: invokevirtual #1046               // Method net/neoforged/neoforge/common/util/InsertableLinkedOpenCustomHashSet.iterator:()Lit/unimi/dsi/fastutil/objects/ObjectListIterator;
+      62: astore        7
+      64: aload         7
+      66: invokeinterface #1050,  1         // InterfaceMethod java/util/Iterator.hasNext:()Z
+      71: ifeq          101
+      74: aload         7
+      76: invokeinterface #1055,  1         // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      81: checkcast     #557                // class net/minecraft/world/item/ItemStack
+      84: astore        8
+      86: aload         4
+      88: aload         8
+      90: getstatic     #1058               // Field net/minecraft/world/item/CreativeModeTab$TabVisibility.PARENT_TAB_ONLY:Lnet/minecraft/world/item/CreativeModeTab$TabVisibility;
+      93: invokeinterface #1064,  3         // InterfaceMethod net/minecraft/world/item/CreativeModeTab$Output.accept:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/CreativeModeTab$TabVisibility;)V
+      98: goto          64
+     101: aload         6
+     103: invokevirtual #1046               // Method net/neoforged/neoforge/common/util/InsertableLinkedOpenCustomHashSet.iterator:()Lit/unimi/dsi/fastutil/objects/ObjectListIterator;
+     106: astore        7
+     108: aload         7
+     110: invokeinterface #1050,  1         // InterfaceMethod java/util/Iterator.hasNext:()Z
+     115: ifeq          145
+     118: aload         7
+     120: invokeinterface #1055,  1         // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     125: checkcast     #557                // class net/minecraft/world/item/ItemStack
+     128: astore        8
+     130: aload         4
+     132: aload         8
+     134: getstatic     #1069               // Field net/minecraft/world/item/CreativeModeTab$TabVisibility.SEARCH_TAB_ONLY:Lnet/minecraft/world/item/CreativeModeTab$TabVisibility;
+     137: invokeinterface #1064,  3         // InterfaceMethod net/minecraft/world/item/CreativeModeTab$Output.accept:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/CreativeModeTab$TabVisibility;)V
+     142: goto          108
+     145: return
+
+  public static net.neoforged.neoforge.event.entity.living.MobSplitEvent onMobSplit(net.minecraft.world.entity.Mob, java.util.List<net.minecraft.world.entity.Mob>);
+    Code:
+       0: new           #1072               // class net/neoforged/neoforge/event/entity/living/MobSplitEvent
+       3: dup
+       4: aload_0
+       5: aload_1
+       6: invokespecial #1074               // Method net/neoforged/neoforge/event/entity/living/MobSplitEvent."<init>":(Lnet/minecraft/world/entity/Mob;Ljava/util/List;)V
+       9: astore_2
+      10: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      13: aload_2
+      14: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      19: pop
+      20: aload_2
+      21: areturn
+
+  public static java.util.List<net.minecraft.world.level.CustomSpawner> getCustomSpawners(net.minecraft.server.level.ServerLevel, java.util.List<net.minecraft.world.level.CustomSpawner>);
+    Code:
+       0: new           #1077               // class net/neoforged/neoforge/event/level/ModifyCustomSpawnersEvent
+       3: dup
+       4: aload_0
+       5: new           #1079               // class java/util/ArrayList
+       8: dup
+       9: aload_1
+      10: invokespecial #1081               // Method java/util/ArrayList."<init>":(Ljava/util/Collection;)V
+      13: invokespecial #1084               // Method net/neoforged/neoforge/event/level/ModifyCustomSpawnersEvent."<init>":(Lnet/minecraft/server/level/ServerLevel;Ljava/util/List;)V
+      16: astore_2
+      17: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      20: aload_2
+      21: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      26: pop
+      27: aload_2
+      28: invokevirtual #1087               // Method net/neoforged/neoforge/event/level/ModifyCustomSpawnersEvent.getCustomSpawners:()Ljava/util/List;
+      31: areturn
+
+  public static int getBlockLootEnchantmentLevel(net.minecraft.world.item.ItemStack, net.minecraft.core.Holder<net.minecraft.world.item.enchantment.Enchantment>, int, net.minecraft.world.level.storage.loot.LootContext);
+    Code:
+       0: aload_3
+       1: getstatic     #1090               // Field net/minecraft/world/level/storage/loot/parameters/LootContextParams.BLOCK_STATE:Lnet/minecraft/world/level/storage/loot/parameters/LootContextParam;
+       4: invokevirtual #1096               // Method net/minecraft/world/level/storage/loot/LootContext.getParamOrNull:(Lnet/minecraft/world/level/storage/loot/parameters/LootContextParam;)Ljava/lang/Object;
+       7: checkcast     #1102               // class net/minecraft/world/level/block/state/BlockState
+      10: astore        4
+      12: aload_3
+      13: getstatic     #1104               // Field net/minecraft/world/level/storage/loot/parameters/LootContextParams.ORIGIN:Lnet/minecraft/world/level/storage/loot/parameters/LootContextParam;
+      16: invokevirtual #1096               // Method net/minecraft/world/level/storage/loot/LootContext.getParamOrNull:(Lnet/minecraft/world/level/storage/loot/parameters/LootContextParam;)Ljava/lang/Object;
+      19: checkcast     #408                // class net/minecraft/world/phys/Vec3
+      22: astore        5
+      24: aload         4
+      26: ifnull        74
+      29: aload         5
+      31: ifnull        74
+      34: new           #1107               // class net/neoforged/neoforge/event/enchanting/EnchantedBlockLootEvent
+      37: dup
+      38: aload_3
+      39: invokevirtual #1109               // Method net/minecraft/world/level/storage/loot/LootContext.getLevel:()Lnet/minecraft/server/level/ServerLevel;
+      42: aload         5
+      44: invokestatic  #1112               // Method net/minecraft/core/BlockPos.containing:(Lnet/minecraft/core/Position;)Lnet/minecraft/core/BlockPos;
+      47: aload         4
+      49: aload_0
+      50: aload_1
+      51: iload_2
+      52: invokespecial #1116               // Method net/neoforged/neoforge/event/enchanting/EnchantedBlockLootEvent."<init>":(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/core/Holder;I)V
+      55: astore        6
+      57: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      60: aload         6
+      62: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      67: pop
+      68: aload         6
+      70: invokevirtual #1119               // Method net/neoforged/neoforge/event/enchanting/EnchantedBlockLootEvent.getEnchantmentLevel:()I
+      73: ireturn
+      74: iload_2
+      75: ireturn
+
+  public static int getEntityLootEnchantmentLevel(net.minecraft.core.Holder<net.minecraft.world.item.enchantment.Enchantment>, int, net.minecraft.world.level.storage.loot.LootContext);
+    Code:
+       0: aload_2
+       1: getstatic     #1122               // Field net/minecraft/world/level/storage/loot/parameters/LootContextParams.ATTACKING_ENTITY:Lnet/minecraft/world/level/storage/loot/parameters/LootContextParam;
+       4: invokevirtual #1096               // Method net/minecraft/world/level/storage/loot/LootContext.getParamOrNull:(Lnet/minecraft/world/level/storage/loot/parameters/LootContextParam;)Ljava/lang/Object;
+       7: checkcast     #437                // class net/minecraft/world/entity/Entity
+      10: astore_3
+      11: aload_2
+      12: getstatic     #1125               // Field net/minecraft/world/level/storage/loot/parameters/LootContextParams.DAMAGE_SOURCE:Lnet/minecraft/world/level/storage/loot/parameters/LootContextParam;
+      15: invokevirtual #1096               // Method net/minecraft/world/level/storage/loot/LootContext.getParamOrNull:(Lnet/minecraft/world/level/storage/loot/parameters/LootContextParam;)Ljava/lang/Object;
+      18: checkcast     #1128               // class net/minecraft/world/damagesource/DamageSource
+      21: astore        4
+      23: aload         4
+      25: ifnull        73
+      28: aload_3
+      29: instanceof    #322                // class net/minecraft/world/entity/LivingEntity
+      32: ifeq          73
+      35: aload_3
+      36: checkcast     #322                // class net/minecraft/world/entity/LivingEntity
+      39: astore        5
+      41: new           #1130               // class net/neoforged/neoforge/event/enchanting/EnchantedEntityLootEvent
+      44: dup
+      45: aload         5
+      47: aload         4
+      49: aload_0
+      50: iload_1
+      51: invokespecial #1132               // Method net/neoforged/neoforge/event/enchanting/EnchantedEntityLootEvent."<init>":(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/damagesource/DamageSource;Lnet/minecraft/core/Holder;I)V
+      54: astore        6
+      56: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      59: aload         6
+      61: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      66: pop
+      67: aload         6
+      69: invokevirtual #1135               // Method net/neoforged/neoforge/event/enchanting/EnchantedEntityLootEvent.getEnchantmentLevel:()I
+      72: ireturn
+      73: iload_1
+      74: ireturn
+
+  public static void onEquipmentDropChance(net.minecraft.server.level.ServerLevel, net.minecraft.world.entity.LivingEntity, net.minecraft.world.damagesource.DamageSource, org.apache.commons.lang3.mutable.MutableFloat, float, net.minecraft.world.entity.EquipmentSlot);
+    Code:
+       0: getstatic     #46                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #1136               // class net/neoforged/neoforge/event/entity/living/GetEquipmentDropChanceEvent
+       6: dup
+       7: aload_0
+       8: aload_1
+       9: aload_2
+      10: aload_3
+      11: fload         4
+      13: aload         5
+      15: invokespecial #1138               // Method net/neoforged/neoforge/event/entity/living/GetEquipmentDropChanceEvent."<init>":(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/damagesource/DamageSource;Lorg/apache/commons/lang3/mutable/MutableFloat;FLnet/minecraft/world/entity/EquipmentSlot;)V
+      18: invokeinterface #52,  2           // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      23: pop
+      24: return
+
+  private static void lambda$onCreativeModeTabBuildContents$0(net.neoforged.neoforge.common.util.InsertableLinkedOpenCustomHashSet, net.neoforged.neoforge.common.util.InsertableLinkedOpenCustomHashSet, net.minecraft.world.item.ItemStack, net.minecraft.world.item.CreativeModeTab$TabVisibility);
+    Code:
+       0: aload_2
+       1: invokevirtual #1141               // Method net/minecraft/world/item/ItemStack.getCount:()I
+       4: iconst_1
+       5: if_icmpeq     19
+       8: new           #1144               // class java/lang/IllegalArgumentException
+      11: dup
+      12: ldc_w         #1146               // String The stack count must be 1
+      15: invokespecial #1148               // Method java/lang/IllegalArgumentException."<init>":(Ljava/lang/String;)V
+      18: athrow
+      19: aload_3
+      20: invokestatic  #1151               // Method net/neoforged/neoforge/event/BuildCreativeModeTabContentsEvent.isParentTab:(Lnet/minecraft/world/item/CreativeModeTab$TabVisibility;)Z
+      23: ifeq          32
+      26: aload_0
+      27: aload_2
+      28: invokevirtual #1155               // Method net/neoforged/neoforge/common/util/InsertableLinkedOpenCustomHashSet.add:(Ljava/lang/Object;)Z
+      31: pop
+      32: aload_3
+      33: invokestatic  #1159               // Method net/neoforged/neoforge/event/BuildCreativeModeTabContentsEvent.isSearchTab:(Lnet/minecraft/world/item/CreativeModeTab$TabVisibility;)Z
+      36: ifeq          45
+      39: aload_1
+      40: aload_2
+      41: invokevirtual #1155               // Method net/neoforged/neoforge/common/util/InsertableLinkedOpenCustomHashSet.add:(Ljava/lang/Object;)Z
+      44: pop
+      45: return
+
+  static {};
+    Code:
+       0: invokestatic  #1162               // Method net/minecraft/util/random/WeightedRandomList.create:()Lnet/minecraft/util/random/WeightedRandomList;
+       3: putstatic     #944                // Field NO_SPAWNS:Lnet/minecraft/util/random/WeightedRandomList;
+       6: return
+}

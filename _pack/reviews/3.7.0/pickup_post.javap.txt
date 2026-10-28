@@ -1,0 +1,29 @@
+Compiled from "ItemEntityPickupEvent.java"
+public class net.neoforged.neoforge.event.entity.player.ItemEntityPickupEvent$Post extends net.neoforged.neoforge.event.entity.player.ItemEntityPickupEvent {
+  private final net.minecraft.world.item.ItemStack originalStack;
+
+  public net.neoforged.neoforge.event.entity.player.ItemEntityPickupEvent$Post(net.minecraft.world.entity.player.Player, net.minecraft.world.entity.item.ItemEntity, net.minecraft.world.item.ItemStack);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: aload_2
+       3: invokespecial #1                  // Method net/neoforged/neoforge/event/entity/player/ItemEntityPickupEvent."<init>":(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/entity/item/ItemEntity;)V
+       6: aload_0
+       7: aload_3
+       8: putfield      #7                  // Field originalStack:Lnet/minecraft/world/item/ItemStack;
+      11: return
+
+  public net.minecraft.world.item.ItemStack getOriginalStack();
+    Code:
+       0: aload_0
+       1: getfield      #7                  // Field originalStack:Lnet/minecraft/world/item/ItemStack;
+       4: invokevirtual #13                 // Method net/minecraft/world/item/ItemStack.copy:()Lnet/minecraft/world/item/ItemStack;
+       7: areturn
+
+  public net.minecraft.world.item.ItemStack getCurrentStack();
+    Code:
+       0: aload_0
+       1: invokevirtual #19                 // Method getItemEntity:()Lnet/minecraft/world/entity/item/ItemEntity;
+       4: invokevirtual #23                 // Method net/minecraft/world/entity/item/ItemEntity.getItem:()Lnet/minecraft/world/item/ItemStack;
+       7: areturn
+}

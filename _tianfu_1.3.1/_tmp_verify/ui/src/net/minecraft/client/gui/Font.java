@@ -1,0 +1,2 @@
+package net.minecraft.client.gui;
+public class Font {public int width(String s){return s.codePoints().map(c->c<128?5:9).sum();}public String plainSubstrByWidth(String s,int max){int n=0,end=0;while(end<s.length()){int c=s.codePointAt(end),w=c<128?5:9;if(n+w>max)break;n+=w;end+=Character.charCount(c);}return s.substring(0,end);}}

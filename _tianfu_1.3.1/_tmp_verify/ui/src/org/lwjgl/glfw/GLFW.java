@@ -1,0 +1,1 @@
+package org.lwjgl.glfw;public class GLFW{public static final int GLFW_KEY_ESCAPE=256,GLFW_KEY_ENTER=257,GLFW_KEY_KP_ENTER=335,GLFW_KEY_F=70,GLFW_KEY_F6=295;}

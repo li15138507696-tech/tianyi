@@ -1,0 +1,45 @@
+# 天意 AI 降谕 —— 服务端配置
+# 这份文件是预先写好的「已填充」版本：首次启动直接读它，
+# 不走 FML 的「新建空配置 → correct(null) → NPE」那条路（1.0.10 就是崩在那里）。
+# 键可以不写全，缺的会按默认补；值写错会在启动时被修正回默认。
+
+[ai]
+	# 总开关。false = 完全不联网，只用本地模板出题。
+	enabled = true
+	# AI 后端：auto / numen / provider / dsh / http / local
+	# auto = Numen → 玩家自己的 key → 自定义接口 → DSH 本体 → 服主兜底 → 本地模板
+	mode = "auto"
+	# 默认 endpoint（OpenAI 兼容）
+	endpoint = "https://api.deepseek.com/chat/completions"
+	# 默认模型名
+	model = "deepseek-chat"
+	# 玩家自填 endpoint 时允许的 host 白名单（逗号分隔，防 SSRF）
+	allowedHosts = "api.openai.com,api.deepseek.com,open.bigmodel.cn,dashscope.aliyuncs.com,localhost,127.0.0.1"
+	# 是否允许 endpoint 指向回环/内网（本地 Ollama / LM Studio 需要 true）
+	allowPrivateHosts = true
+	# 单次请求超时（毫秒）
+	timeoutMs = 15000
+	# 全局并发上限
+	maxConcurrent = 2
+	# 请求体 max_tokens
+	maxTokens = 400
+	# 采样温度
+	temperature = 0.8
+	# 每个游戏日可祈问几次
+	dailyAsks = 1
+	# 手上最多同时有几条 AI 任务
+	maxOpenQuests = 3
+	# 难度 1–5 对应的天机点（逗号分隔，必须单调递增）
+	rewardByDifficulty = "10,18,28,40,55"
+	# 玩家没配 key 时的兜底 key（服主自己的），留空 = 不兜底
+	serverKey = ""
+	# 是否把玩家名发给 AI
+	sendPlayerName = false
+	# 复用 DeepSeek Harness（DSH）本体的模型凭据
+	dshEnabled = true
+	# DSH 凭据文件路径，留空 = 自动探测 ~/.dsh/.credentials.yaml
+	dshKeyFile = ""
+	# 用 DSH 凭据时的 endpoint
+	dshEndpoint = "https://api.deepseek.com/chat/completions"
+	# 用 DSH 凭据时的模型名
+	dshModel = "deepseek-chat"

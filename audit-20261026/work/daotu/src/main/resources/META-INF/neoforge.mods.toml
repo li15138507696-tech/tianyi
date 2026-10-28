@@ -1,0 +1,43 @@
+modLoader = "javafml"
+loaderVersion = "[1,)"
+license = "All Rights Reserved"
+
+[[mods]]
+modId = "daotu"
+version="1.6.1"
+displayName = "蛊真人道途"
+description = '''
+蛊真人附属「道途」：开窍之后，你从哪里来、要往哪里去。
+
+出身十六种（青茅山三寨、炼玄谷、冰雪道准宗、剑门、商队、罪血营、天外遗孤……），
+选定即写入本体属性面板的「势力:」「身份:」两行，附带元石、道痕与人情冷暖。
+势力六档晋升（白身→外门→内门→真传→长老→太上），以本体的贡献值衡量，只升不降。
+流派专精六大道统（杀伐、术法、诡道、身法、器道、心道），随道痕自然积累感悟点。
+
+按 M 打开道途界面。与「天命」附属可同装，互不干扰。
+'''
+authors = "daotu"
+
+[[dependencies.daotu]]
+modId = "neoforge"
+type = "required"
+versionRange = "[21.1.232,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.daotu]]
+modId = "minecraft"
+type = "required"
+versionRange = "[1.21.1,1.22)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.daotu]]
+modId = "guzhenren"
+type = "required"
+versionRange = "[0.1,)"
+ordering = "AFTER"
+side = "BOTH"
+
+[[mixins]]
+config = "daotu.mixins.json"

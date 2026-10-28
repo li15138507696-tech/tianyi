@@ -1,0 +1,1 @@
+b'Manifest-Version: 1.0\r\r\nSpecification-Title: tianyi\r\r\nSpecification-Vendor: tianyi\r\r\nSpecification-Version: 1\r\r\nImplementation-Title: tianyi\r\r\nImplementation-Version: 3.7.0\r\r\nImplementation-Vendor: tianyi\r\r\n'

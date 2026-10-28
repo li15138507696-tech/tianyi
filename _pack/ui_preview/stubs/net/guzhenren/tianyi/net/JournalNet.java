@@ -1,0 +1,2 @@
+
+package net.guzhenren.tianyi.net; import java.util.*; public class JournalNet {public static final List<String> sent=new ArrayList<>(); public static void send(JournalActionPayload.Action action,String id){sent.add(action+":"+id);}}

@@ -1,0 +1,24 @@
+{
+  "key.tianfu.view": "天赋 · 查看",
+
+  "effect.tianfu.tianfu_zhu_tu": "土烛",
+  "effect.tianfu.tianfu_zhu_bing": "兵烛",
+  "effect.tianfu.tianfu_zhu_bingxue": "冰雪烛",
+  "effect.tianfu.tianfu_zhu_feng": "风烛",
+  "effect.tianfu.tianfu_zhu_gu": "骨烛",
+  "effect.tianfu.tianfu_zhu_hun": "魂烛",
+  "effect.tianfu.tianfu_zhu_jian": "剑烛",
+  "effect.tianfu.tianfu_zhu_jin": "金烛",
+  "effect.tianfu.tianfu_zhu_li": "力烛",
+  "effect.tianfu.tianfu_zhu_mu": "木烛",
+  "effect.tianfu.tianfu_zhu_qi": "气烛",
+  "effect.tianfu.tianfu_zhu_xue": "血烛",
+  "effect.tianfu.tianfu_zhu_xu": "虚烛",
+  "effect.tianfu.tianfu_zhu_ying": "影烛",
+  "effect.tianfu.tianfu_zhu_yue": "月烛",
+  "effect.tianfu.tianfu_zhu_zhi": "智烛",
+  "effect.tianfu.tianfu_zhu_zhou": "宙烛",
+  "effect.tianfu.tianfu_zhu_meng": "梦烛",
+
+  "tianfu.zhu.desc": "命中时点燃，再次命中按已侵蚀时长结算流派伤害"
+}

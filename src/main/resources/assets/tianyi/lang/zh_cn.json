@@ -1,0 +1,22 @@
+{
+  "key.categories.tianyi": "天意",
+  "key.tianyi.journal": "见闻录 / 窥天录",
+  "tianyi.journal.title": "见闻录",
+  "tianyi.journal.title_unlocked": "窥天录",
+  "tianyi.journal.empty": "尚无相关见闻",
+  "tianyi.journal.tab.sight": "观象",
+  "tianyi.journal.tab.case": "察局",
+  "tianyi.journal.tab.knowledge": "藏识",
+  "tianyi.journal.tab.trace": "行藏",
+  "tianyi.journal.btn.favorite": "收藏",
+  "tianyi.journal.btn.doubt": "存疑",
+  "tianyi.journal.btn.case": "记入疑局",
+  "tianyi.journal.btn.uncase": "移出疑局",
+  "item.tianyi.suminggu": "宿命蛊",
+  "item.tianyi.suminggu.tip.empty": "没有凭证。这只是一具空壳。",
+  "item.tianyi.suminggu.tip.claim": "凭证：代次 %s · 保管版本 %s",
+  "item.tianyi.suminggu.tip.scarred": "赤红伤痕沿着甲壳裂开，气息不稳。",
+  "item.tianyi.suminggu.tip.repair": "仅限账本认可的正品：手持在铁砧处修复，每次投入蛊材元石 ×4、紫水晶碎片 ×4。",
+  "item.tianyi.suminggu.tip.ledger": "它记着自己上次被核对时的账本状态：%s",
+  "item.tianyi.suminggu.tip.verify": "真伪不由它自己说了算——须经世界账本核对。"
+}

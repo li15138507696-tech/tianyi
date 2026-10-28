@@ -1,0 +1,151 @@
+import groovy.json.JsonSlurper
+
+plugins {
+    id 'java'
+}
+
+group = 'net.guzhenren.tianyi'
+
+// 版本号唯一来源：version.properties（gradle.properties 只放构建环境参数）。
+def versionFile = file('version.properties')
+if (!versionFile.isFile()) {
+    throw new GradleException("缺少 version.properties（版本号唯一来源）")
+}
+def modVersion = new Properties().with { p ->
+    versionFile.withInputStream { p.load(it) }
+    p.getProperty('version')
+}
+if (modVersion == null || modVersion.trim().isEmpty()) {
+    throw new GradleException("version.properties 里没有 version=…")
+}
+version = modVersion.trim()
+
+base {
+    archivesName = 'tianyi'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+// ---------------------------------------------------------------------------
+// 离线编译 classpath
+//
+// 为什么不用 MDG：MDG 的 createMinecraftArtifacts 必须联网下载
+// net.neoforged:neoform-runtime（只发布在 maven.neoforged.net），本机该域名不可达。
+// 因此直接使用启动器已落地的 NeoForge 产物——与整合包运行期同一套 classpath。
+// 真正用于出包的是 _pack/javac_check.py + pack_jar.py（本文件仅供 IDE 索引）。
+// ---------------------------------------------------------------------------
+def minecraftDir = file(project.findProperty('tianyi.minecraftDir') ?: 'D:/game/mcmod/1/.minecraft')
+def localLibraries = new File(minecraftDir, 'libraries')
+
+def findNeoForgeProfile = { File mcDir ->
+    def versionsDir = new File(mcDir, 'versions')
+    if (!versionsDir.isDirectory()) {
+        return null
+    }
+    def best = null
+    def bestCount = -1
+    versionsDir.eachDir { dir ->
+        dir.listFiles()?.each { f ->
+            if (f.isFile() && f.name.toLowerCase().endsWith('.json')) {
+                try {
+                    def parsed = new JsonSlurper().parse(f, 'UTF-8')
+                    def gameArgs = parsed.arguments?.game?.findAll { it instanceof String }
+                    if (gameArgs != null && gameArgs.any { it == '--fml.neoForgeVersion' }) {
+                        int count = parsed.libraries?.size() ?: 0
+                        if (count > bestCount) {
+                            bestCount = count
+                            best = parsed
+                        }
+                    }
+                } catch (Exception ignored) {
+                }
+            }
+        }
+    }
+    return best
+}
+
+def profile = findNeoForgeProfile(minecraftDir)
+if (profile == null) {
+    throw new GradleException("未在 ${minecraftDir}/versions 下找到 NeoForge profile，请检查 gradle.properties 的 tianyi.minecraftDir")
+}
+
+def gameArgs = profile.arguments.game.findAll { it instanceof String }
+def argValue = { String key -> gameArgs[gameArgs.indexOf(key) + 1] }
+def neoforgeVersion = argValue('--fml.neoForgeVersion')
+def mcVersion = argValue('--fml.mcVersion')
+def neoFormVersion = argValue('--fml.neoFormVersion')
+
+def coreJars = [
+        new File(localLibraries, "net/neoforged/neoforge/${neoforgeVersion}/neoforge-${neoforgeVersion}-client.jar"),
+        new File(localLibraries, "net/minecraft/client/${mcVersion}-${neoFormVersion}/client-${mcVersion}-${neoFormVersion}-srg.jar"),
+        new File(localLibraries, "net/neoforged/neoforge/${neoforgeVersion}/neoforge-${neoforgeVersion}-universal.jar"),
+].findAll { it.isFile() }
+if (coreJars.isEmpty()) {
+    throw new GradleException("未找到 NeoForge ${neoforgeVersion} 的 client/srg/universal 产物")
+}
+
+def runtimeClasspath = []
+profile.libraries.each { lib ->
+    def path = lib.downloads?.artifact?.path
+    if (path != null) {
+        def f = new File(localLibraries, path)
+        if (f.isFile()) {
+            runtimeClasspath << f
+        }
+    }
+}
+
+logger.lifecycle("tianyi: NeoForge ${neoforgeVersion} / MC ${mcVersion}-${neoFormVersion}，" +
+        "core jar ${coreJars.size()} 个，运行期依赖 ${runtimeClasspath.size()} 个")
+
+dependencies {
+    compileOnly files(coreJars)
+    compileOnly files(runtimeClasspath)
+    // 蛊真人本体：仅编译期依赖，运行期由整合包提供（neoforge.mods.toml 已声明 required）。
+    compileOnly files('_pack/libs/guzhenren-0.1-neoforge-1.21.1.jar')
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.compilerArgs << '-proc:none'
+}
+
+// Python owns the distributable; this Java plugin also supplies IDE indexing.
+jar {
+    enabled = false
+    manifest {
+        attributes(
+                'Specification-Title': 'tianyi',
+                'Specification-Vendor': 'tianyi',
+                'Specification-Version': '1',
+                'Implementation-Title': project.name,
+                'Implementation-Version': project.version,
+                'Implementation-Vendor': 'tianyi'
+        )
+    }
+}
+
+// No wrapper is bundled. Use only with an independently verified Gradle installation.
+def offlinePython = providers.gradleProperty('tianyi.python').orElse('python')
+def offlineRoot = providers.gradleProperty('tianyi.offlineRoot').orElse(projectDir.absolutePath)
+[
+    tianyiOfflineBuild: 'build.py',
+    tianyiOfflineTests: 'run_tests.py',
+    tianyiSiteAudit: 'audit_sites.py'
+].each { taskName, scriptName ->
+    tasks.register(taskName, Exec) {
+        group = 'verification'
+        description = "Run the existing offline Python pipeline: ${scriptName}"
+        workingDir file(offlineRoot.get())
+        environment 'PYTHONIOENCODING', 'utf-8'
+        environment 'PYTHONUTF8', '1'
+        environment 'TIANYI_MINECRAFT_DIR', minecraftDir.absolutePath
+        commandLine offlinePython.get(), new File(workingDir, "_pack/${scriptName}").absolutePath
+        ignoreExitValue = false
+    }
+}

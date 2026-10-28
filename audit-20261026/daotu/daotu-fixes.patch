@@ -1,0 +1,271 @@
+--- a/src/main/java/net/guzhenren/daotu/DaotuOpening.java
++++ b/src/main/java/net/guzhenren/daotu/DaotuOpening.java
+@@ -87,9 +87,15 @@
+         }
+     }
+ 
+-    /** 死亡克隆：PersistentData 默认会复制，这里只需重挂属性修正。 */
++    /** 克隆时只深拷贝道途自己的数据根，再重挂属性修正。 */
+     public static void onClone(ServerPlayer player, ServerPlayer original) {
+         try {
++            // NeoForge 只自动复制 PlayerPersisted，普通根标签须由模组自己迁移。
++            var source = original.getPersistentData();
++            if (source.contains(DaotuData.ROOT, net.minecraft.nbt.Tag.TAG_COMPOUND)) {
++                player.getPersistentData().put(DaotuData.ROOT,
++                        source.getCompound(DaotuData.ROOT).copy());
++            }
+             DaotuAttributes.sync(player);
+         } catch (Throwable t) {
+             DaotuMod.LOGGER.warn("daotu onClone 失败（已忽略）", t);
+--- a/src/main/java/net/guzhenren/daotu/DaotuLiLian.java
++++ b/src/main/java/net/guzhenren/daotu/DaotuLiLian.java
+@@ -229,6 +229,9 @@
+      */
+     public static void award(ServerPlayer player, double combat, double travel,
+                              double cultivate, String reason) {
++        if (!DaotuOpening.hasOpenedQiao(player)) {
++            return;
++        }
+         double gain = combat + travel + cultivate;
+         if (gain <= 0.0) {
+             return;
+--- a/src/main/java/net/guzhenren/daotu/DaotuDraw.java
++++ b/src/main/java/net/guzhenren/daotu/DaotuDraw.java
+@@ -63,7 +63,7 @@
+      * 所以「一转」与「一世」在这里是同一件事，{@code run/draws} 也是每世归零。
+      */
+     public static int capOf(double zhuanshu) {
+-        return zhuanshu < 5.0 ? PER_ZHUAN_CAP : Integer.MAX_VALUE;
++        return zhuanshu <= 5.0 ? PER_ZHUAN_CAP : Integer.MAX_VALUE;
+     }
+ 
+     /** 当前玩家的抽选上限。 */
+@@ -82,6 +82,9 @@
+      * <p><b>不扣池、不发奖</b>——真正的结算在 {@link #choose}。
+      */
+     public static int tryDraw(ServerPlayer player) {
++        if (!DaotuOpening.hasOpenedQiao(player)) {
++            return 0;
++        }
+         // 已达本转抽选上限：不再生成候选。池由 DaotuLiLian 停止累计，
+         // 这里只兜底（防止上限是后来调小的，旧存档池子已经很高）。
+         if (atCap(player)) {
+@@ -125,6 +128,9 @@
+      * @return 是否成功（候选不存在 / 池不够 / 下标越界都返回 false）
+      */
+     public static boolean choose(ServerPlayer player, int index) {
++        if (!DaotuOpening.hasOpenedQiao(player)) {
++            return false;
++        }
+         List<DaotuDrawTable.Candidate> cands = pendingOffer(player);
+         if (cands.isEmpty()) {
+             return false;
+@@ -276,6 +282,14 @@
+ 
+     /** 键 → 中文名。客户端另有一份副本（不能引用服务端）。 */
+     public static String labelOf(String key) {
++        if (key.startsWith(DaotuDrawTable.TALENT_PREFIX)) {
++            DaotuTalent.Entry entry = DaotuTalent.byId(
++                    key.substring(DaotuDrawTable.TALENT_PREFIX.length()));
++            if (entry != null) {
++                String summary = entry.summary();
++                return entry.name() + (summary.isEmpty() ? "" : " · " + summary);
++            }
++        }
+         return switch (key) {
+             case "attack_damage" -> "力量";
+             case "max_health" -> "生命";
+--- a/src/main/java/net/guzhenren/daotu/DaotuMigrate.java
++++ b/src/main/java/net/guzhenren/daotu/DaotuMigrate.java
+@@ -84,8 +84,7 @@
+         DaotuData.clearOrigin(player);
+         DaotuData.markMigrated(player);
+ 
+-        // 折算的抽选次数直接灌满池，让 drawAll 一次抽完
+-        DaotuRun.setDraws(player, draws);
++        // 补发流程自己逐次递增 draws；不能在补发前预加一次。
+         DaotuDraw.replayForMigration(player, draws);
+ 
+         DaotuGrowthApply.refreshTitles(player);
+--- a/src/main/java/net/guzhenren/daotu/chronicle/NbtChronicleRepository.java
++++ b/src/main/java/net/guzhenren/daotu/chronicle/NbtChronicleRepository.java
+@@ -47,9 +47,9 @@
+         parent.put(key, tag);
+     }
+ 
+-    private static Set<String> readPairs(CompoundTag parent) {
++    private static Set<String> readStrings(CompoundTag parent, String key) {
+         Set<String> out = new LinkedHashSet<>();
+-        ListTag list = parent.getList("pairs", Tag.TAG_STRING);
++        ListTag list = parent.getList(key, Tag.TAG_STRING);
+         for (int i = 0; i < list.size(); i++) {
+             out.add(list.getString(i));
+         }
+@@ -72,20 +72,20 @@
+ 
+     private static MeritArchive readMerit(CompoundTag parent) {
+         if (!parent.contains(K_MERIT, Tag.TAG_COMPOUND)) {
+-            return new MeritArchive(-1.0, -1.0, Set.of(), 0L);
++            return new MeritArchive(-1.0, -1.0, Set.of(), -1L);
+         }
+         CompoundTag tag = parent.getCompound(K_MERIT);
+         return new MeritArchive(tag.getDouble("last"), tag.getDouble("peak"),
+-                Set.copyOf(readPairs(tag)), tag.getLong("tick"));
++                Set.copyOf(readStrings(tag, "unlocked")), tag.getLong("tick"));
+     }
+ 
+     private static ReputationJournal readReputation(CompoundTag parent) {
+         if (!parent.contains(K_REPUTATION, Tag.TAG_COMPOUND)) {
+-            return new ReputationJournal(-1.0, -1.0, Set.of(), 0L);
++            return new ReputationJournal(-1.0, -1.0, Set.of(), -1L);
+         }
+         CompoundTag tag = parent.getCompound(K_REPUTATION);
+         return new ReputationJournal(tag.getDouble("last"), tag.getDouble("peak"),
+-                Set.copyOf(readPairs(tag)), tag.getLong("tick"));
++                Set.copyOf(readStrings(tag, "unlocked")), tag.getLong("tick"));
+     }
+ 
+     /** {@inheritDoc} 缺失返回空；schema 高于本版本直接拒绝且不修改原数据。 */
+@@ -107,7 +107,7 @@
+         CompoundTag factionTag = tag.contains(K_FACTION, Tag.TAG_COMPOUND)
+                 ? tag.getCompound(K_FACTION) : new CompoundTag();
+         FactionJournal faction = new FactionJournal(
+-                Set.copyOf(readPairs(factionTag)),
++                Set.copyOf(readStrings(factionTag, "pairs")),
+                 factionTag.getString("lastA"),
+                 factionTag.getString("lastB"),
+                 factionTag.getLong("tick"));
+--- a/src/main/java/net/guzhenren/daotu/chronicle/FactionJournalModule.java
++++ b/src/main/java/net/guzhenren/daotu/chronicle/FactionJournalModule.java
+@@ -49,7 +49,7 @@
+         }
+         FactionJournal next = new FactionJournal(Set.copyOf(pairs), faction, identity, snapshot.gameTick());
+         return Optional.of(new ModuleDecision(ID,
+-                new ChronicleState(state.playerId(), state.schema(), state.revision(), snapshot.runId(),
++                new ChronicleState(state.playerId(), state.schema(), state.revision(), state.runId(),
+                         next, state.merit(), state.reputation()),
+                 List.copyOf(entries)));
+     }
+--- a/src/main/java/net/guzhenren/daotu/chronicle/MeritArchiveModule.java
++++ b/src/main/java/net/guzhenren/daotu/chronicle/MeritArchiveModule.java
+@@ -31,15 +31,15 @@
+         MeritArchive previous = state.merit();
+         double current = snapshot.contribution();
+         boolean newRun = snapshot.runId() != state.runId();
+-        boolean noBaseline = previous.lastObserved() < 0.0;
++        boolean noBaseline = previous.lastObservedTick() < 0L;
+ 
+         if (newRun || noBaseline) {
+             // 基线：只记下当前值，不发条目。
+             MeritArchive base = new MeritArchive(current,
+-                    Math.max(current, previous.peakObserved()), previous.unlockedEntries(),
++                    noBaseline ? current : Math.max(current, previous.peakObserved()), previous.unlockedEntries(),
+                     snapshot.gameTick());
+             return Optional.of(new ModuleDecision(ID,
+-                    new ChronicleState(state.playerId(), state.schema(), state.revision(), snapshot.runId(),
++                    new ChronicleState(state.playerId(), state.schema(), state.revision(), state.runId(),
+                             state.faction(), base, state.reputation()),
+                     List.of()));
+         }
+@@ -53,7 +53,8 @@
+         List<String> entries = new ArrayList<>();
+         if (current >= previous.lastObserved()) {
+             for (Milestone milestone : ChronicleTables.MERIT) {
+-                if (peak >= milestone.threshold() && unlocked.add(milestone.id())) {
++                if (previous.peakObserved() < milestone.threshold()
++                        && peak >= milestone.threshold() && unlocked.add(milestone.id())) {
+                     entries.add(milestone.id());
+                 }
+             }
+@@ -61,7 +62,7 @@
+         // 下降分支：unlocked 不变，peak 也不因下降而缩水。
+         MeritArchive next = new MeritArchive(current, peak, Set.copyOf(unlocked), snapshot.gameTick());
+         return Optional.of(new ModuleDecision(ID,
+-                new ChronicleState(state.playerId(), state.schema(), state.revision(), snapshot.runId(),
++                new ChronicleState(state.playerId(), state.schema(), state.revision(), state.runId(),
+                         state.faction(), next, state.reputation()),
+                 List.copyOf(entries)));
+     }
+--- a/src/main/java/net/guzhenren/daotu/chronicle/ReputationJournalModule.java
++++ b/src/main/java/net/guzhenren/daotu/chronicle/ReputationJournalModule.java
+@@ -26,14 +26,14 @@
+         ReputationJournal previous = state.reputation();
+         double current = snapshot.reputation();
+         boolean newRun = snapshot.runId() != state.runId();
+-        boolean noBaseline = previous.lastObserved() < 0.0;
++        boolean noBaseline = previous.lastObservedTick() < 0L;
+ 
+         if (newRun || noBaseline) {
+             ReputationJournal base = new ReputationJournal(current,
+-                    Math.max(current, previous.peakObserved()), previous.unlockedEntries(),
++                    noBaseline ? current : Math.max(current, previous.peakObserved()), previous.unlockedEntries(),
+                     snapshot.gameTick());
+             return Optional.of(new ModuleDecision(ID,
+-                    new ChronicleState(state.playerId(), state.schema(), state.revision(), snapshot.runId(),
++                    new ChronicleState(state.playerId(), state.schema(), state.revision(), state.runId(),
+                             state.faction(), state.merit(), base),
+                     List.of()));
+         }
+@@ -47,13 +47,14 @@
+         Set<String> unlocked = new LinkedHashSet<>(previous.unlockedEntries());
+         List<String> entries = new ArrayList<>();
+         for (Milestone milestone : ChronicleTables.REPUTATION) {
+-            if (peak >= milestone.threshold() && unlocked.add(milestone.id())) {
++            if (previous.peakObserved() < milestone.threshold()
++                    && peak >= milestone.threshold() && unlocked.add(milestone.id())) {
+                 entries.add(milestone.id());
+             }
+         }
+         ReputationJournal next = new ReputationJournal(current, peak, Set.copyOf(unlocked), snapshot.gameTick());
+         return Optional.of(new ModuleDecision(ID,
+-                new ChronicleState(state.playerId(), state.schema(), state.revision(), snapshot.runId(),
++                new ChronicleState(state.playerId(), state.schema(), state.revision(), state.runId(),
+                         state.faction(), state.merit(), next),
+                 List.copyOf(entries)));
+     }
+--- a/src/main/java/net/guzhenren/daotu/chronicle/ChronicleCoordinator.java
++++ b/src/main/java/net/guzhenren/daotu/chronicle/ChronicleCoordinator.java
+@@ -31,7 +31,7 @@
+         this.modules = List.copyOf(modules);
+     }
+ 
+-    /** 首次建档的空状态：merit/reputation 的 lastObserved 用 -1 表示"尚无基线"。 */
++    /** 首次建档的空状态：采样时间 -1 表示尚无基线，负声望仍是有效观测值。 */
+     private static ChronicleState baseline(CoreSnapshot snapshot) {
+         return new ChronicleState(
+                 snapshot.playerId(),
+@@ -39,8 +39,8 @@
+                 0L,
+                 snapshot.runId(),
+                 new FactionJournal(Set.of(), "", "", 0L),
+-                new MeritArchive(-1.0, -1.0, Set.of(), 0L),
+-                new ReputationJournal(-1.0, -1.0, Set.of(), 0L));
++                new MeritArchive(-1.0, -1.0, Set.of(), -1L),
++                new ReputationJournal(-1.0, -1.0, Set.of(), -1L));
+     }
+ 
+     /**
+@@ -82,19 +82,20 @@
+         }
+ 
+         boolean dirty = !loaded.isPresent()
+-                || working.runId() != loaded.get().runId()
++                || snapshot.runId() != loaded.get().runId()
+                 || !collected.isEmpty()
+                 || !working.equals(loaded.get());
+         if (!dirty) {
+             return;
+         }
+ 
+-        // 整批一次 revision：任何模块都不能自己递增版本。
++        // 整批统一提交 revision 与 runId；模块合并期间保留旧 runId，
++        // 使每个模块都能识别同一次转世，不能由前一个模块提前消费。
+         ChronicleState next = new ChronicleState(
+                 working.playerId(),
+                 ChronicleModels.SCHEMA,
+                 expectedRevision + 1L,
+-                working.runId(),
++                snapshot.runId(),
+                 working.faction(),
+                 working.merit(),
+                 working.reputation());

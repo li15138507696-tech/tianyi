@@ -1,0 +1,583 @@
+Compiled from "JarContentsImpl.java"
+public class cpw.mods.jarhandling.impl.JarContentsImpl implements cpw.mods.jarhandling.JarContents {
+  private static final cpw.mods.niofs.union.UnionFileSystemProvider UFSP;
+
+  private static final java.util.Set<java.lang.String> NAUGHTY_SERVICE_FILES;
+
+  final cpw.mods.niofs.union.UnionFileSystem filesystem;
+
+  final cpw.mods.jarhandling.impl.JarSigningData signingData;
+
+  private final java.util.jar.Manifest manifest;
+
+  private final java.util.Map<java.nio.file.Path, java.lang.Integer> nameOverrides;
+
+  private java.util.Set<java.lang.String> packages;
+
+  private java.util.List<cpw.mods.jarhandling.SecureJar$Provider> providers;
+
+  public cpw.mods.jarhandling.impl.JarContentsImpl(java.nio.file.Path[], java.util.function.Supplier<java.util.jar.Manifest>, cpw.mods.niofs.union.UnionPathFilter);
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: aload_0
+       5: new           #7                  // class cpw/mods/jarhandling/impl/JarSigningData
+       8: dup
+       9: invokespecial #9                  // Method cpw/mods/jarhandling/impl/JarSigningData."<init>":()V
+      12: putfield      #10                 // Field signingData:Lcpw/mods/jarhandling/impl/JarSigningData;
+      15: aload_1
+      16: invokestatic  #16                 // Method java/util/Arrays.stream:([Ljava/lang/Object;)Ljava/util/stream/Stream;
+      19: invokedynamic #22,  0             // InvokeDynamic #0:test:()Ljava/util/function/Predicate;
+      24: invokeinterface #26,  2           // InterfaceMethod java/util/stream/Stream.filter:(Ljava/util/function/Predicate;)Ljava/util/stream/Stream;
+      29: invokedynamic #32,  0             // InvokeDynamic #1:apply:()Ljava/util/function/IntFunction;
+      34: invokeinterface #36,  2           // InterfaceMethod java/util/stream/Stream.toArray:(Ljava/util/function/IntFunction;)[Ljava/lang/Object;
+      39: checkcast     #40                 // class "[Ljava/nio/file/Path;"
+      42: astore        4
+      44: aload         4
+      46: arraylength
+      47: ifne          74
+      50: new           #42                 // class java/io/UncheckedIOException
+      53: dup
+      54: new           #44                 // class java/io/IOException
+      57: dup
+      58: aload_1
+      59: invokestatic  #46                 // Method java/util/Arrays.toString:([Ljava/lang/Object;)Ljava/lang/String;
+      62: invokedynamic #50,  0             // InvokeDynamic #2:makeConcatWithConstants:(Ljava/lang/String;)Ljava/lang/String;
+      67: invokespecial #54                 // Method java/io/IOException."<init>":(Ljava/lang/String;)V
+      70: invokespecial #57                 // Method java/io/UncheckedIOException."<init>":(Ljava/io/IOException;)V
+      73: athrow
+      74: aload_0
+      75: getstatic     #60                 // Field UFSP:Lcpw/mods/niofs/union/UnionFileSystemProvider;
+      78: aload_3
+      79: aload         4
+      81: invokevirtual #64                 // Method cpw/mods/niofs/union/UnionFileSystemProvider.newFileSystem:(Lcpw/mods/niofs/union/UnionPathFilter;[Ljava/nio/file/Path;)Lcpw/mods/niofs/union/UnionFileSystem;
+      84: putfield      #70                 // Field filesystem:Lcpw/mods/niofs/union/UnionFileSystem;
+      87: aload_0
+      88: aload_0
+      89: aload_2
+      90: aload         4
+      92: invokevirtual #74                 // Method readManifestAndSigningData:(Ljava/util/function/Supplier;[Ljava/nio/file/Path;)Ljava/util/jar/Manifest;
+      95: putfield      #78                 // Field manifest:Ljava/util/jar/Manifest;
+      98: aload_0
+      99: aload_0
+     100: invokevirtual #82                 // Method readMultiReleaseInfo:()Ljava/util/Map;
+     103: putfield      #86                 // Field nameOverrides:Ljava/util/Map;
+     106: return
+
+  private java.util.jar.Manifest readManifestAndSigningData(java.util.function.Supplier<java.util.jar.Manifest>, java.nio.file.Path[]);
+    Code:
+       0: aload_2
+       1: arraylength
+       2: iconst_1
+       3: isub
+       4: istore_3
+       5: iload_3
+       6: iflt          207
+       9: aload_2
+      10: iload_3
+      11: aaload
+      12: astore        4
+      14: aload         4
+      16: iconst_0
+      17: anewarray     #90                 // class java/nio/file/LinkOption
+      20: invokestatic  #92                 // Method java/nio/file/Files.isDirectory:(Ljava/nio/file/Path;[Ljava/nio/file/LinkOption;)Z
+      23: ifeq          114
+      26: aload         4
+      28: ldc           #100                // String META-INF/MANIFEST.MF
+      30: invokeinterface #102,  2          // InterfaceMethod java/nio/file/Path.resolve:(Ljava/lang/String;)Ljava/nio/file/Path;
+      35: astore        5
+      37: aload         5
+      39: iconst_0
+      40: anewarray     #90                 // class java/nio/file/LinkOption
+      43: invokestatic  #108                // Method java/nio/file/Files.exists:(Ljava/nio/file/Path;[Ljava/nio/file/LinkOption;)Z
+      46: ifeq          111
+      49: aload         5
+      51: iconst_0
+      52: anewarray     #111                // class java/nio/file/OpenOption
+      55: invokestatic  #113                // Method java/nio/file/Files.newInputStream:(Ljava/nio/file/Path;[Ljava/nio/file/OpenOption;)Ljava/io/InputStream;
+      58: astore        6
+      60: new           #117                // class java/util/jar/Manifest
+      63: dup
+      64: aload         6
+      66: invokespecial #119                // Method java/util/jar/Manifest."<init>":(Ljava/io/InputStream;)V
+      69: astore        7
+      71: aload         6
+      73: ifnull        81
+      76: aload         6
+      78: invokevirtual #122                // Method java/io/InputStream.close:()V
+      81: aload         7
+      83: areturn
+      84: astore        7
+      86: aload         6
+      88: ifnull        108
+      91: aload         6
+      93: invokevirtual #122                // Method java/io/InputStream.close:()V
+      96: goto          108
+      99: astore        8
+     101: aload         7
+     103: aload         8
+     105: invokevirtual #129                // Method java/lang/Throwable.addSuppressed:(Ljava/lang/Throwable;)V
+     108: aload         7
+     110: athrow
+     111: goto          201
+     114: new           #133                // class java/util/jar/JarInputStream
+     117: dup
+     118: aload         4
+     120: iconst_0
+     121: anewarray     #111                // class java/nio/file/OpenOption
+     124: invokestatic  #113                // Method java/nio/file/Files.newInputStream:(Ljava/nio/file/Path;[Ljava/nio/file/OpenOption;)Ljava/io/InputStream;
+     127: invokespecial #135                // Method java/util/jar/JarInputStream."<init>":(Ljava/io/InputStream;)V
+     130: astore        5
+     132: aload_0
+     133: getfield      #10                 // Field signingData:Lcpw/mods/jarhandling/impl/JarSigningData;
+     136: aload         5
+     138: invokevirtual #136                // Method cpw/mods/jarhandling/impl/JarSigningData.readJarSigningData:(Ljava/util/jar/JarInputStream;)V
+     141: aload         5
+     143: invokevirtual #140                // Method java/util/jar/JarInputStream.getManifest:()Ljava/util/jar/Manifest;
+     146: ifnull        171
+     149: new           #117                // class java/util/jar/Manifest
+     152: dup
+     153: aload         5
+     155: invokevirtual #140                // Method java/util/jar/JarInputStream.getManifest:()Ljava/util/jar/Manifest;
+     158: invokespecial #144                // Method java/util/jar/Manifest."<init>":(Ljava/util/jar/Manifest;)V
+     161: astore        6
+     163: aload         5
+     165: invokevirtual #147                // Method java/util/jar/JarInputStream.close:()V
+     168: aload         6
+     170: areturn
+     171: aload         5
+     173: invokevirtual #147                // Method java/util/jar/JarInputStream.close:()V
+     176: goto          201
+     179: astore        6
+     181: aload         5
+     183: invokevirtual #147                // Method java/util/jar/JarInputStream.close:()V
+     186: goto          198
+     189: astore        7
+     191: aload         6
+     193: aload         7
+     195: invokevirtual #129                // Method java/lang/Throwable.addSuppressed:(Ljava/lang/Throwable;)V
+     198: aload         6
+     200: athrow
+     201: iinc          3, -1
+     204: goto          5
+     207: goto          220
+     210: astore_3
+     211: new           #42                 // class java/io/UncheckedIOException
+     214: dup
+     215: aload_3
+     216: invokespecial #57                 // Method java/io/UncheckedIOException."<init>":(Ljava/io/IOException;)V
+     219: athrow
+     220: aload_1
+     221: invokeinterface #148,  1          // InterfaceMethod java/util/function/Supplier.get:()Ljava/lang/Object;
+     226: checkcast     #117                // class java/util/jar/Manifest
+     229: areturn
+    Exception table:
+       from    to  target type
+          60    71    84   Class java/lang/Throwable
+          91    96    99   Class java/lang/Throwable
+         132   163   179   Class java/lang/Throwable
+         181   186   189   Class java/lang/Throwable
+           0    81   210   Class java/io/IOException
+          84   168   210   Class java/io/IOException
+         171   207   210   Class java/io/IOException
+
+  private java.util.Map<java.nio.file.Path, java.lang.Integer> readMultiReleaseInfo();
+    Code:
+       0: aload_0
+       1: invokevirtual #154                // Method getManifest:()Ljava/util/jar/Manifest;
+       4: invokevirtual #155                // Method java/util/jar/Manifest.getMainAttributes:()Ljava/util/jar/Attributes;
+       7: ldc           #159                // String Multi-Release
+       9: invokevirtual #161                // Method java/util/jar/Attributes.getValue:(Ljava/lang/String;)Ljava/lang/String;
+      12: invokestatic  #166                // Method java/lang/Boolean.parseBoolean:(Ljava/lang/String;)Z
+      15: istore_1
+      16: iload_1
+      17: ifne          24
+      20: invokestatic  #172                // InterfaceMethod java/util/Map.of:()Ljava/util/Map;
+      23: areturn
+      24: aload_0
+      25: getfield      #70                 // Field filesystem:Lcpw/mods/niofs/union/UnionFileSystem;
+      28: invokevirtual #177                // Method cpw/mods/niofs/union/UnionFileSystem.getRoot:()Ljava/nio/file/Path;
+      31: ldc           #183                // String META-INF/versions
+      33: invokeinterface #102,  2          // InterfaceMethod java/nio/file/Path.resolve:(Ljava/lang/String;)Ljava/nio/file/Path;
+      38: astore_2
+      39: aload_2
+      40: iconst_0
+      41: anewarray     #90                 // class java/nio/file/LinkOption
+      44: invokestatic  #92                 // Method java/nio/file/Files.isDirectory:(Ljava/nio/file/Path;[Ljava/nio/file/LinkOption;)Z
+      47: ifne          54
+      50: invokestatic  #172                // InterfaceMethod java/util/Map.of:()Ljava/util/Map;
+      53: areturn
+      54: aload_2
+      55: iconst_0
+      56: anewarray     #185                // class java/nio/file/FileVisitOption
+      59: invokestatic  #187                // Method java/nio/file/Files.walk:(Ljava/nio/file/Path;[Ljava/nio/file/FileVisitOption;)Ljava/util/stream/Stream;
+      62: astore_3
+      63: new           #191                // class java/util/HashMap
+      66: dup
+      67: invokespecial #193                // Method java/util/HashMap."<init>":()V
+      70: astore        4
+      72: aload_3
+      73: invokedynamic #194,  0            // InvokeDynamic #3:test:()Ljava/util/function/Predicate;
+      78: invokeinterface #26,  2           // InterfaceMethod java/util/stream/Stream.filter:(Ljava/util/function/Predicate;)Ljava/util/stream/Stream;
+      83: aload         4
+      85: invokedynamic #195,  0            // InvokeDynamic #4:accept:(Ljava/util/Map;)Ljava/util/function/Consumer;
+      90: invokeinterface #199,  2          // InterfaceMethod java/util/stream/Stream.forEach:(Ljava/util/function/Consumer;)V
+      95: aload         4
+      97: astore        5
+      99: aload_3
+     100: ifnull        109
+     103: aload_3
+     104: invokeinterface #203,  1          // InterfaceMethod java/util/stream/Stream.close:()V
+     109: aload         5
+     111: areturn
+     112: astore        4
+     114: aload_3
+     115: ifnull        136
+     118: aload_3
+     119: invokeinterface #203,  1          // InterfaceMethod java/util/stream/Stream.close:()V
+     124: goto          136
+     127: astore        5
+     129: aload         4
+     131: aload         5
+     133: invokevirtual #129                // Method java/lang/Throwable.addSuppressed:(Ljava/lang/Throwable;)V
+     136: aload         4
+     138: athrow
+     139: astore_3
+     140: new           #42                 // class java/io/UncheckedIOException
+     143: dup
+     144: aload_3
+     145: invokespecial #57                 // Method java/io/UncheckedIOException."<init>":(Ljava/io/IOException;)V
+     148: athrow
+    Exception table:
+       from    to  target type
+          63    99   112   Class java/lang/Throwable
+         118   124   127   Class java/lang/Throwable
+          54   109   139   Class java/io/IOException
+         112   139   139   Class java/io/IOException
+
+  public java.nio.file.Path getPrimaryPath();
+    Code:
+       0: aload_0
+       1: getfield      #70                 // Field filesystem:Lcpw/mods/niofs/union/UnionFileSystem;
+       4: invokevirtual #204                // Method cpw/mods/niofs/union/UnionFileSystem.getPrimaryPath:()Ljava/nio/file/Path;
+       7: areturn
+
+  public java.util.Optional<java.net.URI> findFile(java.lang.String);
+    Code:
+       0: aload_0
+       1: getfield      #70                 // Field filesystem:Lcpw/mods/niofs/union/UnionFileSystem;
+       4: aload_1
+       5: iconst_0
+       6: anewarray     #207                // class java/lang/String
+       9: invokevirtual #209                // Method cpw/mods/niofs/union/UnionFileSystem.getPath:(Ljava/lang/String;[Ljava/lang/String;)Ljava/nio/file/Path;
+      12: astore_2
+      13: aload_0
+      14: getfield      #86                 // Field nameOverrides:Ljava/util/Map;
+      17: aload_2
+      18: invokeinterface #213,  2          // InterfaceMethod java/util/Map.containsKey:(Ljava/lang/Object;)Z
+      23: ifeq          70
+      26: aload_0
+      27: getfield      #70                 // Field filesystem:Lcpw/mods/niofs/union/UnionFileSystem;
+      30: ldc           #217                // String META-INF
+      32: iconst_2
+      33: anewarray     #207                // class java/lang/String
+      36: dup
+      37: iconst_0
+      38: ldc           #219                // String versions
+      40: aastore
+      41: dup
+      42: iconst_1
+      43: aload_0
+      44: getfield      #86                 // Field nameOverrides:Ljava/util/Map;
+      47: aload_2
+      48: invokeinterface #221,  2          // InterfaceMethod java/util/Map.get:(Ljava/lang/Object;)Ljava/lang/Object;
+      53: checkcast     #224                // class java/lang/Integer
+      56: invokevirtual #226                // Method java/lang/Integer.toString:()Ljava/lang/String;
+      59: aastore
+      60: invokevirtual #209                // Method cpw/mods/niofs/union/UnionFileSystem.getPath:(Ljava/lang/String;[Ljava/lang/String;)Ljava/nio/file/Path;
+      63: aload_2
+      64: invokeinterface #229,  2          // InterfaceMethod java/nio/file/Path.resolve:(Ljava/nio/file/Path;)Ljava/nio/file/Path;
+      69: astore_2
+      70: aload_0
+      71: getfield      #70                 // Field filesystem:Lcpw/mods/niofs/union/UnionFileSystem;
+      74: invokevirtual #177                // Method cpw/mods/niofs/union/UnionFileSystem.getRoot:()Ljava/nio/file/Path;
+      77: aload_2
+      78: invokeinterface #229,  2          // InterfaceMethod java/nio/file/Path.resolve:(Ljava/nio/file/Path;)Ljava/nio/file/Path;
+      83: invokestatic  #232                // Method java/util/Optional.of:(Ljava/lang/Object;)Ljava/util/Optional;
+      86: invokedynamic #237,  0            // InvokeDynamic #5:test:()Ljava/util/function/Predicate;
+      91: invokevirtual #238                // Method java/util/Optional.filter:(Ljava/util/function/Predicate;)Ljava/util/Optional;
+      94: invokedynamic #241,  0            // InvokeDynamic #6:apply:()Ljava/util/function/Function;
+      99: invokevirtual #244                // Method java/util/Optional.map:(Ljava/util/function/Function;)Ljava/util/Optional;
+     102: areturn
+
+  public java.util.jar.Manifest getManifest();
+    Code:
+       0: aload_0
+       1: getfield      #78                 // Field manifest:Ljava/util/jar/Manifest;
+       4: areturn
+
+  public java.util.Set<java.lang.String> getPackagesExcluding(java.lang.String...);
+    Code:
+       0: new           #248                // class java/util/HashSet
+       3: dup
+       4: aload_1
+       5: arraylength
+       6: iconst_1
+       7: iadd
+       8: invokespecial #250                // Method java/util/HashSet."<init>":(I)V
+      11: astore_2
+      12: aload_2
+      13: ldc           #217                // String META-INF
+      15: invokeinterface #253,  2          // InterfaceMethod java/util/Set.add:(Ljava/lang/Object;)Z
+      20: pop
+      21: aload_2
+      22: aload_1
+      23: invokestatic  #258                // InterfaceMethod java/util/List.of:([Ljava/lang/Object;)Ljava/util/List;
+      26: invokeinterface #263,  2          // InterfaceMethod java/util/Set.addAll:(Ljava/util/Collection;)Z
+      31: pop
+      32: new           #248                // class java/util/HashSet
+      35: dup
+      36: invokespecial #267                // Method java/util/HashSet."<init>":()V
+      39: astore_3
+      40: aload_0
+      41: getfield      #70                 // Field filesystem:Lcpw/mods/niofs/union/UnionFileSystem;
+      44: invokevirtual #177                // Method cpw/mods/niofs/union/UnionFileSystem.getRoot:()Ljava/nio/file/Path;
+      47: new           #268                // class cpw/mods/jarhandling/impl/JarContentsImpl$1
+      50: dup
+      51: aload_0
+      52: aload_3
+      53: aload_2
+      54: invokespecial #270                // Method cpw/mods/jarhandling/impl/JarContentsImpl$1."<init>":(Lcpw/mods/jarhandling/impl/JarContentsImpl;Ljava/util/Set;Ljava/util/Set;)V
+      57: invokestatic  #273                // Method java/nio/file/Files.walkFileTree:(Ljava/nio/file/Path;Ljava/nio/file/FileVisitor;)Ljava/nio/file/Path;
+      60: pop
+      61: aload_3
+      62: invokestatic  #277                // InterfaceMethod java/util/Set.copyOf:(Ljava/util/Collection;)Ljava/util/Set;
+      65: areturn
+      66: astore        4
+      68: new           #42                 // class java/io/UncheckedIOException
+      71: dup
+      72: aload         4
+      74: invokespecial #57                 // Method java/io/UncheckedIOException."<init>":(Ljava/io/IOException;)V
+      77: athrow
+    Exception table:
+       from    to  target type
+          40    65    66   Class java/io/IOException
+
+  public java.util.Set<java.lang.String> getPackages();
+    Code:
+       0: aload_0
+       1: getfield      #281                // Field packages:Ljava/util/Set;
+       4: ifnonnull     19
+       7: aload_0
+       8: aload_0
+       9: iconst_0
+      10: anewarray     #207                // class java/lang/String
+      13: invokevirtual #285                // Method getPackagesExcluding:([Ljava/lang/String;)Ljava/util/Set;
+      16: putfield      #281                // Field packages:Ljava/util/Set;
+      19: aload_0
+      20: getfield      #281                // Field packages:Ljava/util/Set;
+      23: areturn
+
+  public java.util.List<cpw.mods.jarhandling.SecureJar$Provider> getMetaInfServices();
+    Code:
+       0: aload_0
+       1: getfield      #289                // Field providers:Ljava/util/List;
+       4: ifnonnull     142
+       7: aload_0
+       8: getfield      #70                 // Field filesystem:Lcpw/mods/niofs/union/UnionFileSystem;
+      11: invokevirtual #177                // Method cpw/mods/niofs/union/UnionFileSystem.getRoot:()Ljava/nio/file/Path;
+      14: ldc_w         #293                // String META-INF/services/
+      17: invokeinterface #102,  2          // InterfaceMethod java/nio/file/Path.resolve:(Ljava/lang/String;)Ljava/nio/file/Path;
+      22: astore_1
+      23: aload_1
+      24: iconst_0
+      25: anewarray     #90                 // class java/nio/file/LinkOption
+      28: invokestatic  #108                // Method java/nio/file/Files.exists:(Ljava/nio/file/Path;[Ljava/nio/file/LinkOption;)Z
+      31: ifeq          135
+      34: aload_1
+      35: iconst_1
+      36: iconst_0
+      37: anewarray     #185                // class java/nio/file/FileVisitOption
+      40: invokestatic  #295                // Method java/nio/file/Files.walk:(Ljava/nio/file/Path;I[Ljava/nio/file/FileVisitOption;)Ljava/util/stream/Stream;
+      43: astore_2
+      44: aload_0
+      45: aload_2
+      46: invokedynamic #298,  0            // InvokeDynamic #7:test:()Ljava/util/function/Predicate;
+      51: invokeinterface #26,  2           // InterfaceMethod java/util/stream/Stream.filter:(Ljava/util/function/Predicate;)Ljava/util/stream/Stream;
+      56: invokedynamic #299,  0            // InvokeDynamic #8:test:()Ljava/util/function/Predicate;
+      61: invokeinterface #26,  2           // InterfaceMethod java/util/stream/Stream.filter:(Ljava/util/function/Predicate;)Ljava/util/stream/Stream;
+      66: aload_0
+      67: invokedynamic #300,  0            // InvokeDynamic #9:apply:(Lcpw/mods/jarhandling/impl/JarContentsImpl;)Ljava/util/function/Function;
+      72: invokeinterface #303,  2          // InterfaceMethod java/util/stream/Stream.map:(Ljava/util/function/Function;)Ljava/util/stream/Stream;
+      77: invokeinterface #306,  1          // InterfaceMethod java/util/stream/Stream.toList:()Ljava/util/List;
+      82: putfield      #289                // Field providers:Ljava/util/List;
+      85: aload_2
+      86: ifnull        122
+      89: aload_2
+      90: invokeinterface #203,  1          // InterfaceMethod java/util/stream/Stream.close:()V
+      95: goto          122
+      98: astore_3
+      99: aload_2
+     100: ifnull        120
+     103: aload_2
+     104: invokeinterface #203,  1          // InterfaceMethod java/util/stream/Stream.close:()V
+     109: goto          120
+     112: astore        4
+     114: aload_3
+     115: aload         4
+     117: invokevirtual #129                // Method java/lang/Throwable.addSuppressed:(Ljava/lang/Throwable;)V
+     120: aload_3
+     121: athrow
+     122: goto          142
+     125: astore_2
+     126: new           #42                 // class java/io/UncheckedIOException
+     129: dup
+     130: aload_2
+     131: invokespecial #57                 // Method java/io/UncheckedIOException."<init>":(Ljava/io/IOException;)V
+     134: athrow
+     135: aload_0
+     136: invokestatic  #310                // InterfaceMethod java/util/List.of:()Ljava/util/List;
+     139: putfield      #289                // Field providers:Ljava/util/List;
+     142: aload_0
+     143: getfield      #289                // Field providers:Ljava/util/List;
+     146: areturn
+    Exception table:
+       from    to  target type
+          44    85    98   Class java/lang/Throwable
+         103   109   112   Class java/lang/Throwable
+          34   122   125   Class java/io/IOException
+
+  public void close() throws java.io.IOException;
+    Code:
+       0: aload_0
+       1: getfield      #70                 // Field filesystem:Lcpw/mods/niofs/union/UnionFileSystem;
+       4: invokevirtual #312                // Method cpw/mods/niofs/union/UnionFileSystem.close:()V
+       7: return
+
+  private cpw.mods.jarhandling.SecureJar$Provider lambda$getMetaInfServices$9(java.nio.file.Path);
+    Code:
+       0: aload_1
+       1: aload_0
+       2: getfield      #70                 // Field filesystem:Lcpw/mods/niofs/union/UnionFileSystem;
+       5: invokevirtual #313                // Method cpw/mods/niofs/union/UnionFileSystem.getFilesystemFilter:()Lcpw/mods/niofs/union/UnionPathFilter;
+       8: invokestatic  #317                // Method cpw/mods/jarhandling/SecureJar$Provider.fromPath:(Ljava/nio/file/Path;Lcpw/mods/niofs/union/UnionPathFilter;)Lcpw/mods/jarhandling/SecureJar$Provider;
+      11: areturn
+
+  private static boolean lambda$getMetaInfServices$8(java.nio.file.Path);
+    Code:
+       0: getstatic     #323                // Field NAUGHTY_SERVICE_FILES:Ljava/util/Set;
+       3: aload_0
+       4: invokeinterface #326,  1          // InterfaceMethod java/nio/file/Path.getFileName:()Ljava/nio/file/Path;
+       9: invokeinterface #329,  1          // InterfaceMethod java/nio/file/Path.toString:()Ljava/lang/String;
+      14: invokeinterface #330,  2          // InterfaceMethod java/util/Set.contains:(Ljava/lang/Object;)Z
+      19: ifne          26
+      22: iconst_1
+      23: goto          27
+      26: iconst_0
+      27: ireturn
+
+  private static boolean lambda$getMetaInfServices$7(java.nio.file.Path);
+    Code:
+       0: aload_0
+       1: iconst_0
+       2: anewarray     #90                 // class java/nio/file/LinkOption
+       5: invokestatic  #92                 // Method java/nio/file/Files.isDirectory:(Ljava/nio/file/Path;[Ljava/nio/file/LinkOption;)Z
+       8: ifne          15
+      11: iconst_1
+      12: goto          16
+      15: iconst_0
+      16: ireturn
+
+  private static boolean lambda$findFile$6(java.nio.file.Path);
+    Code:
+       0: aload_0
+       1: iconst_0
+       2: anewarray     #90                 // class java/nio/file/LinkOption
+       5: invokestatic  #108                // Method java/nio/file/Files.exists:(Ljava/nio/file/Path;[Ljava/nio/file/LinkOption;)Z
+       8: ireturn
+
+  private static void lambda$readMultiReleaseInfo$5(java.util.Map, java.nio.file.Path);
+    Code:
+       0: aload_1
+       1: iconst_2
+       2: invokeinterface #333,  2          // InterfaceMethod java/nio/file/Path.getName:(I)Ljava/nio/file/Path;
+       7: invokeinterface #329,  1          // InterfaceMethod java/nio/file/Path.toString:()Ljava/lang/String;
+      12: invokestatic  #337                // Method java/lang/Integer.parseInt:(Ljava/lang/String;)I
+      15: istore_2
+      16: aload_1
+      17: iconst_3
+      18: aload_1
+      19: invokeinterface #341,  1          // InterfaceMethod java/nio/file/Path.getNameCount:()I
+      24: invokeinterface #345,  3          // InterfaceMethod java/nio/file/Path.subpath:(II)Ljava/nio/file/Path;
+      29: astore_3
+      30: iload_2
+      31: invokestatic  #349                // Method java/lang/Runtime.version:()Ljava/lang/Runtime$Version;
+      34: invokevirtual #355                // Method java/lang/Runtime$Version.feature:()I
+      37: if_icmpgt     57
+      40: aload_0
+      41: aload_3
+      42: iload_2
+      43: invokestatic  #360                // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      46: invokedynamic #364,  0            // InvokeDynamic #10:apply:()Ljava/util/function/BiFunction;
+      51: invokeinterface #367,  4          // InterfaceMethod java/util/Map.merge:(Ljava/lang/Object;Ljava/lang/Object;Ljava/util/function/BiFunction;)Ljava/lang/Object;
+      56: pop
+      57: return
+
+  private static boolean lambda$readMultiReleaseInfo$4(java.nio.file.Path);
+    Code:
+       0: aload_0
+       1: iconst_0
+       2: anewarray     #90                 // class java/nio/file/LinkOption
+       5: invokestatic  #92                 // Method java/nio/file/Files.isDirectory:(Ljava/nio/file/Path;[Ljava/nio/file/LinkOption;)Z
+       8: ifne          15
+      11: iconst_1
+      12: goto          16
+      15: iconst_0
+      16: ireturn
+
+  private static java.nio.file.Path[] lambda$new$3(int);
+    Code:
+       0: iload_0
+       1: anewarray     #103                // class java/nio/file/Path
+       4: areturn
+
+  private static boolean lambda$new$2(java.nio.file.Path);
+    Code:
+       0: aload_0
+       1: iconst_0
+       2: anewarray     #90                 // class java/nio/file/LinkOption
+       5: invokestatic  #108                // Method java/nio/file/Files.exists:(Ljava/nio/file/Path;[Ljava/nio/file/LinkOption;)Z
+       8: ireturn
+
+  private static java.lang.IllegalStateException lambda$static$1();
+    Code:
+       0: new           #371                // class java/lang/IllegalStateException
+       3: dup
+       4: ldc_w         #373                // String Couldn\'t find UnionFileSystemProvider
+       7: invokespecial #375                // Method java/lang/IllegalStateException."<init>":(Ljava/lang/String;)V
+      10: areturn
+
+  private static boolean lambda$static$0(java.nio.file.spi.FileSystemProvider);
+    Code:
+       0: aload_0
+       1: invokevirtual #376                // Method java/nio/file/spi/FileSystemProvider.getScheme:()Ljava/lang/String;
+       4: ldc_w         #381                // String union
+       7: invokevirtual #383                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+      10: ireturn
+
+  static {};
+    Code:
+       0: invokestatic  #386                // Method java/nio/file/spi/FileSystemProvider.installedProviders:()Ljava/util/List;
+       3: invokeinterface #389,  1          // InterfaceMethod java/util/List.stream:()Ljava/util/stream/Stream;
+       8: invokedynamic #392,  0            // InvokeDynamic #11:test:()Ljava/util/function/Predicate;
+      13: invokeinterface #26,  2           // InterfaceMethod java/util/stream/Stream.filter:(Ljava/util/function/Predicate;)Ljava/util/stream/Stream;
+      18: invokeinterface #393,  1          // InterfaceMethod java/util/stream/Stream.findFirst:()Ljava/util/Optional;
+      23: invokedynamic #397,  0            // InvokeDynamic #12:get:()Ljava/util/function/Supplier;
+      28: invokevirtual #400                // Method java/util/Optional.orElseThrow:(Ljava/util/function/Supplier;)Ljava/lang/Object;
+      31: checkcast     #65                 // class cpw/mods/niofs/union/UnionFileSystemProvider
+      34: putstatic     #60                 // Field UFSP:Lcpw/mods/niofs/union/UnionFileSystemProvider;
+      37: ldc_w         #404                // String org.codehaus.groovy.runtime.ExtensionModule
+      40: invokestatic  #406                // InterfaceMethod java/util/Set.of:(Ljava/lang/Object;)Ljava/util/Set;
+      43: putstatic     #323                // Field NAUGHTY_SERVICE_FILES:Ljava/util/Set;
+      46: return
+}

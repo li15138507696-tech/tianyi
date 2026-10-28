@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.guzhenren.tianfu.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "JingJieBaoCunProcedureMixin",
+    "UikongqiaoquedingProcedureMixin",
+    "UishuxingshijuetiProcedureMixin",
+    "YizhuanrendaoxiwangguItemMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 0
+  }
+}

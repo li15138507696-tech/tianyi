@@ -1,0 +1,13 @@
+{
+  "renderStage": "after_level",
+  "priority": 1210,
+  "stages": [
+    {
+      "type": "veil:blit",
+      "shader": "tianfu:star_gold_domain_post",
+      "in": "minecraft:main",
+      "out": "veil:post",
+      "clear": true
+    }
+  ]
+}

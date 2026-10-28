@@ -1,0 +1,3062 @@
+Compiled from "ResidentService.java"
+public final class com.guzhenrenlibrary.npc.life.ResidentService {
+  private static final java.util.Set<java.util.UUID> HELD;
+
+  public static final int SPEAK_COOLDOWN_TICKS;
+
+  public static final double SPEAK_RANGE;
+
+  public static final double NOTICE_RANGE;
+
+  private static final java.util.Map<java.util.UUID, java.lang.Long> LAST_SPOKE;
+
+  private static final java.util.Random RANDOM;
+
+  public static final java.lang.String GU_GRANT_KEY;
+
+  public static final int GU_GAIN_CAP;
+
+  private com.guzhenrenlibrary.npc.life.ResidentService();
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: return
+
+  public static com.guzhenrenlibrary.npc.life.ResidentRegistry registry(net.minecraft.world.level.Level);
+    Code:
+       0: aload_0
+       1: invokestatic  #7                  // Method overworldOf:(Lnet/minecraft/world/level/Level;)Lnet/minecraft/server/level/ServerLevel;
+       4: astore_1
+       5: aload_1
+       6: ifnonnull     17
+       9: new           #13                 // class com/guzhenrenlibrary/npc/life/ResidentRegistry
+      12: dup
+      13: invokespecial #15                 // Method com/guzhenrenlibrary/npc/life/ResidentRegistry."<init>":()V
+      16: areturn
+      17: aload_1
+      18: getstatic     #16                 // Field com/guzhenrenlibrary/npc/life/ResidentData.REGISTRY:Lnet/neoforged/neoforge/registries/DeferredHolder;
+      21: invokevirtual #22                 // Method net/minecraft/server/level/ServerLevel.getData:(Ljava/util/function/Supplier;)Ljava/lang/Object;
+      24: checkcast     #13                 // class com/guzhenrenlibrary/npc/life/ResidentRegistry
+      27: astore_2
+      28: aload_2
+      29: ifnonnull     42
+      32: new           #13                 // class com/guzhenrenlibrary/npc/life/ResidentRegistry
+      35: dup
+      36: invokespecial #15                 // Method com/guzhenrenlibrary/npc/life/ResidentRegistry."<init>":()V
+      39: goto          43
+      42: aload_2
+      43: areturn
+
+  private static net.minecraft.server.level.ServerLevel overworldOf(net.minecraft.world.level.Level);
+    Code:
+       0: aload_0
+       1: instanceof    #23                 // class net/minecraft/server/level/ServerLevel
+       4: ifeq          31
+       7: aload_0
+       8: checkcast     #23                 // class net/minecraft/server/level/ServerLevel
+      11: astore_1
+      12: aload_1
+      13: invokevirtual #28                 // Method net/minecraft/server/level/ServerLevel.getServer:()Lnet/minecraft/server/MinecraftServer;
+      16: ifnonnull     23
+      19: aload_1
+      20: goto          30
+      23: aload_1
+      24: invokevirtual #28                 // Method net/minecraft/server/level/ServerLevel.getServer:()Lnet/minecraft/server/MinecraftServer;
+      27: invokevirtual #32                 // Method net/minecraft/server/MinecraftServer.overworld:()Lnet/minecraft/server/level/ServerLevel;
+      30: areturn
+      31: aconst_null
+      32: areturn
+
+  public static com.guzhenrenlibrary.npc.life.Resident residentOf(net.minecraft.world.entity.Entity);
+    Code:
+       0: aload_0
+       1: ifnonnull     8
+       4: aconst_null
+       5: goto          22
+       8: aload_0
+       9: invokevirtual #38                 // Method net/minecraft/world/entity/Entity.level:()Lnet/minecraft/world/level/Level;
+      12: invokestatic  #44                 // Method registry:(Lnet/minecraft/world/level/Level;)Lcom/guzhenrenlibrary/npc/life/ResidentRegistry;
+      15: aload_0
+      16: invokevirtual #48                 // Method net/minecraft/world/entity/Entity.getUUID:()Ljava/util/UUID;
+      19: invokevirtual #52                 // Method com/guzhenrenlibrary/npc/life/ResidentRegistry.get:(Ljava/util/UUID;)Lcom/guzhenrenlibrary/npc/life/Resident;
+      22: areturn
+
+  public static java.lang.String lastLifeLine(java.util.UUID, net.minecraft.world.level.Level);
+    Code:
+       0: aload_1
+       1: invokestatic  #44                 // Method registry:(Lnet/minecraft/world/level/Level;)Lcom/guzhenrenlibrary/npc/life/ResidentRegistry;
+       4: aload_0
+       5: invokevirtual #52                 // Method com/guzhenrenlibrary/npc/life/ResidentRegistry.get:(Ljava/util/UUID;)Lcom/guzhenrenlibrary/npc/life/Resident;
+       8: astore_2
+       9: aload_2
+      10: ifnonnull     17
+      13: aconst_null
+      14: goto          21
+      17: aload_2
+      18: invokevirtual #56                 // Method com/guzhenrenlibrary/npc/life/Resident.latestLog:()Ljava/lang/String;
+      21: areturn
+
+  public static java.lang.String lifeStateName(java.util.UUID, net.minecraft.world.level.Level);
+    Code:
+       0: aload_1
+       1: invokestatic  #44                 // Method registry:(Lnet/minecraft/world/level/Level;)Lcom/guzhenrenlibrary/npc/life/ResidentRegistry;
+       4: aload_0
+       5: invokevirtual #52                 // Method com/guzhenrenlibrary/npc/life/ResidentRegistry.get:(Ljava/util/UUID;)Lcom/guzhenrenlibrary/npc/life/Resident;
+       8: astore_2
+       9: aload_2
+      10: ifnonnull     17
+      13: aconst_null
+      14: goto          24
+      17: aload_2
+      18: invokevirtual #62                 // Method com/guzhenrenlibrary/npc/life/Resident.state:()Lcom/guzhenrenlibrary/npc/life/Resident$State;
+      21: invokevirtual #66                 // Method com/guzhenrenlibrary/npc/life/Resident$State.chineseName:()Ljava/lang/String;
+      24: areturn
+
+  public static void enroll(net.minecraft.world.entity.Entity);
+    Code:
+       0: aload_0
+       1: instanceof    #71                 // class net/minecraft/world/entity/Mob
+       4: ifeq          29
+       7: aload_0
+       8: checkcast     #71                 // class net/minecraft/world/entity/Mob
+      11: astore_1
+      12: aload_1
+      13: invokestatic  #73                 // Method com/guzhenrenlibrary/npc/NpcFilter.isNpc:(Lnet/minecraft/world/entity/Entity;)Z
+      16: ifeq          29
+      19: aload_1
+      20: invokevirtual #79                 // Method net/minecraft/world/entity/Mob.level:()Lnet/minecraft/world/level/Level;
+      23: invokevirtual #80                 // Method net/minecraft/world/level/Level.isClientSide:()Z
+      26: ifeq          30
+      29: return
+      30: aload_1
+      31: invokevirtual #79                 // Method net/minecraft/world/entity/Mob.level:()Lnet/minecraft/world/level/Level;
+      34: invokestatic  #7                  // Method overworldOf:(Lnet/minecraft/world/level/Level;)Lnet/minecraft/server/level/ServerLevel;
+      37: astore_2
+      38: aload_2
+      39: ifnonnull     43
+      42: return
+      43: aload_2
+      44: invokevirtual #86                 // Method net/minecraft/server/level/ServerLevel.getGameTime:()J
+      47: lstore_3
+      48: aload_2
+      49: invokestatic  #44                 // Method registry:(Lnet/minecraft/world/level/Level;)Lcom/guzhenrenlibrary/npc/life/ResidentRegistry;
+      52: astore        5
+      54: aload_1
+      55: invokestatic  #90                 // Method com/guzhenrenlibrary/npc/NpcPersonas.ensure:(Lnet/minecraft/world/entity/Entity;)Lcom/guzhenrenlibrary/npc/NpcPersona;
+      58: astore        6
+      60: aload_1
+      61: invokestatic  #96                 // Method com/guzhenrenlibrary/npc/NpcPersonas.zhuanshu:(Lnet/minecraft/world/entity/Entity;)D
+      64: dstore        7
+      66: aload         5
+      68: aload_1
+      69: invokevirtual #100                // Method net/minecraft/world/entity/Mob.getUUID:()Ljava/util/UUID;
+      72: invokevirtual #101                // Method com/guzhenrenlibrary/npc/life/ResidentRegistry.contains:(Ljava/util/UUID;)Z
+      75: ifne          82
+      78: iconst_1
+      79: goto          83
+      82: iconst_0
+      83: istore        9
+      85: aload         5
+      87: aload_1
+      88: invokevirtual #100                // Method net/minecraft/world/entity/Mob.getUUID:()Ljava/util/UUID;
+      91: aload         6
+      93: dload         7
+      95: lload_3
+      96: invokevirtual #105                // Method com/guzhenrenlibrary/npc/life/ResidentRegistry.enroll:(Ljava/util/UUID;Lcom/guzhenrenlibrary/npc/NpcPersona;DJ)Lcom/guzhenrenlibrary/npc/life/Resident;
+      99: astore        10
+     101: aload         10
+     103: ifnonnull     107
+     106: return
+     107: aload         10
+     109: aload_1
+     110: lload_3
+     111: invokestatic  #109                // Method syncFromEntity:(Lcom/guzhenrenlibrary/npc/life/Resident;Lnet/minecraft/world/entity/Mob;J)V
+     114: aload         10
+     116: invokevirtual #113                // Method com/guzhenrenlibrary/npc/life/Resident.homeKnown:()Z
+     119: ifne          135
+     122: aload         10
+     124: aload_1
+     125: invokevirtual #116                // Method net/minecraft/world/entity/Mob.getX:()D
+     128: aload_1
+     129: invokevirtual #120                // Method net/minecraft/world/entity/Mob.getZ:()D
+     132: invokevirtual #123                // Method com/guzhenrenlibrary/npc/life/Resident.setHome:(DD)V
+     135: aload_1
+     136: invokevirtual #127                // Method net/minecraft/world/entity/Mob.setPersistenceRequired:()V
+     139: aload_1
+     140: invokestatic  #130                // Method com/guzhenrenlibrary/npc/life/NpcErrandGoal.attach:(Lnet/minecraft/world/entity/Mob;)Z
+     143: pop
+     144: aload_1
+     145: invokestatic  #136                // Method com/guzhenrenlibrary/npc/life/NpcFeudGoal.attach:(Lnet/minecraft/world/entity/Mob;)Z
+     148: pop
+     149: aload_1
+     150: invokestatic  #139                // Method com/guzhenrenlibrary/npc/life/NpcSocialGoal.attach:(Lnet/minecraft/world/entity/Mob;)V
+     153: iload         9
+     155: ifeq          191
+     158: getstatic     #144                // Field com/guzhenrenlibrary/GuzhenrenLibrary.LOGGER:Lorg/apache/logging/log4j/Logger;
+     161: ldc           #150                // String [��פ] ��᣺{}��{}ת��{}��
+     163: aload         10
+     165: invokevirtual #152                // Method com/guzhenrenlibrary/npc/life/Resident.displayName:()Ljava/lang/String;
+     168: aload         10
+     170: invokevirtual #155                // Method com/guzhenrenlibrary/npc/life/Resident.zhuanshuInt:()I
+     173: invokestatic  #159                // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     176: aload_1
+     177: invokevirtual #79                 // Method net/minecraft/world/entity/Mob.level:()Lnet/minecraft/world/level/Level;
+     180: invokevirtual #165                // Method net/minecraft/world/level/Level.dimension:()Lnet/minecraft/resources/ResourceKey;
+     183: invokevirtual #169                // Method net/minecraft/resources/ResourceKey.location:()Lnet/minecraft/resources/ResourceLocation;
+     186: invokeinterface #175,  5          // InterfaceMethod org/apache/logging/log4j/Logger.debug:(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)V
+     191: return
+
+  public static void enrollAll(java.util.List<? extends net.minecraft.world.entity.Entity>);
+    Code:
+       0: aload_0
+       1: ifnonnull     5
+       4: return
+       5: aload_0
+       6: invokeinterface #181,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+      11: astore_1
+      12: aload_1
+      13: invokeinterface #187,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+      18: ifeq          38
+      21: aload_1
+      22: invokeinterface #192,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      27: checkcast     #39                 // class net/minecraft/world/entity/Entity
+      30: astore_2
+      31: aload_2
+      32: invokestatic  #196                // Method enroll:(Lnet/minecraft/world/entity/Entity;)V
+      35: goto          12
+      38: return
+
+  public static void tick(net.minecraft.server.level.ServerLevel);
+    Code:
+       0: aload_0
+       1: invokestatic  #7                  // Method overworldOf:(Lnet/minecraft/world/level/Level;)Lnet/minecraft/server/level/ServerLevel;
+       4: astore_1
+       5: aload_1
+       6: ifnull        23
+       9: aload_1
+      10: invokevirtual #86                 // Method net/minecraft/server/level/ServerLevel.getGameTime:()J
+      13: invokestatic  #199                // Method com/guzhenrenlibrary/Tuning.simIntervalTicks:()I
+      16: i2l
+      17: lrem
+      18: lconst_0
+      19: lcmp
+      20: ifeq          24
+      23: return
+      24: aload_1
+      25: invokestatic  #44                 // Method registry:(Lnet/minecraft/world/level/Level;)Lcom/guzhenrenlibrary/npc/life/ResidentRegistry;
+      28: astore_2
+      29: aload_2
+      30: invokevirtual #204                // Method com/guzhenrenlibrary/npc/life/ResidentRegistry.isEmpty:()Z
+      33: ifeq          37
+      36: return
+      37: aload_1
+      38: invokevirtual #86                 // Method net/minecraft/server/level/ServerLevel.getGameTime:()J
+      41: lstore_3
+      42: aconst_null
+      43: astore        5
+      45: aload_1
+      46: invokestatic  #207                // Method com/guzhenrenlibrary/faction/FactionTerritory.of:(Lnet/minecraft/world/level/Level;)Lcom/guzhenrenlibrary/faction/FactionTerritory;
+      49: aload_1
+      50: invokestatic  #213                // Method com/guzhenrenlibrary/faction/FactionNpcManager.factionIndex:(Lcom/guzhenrenlibrary/faction/FactionTerritory;Lnet/minecraft/server/level/ServerLevel;)Ljava/util/Map;
+      53: astore        5
+      55: goto          75
+      58: astore        6
+      60: getstatic     #144                // Field com/guzhenrenlibrary/GuzhenrenLibrary.LOGGER:Lorg/apache/logging/log4j/Logger;
+      63: ldc           #221                // String [��פ] ������������ʧ�ܣ�{}
+      65: aload         6
+      67: invokevirtual #223                // Method java/lang/RuntimeException.toString:()Ljava/lang/String;
+      70: invokeinterface #226,  3          // InterfaceMethod org/apache/logging/log4j/Logger.warn:(Ljava/lang/String;Ljava/lang/Object;)V
+      75: aload_2
+      76: invokestatic  #230                // Method com/guzhenrenlibrary/Tuning.simBatch:()I
+      79: invokevirtual #233                // Method com/guzhenrenlibrary/npc/life/ResidentRegistry.nextBatch:(I)Ljava/util/List;
+      82: invokeinterface #181,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+      87: astore        6
+      89: aload         6
+      91: invokeinterface #187,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+      96: ifeq          148
+      99: aload         6
+     101: invokeinterface #192,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     106: checkcast     #57                 // class com/guzhenrenlibrary/npc/life/Resident
+     109: astore        7
+     111: aload_1
+     112: aload         7
+     114: lload_3
+     115: aload         5
+     117: invokestatic  #237                // Method simulate:(Lnet/minecraft/server/level/ServerLevel;Lcom/guzhenrenlibrary/npc/life/Resident;JLjava/util/Map;)V
+     120: goto          145
+     123: astore        8
+     125: getstatic     #144                // Field com/guzhenrenlibrary/GuzhenrenLibrary.LOGGER:Lorg/apache/logging/log4j/Logger;
+     128: ldc           #241                // String [��פ] ���� {} ʱ������{}
+     130: aload         7
+     132: invokevirtual #152                // Method com/guzhenrenlibrary/npc/life/Resident.displayName:()Ljava/lang/String;
+     135: aload         8
+     137: invokevirtual #223                // Method java/lang/RuntimeException.toString:()Ljava/lang/String;
+     140: invokeinterface #243,  4          // InterfaceMethod org/apache/logging/log4j/Logger.warn:(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;)V
+     145: goto          89
+     148: aload_2
+     149: lload_3
+     150: invokevirtual #246                // Method com/guzhenrenlibrary/npc/life/ResidentRegistry.setLastSimTick:(J)V
+     153: return
+    Exception table:
+       from    to  target type
+          45    55    58   Class java/lang/RuntimeException
+         111   120   123   Class java/lang/RuntimeException
+
+  public static void onDeath(net.minecraft.world.entity.Entity);
+    Code:
+       0: aload_0
+       1: instanceof    #71                 // class net/minecraft/world/entity/Mob
+       4: ifeq          22
+       7: aload_0
+       8: checkcast     #71                 // class net/minecraft/world/entity/Mob
+      11: astore_1
+      12: aload_1
+      13: invokevirtual #79                 // Method net/minecraft/world/entity/Mob.level:()Lnet/minecraft/world/level/Level;
+      16: invokevirtual #80                 // Method net/minecraft/world/level/Level.isClientSide:()Z
+      19: ifeq          23
+      22: return
+      23: aload_1
+      24: invokevirtual #79                 // Method net/minecraft/world/entity/Mob.level:()Lnet/minecraft/world/level/Level;
+      27: invokestatic  #7                  // Method overworldOf:(Lnet/minecraft/world/level/Level;)Lnet/minecraft/server/level/ServerLevel;
+      30: astore_2
+      31: aload_2
+      32: ifnonnull     36
+      35: return
+      36: aload_2
+      37: invokestatic  #44                 // Method registry:(Lnet/minecraft/world/level/Level;)Lcom/guzhenrenlibrary/npc/life/ResidentRegistry;
+      40: aload_1
+      41: invokevirtual #100                // Method net/minecraft/world/entity/Mob.getUUID:()Ljava/util/UUID;
+      44: invokevirtual #52                 // Method com/guzhenrenlibrary/npc/life/ResidentRegistry.get:(Ljava/util/UUID;)Lcom/guzhenrenlibrary/npc/life/Resident;
+      47: astore_3
+      48: aload_3
+      49: ifnull        59
+      52: aload_3
+      53: invokevirtual #250                // Method com/guzhenrenlibrary/npc/life/Resident.deceased:()Z
+      56: ifeq          60
+      59: return
+      60: aload_3
+      61: invokevirtual #253                // Method com/guzhenrenlibrary/npc/life/Resident.markDeceased:()V
+      64: aload_3
+      65: aload_1
+      66: invokevirtual #79                 // Method net/minecraft/world/entity/Mob.level:()Lnet/minecraft/world/level/Level;
+      69: invokestatic  #256                // Method dimensionName:(Lnet/minecraft/world/level/Level;)Ljava/lang/String;
+      72: invokedynamic #260,  0            // InvokeDynamic #0:makeConcatWithConstants:(Ljava/lang/String;)Ljava/lang/String;
+      77: aload_2
+      78: invokevirtual #86                 // Method net/minecraft/server/level/ServerLevel.getGameTime:()J
+      81: invokevirtual #264                // Method com/guzhenrenlibrary/npc/life/Resident.remember:(Ljava/lang/String;J)V
+      84: aload_1
+      85: invokestatic  #268                // Method release:(Lnet/minecraft/world/entity/Mob;)V
+      88: getstatic     #144                // Field com/guzhenrenlibrary/GuzhenrenLibrary.LOGGER:Lorg/apache/logging/log4j/Logger;
+      91: ldc_w         #271                // String [��פ] {} ������
+      94: aload_3
+      95: invokevirtual #152                // Method com/guzhenrenlibrary/npc/life/Resident.displayName:()Ljava/lang/String;
+      98: invokeinterface #273,  3          // InterfaceMethod org/apache/logging/log4j/Logger.debug:(Ljava/lang/String;Ljava/lang/Object;)V
+     103: return
+
+  public static void simulate(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.npc.life.Resident, long);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: lload_2
+       3: aconst_null
+       4: invokestatic  #237                // Method simulate:(Lnet/minecraft/server/level/ServerLevel;Lcom/guzhenrenlibrary/npc/life/Resident;JLjava/util/Map;)V
+       7: return
+
+  public static void simulate(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.npc.life.Resident, long, java.util.Map<java.lang.String, com.guzhenrenlibrary.faction.FactionDef>);
+    Code:
+       0: lload_2
+       1: aload_1
+       2: invokevirtual #275                // Method com/guzhenrenlibrary/npc/life/Resident.lastSimTick:()J
+       5: lsub
+       6: lstore        5
+       8: aload_1
+       9: lload_2
+      10: invokevirtual #278                // Method com/guzhenrenlibrary/npc/life/Resident.setLastSimTick:(J)V
+      13: lload         5
+      15: lconst_0
+      16: lcmp
+      17: ifgt          21
+      20: return
+      21: lload         5
+      23: invokestatic  #279                // Method com/guzhenrenlibrary/npc/life/ResidentRules.maxCatchupTicks:()I
+      26: i2l
+      27: invokestatic  #284                // Method java/lang/Math.min:(JJ)J
+      30: lstore        7
+      32: aload_1
+      33: invokevirtual #62                 // Method com/guzhenrenlibrary/npc/life/Resident.state:()Lcom/guzhenrenlibrary/npc/life/Resident$State;
+      36: getstatic     #290                // Field com/guzhenrenlibrary/npc/life/Resident$State.CULTIVATING:Lcom/guzhenrenlibrary/npc/life/Resident$State;
+      39: if_acmpne     46
+      42: fconst_1
+      43: goto          49
+      46: ldc_w         #294                // float 0.5f
+      49: fstore        9
+      51: ldc2_w        #295                // long 2147483647l
+      54: lload         7
+      56: l2f
+      57: fload         9
+      59: fmul
+      60: f2l
+      61: invokestatic  #284                // Method java/lang/Math.min:(JJ)J
+      64: l2i
+      65: istore        10
+      67: aload_1
+      68: invokevirtual #155                // Method com/guzhenrenlibrary/npc/life/Resident.zhuanshuInt:()I
+      71: iconst_5
+      72: if_icmpge     119
+      75: aload_1
+      76: iload         10
+      78: invokevirtual #297                // Method com/guzhenrenlibrary/npc/life/Resident.gainCultivation:(I)Z
+      81: ifeq          119
+      84: getstatic     #301                // Field RANDOM:Ljava/util/Random;
+      87: invokevirtual #305                // Method java/util/Random.nextFloat:()F
+      90: f2d
+      91: invokestatic  #311                // Method com/guzhenrenlibrary/Tuning.breakthroughChance:()D
+      94: dcmpg
+      95: ifge          119
+      98: aload_1
+      99: invokevirtual #314                // Method com/guzhenrenlibrary/npc/life/Resident.breakthrough:()V
+     102: aload_1
+     103: aload_1
+     104: invokevirtual #155                // Method com/guzhenrenlibrary/npc/life/Resident.zhuanshuInt:()I
+     107: invokestatic  #317                // Method zhuanshuName:(I)Ljava/lang/String;
+     110: invokedynamic #321,  0            // InvokeDynamic #1:makeConcatWithConstants:(Ljava/lang/String;)Ljava/lang/String;
+     115: lload_2
+     116: invokevirtual #264                // Method com/guzhenrenlibrary/npc/life/Resident.remember:(Ljava/lang/String;J)V
+     119: lload_2
+     120: aload_1
+     121: invokevirtual #322                // Method com/guzhenrenlibrary/npc/life/Resident.stateUntil:()J
+     124: lcmp
+     125: iflt          174
+     128: aload_1
+     129: invokevirtual #155                // Method com/guzhenrenlibrary/npc/life/Resident.zhuanshuInt:()I
+     132: istore        11
+     134: iload         11
+     136: aload_1
+     137: invokevirtual #325                // Method com/guzhenrenlibrary/npc/life/Resident.partners:()Ljava/util/List;
+     140: invokeinterface #329,  1          // InterfaceMethod java/util/List.isEmpty:()Z
+     145: getstatic     #301                // Field RANDOM:Ljava/util/Random;
+     148: invokestatic  #330                // Method com/guzhenrenlibrary/npc/life/ResidentRules.rollState:(IZLjava/util/Random;)Lcom/guzhenrenlibrary/npc/life/Resident$State;
+     151: astore        12
+     153: aload_1
+     154: aload         12
+     156: lload_2
+     157: getstatic     #301                // Field RANDOM:Ljava/util/Random;
+     160: sipush        1200
+     163: sipush        12000
+     166: invokestatic  #334                // Method between:(Ljava/util/Random;II)I
+     169: i2l
+     170: ladd
+     171: invokevirtual #338                // Method com/guzhenrenlibrary/npc/life/Resident.setState:(Lcom/guzhenrenlibrary/npc/life/Resident$State;J)V
+     174: fconst_1
+     175: lload         7
+     177: l2f
+     178: invokestatic  #342                // Method com/guzhenrenlibrary/npc/life/ResidentRules.eventIntervalTicks:()I
+     181: i2f
+     182: fdiv
+     183: invokestatic  #345                // Method java/lang/Math.min:(FF)F
+     186: fstore        11
+     188: getstatic     #301                // Field RANDOM:Ljava/util/Random;
+     191: invokevirtual #305                // Method java/util/Random.nextFloat:()F
+     194: fload         11
+     196: fcmpg
+     197: ifge          206
+     200: aload_0
+     201: aload_1
+     202: lload_2
+     203: invokestatic  #348                // Method lifeEvent:(Lnet/minecraft/server/level/ServerLevel;Lcom/guzhenrenlibrary/npc/life/Resident;J)V
+     206: aload         4
+     208: ifnull        323
+     211: aload_0
+     212: aload_1
+     213: aload         4
+     215: lload_2
+     216: invokestatic  #352                // Method com/guzhenrenlibrary/faction/FactionAutonomy.day:(J)J
+     219: lload_2
+     220: invokestatic  #358                // Method com/guzhenrenlibrary/faction/FactionAutonomy.maybeApply:(Lnet/minecraft/server/level/ServerLevel;Lcom/guzhenrenlibrary/npc/life/Resident;Ljava/util/Map;JJ)Lcom/guzhenrenlibrary/faction/FactionAutonomy$Outcome;
+     223: astore        12
+     225: aload         12
+     227: ifnull        267
+     230: aload         12
+     232: invokevirtual #362                // Method com/guzhenrenlibrary/faction/FactionAutonomy$Outcome.accepted:()Z
+     235: ifeq          267
+     238: aload_1
+     239: aload         12
+     241: invokevirtual #367                // Method com/guzhenrenlibrary/faction/FactionAutonomy$Outcome.hall:()Lcom/guzhenrenlibrary/faction/FactionBuilding;
+     244: invokevirtual #371                // Method com/guzhenrenlibrary/faction/FactionBuilding.chineseName:()Ljava/lang/String;
+     247: aload         12
+     249: invokevirtual #374                // Method com/guzhenrenlibrary/faction/FactionAutonomy$Outcome.role:()Lcom/guzhenrenlibrary/faction/FactionPost;
+     252: invokevirtual #378                // Method com/guzhenrenlibrary/faction/FactionPost.chineseName:()Ljava/lang/String;
+     255: invokedynamic #381,  0            // InvokeDynamic #2:makeConcatWithConstants:(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+     260: lload_2
+     261: invokevirtual #264                // Method com/guzhenrenlibrary/npc/life/Resident.remember:(Ljava/lang/String;J)V
+     264: goto          298
+     267: aload         12
+     269: ifnull        298
+     272: aload         12
+     274: invokevirtual #384                // Method com/guzhenrenlibrary/faction/FactionAutonomy$Outcome.pending:()Z
+     277: ifeq          298
+     280: aload_1
+     281: aload         12
+     283: invokevirtual #367                // Method com/guzhenrenlibrary/faction/FactionAutonomy$Outcome.hall:()Lcom/guzhenrenlibrary/faction/FactionBuilding;
+     286: invokevirtual #371                // Method com/guzhenrenlibrary/faction/FactionBuilding.chineseName:()Ljava/lang/String;
+     289: invokedynamic #387,  0            // InvokeDynamic #3:makeConcatWithConstants:(Ljava/lang/String;)Ljava/lang/String;
+     294: lload_2
+     295: invokevirtual #264                // Method com/guzhenrenlibrary/npc/life/Resident.remember:(Ljava/lang/String;J)V
+     298: goto          323
+     301: astore        12
+     303: getstatic     #144                // Field com/guzhenrenlibrary/GuzhenrenLibrary.LOGGER:Lorg/apache/logging/log4j/Logger;
+     306: ldc_w         #388                // String [��פ] {} �����ξ�ְ������{}
+     309: aload_1
+     310: invokevirtual #152                // Method com/guzhenrenlibrary/npc/life/Resident.displayName:()Ljava/lang/String;
+     313: aload         12
+     315: invokevirtual #223                // Method java/lang/RuntimeException.toString:()Ljava/lang/String;
+     318: invokeinterface #243,  4          // InterfaceMethod org/apache/logging/log4j/Logger.warn:(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;)V
+     323: aload_0
+     324: aload_1
+     325: invokestatic  #390                // Method findLive:(Lnet/minecraft/server/level/ServerLevel;Lcom/guzhenrenlibrary/npc/life/Resident;)Lnet/minecraft/world/entity/Mob;
+     328: astore        12
+     330: aload         12
+     332: ifnull        351
+     335: aload_1
+     336: aload         12
+     338: invokestatic  #394                // Method applyToEntity:(Lcom/guzhenrenlibrary/npc/life/Resident;Lnet/minecraft/world/entity/Mob;)V
+     341: aload_1
+     342: aload         12
+     344: lload_2
+     345: invokestatic  #109                // Method syncFromEntity:(Lcom/guzhenrenlibrary/npc/life/Resident;Lnet/minecraft/world/entity/Mob;J)V
+     348: goto          357
+     351: aload_0
+     352: aload_1
+     353: lload_2
+     354: invokestatic  #398                // Method materialize:(Lnet/minecraft/server/level/ServerLevel;Lcom/guzhenrenlibrary/npc/life/Resident;J)V
+     357: return
+    Exception table:
+       from    to  target type
+         211   298   301   Class java/lang/RuntimeException
+
+  private static void lifeEvent(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.npc.life.Resident, long);
+    Code:
+       0: aload_1
+       1: invokevirtual #62                 // Method com/guzhenrenlibrary/npc/life/Resident.state:()Lcom/guzhenrenlibrary/npc/life/Resident$State;
+       4: astore        4
+       6: aload_1
+       7: invokevirtual #152                // Method com/guzhenrenlibrary/npc/life/Resident.displayName:()Ljava/lang/String;
+      10: astore        5
+      12: aload         4
+      14: getstatic     #301                // Field RANDOM:Ljava/util/Random;
+      17: invokestatic  #401                // Method com/guzhenrenlibrary/npc/life/ResidentRules.findsGu:(Lcom/guzhenrenlibrary/npc/life/Resident$State;Ljava/util/Random;)Z
+      20: ifeq          65
+      23: aload_1
+      24: invokevirtual #155                // Method com/guzhenrenlibrary/npc/life/Resident.zhuanshuInt:()I
+      27: invokestatic  #405                // Method pickGu:(I)Ljava/lang/String;
+      30: astore        6
+      32: aload         6
+      34: ifnull        65
+      37: aload_0
+      38: aload_1
+      39: aload         6
+      41: lload_2
+      42: invokestatic  #408                // Method contestGu:(Lnet/minecraft/server/level/ServerLevel;Lcom/guzhenrenlibrary/npc/life/Resident;Ljava/lang/String;J)Z
+      45: ifeq          49
+      48: return
+      49: aload_1
+      50: aload         6
+      52: invokestatic  #412                // Method guName:(Ljava/lang/String;)Ljava/lang/String;
+      55: invokedynamic #415,  0            // InvokeDynamic #4:makeConcatWithConstants:(Ljava/lang/String;)Ljava/lang/String;
+      60: lload_2
+      61: invokevirtual #264                // Method com/guzhenrenlibrary/npc/life/Resident.remember:(Ljava/lang/String;J)V
+      64: return
+      65: aload         4
+      67: getstatic     #416                // Field com/guzhenrenlibrary/npc/life/Resident$State.VISITING:Lcom/guzhenrenlibrary/npc/life/Resident$State;
+      70: if_acmpne     196
+      73: aload_0
+      74: aload_1
+      75: invokestatic  #419                // Method findPartnerCandidate:(Lnet/minecraft/server/level/ServerLevel;Lcom/guzhenrenlibrary/npc/life/Resident;)Lcom/guzhenrenlibrary/npc/life/Resident;
+      78: astore        6
+      80: aload         6
+      82: ifnull        186
+      85: aload         4
+      87: aload_1
+      88: invokevirtual #325                // Method com/guzhenrenlibrary/npc/life/Resident.partners:()Ljava/util/List;
+      91: invokeinterface #329,  1          // InterfaceMethod java/util/List.isEmpty:()Z
+      96: aload_1
+      97: invokevirtual #155                // Method com/guzhenrenlibrary/npc/life/Resident.zhuanshuInt:()I
+     100: aload         6
+     102: invokevirtual #155                // Method com/guzhenrenlibrary/npc/life/Resident.zhuanshuInt:()I
+     105: getstatic     #301                // Field RANDOM:Ljava/util/Random;
+     108: invokestatic  #423                // Method com/guzhenrenlibrary/npc/life/ResidentRules.seeksPartner:(Lcom/guzhenrenlibrary/npc/life/Resident$State;ZIILjava/util/Random;)Z
+     111: ifeq          186
+     114: aload_1
+     115: aload         6
+     117: invokevirtual #427                // Method com/guzhenrenlibrary/npc/life/Resident.npcId:()Ljava/util/UUID;
+     120: invokevirtual #430                // Method com/guzhenrenlibrary/npc/life/Resident.addPartner:(Ljava/util/UUID;)V
+     123: aload         6
+     125: aload_1
+     126: invokevirtual #427                // Method com/guzhenrenlibrary/npc/life/Resident.npcId:()Ljava/util/UUID;
+     129: invokevirtual #430                // Method com/guzhenrenlibrary/npc/life/Resident.addPartner:(Ljava/util/UUID;)V
+     132: aload_1
+     133: getstatic     #434                // Field com/guzhenrenlibrary/npc/life/Resident$State.WITH_PARTNER:Lcom/guzhenrenlibrary/npc/life/Resident$State;
+     136: lload_2
+     137: ldc2_w        #437                // long 12000l
+     140: ladd
+     141: invokevirtual #338                // Method com/guzhenrenlibrary/npc/life/Resident.setState:(Lcom/guzhenrenlibrary/npc/life/Resident$State;J)V
+     144: aload         6
+     146: getstatic     #434                // Field com/guzhenrenlibrary/npc/life/Resident$State.WITH_PARTNER:Lcom/guzhenrenlibrary/npc/life/Resident$State;
+     149: lload_2
+     150: ldc2_w        #437                // long 12000l
+     153: ladd
+     154: invokevirtual #338                // Method com/guzhenrenlibrary/npc/life/Resident.setState:(Lcom/guzhenrenlibrary/npc/life/Resident$State;J)V
+     157: aload_1
+     158: aload         6
+     160: invokevirtual #152                // Method com/guzhenrenlibrary/npc/life/Resident.displayName:()Ljava/lang/String;
+     163: invokedynamic #439,  0            // InvokeDynamic #5:makeConcatWithConstants:(Ljava/lang/String;)Ljava/lang/String;
+     168: lload_2
+     169: invokevirtual #264                // Method com/guzhenrenlibrary/npc/life/Resident.remember:(Ljava/lang/String;J)V
+     172: aload         6
+     174: aload         5
+     176: invokedynamic #439,  0            // InvokeDynamic #5:makeConcatWithConstants:(Ljava/lang/String;)Ljava/lang/String;
+     181: lload_2
+     182: invokevirtual #264                // Method com/guzhenrenlibrary/npc/life/Resident.remember:(Ljava/lang/String;J)V
+     185: return
+     186: aload_0
+     187: aload_1
+     188: lload_2
+     189: invokestatic  #440                // Method quarrel:(Lnet/minecraft/server/level/ServerLevel;Lcom/guzhenrenlibrary/npc/life/Resident;J)Z
+     192: ifeq          196
+     195: return
+     196: aload_0
+     197: aload_1
+     198: lload_2
+     199: invokestatic  #444                // Method maybeFoundHousehold:(Lnet/minecraft/server/level/ServerLevel;Lcom/guzhenrenlibrary/npc/life/Resident;J)Z
+     202: ifeq          206
+     205: return
+     206: aload_0
+     207: aload_1
+     208: lload_2
+     209: invokestatic  #447                // Method maybeJoinHousehold:(Lnet/minecraft/server/level/ServerLevel;Lcom/guzhenrenlibrary/npc/life/Resident;J)Z
+     212: ifeq          216
+     215: return
+     216: aload         4
+     218: getstatic     #450                // Field com/guzhenrenlibrary/npc/life/Resident$State.TRAVELLING:Lcom/guzhenrenlibrary/npc/life/Resident$State;
+     221: if_acmpne     343
+     224: aload_1
+     225: invokevirtual #113                // Method com/guzhenrenlibrary/npc/life/Resident.homeKnown:()Z
+     228: ifeq          343
+     231: getstatic     #301                // Field RANDOM:Ljava/util/Random;
+     234: invokevirtual #453                // Method java/util/Random.nextDouble:()D
+     237: ldc2_w        #456                // double 3.141592653589793d
+     240: dmul
+     241: ldc2_w        #458                // double 2.0d
+     244: dmul
+     245: dstore        6
+     247: getstatic     #301                // Field RANDOM:Ljava/util/Random;
+     250: bipush        24
+     252: sipush        160
+     255: invokestatic  #334                // Method between:(Ljava/util/Random;II)I
+     258: istore        8
+     260: aload_1
+     261: invokevirtual #460                // Method com/guzhenrenlibrary/npc/life/Resident.homeX:()D
+     264: dload         6
+     266: invokestatic  #463                // Method java/lang/Math.cos:(D)D
+     269: iload         8
+     271: i2d
+     272: dmul
+     273: dadd
+     274: dstore        9
+     276: aload_1
+     277: invokevirtual #467                // Method com/guzhenrenlibrary/npc/life/Resident.homeZ:()D
+     280: dload         6
+     282: invokestatic  #470                // Method java/lang/Math.sin:(D)D
+     285: iload         8
+     287: i2d
+     288: dmul
+     289: dadd
+     290: dstore        11
+     292: dload         9
+     294: aload_1
+     295: invokevirtual #460                // Method com/guzhenrenlibrary/npc/life/Resident.homeX:()D
+     298: invokestatic  #473                // Method clampToHome:(DD)D
+     301: dstore        9
+     303: dload         11
+     305: aload_1
+     306: invokevirtual #467                // Method com/guzhenrenlibrary/npc/life/Resident.homeZ:()D
+     309: invokestatic  #473                // Method clampToHome:(DD)D
+     312: dstore        11
+     314: aload_1
+     315: dload         9
+     317: aload_1
+     318: invokevirtual #477                // Method com/guzhenrenlibrary/npc/life/Resident.y:()D
+     321: dload         11
+     323: invokevirtual #480                // Method com/guzhenrenlibrary/npc/life/Resident.travelTo:(DDD)V
+     326: aload_1
+     327: dload         9
+     329: d2i
+     330: dload         11
+     332: d2i
+     333: invokedynamic #484,  0            // InvokeDynamic #6:makeConcatWithConstants:(II)Ljava/lang/String;
+     338: lload_2
+     339: invokevirtual #264                // Method com/guzhenrenlibrary/npc/life/Resident.remember:(Ljava/lang/String;J)V
+     342: return
+     343: aload_1
+     344: aload         4
+     346: invokevirtual #66                 // Method com/guzhenrenlibrary/npc/life/Resident$State.chineseName:()Ljava/lang/String;
+     349: invokedynamic #487,  0            // InvokeDynamic #7:makeConcatWithConstants:(Ljava/lang/String;)Ljava/lang/String;
+     354: lload_2
+     355: invokevirtual #264                // Method com/guzhenrenlibrary/npc/life/Resident.remember:(Ljava/lang/String;J)V
+     358: return
+
+  private static boolean contestGu(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.npc.life.Resident, java.lang.String, long);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokestatic  #488                // Method findRival:(Lnet/minecraft/server/level/ServerLevel;Lcom/guzhenrenlibrary/npc/life/Resident;)Lcom/guzhenrenlibrary/npc/life/Resident;
+       5: astore        5
+       7: aload         5
+       9: ifnull        22
+      12: iconst_1
+      13: getstatic     #301                // Field RANDOM:Ljava/util/Random;
+      16: invokestatic  #491                // Method com/guzhenrenlibrary/npc/life/ResidentRules.feudRoll:(ZLjava/util/Random;)Z
+      19: ifne          24
+      22: iconst_0
+      23: ireturn
+      24: aload_1
+      25: invokestatic  #495                // Method contestScore:(Lcom/guzhenrenlibrary/npc/life/Resident;)I
+      28: istore        6
+      30: aload         5
+      32: invokestatic  #495                // Method contestScore:(Lcom/guzhenrenlibrary/npc/life/Resident;)I
+      35: istore        7
+      37: iload         6
+      39: getstatic     #301                // Field RANDOM:Ljava/util/Random;
+      42: bipush        6
+      44: invokevirtual #499                // Method java/util/Random.nextInt:(I)I
+      47: iadd
+      48: iload         7
+      50: getstatic     #301                // Field RANDOM:Ljava/util/Random;
+      53: bipush        6
+      55: invokevirtual #499                // Method java/util/Random.nextInt:(I)I
+      58: iadd
+      59: if_icmplt     66
+      62: iconst_1
+      63: goto          67
+      66: iconst_0
+      67: istore        8
+      69: iload         8
+      71: ifeq          78
+      74: aload_1
+      75: goto          80
+      78: aload         5
+      80: astore        9
+      82: iload         8
+      84: ifeq          92
+      87: aload         5
+      89: goto          93
+      92: aload_1
+      93: astore        10
+      95: aload         9
+      97: aload         10
+      99: invokevirtual #152                // Method com/guzhenrenlibrary/npc/life/Resident.displayName:()Ljava/lang/String;
+     102: aload_2
+     103: invokestatic  #412                // Method guName:(Ljava/lang/String;)Ljava/lang/String;
+     106: invokedynamic #503,  0            // InvokeDynamic #8:makeConcatWithConstants:(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+     111: lload_3
+     112: invokevirtual #264                // Method com/guzhenrenlibrary/npc/life/Resident.remember:(Ljava/lang/String;J)V
+     115: aload         10
+     117: aload         9
+     119: invokevirtual #427                // Method com/guzhenrenlibrary/npc/life/Resident.npcId:()Ljava/util/UUID;
+     122: invokevirtual #504                // Method com/guzhenrenlibrary/npc/life/Resident.addFeud:(Ljava/util/UUID;)V
+     125: aload         9
+     127: aload         10
+     129: invokevirtual #427                // Method com/guzhenrenlibrary/npc/life/Resident.npcId:()Ljava/util/UUID;
+     132: invokevirtual #504                // Method com/guzhenrenlibrary/npc/life/Resident.addFeud:(Ljava/util/UUID;)V
+     135: aload         10
+     137: aload         9
+     139: invokevirtual #152                // Method com/guzhenrenlibrary/npc/life/Resident.displayName:()Ljava/lang/String;
+     142: aload_2
+     143: invokestatic  #412                // Method guName:(Ljava/lang/String;)Ljava/lang/String;
+     146: invokedynamic #507,  0            // InvokeDynamic #9:makeConcatWithConstants:(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+     151: lload_3
+     152: invokevirtual #264                // Method com/guzhenrenlibrary/npc/life/Resident.remember:(Ljava/lang/String;J)V
+     155: iload         8
+     157: ifne          164
+     160: iconst_1
+     161: goto          165
+     164: iconst_0
+     165: ireturn
+
+  private static int contestScore(com.guzhenrenlibrary.npc.life.Resident);
+    Code:
+       0: getstatic     #508                // Field com/guzhenrenlibrary/npc/life/ResidentService$1.$SwitchMap$com$guzhenrenlibrary$npc$NpcPersonality:[I
+       3: aload_0
+       4: invokevirtual #514                // Method com/guzhenrenlibrary/npc/life/Resident.persona:()Lcom/guzhenrenlibrary/npc/NpcPersona;
+       7: invokevirtual #518                // Method com/guzhenrenlibrary/npc/NpcPersona.personality:()Lcom/guzhenrenlibrary/npc/NpcPersonality;
+      10: invokevirtual #524                // Method com/guzhenrenlibrary/npc/NpcPersonality.ordinal:()I
+      13: iaload
+      14: tableswitch   { // 1 to 6
+
+                     1: 52
+
+                     2: 52
+
+                     3: 56
+
+                     4: 56
+
+                     5: 60
+
+                     6: 60
+               default: 64
+          }
+      52: iconst_2
+      53: goto          65
+      56: iconst_1
+      57: goto          65
+      60: iconst_m1
+      61: goto          65
+      64: iconst_0
+      65: istore_1
+      66: aload_0
+      67: invokevirtual #155                // Method com/guzhenrenlibrary/npc/life/Resident.zhuanshuInt:()I
+      70: iconst_4
+      71: imul
+      72: iload_1
+      73: iadd
+      74: ireturn
+
+  private static boolean quarrel(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.npc.life.Resident, long);
+    Code:
+       0: iconst_1
+       1: getstatic     #301                // Field RANDOM:Ljava/util/Random;
+       4: invokestatic  #491                // Method com/guzhenrenlibrary/npc/life/ResidentRules.feudRoll:(ZLjava/util/Random;)Z
+       7: ifne          12
+      10: iconst_0
+      11: ireturn
+      12: aload_0
+      13: aload_1
+      14: invokestatic  #488                // Method findRival:(Lnet/minecraft/server/level/ServerLevel;Lcom/guzhenrenlibrary/npc/life/Resident;)Lcom/guzhenrenlibrary/npc/life/Resident;
+      17: astore        4
+      19: aload         4
+      21: ifnonnull     26
+      24: iconst_0
+      25: ireturn
+      26: aload_1
+      27: aload         4
+      29: invokevirtual #427                // Method com/guzhenrenlibrary/npc/life/Resident.npcId:()Ljava/util/UUID;
+      32: invokevirtual #504                // Method com/guzhenrenlibrary/npc/life/Resident.addFeud:(Ljava/util/UUID;)V
+      35: aload         4
+      37: aload_1
+      38: invokevirtual #427                // Method com/guzhenrenlibrary/npc/life/Resident.npcId:()Ljava/util/UUID;
+      41: invokevirtual #504                // Method com/guzhenrenlibrary/npc/life/Resident.addFeud:(Ljava/util/UUID;)V
+      44: aload_1
+      45: aload         4
+      47: invokevirtual #152                // Method com/guzhenrenlibrary/npc/life/Resident.displayName:()Ljava/lang/String;
+      50: invokedynamic #529,  0            // InvokeDynamic #10:makeConcatWithConstants:(Ljava/lang/String;)Ljava/lang/String;
+      55: lload_2
+      56: invokevirtual #264                // Method com/guzhenrenlibrary/npc/life/Resident.remember:(Ljava/lang/String;J)V
+      59: aload         4
+      61: aload_1
+      62: invokevirtual #152                // Method com/guzhenrenlibrary/npc/life/Resident.displayName:()Ljava/lang/String;
+      65: invokedynamic #529,  0            // InvokeDynamic #10:makeConcatWithConstants:(Ljava/lang/String;)Ljava/lang/String;
+      70: lload_2
+      71: invokevirtual #264                // Method com/guzhenrenlibrary/npc/life/Resident.remember:(Ljava/lang/String;J)V
+      74: aload_1
+      75: getstatic     #530                // Field com/guzhenrenlibrary/npc/life/Resident$State.IDLE:Lcom/guzhenrenlibrary/npc/life/Resident$State;
+      78: lload_2
+      79: ldc2_w        #533                // long 1200l
+      82: ladd
+      83: invokevirtual #338                // Method com/guzhenrenlibrary/npc/life/Resident.setState:(Lcom/guzhenrenlibrary/npc/life/Resident$State;J)V
+      86: iconst_1
+      87: ireturn
+
+  private static boolean maybeFoundHousehold(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.npc.life.Resident, long);
+    Code:
+       0: aload_1
+       1: invokevirtual #535                // Method com/guzhenrenlibrary/npc/life/Resident.inHousehold:()Z
+       4: ifne          14
+       7: aload_1
+       8: invokevirtual #250                // Method com/guzhenrenlibrary/npc/life/Resident.deceased:()Z
+      11: ifeq          16
+      14: iconst_0
+      15: ireturn
+      16: aload_1
+      17: invokevirtual #155                // Method com/guzhenrenlibrary/npc/life/Resident.zhuanshuInt:()I
+      20: iconst_3
+      21: if_icmplt     37
+      24: aload_1
+      25: invokevirtual #538                // Method com/guzhenrenlibrary/npc/life/Resident.gu:()Ljava/util/List;
+      28: invokeinterface #541,  1          // InterfaceMethod java/util/List.size:()I
+      33: iconst_3
+      34: if_icmpge     39
+      37: iconst_0
+      38: ireturn
+      39: getstatic     #301                // Field RANDOM:Ljava/util/Random;
+      42: invokevirtual #453                // Method java/util/Random.nextDouble:()D
+      45: invokestatic  #544                // Method com/guzhenrenlibrary/Tuning.foundHouseholdChance:()D
+      48: dcmpl
+      49: iflt          54
+      52: iconst_0
+      53: ireturn
+      54: aload_1
+      55: invokevirtual #547                // Method com/guzhenrenlibrary/npc/life/Resident.positionKnown:()Z
+      58: ifeq          68
+      61: aload_1
+      62: invokevirtual #550                // Method com/guzhenrenlibrary/npc/life/Resident.x:()D
+      65: goto          72
+      68: aload_1
+      69: invokevirtual #460                // Method com/guzhenrenlibrary/npc/life/Resident.homeX:()D
+      72: dstore        4
+      74: aload_1
+      75: invokevirtual #547                // Method com/guzhenrenlibrary/npc/life/Resident.positionKnown:()Z
+      78: ifeq          88
+      81: aload_1
+      82: invokevirtual #553                // Method com/guzhenrenlibrary/npc/life/Resident.z:()D
+      85: goto          92
+      88: aload_1
+      89: invokevirtual #467                // Method com/guzhenrenlibrary/npc/life/Resident.homeZ:()D
+      92: dstore        6
+      94: aload_1
+      95: invokestatic  #556                // Method householdName:(Lcom/guzhenrenlibrary/npc/life/Resident;)Ljava/lang/String;
+      98: astore        8
+     100: aload_1
+     101: aload         8
+     103: dload         4
+     105: dload         6
+     107: invokevirtual #560                // Method com/guzhenrenlibrary/npc/life/Resident.foundHousehold:(Ljava/lang/String;DD)V
+     110: aload_1
+     111: dload         4
+     113: d2i
+     114: dload         6
+     116: d2i
+     117: aload         8
+     119: invokedynamic #564,  0            // InvokeDynamic #11:makeConcatWithConstants:(IILjava/lang/String;)Ljava/lang/String;
+     124: lload_2
+     125: invokevirtual #264                // Method com/guzhenrenlibrary/npc/life/Resident.remember:(Ljava/lang/String;J)V
+     128: iconst_1
+     129: ireturn
+
+  private static boolean maybeJoinHousehold(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.npc.life.Resident, long);
+    Code:
+       0: aload_1
+       1: invokevirtual #535                // Method com/guzhenrenlibrary/npc/life/Resident.inHousehold:()Z
+       4: ifne          14
+       7: aload_1
+       8: invokevirtual #250                // Method com/guzhenrenlibrary/npc/life/Resident.deceased:()Z
+      11: ifeq          16
+      14: iconst_0
+      15: ireturn
+      16: aload_0
+      17: aload_1
+      18: invokestatic  #567                // Method findHouseholdLord:(Lnet/minecraft/server/level/ServerLevel;Lcom/guzhenrenlibrary/npc/life/Resident;)Lcom/guzhenrenlibrary/npc/life/Resident;
+      21: astore        4
+      23: aload         4
+      25: ifnonnull     30
+      28: iconst_0
+      29: ireturn
+      30: aload_1
+      31: aload         4
+      33: invokevirtual #570                // Method com/guzhenrenlibrary/npc/life/Resident.household:()Ljava/lang/String;
+      36: aload         4
+      38: invokevirtual #573                // Method com/guzhenrenlibrary/npc/life/Resident.householdX:()D
+      41: aload         4
+      43: invokevirtual #576                // Method com/guzhenrenlibrary/npc/life/Resident.householdZ:()D
+      46: invokevirtual #579                // Method com/guzhenrenlibrary/npc/life/Resident.joinHousehold:(Ljava/lang/String;DD)V
+      49: aload_1
+      50: aload         4
+      52: invokevirtual #570                // Method com/guzhenrenlibrary/npc/life/Resident.household:()Ljava/lang/String;
+      55: invokedynamic #582,  0            // InvokeDynamic #12:makeConcatWithConstants:(Ljava/lang/String;)Ljava/lang/String;
+      60: lload_2
+      61: invokevirtual #264                // Method com/guzhenrenlibrary/npc/life/Resident.remember:(Ljava/lang/String;J)V
+      64: aload         4
+      66: aload_1
+      67: invokevirtual #152                // Method com/guzhenrenlibrary/npc/life/Resident.displayName:()Ljava/lang/String;
+      70: invokedynamic #583,  0            // InvokeDynamic #13:makeConcatWithConstants:(Ljava/lang/String;)Ljava/lang/String;
+      75: lload_2
+      76: invokevirtual #264                // Method com/guzhenrenlibrary/npc/life/Resident.remember:(Ljava/lang/String;J)V
+      79: iconst_1
+      80: ireturn
+
+  private static com.guzhenrenlibrary.npc.life.Resident findHouseholdLord(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.npc.life.Resident);
+    Code:
+       0: aload_1
+       1: invokevirtual #547                // Method com/guzhenrenlibrary/npc/life/Resident.positionKnown:()Z
+       4: ifne          9
+       7: aconst_null
+       8: areturn
+       9: aconst_null
+      10: astore_2
+      11: ldc2_w        #586                // double 1.7976931348623157E308d
+      14: dstore_3
+      15: aload_0
+      16: invokestatic  #44                 // Method registry:(Lnet/minecraft/world/level/Level;)Lcom/guzhenrenlibrary/npc/life/ResidentRegistry;
+      19: invokevirtual #588                // Method com/guzhenrenlibrary/npc/life/ResidentRegistry.all:()Ljava/util/Collection;
+      22: invokeinterface #592,  1          // InterfaceMethod java/util/Collection.iterator:()Ljava/util/Iterator;
+      27: astore        5
+      29: aload         5
+      31: invokeinterface #187,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+      36: ifeq          157
+      39: aload         5
+      41: invokeinterface #192,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      46: checkcast     #57                 // class com/guzhenrenlibrary/npc/life/Resident
+      49: astore        6
+      51: aload         6
+      53: aload_1
+      54: if_acmpeq     29
+      57: aload         6
+      59: invokevirtual #250                // Method com/guzhenrenlibrary/npc/life/Resident.deceased:()Z
+      62: ifne          29
+      65: aload         6
+      67: invokevirtual #595                // Method com/guzhenrenlibrary/npc/life/Resident.isHouseholdLord:()Z
+      70: ifne          76
+      73: goto          29
+      76: aload         6
+      78: invokevirtual #598                // Method com/guzhenrenlibrary/npc/life/Resident.dimension:()Ljava/lang/String;
+      81: aload_1
+      82: invokevirtual #598                // Method com/guzhenrenlibrary/npc/life/Resident.dimension:()Ljava/lang/String;
+      85: invokevirtual #600                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+      88: ifne          94
+      91: goto          29
+      94: aload_0
+      95: aload         6
+      97: invokestatic  #606                // Method householdSize:(Lnet/minecraft/server/level/ServerLevel;Lcom/guzhenrenlibrary/npc/life/Resident;)I
+     100: iconst_5
+     101: if_icmplt     107
+     104: goto          29
+     107: aload         6
+     109: aload_1
+     110: invokevirtual #550                // Method com/guzhenrenlibrary/npc/life/Resident.x:()D
+     113: aload_1
+     114: invokevirtual #553                // Method com/guzhenrenlibrary/npc/life/Resident.z:()D
+     117: invokevirtual #610                // Method com/guzhenrenlibrary/npc/life/Resident.distanceToHousehold:(DD)D
+     120: dstore        7
+     122: dload         7
+     124: dconst_0
+     125: dcmpg
+     126: iflt          29
+     129: dload         7
+     131: ldc2_w        #613                // double 192.0d
+     134: dcmpl
+     135: ifle          141
+     138: goto          29
+     141: dload         7
+     143: dload_3
+     144: dcmpg
+     145: ifge          154
+     148: aload         6
+     150: astore_2
+     151: dload         7
+     153: dstore_3
+     154: goto          29
+     157: aload_2
+     158: areturn
+
+  public static int householdSize(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.npc.life.Resident);
+    Code:
+       0: iconst_1
+       1: istore_2
+       2: aload_0
+       3: invokestatic  #44                 // Method registry:(Lnet/minecraft/world/level/Level;)Lcom/guzhenrenlibrary/npc/life/ResidentRegistry;
+       6: invokevirtual #588                // Method com/guzhenrenlibrary/npc/life/ResidentRegistry.all:()Ljava/util/Collection;
+       9: invokeinterface #592,  1          // InterfaceMethod java/util/Collection.iterator:()Ljava/util/Iterator;
+      14: astore_3
+      15: aload_3
+      16: invokeinterface #187,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+      21: ifeq          70
+      24: aload_3
+      25: invokeinterface #192,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      30: checkcast     #57                 // class com/guzhenrenlibrary/npc/life/Resident
+      33: astore        4
+      35: aload         4
+      37: aload_1
+      38: if_acmpeq     67
+      41: aload         4
+      43: invokevirtual #250                // Method com/guzhenrenlibrary/npc/life/Resident.deceased:()Z
+      46: ifne          67
+      49: aload_1
+      50: invokevirtual #570                // Method com/guzhenrenlibrary/npc/life/Resident.household:()Ljava/lang/String;
+      53: aload         4
+      55: invokevirtual #570                // Method com/guzhenrenlibrary/npc/life/Resident.household:()Ljava/lang/String;
+      58: invokevirtual #600                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+      61: ifeq          67
+      64: iinc          2, 1
+      67: goto          15
+      70: iload_2
+      71: ireturn
+
+  public static java.lang.String householdName(com.guzhenrenlibrary.npc.life.Resident);
+    Code:
+       0: bipush        12
+       2: anewarray     #601                // class java/lang/String
+       5: dup
+       6: iconst_0
+       7: ldc_w         #615                // String ����
+      10: aastore
+      11: dup
+      12: iconst_1
+      13: ldc_w         #617                // String ��ϼ
+      16: aastore
+      17: dup
+      18: iconst_2
+      19: ldc_w         #619                // String ����
+      22: aastore
+      23: dup
+      24: iconst_3
+      25: ldc_w         #621                // String ����
+      28: aastore
+      29: dup
+      30: iconst_4
+      31: ldc_w         #623                // String ��̶
+      34: aastore
+      35: dup
+      36: iconst_5
+      37: ldc_w         #625                // String ����
+      40: aastore
+      41: dup
+      42: bipush        6
+      44: ldc_w         #627                // String ��¹
+      47: aastore
+      48: dup
+      49: bipush        7
+      51: ldc_w         #629                // String ����
+      54: aastore
+      55: dup
+      56: bipush        8
+      58: ldc_w         #631                // String ����
+      61: aastore
+      62: dup
+      63: bipush        9
+      65: ldc_w         #633                // String ����
+      68: aastore
+      69: dup
+      70: bipush        10
+      72: ldc_w         #635                // String ����
+      75: aastore
+      76: dup
+      77: bipush        11
+      79: ldc_w         #637                // String �ʽ�
+      82: aastore
+      83: astore_1
+      84: bipush        6
+      86: anewarray     #601                // class java/lang/String
+      89: dup
+      90: iconst_0
+      91: ldc_w         #639                // String С��
+      94: aastore
+      95: dup
+      96: iconst_1
+      97: ldc_w         #641                // String ��Ժ
+     100: aastore
+     101: dup
+     102: iconst_2
+     103: ldc_w         #643                // String ����
+     106: aastore
+     107: dup
+     108: iconst_3
+     109: ldc_w         #645                // String һ��
+     112: aastore
+     113: dup
+     114: iconst_4
+     115: ldc_w         #647                // String ɽ��
+     118: aastore
+     119: dup
+     120: iconst_5
+     121: ldc_w         #649                // String ����
+     124: aastore
+     125: astore_2
+     126: aload_0
+     127: invokevirtual #427                // Method com/guzhenrenlibrary/npc/life/Resident.npcId:()Ljava/util/UUID;
+     130: invokevirtual #651                // Method java/util/UUID.hashCode:()I
+     133: istore_3
+     134: aload_1
+     135: iload_3
+     136: aload_1
+     137: arraylength
+     138: invokestatic  #656                // Method java/lang/Math.floorMod:(II)I
+     141: aaload
+     142: astore        4
+     144: aload_2
+     145: iload_3
+     146: aload_1
+     147: arraylength
+     148: idiv
+     149: aload_2
+     150: arraylength
+     151: invokestatic  #656                // Method java/lang/Math.floorMod:(II)I
+     154: aaload
+     155: astore        5
+     157: aload         4
+     159: aload         5
+     161: invokedynamic #660,  0            // InvokeDynamic #14:makeConcatWithConstants:(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+     166: areturn
+
+  private static com.guzhenrenlibrary.npc.life.Resident findRival(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.npc.life.Resident);
+    Code:
+       0: aload_0
+       1: invokestatic  #44                 // Method registry:(Lnet/minecraft/world/level/Level;)Lcom/guzhenrenlibrary/npc/life/ResidentRegistry;
+       4: invokevirtual #661                // Method com/guzhenrenlibrary/npc/life/ResidentRegistry.size:()I
+       7: iconst_2
+       8: if_icmpge     13
+      11: aconst_null
+      12: areturn
+      13: new           #662                // class java/util/ArrayList
+      16: dup
+      17: aload_0
+      18: invokestatic  #44                 // Method registry:(Lnet/minecraft/world/level/Level;)Lcom/guzhenrenlibrary/npc/life/ResidentRegistry;
+      21: invokevirtual #588                // Method com/guzhenrenlibrary/npc/life/ResidentRegistry.all:()Ljava/util/Collection;
+      24: invokespecial #664                // Method java/util/ArrayList."<init>":(Ljava/util/Collection;)V
+      27: astore_2
+      28: getstatic     #301                // Field RANDOM:Ljava/util/Random;
+      31: aload_2
+      32: invokeinterface #541,  1          // InterfaceMethod java/util/List.size:()I
+      37: invokevirtual #499                // Method java/util/Random.nextInt:(I)I
+      40: istore_3
+      41: iconst_0
+      42: istore        4
+      44: iload         4
+      46: aload_2
+      47: invokeinterface #541,  1          // InterfaceMethod java/util/List.size:()I
+      52: if_icmpge     189
+      55: aload_2
+      56: iload_3
+      57: iload         4
+      59: iadd
+      60: aload_2
+      61: invokeinterface #541,  1          // InterfaceMethod java/util/List.size:()I
+      66: irem
+      67: invokeinterface #667,  2          // InterfaceMethod java/util/List.get:(I)Ljava/lang/Object;
+      72: checkcast     #57                 // class com/guzhenrenlibrary/npc/life/Resident
+      75: astore        5
+      77: aload         5
+      79: invokevirtual #427                // Method com/guzhenrenlibrary/npc/life/Resident.npcId:()Ljava/util/UUID;
+      82: aload_1
+      83: invokevirtual #427                // Method com/guzhenrenlibrary/npc/life/Resident.npcId:()Ljava/util/UUID;
+      86: invokevirtual #670                // Method java/util/UUID.equals:(Ljava/lang/Object;)Z
+      89: ifne          183
+      92: aload         5
+      94: invokevirtual #250                // Method com/guzhenrenlibrary/npc/life/Resident.deceased:()Z
+      97: ifeq          103
+     100: goto          183
+     103: aload         5
+     105: invokevirtual #514                // Method com/guzhenrenlibrary/npc/life/Resident.persona:()Lcom/guzhenrenlibrary/npc/NpcPersona;
+     108: invokevirtual #671                // Method com/guzhenrenlibrary/npc/NpcPersona.assigned:()Z
+     111: ifeq          183
+     114: aload_1
+     115: invokevirtual #514                // Method com/guzhenrenlibrary/npc/life/Resident.persona:()Lcom/guzhenrenlibrary/npc/NpcPersona;
+     118: invokevirtual #671                // Method com/guzhenrenlibrary/npc/NpcPersona.assigned:()Z
+     121: ifne          127
+     124: goto          183
+     127: aload         5
+     129: invokevirtual #598                // Method com/guzhenrenlibrary/npc/life/Resident.dimension:()Ljava/lang/String;
+     132: aload_1
+     133: invokevirtual #598                // Method com/guzhenrenlibrary/npc/life/Resident.dimension:()Ljava/lang/String;
+     136: invokevirtual #600                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     139: ifne          145
+     142: goto          183
+     145: aload         5
+     147: invokevirtual #155                // Method com/guzhenrenlibrary/npc/life/Resident.zhuanshuInt:()I
+     150: aload_1
+     151: invokevirtual #155                // Method com/guzhenrenlibrary/npc/life/Resident.zhuanshuInt:()I
+     154: isub
+     155: invokestatic  #674                // Method java/lang/Math.abs:(I)I
+     158: iconst_3
+     159: if_icmple     165
+     162: goto          183
+     165: aload_1
+     166: aload         5
+     168: invokevirtual #427                // Method com/guzhenrenlibrary/npc/life/Resident.npcId:()Ljava/util/UUID;
+     171: invokevirtual #677                // Method com/guzhenrenlibrary/npc/life/Resident.hasPartner:(Ljava/util/UUID;)Z
+     174: ifeq          180
+     177: goto          183
+     180: aload         5
+     182: areturn
+     183: iinc          4, 1
+     186: goto          44
+     189: aconst_null
+     190: areturn
+
+  public static net.minecraft.world.entity.Mob findDuelTarget(net.minecraft.world.entity.Mob);
+    Code:
+       0: aload_0
+       1: invokestatic  #680                // Method residentOf:(Lnet/minecraft/world/entity/Entity;)Lcom/guzhenrenlibrary/npc/life/Resident;
+       4: astore_1
+       5: aload_1
+       6: ifnull        28
+       9: aload_1
+      10: invokevirtual #250                // Method com/guzhenrenlibrary/npc/life/Resident.deceased:()Z
+      13: ifne          28
+      16: aload_1
+      17: invokevirtual #684                // Method com/guzhenrenlibrary/npc/life/Resident.feuds:()Ljava/util/List;
+      20: invokeinterface #329,  1          // InterfaceMethod java/util/List.isEmpty:()Z
+      25: ifeq          30
+      28: aconst_null
+      29: areturn
+      30: aload_0
+      31: invokestatic  #687                // Method com/guzhenrenlibrary/npc/NpcHostility.inCombat:(Lnet/minecraft/world/entity/Entity;)Z
+      34: ifeq          46
+      37: aload_0
+      38: invokevirtual #692                // Method net/minecraft/world/entity/Mob.getTarget:()Lnet/minecraft/world/entity/LivingEntity;
+      41: ifnull        46
+      44: aconst_null
+      45: areturn
+      46: aload_0
+      47: invokevirtual #79                 // Method net/minecraft/world/entity/Mob.level:()Lnet/minecraft/world/level/Level;
+      50: ldc           #71                 // class net/minecraft/world/entity/Mob
+      52: aload_0
+      53: invokevirtual #696                // Method net/minecraft/world/entity/Mob.getBoundingBox:()Lnet/minecraft/world/phys/AABB;
+      56: ldc2_w        #700                // double 24.0d
+      59: invokevirtual #702                // Method net/minecraft/world/phys/AABB.inflate:(D)Lnet/minecraft/world/phys/AABB;
+      62: invokevirtual #708                // Method net/minecraft/world/level/Level.getEntitiesOfClass:(Ljava/lang/Class;Lnet/minecraft/world/phys/AABB;)Ljava/util/List;
+      65: invokeinterface #181,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+      70: astore_2
+      71: aload_2
+      72: invokeinterface #187,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+      77: ifeq          152
+      80: aload_2
+      81: invokeinterface #192,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      86: checkcast     #71                 // class net/minecraft/world/entity/Mob
+      89: astore_3
+      90: aload_3
+      91: aload_0
+      92: if_acmpeq     71
+      95: aload_3
+      96: invokevirtual #712                // Method net/minecraft/world/entity/Mob.isAlive:()Z
+      99: ifeq          71
+     102: aload_1
+     103: aload_3
+     104: invokevirtual #100                // Method net/minecraft/world/entity/Mob.getUUID:()Ljava/util/UUID;
+     107: invokevirtual #715                // Method com/guzhenrenlibrary/npc/life/Resident.hasFeud:(Ljava/util/UUID;)Z
+     110: ifne          116
+     113: goto          71
+     116: aload_3
+     117: invokestatic  #680                // Method residentOf:(Lnet/minecraft/world/entity/Entity;)Lcom/guzhenrenlibrary/npc/life/Resident;
+     120: astore        4
+     122: aload         4
+     124: ifnull        71
+     127: aload         4
+     129: invokevirtual #250                // Method com/guzhenrenlibrary/npc/life/Resident.deceased:()Z
+     132: ifne          71
+     135: aload         4
+     137: aload_0
+     138: invokevirtual #100                // Method net/minecraft/world/entity/Mob.getUUID:()Ljava/util/UUID;
+     141: invokevirtual #715                // Method com/guzhenrenlibrary/npc/life/Resident.hasFeud:(Ljava/util/UUID;)Z
+     144: ifne          150
+     147: goto          71
+     150: aload_3
+     151: areturn
+     152: aconst_null
+     153: areturn
+
+  public static java.util.List<net.minecraft.world.entity.Mob> socialTargets(net.minecraft.world.entity.Mob);
+    Code:
+       0: aload_0
+       1: ifnull        14
+       4: aload_0
+       5: invokevirtual #79                 // Method net/minecraft/world/entity/Mob.level:()Lnet/minecraft/world/level/Level;
+       8: invokevirtual #80                 // Method net/minecraft/world/level/Level.isClientSide:()Z
+      11: ifeq          18
+      14: invokestatic  #718                // InterfaceMethod java/util/List.of:()Ljava/util/List;
+      17: areturn
+      18: aload_0
+      19: invokestatic  #680                // Method residentOf:(Lnet/minecraft/world/entity/Entity;)Lcom/guzhenrenlibrary/npc/life/Resident;
+      22: astore_1
+      23: new           #662                // class java/util/ArrayList
+      26: dup
+      27: iconst_4
+      28: invokespecial #720                // Method java/util/ArrayList."<init>":(I)V
+      31: astore_2
+      32: aload_0
+      33: invokevirtual #79                 // Method net/minecraft/world/entity/Mob.level:()Lnet/minecraft/world/level/Level;
+      36: ldc           #71                 // class net/minecraft/world/entity/Mob
+      38: aload_0
+      39: invokevirtual #696                // Method net/minecraft/world/entity/Mob.getBoundingBox:()Lnet/minecraft/world/phys/AABB;
+      42: ldc2_w        #723                // double 28.0d
+      45: invokevirtual #702                // Method net/minecraft/world/phys/AABB.inflate:(D)Lnet/minecraft/world/phys/AABB;
+      48: invokevirtual #708                // Method net/minecraft/world/level/Level.getEntitiesOfClass:(Ljava/lang/Class;Lnet/minecraft/world/phys/AABB;)Ljava/util/List;
+      51: invokeinterface #181,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+      56: astore_3
+      57: aload_3
+      58: invokeinterface #187,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+      63: ifeq          162
+      66: aload_3
+      67: invokeinterface #192,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      72: checkcast     #71                 // class net/minecraft/world/entity/Mob
+      75: astore        4
+      77: aload         4
+      79: aload_0
+      80: if_acmpeq     57
+      83: aload         4
+      85: invokevirtual #712                // Method net/minecraft/world/entity/Mob.isAlive:()Z
+      88: ifne          94
+      91: goto          57
+      94: aload_1
+      95: ifnull        113
+      98: aload_1
+      99: aload         4
+     101: invokevirtual #100                // Method net/minecraft/world/entity/Mob.getUUID:()Ljava/util/UUID;
+     104: invokevirtual #715                // Method com/guzhenrenlibrary/npc/life/Resident.hasFeud:(Ljava/util/UUID;)Z
+     107: ifeq          113
+     110: goto          57
+     113: aload         4
+     115: invokestatic  #680                // Method residentOf:(Lnet/minecraft/world/entity/Entity;)Lcom/guzhenrenlibrary/npc/life/Resident;
+     118: astore        5
+     120: aload         5
+     122: ifnull        57
+     125: aload         5
+     127: invokevirtual #250                // Method com/guzhenrenlibrary/npc/life/Resident.deceased:()Z
+     130: ifeq          136
+     133: goto          57
+     136: aload_2
+     137: aload         4
+     139: invokeinterface #725,  2          // InterfaceMethod java/util/List.add:(Ljava/lang/Object;)Z
+     144: pop
+     145: aload_2
+     146: invokeinterface #541,  1          // InterfaceMethod java/util/List.size:()I
+     151: bipush        8
+     153: if_icmplt     159
+     156: goto          162
+     159: goto          57
+     162: aload_2
+     163: areturn
+
+  public static net.minecraft.world.entity.Mob findSocialTarget(net.minecraft.world.entity.Mob);
+    Code:
+       0: aload_0
+       1: invokestatic  #728                // Method socialTargets:(Lnet/minecraft/world/entity/Mob;)Ljava/util/List;
+       4: astore_1
+       5: aconst_null
+       6: astore_2
+       7: ldc2_w        #586                // double 1.7976931348623157E308d
+      10: dstore_3
+      11: aload_1
+      12: invokeinterface #181,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+      17: astore        5
+      19: aload         5
+      21: invokeinterface #187,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+      26: ifeq          65
+      29: aload         5
+      31: invokeinterface #192,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      36: checkcast     #71                 // class net/minecraft/world/entity/Mob
+      39: astore        6
+      41: aload_0
+      42: aload         6
+      44: invokevirtual #732                // Method net/minecraft/world/entity/Mob.distanceToSqr:(Lnet/minecraft/world/entity/Entity;)D
+      47: dstore        7
+      49: dload         7
+      51: dload_3
+      52: dcmpg
+      53: ifge          62
+      56: dload         7
+      58: dstore_3
+      59: aload         6
+      61: astore_2
+      62: goto          19
+      65: aload_2
+      66: areturn
+
+  public static void recordSocial(net.minecraft.world.entity.Mob, net.minecraft.world.entity.Mob, boolean);
+    Code:
+       0: aload_0
+       1: ifnull        8
+       4: aload_1
+       5: ifnonnull     9
+       8: return
+       9: aload_0
+      10: invokestatic  #680                // Method residentOf:(Lnet/minecraft/world/entity/Entity;)Lcom/guzhenrenlibrary/npc/life/Resident;
+      13: astore_3
+      14: aload_1
+      15: invokestatic  #680                // Method residentOf:(Lnet/minecraft/world/entity/Entity;)Lcom/guzhenrenlibrary/npc/life/Resident;
+      18: astore        4
+      20: aload_3
+      21: ifnull        29
+      24: aload         4
+      26: ifnonnull     30
+      29: return
+      30: aload_0
+      31: invokevirtual #79                 // Method net/minecraft/world/entity/Mob.level:()Lnet/minecraft/world/level/Level;
+      34: invokevirtual #735                // Method net/minecraft/world/level/Level.getGameTime:()J
+      37: lstore        5
+      39: aload_3
+      40: invokevirtual #152                // Method com/guzhenrenlibrary/npc/life/Resident.displayName:()Ljava/lang/String;
+      43: astore        7
+      45: aload         4
+      47: invokevirtual #152                // Method com/guzhenrenlibrary/npc/life/Resident.displayName:()Ljava/lang/String;
+      50: astore        8
+      52: iload_2
+      53: ifeq          158
+      56: aload_3
+      57: invokestatic  #736                // Method firstGu:(Lcom/guzhenrenlibrary/npc/life/Resident;)Ljava/lang/String;
+      60: astore        9
+      62: aload         4
+      64: invokestatic  #736                // Method firstGu:(Lcom/guzhenrenlibrary/npc/life/Resident;)Ljava/lang/String;
+      67: astore        10
+      69: aload         10
+      71: ifnull        80
+      74: aload_3
+      75: aload         10
+      77: invokevirtual #739                // Method com/guzhenrenlibrary/npc/life/Resident.rememberGu:(Ljava/lang/String;)V
+      80: aload         9
+      82: ifnull        92
+      85: aload         4
+      87: aload         9
+      89: invokevirtual #739                // Method com/guzhenrenlibrary/npc/life/Resident.rememberGu:(Ljava/lang/String;)V
+      92: aload_3
+      93: aload         8
+      95: aload         10
+      97: ifnonnull     106
+     100: ldc_w         #743                // String
+     103: goto          113
+     106: aload         10
+     108: invokedynamic #745,  0            // InvokeDynamic #15:makeConcatWithConstants:(Ljava/lang/String;)Ljava/lang/String;
+     113: invokedynamic #746,  0            // InvokeDynamic #16:makeConcatWithConstants:(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+     118: lload         5
+     120: invokevirtual #264                // Method com/guzhenrenlibrary/npc/life/Resident.remember:(Ljava/lang/String;J)V
+     123: aload         4
+     125: aload         7
+     127: aload         9
+     129: ifnonnull     138
+     132: ldc_w         #743                // String
+     135: goto          145
+     138: aload         9
+     140: invokedynamic #745,  0            // InvokeDynamic #15:makeConcatWithConstants:(Ljava/lang/String;)Ljava/lang/String;
+     145: invokedynamic #746,  0            // InvokeDynamic #16:makeConcatWithConstants:(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+     150: lload         5
+     152: invokevirtual #264                // Method com/guzhenrenlibrary/npc/life/Resident.remember:(Ljava/lang/String;J)V
+     155: goto          185
+     158: aload_3
+     159: aload         8
+     161: invokedynamic #747,  0            // InvokeDynamic #17:makeConcatWithConstants:(Ljava/lang/String;)Ljava/lang/String;
+     166: lload         5
+     168: invokevirtual #264                // Method com/guzhenrenlibrary/npc/life/Resident.remember:(Ljava/lang/String;J)V
+     171: aload         4
+     173: aload         7
+     175: invokedynamic #747,  0            // InvokeDynamic #17:makeConcatWithConstants:(Ljava/lang/String;)Ljava/lang/String;
+     180: lload         5
+     182: invokevirtual #264                // Method com/guzhenrenlibrary/npc/life/Resident.remember:(Ljava/lang/String;J)V
+     185: getstatic     #144                // Field com/guzhenrenlibrary/GuzhenrenLibrary.LOGGER:Lorg/apache/logging/log4j/Logger;
+     188: invokeinterface #748,  1          // InterfaceMethod org/apache/logging/log4j/Logger.isDebugEnabled:()Z
+     193: ifeq          224
+     196: getstatic     #144                // Field com/guzhenrenlibrary/GuzhenrenLibrary.LOGGER:Lorg/apache/logging/log4j/Logger;
+     199: ldc_w         #751                // String [�罻] {} �� {}{}
+     202: aload         7
+     204: aload         8
+     206: iload_2
+     207: ifeq          216
+     210: ldc_w         #753                // String  �����˹Ʋ�
+     213: goto          219
+     216: ldc_w         #755                // String  ��̸
+     219: invokeinterface #175,  5          // InterfaceMethod org/apache/logging/log4j/Logger.debug:(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)V
+     224: return
+
+  private static java.lang.String firstGu(com.guzhenrenlibrary.npc.life.Resident);
+    Code:
+       0: aload_0
+       1: invokevirtual #538                // Method com/guzhenrenlibrary/npc/life/Resident.gu:()Ljava/util/List;
+       4: invokeinterface #181,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+       9: astore_1
+      10: aload_1
+      11: invokeinterface #187,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+      16: ifeq          45
+      19: aload_1
+      20: invokeinterface #192,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      25: checkcast     #601                // class java/lang/String
+      28: astore_2
+      29: aload_2
+      30: ifnull        42
+      33: aload_2
+      34: invokevirtual #757                // Method java/lang/String.isBlank:()Z
+      37: ifne          42
+      40: aload_2
+      41: areturn
+      42: goto          10
+      45: aconst_null
+      46: areturn
+
+  public static void beginDuel(net.minecraft.world.entity.Mob, net.minecraft.world.entity.Mob);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokevirtual #760                // Method net/minecraft/world/entity/Mob.setTarget:(Lnet/minecraft/world/entity/LivingEntity;)V
+       5: aload_1
+       6: aload_0
+       7: invokevirtual #760                // Method net/minecraft/world/entity/Mob.setTarget:(Lnet/minecraft/world/entity/LivingEntity;)V
+      10: aload_0
+      11: aload_1
+      12: invokestatic  #764                // Method com/guzhenrenlibrary/npc/combat/NpcAggression.remember:(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/Entity;)V
+      15: aload_1
+      16: aload_0
+      17: invokestatic  #764                // Method com/guzhenrenlibrary/npc/combat/NpcAggression.remember:(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/Entity;)V
+      20: aload_0
+      21: invokevirtual #79                 // Method net/minecraft/world/entity/Mob.level:()Lnet/minecraft/world/level/Level;
+      24: invokevirtual #735                // Method net/minecraft/world/level/Level.getGameTime:()J
+      27: lstore_2
+      28: aload_0
+      29: invokestatic  #680                // Method residentOf:(Lnet/minecraft/world/entity/Entity;)Lcom/guzhenrenlibrary/npc/life/Resident;
+      32: astore        4
+      34: aload_1
+      35: invokestatic  #680                // Method residentOf:(Lnet/minecraft/world/entity/Entity;)Lcom/guzhenrenlibrary/npc/life/Resident;
+      38: astore        5
+      40: aload         4
+      42: ifnull        67
+      45: aload         4
+      47: aload_0
+      48: invokevirtual #79                 // Method net/minecraft/world/entity/Mob.level:()Lnet/minecraft/world/level/Level;
+      51: invokestatic  #256                // Method dimensionName:(Lnet/minecraft/world/level/Level;)Ljava/lang/String;
+      54: aload_1
+      55: invokestatic  #769                // Method nameOf:(Lnet/minecraft/world/entity/Mob;)Ljava/lang/String;
+      58: invokedynamic #773,  0            // InvokeDynamic #18:makeConcatWithConstants:(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+      63: lload_2
+      64: invokevirtual #264                // Method com/guzhenrenlibrary/npc/life/Resident.remember:(Ljava/lang/String;J)V
+      67: aload         5
+      69: ifnull        94
+      72: aload         5
+      74: aload_1
+      75: invokevirtual #79                 // Method net/minecraft/world/entity/Mob.level:()Lnet/minecraft/world/level/Level;
+      78: invokestatic  #256                // Method dimensionName:(Lnet/minecraft/world/level/Level;)Ljava/lang/String;
+      81: aload_0
+      82: invokestatic  #769                // Method nameOf:(Lnet/minecraft/world/entity/Mob;)Ljava/lang/String;
+      85: invokedynamic #773,  0            // InvokeDynamic #18:makeConcatWithConstants:(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+      90: lload_2
+      91: invokevirtual #264                // Method com/guzhenrenlibrary/npc/life/Resident.remember:(Ljava/lang/String;J)V
+      94: getstatic     #144                // Field com/guzhenrenlibrary/GuzhenrenLibrary.LOGGER:Lorg/apache/logging/log4j/Logger;
+      97: ldc_w         #774                // String [��פ] ������{} vs {}
+     100: aload_0
+     101: invokestatic  #769                // Method nameOf:(Lnet/minecraft/world/entity/Mob;)Ljava/lang/String;
+     104: aload_1
+     105: invokestatic  #769                // Method nameOf:(Lnet/minecraft/world/entity/Mob;)Ljava/lang/String;
+     108: invokeinterface #776,  4          // InterfaceMethod org/apache/logging/log4j/Logger.debug:(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;)V
+     113: return
+
+  public static void keepDuel(net.minecraft.world.entity.Mob, net.minecraft.world.entity.Mob);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokestatic  #764                // Method com/guzhenrenlibrary/npc/combat/NpcAggression.remember:(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/Entity;)V
+       5: aload_1
+       6: aload_0
+       7: invokestatic  #764                // Method com/guzhenrenlibrary/npc/combat/NpcAggression.remember:(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/Entity;)V
+      10: aload_0
+      11: invokevirtual #692                // Method net/minecraft/world/entity/Mob.getTarget:()Lnet/minecraft/world/entity/LivingEntity;
+      14: aload_1
+      15: if_acmpeq     23
+      18: aload_0
+      19: aload_1
+      20: invokevirtual #760                // Method net/minecraft/world/entity/Mob.setTarget:(Lnet/minecraft/world/entity/LivingEntity;)V
+      23: aload_1
+      24: invokevirtual #692                // Method net/minecraft/world/entity/Mob.getTarget:()Lnet/minecraft/world/entity/LivingEntity;
+      27: aload_0
+      28: if_acmpeq     36
+      31: aload_1
+      32: aload_0
+      33: invokevirtual #760                // Method net/minecraft/world/entity/Mob.setTarget:(Lnet/minecraft/world/entity/LivingEntity;)V
+      36: return
+
+  public static void endDuel(net.minecraft.world.entity.Mob, net.minecraft.world.entity.Mob, net.minecraft.world.entity.Mob, java.lang.String);
+    Code:
+       0: aload_0
+       1: invokevirtual #79                 // Method net/minecraft/world/entity/Mob.level:()Lnet/minecraft/world/level/Level;
+       4: invokevirtual #735                // Method net/minecraft/world/level/Level.getGameTime:()J
+       7: lstore        4
+       9: aload_0
+      10: invokestatic  #680                // Method residentOf:(Lnet/minecraft/world/entity/Entity;)Lcom/guzhenrenlibrary/npc/life/Resident;
+      13: astore        6
+      15: aload_1
+      16: invokestatic  #680                // Method residentOf:(Lnet/minecraft/world/entity/Entity;)Lcom/guzhenrenlibrary/npc/life/Resident;
+      19: astore        7
+      21: aload         6
+      23: ifnull        51
+      26: aload         7
+      28: ifnull        51
+      31: aload         6
+      33: aload         7
+      35: invokevirtual #427                // Method com/guzhenrenlibrary/npc/life/Resident.npcId:()Ljava/util/UUID;
+      38: invokevirtual #778                // Method com/guzhenrenlibrary/npc/life/Resident.removeFeud:(Ljava/util/UUID;)V
+      41: aload         7
+      43: aload         6
+      45: invokevirtual #427                // Method com/guzhenrenlibrary/npc/life/Resident.npcId:()Ljava/util/UUID;
+      48: invokevirtual #778                // Method com/guzhenrenlibrary/npc/life/Resident.removeFeud:(Ljava/util/UUID;)V
+      51: aload_0
+      52: invokevirtual #692                // Method net/minecraft/world/entity/Mob.getTarget:()Lnet/minecraft/world/entity/LivingEntity;
+      55: aload_1
+      56: if_acmpne     64
+      59: aload_0
+      60: aconst_null
+      61: invokevirtual #760                // Method net/minecraft/world/entity/Mob.setTarget:(Lnet/minecraft/world/entity/LivingEntity;)V
+      64: aload_1
+      65: invokevirtual #692                // Method net/minecraft/world/entity/Mob.getTarget:()Lnet/minecraft/world/entity/LivingEntity;
+      68: aload_0
+      69: if_acmpne     77
+      72: aload_1
+      73: aconst_null
+      74: invokevirtual #760                // Method net/minecraft/world/entity/Mob.setTarget:(Lnet/minecraft/world/entity/LivingEntity;)V
+      77: aload_0
+      78: aload_1
+      79: invokestatic  #781                // Method com/guzhenrenlibrary/npc/combat/NpcAggression.forget:(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/Entity;)V
+      82: aload_1
+      83: aload_0
+      84: invokestatic  #781                // Method com/guzhenrenlibrary/npc/combat/NpcAggression.forget:(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/Entity;)V
+      87: aload         6
+      89: ifnull        142
+      92: aload         6
+      94: aload_2
+      95: aload_0
+      96: if_acmpne     111
+      99: aload_1
+     100: invokestatic  #769                // Method nameOf:(Lnet/minecraft/world/entity/Mob;)Ljava/lang/String;
+     103: invokedynamic #784,  0            // InvokeDynamic #19:makeConcatWithConstants:(Ljava/lang/String;)Ljava/lang/String;
+     108: goto          137
+     111: aload_2
+     112: aload_1
+     113: if_acmpne     128
+     116: aload_1
+     117: invokestatic  #769                // Method nameOf:(Lnet/minecraft/world/entity/Mob;)Ljava/lang/String;
+     120: invokedynamic #785,  0            // InvokeDynamic #20:makeConcatWithConstants:(Ljava/lang/String;)Ljava/lang/String;
+     125: goto          137
+     128: aload_1
+     129: invokestatic  #769                // Method nameOf:(Lnet/minecraft/world/entity/Mob;)Ljava/lang/String;
+     132: invokedynamic #786,  0            // InvokeDynamic #21:makeConcatWithConstants:(Ljava/lang/String;)Ljava/lang/String;
+     137: lload         4
+     139: invokevirtual #264                // Method com/guzhenrenlibrary/npc/life/Resident.remember:(Ljava/lang/String;J)V
+     142: aload         7
+     144: ifnull        197
+     147: aload         7
+     149: aload_2
+     150: aload_1
+     151: if_acmpne     166
+     154: aload_0
+     155: invokestatic  #769                // Method nameOf:(Lnet/minecraft/world/entity/Mob;)Ljava/lang/String;
+     158: invokedynamic #784,  0            // InvokeDynamic #19:makeConcatWithConstants:(Ljava/lang/String;)Ljava/lang/String;
+     163: goto          192
+     166: aload_2
+     167: aload_0
+     168: if_acmpne     183
+     171: aload_0
+     172: invokestatic  #769                // Method nameOf:(Lnet/minecraft/world/entity/Mob;)Ljava/lang/String;
+     175: invokedynamic #785,  0            // InvokeDynamic #20:makeConcatWithConstants:(Ljava/lang/String;)Ljava/lang/String;
+     180: goto          192
+     183: aload_0
+     184: invokestatic  #769                // Method nameOf:(Lnet/minecraft/world/entity/Mob;)Ljava/lang/String;
+     187: invokedynamic #786,  0            // InvokeDynamic #21:makeConcatWithConstants:(Ljava/lang/String;)Ljava/lang/String;
+     192: lload         4
+     194: invokevirtual #264                // Method com/guzhenrenlibrary/npc/life/Resident.remember:(Ljava/lang/String;J)V
+     197: aload_0
+     198: invokevirtual #79                 // Method net/minecraft/world/entity/Mob.level:()Lnet/minecraft/world/level/Level;
+     201: astore        9
+     203: aload         9
+     205: instanceof    #23                 // class net/minecraft/server/level/ServerLevel
+     208: ifeq          246
+     211: aload         9
+     213: checkcast     #23                 // class net/minecraft/server/level/ServerLevel
+     216: astore        8
+     218: aload_2
+     219: aload_0
+     220: if_acmpne     227
+     223: aload_1
+     224: goto          237
+     227: aload_2
+     228: aload_1
+     229: if_acmpne     236
+     232: aload_0
+     233: goto          237
+     236: aconst_null
+     237: astore        9
+     239: aload         8
+     241: aload         9
+     243: invokestatic  #787                // Method com/guzhenrenlibrary/npc/life/DuelBets.settle:(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/Mob;)V
+     246: getstatic     #144                // Field com/guzhenrenlibrary/GuzhenrenLibrary.LOGGER:Lorg/apache/logging/log4j/Logger;
+     249: ldc_w         #793                // String [��פ] ����������{} vs {}��{}��
+     252: aload_0
+     253: invokestatic  #769                // Method nameOf:(Lnet/minecraft/world/entity/Mob;)Ljava/lang/String;
+     256: aload_1
+     257: invokestatic  #769                // Method nameOf:(Lnet/minecraft/world/entity/Mob;)Ljava/lang/String;
+     260: aload_3
+     261: invokeinterface #175,  5          // InterfaceMethod org/apache/logging/log4j/Logger.debug:(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)V
+     266: return
+
+  public static net.minecraft.world.entity.Mob yieldCheck(net.minecraft.world.entity.Mob, net.minecraft.world.entity.Entity, float);
+    Code:
+       0: aload_1
+       1: instanceof    #71                 // class net/minecraft/world/entity/Mob
+       4: ifeq          17
+       7: aload_1
+       8: checkcast     #71                 // class net/minecraft/world/entity/Mob
+      11: astore_3
+      12: aload_0
+      13: aload_1
+      14: if_acmpne     19
+      17: aconst_null
+      18: areturn
+      19: aload_0
+      20: invokestatic  #680                // Method residentOf:(Lnet/minecraft/world/entity/Entity;)Lcom/guzhenrenlibrary/npc/life/Resident;
+      23: astore        4
+      25: aload_3
+      26: invokestatic  #680                // Method residentOf:(Lnet/minecraft/world/entity/Entity;)Lcom/guzhenrenlibrary/npc/life/Resident;
+      29: astore        5
+      31: aload         4
+      33: ifnull        41
+      36: aload         5
+      38: ifnonnull     43
+      41: aconst_null
+      42: areturn
+      43: aload         4
+      45: aload_3
+      46: invokevirtual #100                // Method net/minecraft/world/entity/Mob.getUUID:()Ljava/util/UUID;
+      49: invokevirtual #715                // Method com/guzhenrenlibrary/npc/life/Resident.hasFeud:(Ljava/util/UUID;)Z
+      52: ifeq          67
+      55: aload         5
+      57: aload_0
+      58: invokevirtual #100                // Method net/minecraft/world/entity/Mob.getUUID:()Ljava/util/UUID;
+      61: invokevirtual #715                // Method com/guzhenrenlibrary/npc/life/Resident.hasFeud:(Ljava/util/UUID;)Z
+      64: ifne          69
+      67: aconst_null
+      68: areturn
+      69: aload_0
+      70: invokevirtual #795                // Method net/minecraft/world/entity/Mob.getHealth:()F
+      73: fload_2
+      74: fsub
+      75: fstore        6
+      77: fload         6
+      79: aload_0
+      80: invokevirtual #798                // Method net/minecraft/world/entity/Mob.getMaxHealth:()F
+      83: ldc_w         #801                // float 0.35f
+      86: fmul
+      87: fcmpg
+      88: ifgt          95
+      91: aload_0
+      92: goto          96
+      95: aconst_null
+      96: areturn
+
+  public static java.lang.String nameOf(net.minecraft.world.entity.Mob);
+    Code:
+       0: aload_0
+       1: ifnonnull     8
+       4: ldc_w         #802                // String ��
+       7: areturn
+       8: aload_0
+       9: invokestatic  #680                // Method residentOf:(Lnet/minecraft/world/entity/Entity;)Lcom/guzhenrenlibrary/npc/life/Resident;
+      12: astore_1
+      13: aload_1
+      14: ifnull        22
+      17: aload_1
+      18: invokevirtual #152                // Method com/guzhenrenlibrary/npc/life/Resident.displayName:()Ljava/lang/String;
+      21: areturn
+      22: aload_0
+      23: invokestatic  #804                // Method com/guzhenrenlibrary/npc/NpcPersonas.persona:(Lnet/minecraft/world/entity/Entity;)Lcom/guzhenrenlibrary/npc/NpcPersona;
+      26: astore_2
+      27: aload_2
+      28: invokevirtual #671                // Method com/guzhenrenlibrary/npc/NpcPersona.assigned:()Z
+      31: ifeq          41
+      34: aload_2
+      35: invokevirtual #806                // Method com/guzhenrenlibrary/npc/NpcPersona.displayName:()Ljava/lang/String;
+      38: goto          44
+      41: ldc_w         #802                // String ��
+      44: areturn
+
+  private static double clampToHome(double, double);
+    Code:
+       0: dload_0
+       1: dload_2
+       2: dsub
+       3: dstore        4
+       5: invokestatic  #807                // Method com/guzhenrenlibrary/Tuning.homeRadius:()I
+       8: i2d
+       9: dstore        6
+      11: dload_2
+      12: dload         6
+      14: dneg
+      15: dload         6
+      17: dload         4
+      19: invokestatic  #810                // Method java/lang/Math.min:(DD)D
+      22: invokestatic  #812                // Method java/lang/Math.max:(DD)D
+      25: dadd
+      26: dreturn
+
+  private static void materialize(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.npc.life.Resident, long);
+    Code:
+       0: aload_1
+       1: invokevirtual #250                // Method com/guzhenrenlibrary/npc/life/Resident.deceased:()Z
+       4: ifne          24
+       7: aload_1
+       8: invokevirtual #547                // Method com/guzhenrenlibrary/npc/life/Resident.positionKnown:()Z
+      11: ifeq          24
+      14: aload_1
+      15: invokevirtual #598                // Method com/guzhenrenlibrary/npc/life/Resident.dimension:()Ljava/lang/String;
+      18: invokevirtual #815                // Method java/lang/String.isEmpty:()Z
+      21: ifeq          25
+      24: return
+      25: aload_0
+      26: aload_1
+      27: invokestatic  #816                // Method dimensionOf:(Lnet/minecraft/server/level/ServerLevel;Lcom/guzhenrenlibrary/npc/life/Resident;)Lnet/minecraft/server/level/ServerLevel;
+      30: astore        4
+      32: aload         4
+      34: ifnonnull     38
+      37: return
+      38: aload_1
+      39: invokevirtual #550                // Method com/guzhenrenlibrary/npc/life/Resident.x:()D
+      42: aload_1
+      43: invokevirtual #477                // Method com/guzhenrenlibrary/npc/life/Resident.y:()D
+      46: aload_1
+      47: invokevirtual #553                // Method com/guzhenrenlibrary/npc/life/Resident.z:()D
+      50: invokestatic  #820                // Method net/minecraft/core/BlockPos.containing:(DDD)Lnet/minecraft/core/BlockPos;
+      53: astore        5
+      55: aload         4
+      57: invokevirtual #826                // Method net/minecraft/server/level/ServerLevel.getChunkSource:()Lnet/minecraft/server/level/ServerChunkCache;
+      60: aload         5
+      62: invokevirtual #830                // Method net/minecraft/core/BlockPos.getX:()I
+      65: iconst_4
+      66: ishr
+      67: aload         5
+      69: invokevirtual #832                // Method net/minecraft/core/BlockPos.getZ:()I
+      72: iconst_4
+      73: ishr
+      74: invokevirtual #834                // Method net/minecraft/server/level/ServerChunkCache.getChunkNow:(II)Lnet/minecraft/world/level/chunk/LevelChunk;
+      77: ifnonnull     81
+      80: return
+      81: aload         4
+      83: aload_1
+      84: invokevirtual #550                // Method com/guzhenrenlibrary/npc/life/Resident.x:()D
+      87: aload_1
+      88: invokevirtual #477                // Method com/guzhenrenlibrary/npc/life/Resident.y:()D
+      91: aload_1
+      92: invokevirtual #553                // Method com/guzhenrenlibrary/npc/life/Resident.z:()D
+      95: invokestatic  #840                // Method com/guzhenrenlibrary/Tuning.materializeRange:()I
+      98: i2d
+      99: invokestatic  #843                // Method hasPlayerNear:(Lnet/minecraft/server/level/ServerLevel;DDDD)Z
+     102: ifne          106
+     105: return
+     106: aload_1
+     107: aload_1
+     108: invokevirtual #847                // Method com/guzhenrenlibrary/npc/life/Resident.missingTicks:()I
+     111: invokestatic  #199                // Method com/guzhenrenlibrary/Tuning.simIntervalTicks:()I
+     114: iadd
+     115: invokevirtual #850                // Method com/guzhenrenlibrary/npc/life/Resident.setMissingTicks:(I)V
+     118: aload_1
+     119: invokevirtual #847                // Method com/guzhenrenlibrary/npc/life/Resident.missingTicks:()I
+     122: invokestatic  #853                // Method com/guzhenrenlibrary/Tuning.missingGrace:()I
+     125: if_icmpge     129
+     128: return
+     129: aload_0
+     130: aload_1
+     131: aload         5
+     133: invokestatic  #856                // Method spawn:(Lnet/minecraft/server/level/ServerLevel;Lcom/guzhenrenlibrary/npc/life/Resident;Lnet/minecraft/core/BlockPos;)Lcom/guzhenrenlibrary/npc/life/Resident;
+     136: astore        6
+     138: aload         6
+     140: ifnull        163
+     143: aload_1
+     144: iconst_0
+     145: invokevirtual #850                // Method com/guzhenrenlibrary/npc/life/Resident.setMissingTicks:(I)V
+     148: aload_1
+     149: aload         4
+     151: invokestatic  #256                // Method dimensionName:(Lnet/minecraft/world/level/Level;)Ljava/lang/String;
+     154: invokedynamic #860,  0            // InvokeDynamic #22:makeConcatWithConstants:(Ljava/lang/String;)Ljava/lang/String;
+     159: lload_2
+     160: invokevirtual #264                // Method com/guzhenrenlibrary/npc/life/Resident.remember:(Ljava/lang/String;J)V
+     163: return
+
+  private static com.guzhenrenlibrary.npc.life.Resident spawn(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.npc.life.Resident, net.minecraft.core.BlockPos);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokestatic  #816                // Method dimensionOf:(Lnet/minecraft/server/level/ServerLevel;Lcom/guzhenrenlibrary/npc/life/Resident;)Lnet/minecraft/server/level/ServerLevel;
+       5: astore_3
+       6: aload_3
+       7: ifnonnull     12
+      10: aconst_null
+      11: areturn
+      12: getstatic     #861                // Field net/minecraft/core/registries/BuiltInRegistries.ENTITY_TYPE:Lnet/minecraft/core/DefaultedRegistry;
+      15: ldc_w         #867                // String guzhenren
+      18: ldc_w         #869                // String gu_xiu
+      21: invokestatic  #871                // Method net/minecraft/resources/ResourceLocation.fromNamespaceAndPath:(Ljava/lang/String;Ljava/lang/String;)Lnet/minecraft/resources/ResourceLocation;
+      24: invokeinterface #877,  2          // InterfaceMethod net/minecraft/core/DefaultedRegistry.get:(Lnet/minecraft/resources/ResourceLocation;)Ljava/lang/Object;
+      29: checkcast     #882                // class net/minecraft/world/entity/EntityType
+      32: astore        4
+      34: aload         4
+      36: ifnonnull     41
+      39: aconst_null
+      40: areturn
+      41: aload         4
+      43: aload_3
+      44: invokevirtual #884                // Method net/minecraft/world/entity/EntityType.create:(Lnet/minecraft/world/level/Level;)Lnet/minecraft/world/entity/Entity;
+      47: astore        5
+      49: aload         5
+      51: instanceof    #71                 // class net/minecraft/world/entity/Mob
+      54: ifeq          67
+      57: aload         5
+      59: checkcast     #71                 // class net/minecraft/world/entity/Mob
+      62: astore        6
+      64: goto          69
+      67: aconst_null
+      68: areturn
+      69: aload         6
+      71: aload_1
+      72: invokevirtual #427                // Method com/guzhenrenlibrary/npc/life/Resident.npcId:()Ljava/util/UUID;
+      75: invokevirtual #888                // Method net/minecraft/world/entity/Mob.setUUID:(Ljava/util/UUID;)V
+      78: aload         6
+      80: aload_2
+      81: invokevirtual #830                // Method net/minecraft/core/BlockPos.getX:()I
+      84: i2d
+      85: ldc2_w        #891                // double 0.5d
+      88: dadd
+      89: aload_2
+      90: invokevirtual #893                // Method net/minecraft/core/BlockPos.getY:()I
+      93: i2d
+      94: aload_2
+      95: invokevirtual #832                // Method net/minecraft/core/BlockPos.getZ:()I
+      98: i2d
+      99: ldc2_w        #891                // double 0.5d
+     102: dadd
+     103: aload         6
+     105: invokevirtual #896                // Method net/minecraft/world/entity/Mob.getYRot:()F
+     108: fconst_0
+     109: invokevirtual #899                // Method net/minecraft/world/entity/Mob.moveTo:(DDDFF)V
+     112: aload         6
+     114: aload_1
+     115: invokevirtual #514                // Method com/guzhenrenlibrary/npc/life/Resident.persona:()Lcom/guzhenrenlibrary/npc/NpcPersona;
+     118: invokestatic  #903                // Method com/guzhenrenlibrary/npc/NpcPersonas.setPersona:(Lnet/minecraft/world/entity/Entity;Lcom/guzhenrenlibrary/npc/NpcPersona;)V
+     121: aload         6
+     123: aload_1
+     124: invokevirtual #907                // Method com/guzhenrenlibrary/npc/life/Resident.zhuanshu:()D
+     127: invokestatic  #909                // Method com/guzhenrenlibrary/npc/NpcPersonas.setZhuanshu:(Lnet/minecraft/world/entity/Entity;D)D
+     130: pop2
+     131: aload         6
+     133: aload_3
+     134: aload_3
+     135: aload_2
+     136: invokevirtual #913                // Method net/minecraft/server/level/ServerLevel.getCurrentDifficultyAt:(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/DifficultyInstance;
+     139: getstatic     #917                // Field net/minecraft/world/entity/MobSpawnType.EVENT:Lnet/minecraft/world/entity/MobSpawnType;
+     142: aconst_null
+     143: invokevirtual #923                // Method net/minecraft/world/entity/Mob.finalizeSpawn:(Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/MobSpawnType;Lnet/minecraft/world/entity/SpawnGroupData;)Lnet/minecraft/world/entity/SpawnGroupData;
+     146: pop
+     147: aload         6
+     149: invokestatic  #927                // Method com/guzhenrenlibrary/npc/NpcAppearanceFactory.assignIfMissing:(Lnet/minecraft/world/entity/Entity;)Z
+     152: pop
+     153: aload_1
+     154: invokevirtual #932                // Method com/guzhenrenlibrary/npc/life/Resident.guGranted:()Ljava/util/List;
+     157: invokeinterface #181,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+     162: astore        7
+     164: aload         7
+     166: invokeinterface #187,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+     171: ifeq          196
+     174: aload         7
+     176: invokeinterface #192,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     181: checkcast     #601                // class java/lang/String
+     184: astore        8
+     186: aload         6
+     188: aload         8
+     190: invokestatic  #935                // Method markGuGranted:(Lnet/minecraft/world/entity/Mob;Ljava/lang/String;)V
+     193: goto          164
+     196: aload_1
+     197: invokevirtual #939                // Method com/guzhenrenlibrary/npc/life/Resident.everKitted:()Z
+     200: ifeq          208
+     203: aload         6
+     205: invokestatic  #942                // Method com/guzhenrenlibrary/npc/combat/CombatLoadout.markEquipped:(Lnet/minecraft/world/entity/Mob;)V
+     208: aload_1
+     209: invokevirtual #538                // Method com/guzhenrenlibrary/npc/life/Resident.gu:()Ljava/util/List;
+     212: invokeinterface #181,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+     217: astore        7
+     219: aload         7
+     221: invokeinterface #187,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+     226: ifeq          262
+     229: aload         7
+     231: invokeinterface #192,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     236: checkcast     #601                // class java/lang/String
+     239: astore        8
+     241: aload_1
+     242: aload         8
+     244: invokevirtual #947                // Method com/guzhenrenlibrary/npc/life/Resident.guGranted:(Ljava/lang/String;)Z
+     247: ifeq          259
+     250: aload         6
+     252: aload         8
+     254: iconst_1
+     255: invokestatic  #950                // Method giveRealGu:(Lnet/minecraft/world/entity/Mob;Ljava/lang/String;Z)Z
+     258: pop
+     259: goto          219
+     262: aload         6
+     264: invokevirtual #127                // Method net/minecraft/world/entity/Mob.setPersistenceRequired:()V
+     267: aload         6
+     269: invokestatic  #130                // Method com/guzhenrenlibrary/npc/life/NpcErrandGoal.attach:(Lnet/minecraft/world/entity/Mob;)Z
+     272: pop
+     273: aload         6
+     275: invokestatic  #136                // Method com/guzhenrenlibrary/npc/life/NpcFeudGoal.attach:(Lnet/minecraft/world/entity/Mob;)Z
+     278: pop
+     279: aload         6
+     281: invokestatic  #139                // Method com/guzhenrenlibrary/npc/life/NpcSocialGoal.attach:(Lnet/minecraft/world/entity/Mob;)V
+     284: aload_3
+     285: aload         6
+     287: invokevirtual #954                // Method net/minecraft/server/level/ServerLevel.addFreshEntity:(Lnet/minecraft/world/entity/Entity;)Z
+     290: ifne          295
+     293: aconst_null
+     294: areturn
+     295: getstatic     #144                // Field com/guzhenrenlibrary/GuzhenrenLibrary.LOGGER:Lorg/apache/logging/log4j/Logger;
+     298: ldc_w         #957                // String [��פ] ���ʻ���{} �� {}
+     301: aload_1
+     302: invokevirtual #152                // Method com/guzhenrenlibrary/npc/life/Resident.displayName:()Ljava/lang/String;
+     305: aload_2
+     306: invokeinterface #776,  4          // InterfaceMethod org/apache/logging/log4j/Logger.debug:(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;)V
+     311: aload_1
+     312: areturn
+     313: astore        5
+     315: getstatic     #144                // Field com/guzhenrenlibrary/GuzhenrenLibrary.LOGGER:Lorg/apache/logging/log4j/Logger;
+     318: ldc_w         #959                // String [��פ] �ؽ� {} ʧ�ܣ�{}
+     321: aload_1
+     322: invokevirtual #152                // Method com/guzhenrenlibrary/npc/life/Resident.displayName:()Ljava/lang/String;
+     325: aload         5
+     327: invokevirtual #223                // Method java/lang/RuntimeException.toString:()Ljava/lang/String;
+     330: invokeinterface #243,  4          // InterfaceMethod org/apache/logging/log4j/Logger.warn:(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;)V
+     335: aconst_null
+     336: areturn
+    Exception table:
+       from    to  target type
+          41    68   313   Class java/lang/RuntimeException
+          69   294   313   Class java/lang/RuntimeException
+         295   312   313   Class java/lang/RuntimeException
+
+  public static void applyToEntity(com.guzhenrenlibrary.npc.life.Resident, net.minecraft.world.entity.Mob);
+    Code:
+       0: aload_1
+       1: invokestatic  #96                 // Method com/guzhenrenlibrary/npc/NpcPersonas.zhuanshu:(Lnet/minecraft/world/entity/Entity;)D
+       4: aload_0
+       5: invokevirtual #907                // Method com/guzhenrenlibrary/npc/life/Resident.zhuanshu:()D
+       8: dsub
+       9: invokestatic  #961                // Method java/lang/Math.abs:(D)D
+      12: ldc2_w        #963                // double 0.01d
+      15: dcmpl
+      16: ifle          28
+      19: aload_1
+      20: aload_0
+      21: invokevirtual #907                // Method com/guzhenrenlibrary/npc/life/Resident.zhuanshu:()D
+      24: invokestatic  #909                // Method com/guzhenrenlibrary/npc/NpcPersonas.setZhuanshu:(Lnet/minecraft/world/entity/Entity;D)D
+      27: pop2
+      28: return
+
+  public static void syncFromEntity(com.guzhenrenlibrary.npc.life.Resident, net.minecraft.world.entity.Mob, long);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokevirtual #79                 // Method net/minecraft/world/entity/Mob.level:()Lnet/minecraft/world/level/Level;
+       5: invokevirtual #165                // Method net/minecraft/world/level/Level.dimension:()Lnet/minecraft/resources/ResourceKey;
+       8: invokevirtual #169                // Method net/minecraft/resources/ResourceKey.location:()Lnet/minecraft/resources/ResourceLocation;
+      11: invokevirtual #965                // Method net/minecraft/resources/ResourceLocation.toString:()Ljava/lang/String;
+      14: aload_1
+      15: invokevirtual #116                // Method net/minecraft/world/entity/Mob.getX:()D
+      18: aload_1
+      19: invokevirtual #966                // Method net/minecraft/world/entity/Mob.getY:()D
+      22: aload_1
+      23: invokevirtual #120                // Method net/minecraft/world/entity/Mob.getZ:()D
+      26: lload_2
+      27: invokevirtual #968                // Method com/guzhenrenlibrary/npc/life/Resident.at:(Ljava/lang/String;DDDJ)V
+      30: aload_0
+      31: aload_1
+      32: invokestatic  #804                // Method com/guzhenrenlibrary/npc/NpcPersonas.persona:(Lnet/minecraft/world/entity/Entity;)Lcom/guzhenrenlibrary/npc/NpcPersona;
+      35: invokevirtual #972                // Method com/guzhenrenlibrary/npc/life/Resident.setPersona:(Lcom/guzhenrenlibrary/npc/NpcPersona;)V
+      38: aload_1
+      39: invokestatic  #975                // Method com/guzhenrenlibrary/npc/combat/NpcCombatData.inventory:(Lnet/minecraft/world/entity/Mob;)Lcom/guzhenrenlibrary/npc/combat/NpcInventory;
+      42: astore        4
+      44: new           #662                // class java/util/ArrayList
+      47: dup
+      48: invokespecial #981                // Method java/util/ArrayList."<init>":()V
+      51: astore        5
+      53: aload         4
+      55: invokevirtual #982                // Method com/guzhenrenlibrary/npc/combat/NpcInventory.guChongList:()Ljava/util/List;
+      58: invokeinterface #181,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+      63: astore        6
+      65: aload         6
+      67: invokeinterface #187,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+      72: ifeq          134
+      75: aload         6
+      77: invokeinterface #192,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      82: checkcast     #987                // class net/minecraft/world/item/ItemStack
+      85: astore        7
+      87: aload         7
+      89: invokevirtual #989                // Method net/minecraft/world/item/ItemStack.isEmpty:()Z
+      92: ifeq          98
+      95: goto          65
+      98: getstatic     #990                // Field net/minecraft/core/registries/BuiltInRegistries.ITEM:Lnet/minecraft/core/DefaultedRegistry;
+     101: aload         7
+     103: invokevirtual #993                // Method net/minecraft/world/item/ItemStack.getItem:()Lnet/minecraft/world/item/Item;
+     106: invokeinterface #997,  2          // InterfaceMethod net/minecraft/core/DefaultedRegistry.getKey:(Ljava/lang/Object;)Lnet/minecraft/resources/ResourceLocation;
+     111: astore        8
+     113: aload         8
+     115: ifnull        131
+     118: aload         5
+     120: aload         8
+     122: invokevirtual #965                // Method net/minecraft/resources/ResourceLocation.toString:()Ljava/lang/String;
+     125: invokeinterface #725,  2          // InterfaceMethod java/util/List.add:(Ljava/lang/Object;)Z
+     130: pop
+     131: goto          65
+     134: aload         5
+     136: invokeinterface #181,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+     141: astore        6
+     143: aload         6
+     145: invokeinterface #187,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+     150: ifeq          187
+     153: aload         6
+     155: invokeinterface #192,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     160: checkcast     #601                // class java/lang/String
+     163: astore        7
+     165: aload_0
+     166: aload         7
+     168: invokevirtual #739                // Method com/guzhenrenlibrary/npc/life/Resident.rememberGu:(Ljava/lang/String;)V
+     171: aload_0
+     172: aload         7
+     174: invokevirtual #1001               // Method com/guzhenrenlibrary/npc/life/Resident.grantGu:(Ljava/lang/String;)Z
+     177: pop
+     178: aload_1
+     179: aload         7
+     181: invokestatic  #935                // Method markGuGranted:(Lnet/minecraft/world/entity/Mob;Ljava/lang/String;)V
+     184: goto          143
+     187: aload_0
+     188: invokevirtual #538                // Method com/guzhenrenlibrary/npc/life/Resident.gu:()Ljava/util/List;
+     191: invokeinterface #181,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+     196: astore        6
+     198: aload         6
+     200: invokeinterface #187,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+     205: ifeq          241
+     208: aload         6
+     210: invokeinterface #192,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     215: checkcast     #601                // class java/lang/String
+     218: astore        7
+     220: aload         5
+     222: aload         7
+     224: invokeinterface #1004,  2         // InterfaceMethod java/util/List.contains:(Ljava/lang/Object;)Z
+     229: ifne          238
+     232: aload_0
+     233: aload         7
+     235: invokevirtual #1006               // Method com/guzhenrenlibrary/npc/life/Resident.forgetGu:(Ljava/lang/String;)V
+     238: goto          198
+     241: return
+
+  public static net.minecraft.world.entity.Mob findLive(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.npc.life.Resident);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokestatic  #816                // Method dimensionOf:(Lnet/minecraft/server/level/ServerLevel;Lcom/guzhenrenlibrary/npc/life/Resident;)Lnet/minecraft/server/level/ServerLevel;
+       5: astore_2
+       6: aload_2
+       7: ifnonnull     12
+      10: aconst_null
+      11: areturn
+      12: aload_2
+      13: aload_1
+      14: invokevirtual #427                // Method com/guzhenrenlibrary/npc/life/Resident.npcId:()Ljava/util/UUID;
+      17: invokevirtual #1009               // Method net/minecraft/server/level/ServerLevel.getEntity:(Ljava/util/UUID;)Lnet/minecraft/world/entity/Entity;
+      20: astore_3
+      21: aload_3
+      22: instanceof    #71                 // class net/minecraft/world/entity/Mob
+      25: ifeq          47
+      28: aload_3
+      29: checkcast     #71                 // class net/minecraft/world/entity/Mob
+      32: astore        4
+      34: aload         4
+      36: invokevirtual #712                // Method net/minecraft/world/entity/Mob.isAlive:()Z
+      39: ifeq          47
+      42: aload         4
+      44: goto          48
+      47: aconst_null
+      48: areturn
+
+  private static net.minecraft.server.level.ServerLevel dimensionOf(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.npc.life.Resident);
+    Code:
+       0: aload_1
+       1: invokevirtual #598                // Method com/guzhenrenlibrary/npc/life/Resident.dimension:()Ljava/lang/String;
+       4: ifnull        17
+       7: aload_1
+       8: invokevirtual #598                // Method com/guzhenrenlibrary/npc/life/Resident.dimension:()Ljava/lang/String;
+      11: invokevirtual #815                // Method java/lang/String.isEmpty:()Z
+      14: ifeq          19
+      17: aload_0
+      18: areturn
+      19: aload_1
+      20: invokevirtual #598                // Method com/guzhenrenlibrary/npc/life/Resident.dimension:()Ljava/lang/String;
+      23: invokestatic  #1013               // Method net/minecraft/resources/ResourceLocation.tryParse:(Ljava/lang/String;)Lnet/minecraft/resources/ResourceLocation;
+      26: astore_2
+      27: aload_2
+      28: ifnull        38
+      31: aload_0
+      32: invokevirtual #28                 // Method net/minecraft/server/level/ServerLevel.getServer:()Lnet/minecraft/server/MinecraftServer;
+      35: ifnonnull     40
+      38: aload_0
+      39: areturn
+      40: aload_0
+      41: invokevirtual #28                 // Method net/minecraft/server/level/ServerLevel.getServer:()Lnet/minecraft/server/MinecraftServer;
+      44: getstatic     #1017               // Field net/minecraft/core/registries/Registries.DIMENSION:Lnet/minecraft/resources/ResourceKey;
+      47: aload_2
+      48: invokestatic  #1023               // Method net/minecraft/resources/ResourceKey.create:(Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/resources/ResourceKey;
+      51: invokevirtual #1026               // Method net/minecraft/server/MinecraftServer.getLevel:(Lnet/minecraft/resources/ResourceKey;)Lnet/minecraft/server/level/ServerLevel;
+      54: astore_3
+      55: aload_3
+      56: ifnonnull     63
+      59: aload_0
+      60: goto          64
+      63: aload_3
+      64: areturn
+
+  private static boolean hasPlayerNear(net.minecraft.server.level.ServerLevel, double, double, double, double);
+    Code:
+       0: aload_0
+       1: invokevirtual #1030               // Method net/minecraft/server/level/ServerLevel.players:()Ljava/util/List;
+       4: invokeinterface #181,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+       9: astore        9
+      11: aload         9
+      13: invokeinterface #187,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+      18: ifeq          56
+      21: aload         9
+      23: invokeinterface #192,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      28: checkcast     #1033               // class net/minecraft/server/level/ServerPlayer
+      31: astore        10
+      33: aload         10
+      35: dload_1
+      36: dload_3
+      37: dload         5
+      39: invokevirtual #1035               // Method net/minecraft/server/level/ServerPlayer.distanceToSqr:(DDD)D
+      42: dload         7
+      44: dload         7
+      46: dmul
+      47: dcmpg
+      48: ifgt          53
+      51: iconst_1
+      52: ireturn
+      53: goto          11
+      56: iconst_0
+      57: ireturn
+
+  public static void ambientTick(net.minecraft.world.entity.Mob);
+    Code:
+       0: aload_0
+       1: invokevirtual #79                 // Method net/minecraft/world/entity/Mob.level:()Lnet/minecraft/world/level/Level;
+       4: invokevirtual #80                 // Method net/minecraft/world/level/Level.isClientSide:()Z
+       7: ifeq          11
+      10: return
+      11: aload_0
+      12: invokevirtual #100                // Method net/minecraft/world/entity/Mob.getUUID:()Ljava/util/UUID;
+      15: astore_1
+      16: getstatic     #1038               // Field HELD:Ljava/util/Set;
+      19: aload_1
+      20: invokeinterface #1042,  2         // InterfaceMethod java/util/Set.contains:(Ljava/lang/Object;)Z
+      25: ifne          36
+      28: aload_0
+      29: invokestatic  #73                 // Method com/guzhenrenlibrary/npc/NpcFilter.isNpc:(Lnet/minecraft/world/entity/Entity;)Z
+      32: ifne          36
+      35: return
+      36: aload_0
+      37: invokevirtual #79                 // Method net/minecraft/world/entity/Mob.level:()Lnet/minecraft/world/level/Level;
+      40: astore_3
+      41: aload_3
+      42: instanceof    #23                 // class net/minecraft/server/level/ServerLevel
+      45: ifeq          56
+      48: aload_3
+      49: checkcast     #23                 // class net/minecraft/server/level/ServerLevel
+      52: astore_2
+      53: goto          57
+      56: return
+      57: aload_0
+      58: invokestatic  #680                // Method residentOf:(Lnet/minecraft/world/entity/Entity;)Lcom/guzhenrenlibrary/npc/life/Resident;
+      61: astore_3
+      62: aload_3
+      63: ifnull        109
+      66: aload_3
+      67: invokevirtual #62                 // Method com/guzhenrenlibrary/npc/life/Resident.state:()Lcom/guzhenrenlibrary/npc/life/Resident$State;
+      70: getstatic     #290                // Field com/guzhenrenlibrary/npc/life/Resident$State.CULTIVATING:Lcom/guzhenrenlibrary/npc/life/Resident$State;
+      73: if_acmpne     109
+      76: aload_1
+      77: invokestatic  #1045               // Method com/guzhenrenlibrary/dialogue/DialogueManager.isAnchored:(Ljava/util/UUID;)Z
+      80: ifne          109
+      83: aload_2
+      84: aload_0
+      85: invokevirtual #116                // Method net/minecraft/world/entity/Mob.getX:()D
+      88: aload_0
+      89: invokevirtual #966                // Method net/minecraft/world/entity/Mob.getY:()D
+      92: aload_0
+      93: invokevirtual #120                // Method net/minecraft/world/entity/Mob.getZ:()D
+      96: ldc2_w        #1050               // double 48.0d
+      99: invokestatic  #843                // Method hasPlayerNear:(Lnet/minecraft/server/level/ServerLevel;DDDD)Z
+     102: ifeq          109
+     105: iconst_1
+     106: goto          110
+     109: iconst_0
+     110: istore        4
+     112: iload         4
+     114: ifeq          171
+     117: aload_0
+     118: invokestatic  #1052               // Method hold:(Lnet/minecraft/world/entity/Mob;)V
+     121: aload_0
+     122: getfield      #1055               // Field net/minecraft/world/entity/Mob.tickCount:I
+     125: bipush        20
+     127: irem
+     128: ifne          187
+     131: aload_2
+     132: getstatic     #1059               // Field net/minecraft/core/particles/ParticleTypes.ENCHANT:Lnet/minecraft/core/particles/SimpleParticleType;
+     135: aload_0
+     136: invokevirtual #116                // Method net/minecraft/world/entity/Mob.getX:()D
+     139: aload_0
+     140: invokevirtual #966                // Method net/minecraft/world/entity/Mob.getY:()D
+     143: ldc2_w        #1065               // double 1.1d
+     146: dadd
+     147: aload_0
+     148: invokevirtual #120                // Method net/minecraft/world/entity/Mob.getZ:()D
+     151: iconst_3
+     152: ldc2_w        #1067               // double 0.35d
+     155: ldc2_w        #1067               // double 0.35d
+     158: ldc2_w        #1067               // double 0.35d
+     161: ldc2_w        #1069               // double 0.02d
+     164: invokevirtual #1071               // Method net/minecraft/server/level/ServerLevel.sendParticles:(Lnet/minecraft/core/particles/ParticleOptions;DDDIDDDD)I
+     167: pop
+     168: goto          187
+     171: getstatic     #1038               // Field HELD:Ljava/util/Set;
+     174: aload_1
+     175: invokeinterface #1042,  2         // InterfaceMethod java/util/Set.contains:(Ljava/lang/Object;)Z
+     180: ifeq          187
+     183: aload_0
+     184: invokestatic  #268                // Method release:(Lnet/minecraft/world/entity/Mob;)V
+     187: return
+
+  private static void hold(net.minecraft.world.entity.Mob);
+    Code:
+       0: aload_0
+       1: getfield      #1075               // Field net/minecraft/world/entity/Mob.goalSelector:Lnet/minecraft/world/entity/ai/goal/GoalSelector;
+       4: getstatic     #1079               // Field net/minecraft/world/entity/ai/goal/Goal$Flag.MOVE:Lnet/minecraft/world/entity/ai/goal/Goal$Flag;
+       7: invokevirtual #1085               // Method net/minecraft/world/entity/ai/goal/GoalSelector.disableControlFlag:(Lnet/minecraft/world/entity/ai/goal/Goal$Flag;)V
+      10: aload_0
+      11: invokevirtual #1091               // Method net/minecraft/world/entity/Mob.getNavigation:()Lnet/minecraft/world/entity/ai/navigation/PathNavigation;
+      14: invokevirtual #1095               // Method net/minecraft/world/entity/ai/navigation/PathNavigation.stop:()V
+      17: aload_0
+      18: invokevirtual #1100               // Method net/minecraft/world/entity/Mob.getDeltaMovement:()Lnet/minecraft/world/phys/Vec3;
+      21: astore_1
+      22: aload_1
+      23: getfield      #1104               // Field net/minecraft/world/phys/Vec3.x:D
+      26: dconst_0
+      27: dcmpl
+      28: ifne          40
+      31: aload_1
+      32: getfield      #1109               // Field net/minecraft/world/phys/Vec3.z:D
+      35: dconst_0
+      36: dcmpl
+      37: ifeq          50
+      40: aload_0
+      41: dconst_0
+      42: aload_1
+      43: getfield      #1111               // Field net/minecraft/world/phys/Vec3.y:D
+      46: dconst_0
+      47: invokevirtual #1113               // Method net/minecraft/world/entity/Mob.setDeltaMovement:(DDD)V
+      50: getstatic     #1038               // Field HELD:Ljava/util/Set;
+      53: aload_0
+      54: invokevirtual #100                // Method net/minecraft/world/entity/Mob.getUUID:()Ljava/util/UUID;
+      57: invokeinterface #1116,  2         // InterfaceMethod java/util/Set.add:(Ljava/lang/Object;)Z
+      62: pop
+      63: return
+
+  private static void release(net.minecraft.world.entity.Mob);
+    Code:
+       0: getstatic     #1038               // Field HELD:Ljava/util/Set;
+       3: aload_0
+       4: invokevirtual #100                // Method net/minecraft/world/entity/Mob.getUUID:()Ljava/util/UUID;
+       7: invokeinterface #1117,  2         // InterfaceMethod java/util/Set.remove:(Ljava/lang/Object;)Z
+      12: ifeq          25
+      15: aload_0
+      16: getfield      #1075               // Field net/minecraft/world/entity/Mob.goalSelector:Lnet/minecraft/world/entity/ai/goal/GoalSelector;
+      19: getstatic     #1079               // Field net/minecraft/world/entity/ai/goal/Goal$Flag.MOVE:Lnet/minecraft/world/entity/ai/goal/Goal$Flag;
+      22: invokevirtual #1120               // Method net/minecraft/world/entity/ai/goal/GoalSelector.enableControlFlag:(Lnet/minecraft/world/entity/ai/goal/Goal$Flag;)V
+      25: return
+
+  public static boolean heldForCultivation(java.util.UUID);
+    Code:
+       0: getstatic     #1038               // Field HELD:Ljava/util/Set;
+       3: aload_0
+       4: invokeinterface #1042,  2         // InterfaceMethod java/util/Set.contains:(Ljava/lang/Object;)Z
+       9: ireturn
+
+  public static boolean wantsToSpeak(net.minecraft.server.level.ServerPlayer, net.minecraft.world.entity.Mob);
+    Code:
+       0: aload_0
+       1: ifnull        8
+       4: aload_1
+       5: ifnonnull     10
+       8: iconst_0
+       9: ireturn
+      10: getstatic     #1123               // Field LAST_SPOKE:Ljava/util/Map;
+      13: aload_1
+      14: invokevirtual #100                // Method net/minecraft/world/entity/Mob.getUUID:()Ljava/util/UUID;
+      17: invokeinterface #1127,  2         // InterfaceMethod java/util/Map.get:(Ljava/lang/Object;)Ljava/lang/Object;
+      22: checkcast     #1132               // class java/lang/Long
+      25: astore_2
+      26: aload_1
+      27: invokevirtual #79                 // Method net/minecraft/world/entity/Mob.level:()Lnet/minecraft/world/level/Level;
+      30: invokevirtual #735                // Method net/minecraft/world/level/Level.getGameTime:()J
+      33: lstore_3
+      34: aload_2
+      35: ifnull        53
+      38: lload_3
+      39: aload_2
+      40: invokevirtual #1134               // Method java/lang/Long.longValue:()J
+      43: lsub
+      44: ldc2_w        #533                // long 1200l
+      47: lcmp
+      48: ifge          53
+      51: iconst_0
+      52: ireturn
+      53: aload_0
+      54: aload_1
+      55: invokestatic  #1137               // Method com/guzhenrenlibrary/quest/NpcErrands.hasAnythingToSay:(Lnet/minecraft/server/level/ServerPlayer;Lnet/minecraft/world/entity/Entity;)Z
+      58: ireturn
+
+  public static void speakTo(net.minecraft.server.level.ServerPlayer, net.minecraft.world.entity.Mob);
+    Code:
+       0: aload_1
+       1: invokestatic  #680                // Method residentOf:(Lnet/minecraft/world/entity/Entity;)Lcom/guzhenrenlibrary/npc/life/Resident;
+       4: astore_2
+       5: aload_2
+       6: ifnull        16
+       9: aload_2
+      10: invokevirtual #152                // Method com/guzhenrenlibrary/npc/life/Resident.displayName:()Ljava/lang/String;
+      13: goto          23
+      16: aload_1
+      17: invokestatic  #804                // Method com/guzhenrenlibrary/npc/NpcPersonas.persona:(Lnet/minecraft/world/entity/Entity;)Lcom/guzhenrenlibrary/npc/NpcPersona;
+      20: invokevirtual #806                // Method com/guzhenrenlibrary/npc/NpcPersona.displayName:()Ljava/lang/String;
+      23: astore_3
+      24: getstatic     #1123               // Field LAST_SPOKE:Ljava/util/Map;
+      27: aload_1
+      28: invokevirtual #100                // Method net/minecraft/world/entity/Mob.getUUID:()Ljava/util/UUID;
+      31: aload_1
+      32: invokevirtual #79                 // Method net/minecraft/world/entity/Mob.level:()Lnet/minecraft/world/level/Level;
+      35: invokevirtual #735                // Method net/minecraft/world/level/Level.getGameTime:()J
+      38: invokestatic  #1143               // Method java/lang/Long.valueOf:(J)Ljava/lang/Long;
+      41: invokeinterface #1146,  3         // InterfaceMethod java/util/Map.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+      46: pop
+      47: aload_0
+      48: aload_3
+      49: invokedynamic #1150,  0           // InvokeDynamic #23:makeConcatWithConstants:(Ljava/lang/String;)Ljava/lang/String;
+      54: invokestatic  #1151               // InterfaceMethod net/minecraft/network/chat/Component.literal:(Ljava/lang/String;)Lnet/minecraft/network/chat/MutableComponent;
+      57: iconst_0
+      58: invokevirtual #1157               // Method net/minecraft/server/level/ServerPlayer.displayClientMessage:(Lnet/minecraft/network/chat/Component;Z)V
+      61: return
+
+  public static long lastSpokeAt(java.util.UUID);
+    Code:
+       0: getstatic     #1123               // Field LAST_SPOKE:Ljava/util/Map;
+       3: aload_0
+       4: invokeinterface #1127,  2         // InterfaceMethod java/util/Map.get:(Ljava/lang/Object;)Ljava/lang/Object;
+       9: checkcast     #1132               // class java/lang/Long
+      12: astore_1
+      13: aload_1
+      14: ifnonnull     23
+      17: ldc2_w        #1161               // long -1l
+      20: goto          27
+      23: aload_1
+      24: invokevirtual #1134               // Method java/lang/Long.longValue:()J
+      27: lreturn
+
+  private static int between(java.util.Random, int, int);
+    Code:
+       0: iload_2
+       1: iload_1
+       2: if_icmpgt     7
+       5: iload_1
+       6: ireturn
+       7: iload_1
+       8: aload_0
+       9: iload_2
+      10: iload_1
+      11: isub
+      12: iconst_1
+      13: iadd
+      14: invokevirtual #499                // Method java/util/Random.nextInt:(I)I
+      17: iadd
+      18: ireturn
+
+  public static java.lang.String pickGu(int);
+    Code:
+       0: iconst_1
+       1: iconst_5
+       2: iload_0
+       3: invokestatic  #1163               // Method java/lang/Math.min:(II)I
+       6: invokestatic  #1165               // Method java/lang/Math.max:(II)I
+       9: istore_1
+      10: getstatic     #1167               // Field net/minecraft/core/registries/Registries.ITEM:Lnet/minecraft/resources/ResourceKey;
+      13: ldc_w         #867                // String guzhenren
+      16: iload_1
+      17: invokedynamic #1169,  0           // InvokeDynamic #24:makeConcatWithConstants:(I)Ljava/lang/String;
+      22: invokestatic  #871                // Method net/minecraft/resources/ResourceLocation.fromNamespaceAndPath:(Ljava/lang/String;Ljava/lang/String;)Lnet/minecraft/resources/ResourceLocation;
+      25: invokestatic  #1171               // Method net/minecraft/tags/TagKey.create:(Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/tags/TagKey;
+      28: astore_2
+      29: getstatic     #990                // Field net/minecraft/core/registries/BuiltInRegistries.ITEM:Lnet/minecraft/core/DefaultedRegistry;
+      32: aload_2
+      33: invokeinterface #1176,  2         // InterfaceMethod net/minecraft/core/DefaultedRegistry.getTag:(Lnet/minecraft/tags/TagKey;)Ljava/util/Optional;
+      38: invokedynamic #1180,  0           // InvokeDynamic #25:apply:()Ljava/util/function/Function;
+      43: invokevirtual #1184               // Method java/util/Optional.map:(Ljava/util/function/Function;)Ljava/util/Optional;
+      46: invokestatic  #718                // InterfaceMethod java/util/List.of:()Ljava/util/List;
+      49: invokevirtual #1190               // Method java/util/Optional.orElse:(Ljava/lang/Object;)Ljava/lang/Object;
+      52: checkcast     #182                // class java/util/List
+      55: astore_3
+      56: goto          63
+      59: astore        4
+      61: aconst_null
+      62: areturn
+      63: aload_3
+      64: invokeinterface #329,  1          // InterfaceMethod java/util/List.isEmpty:()Z
+      69: ifeq          74
+      72: aconst_null
+      73: areturn
+      74: aload_3
+      75: getstatic     #301                // Field RANDOM:Ljava/util/Random;
+      78: aload_3
+      79: invokeinterface #541,  1          // InterfaceMethod java/util/List.size:()I
+      84: invokevirtual #499                // Method java/util/Random.nextInt:(I)I
+      87: invokeinterface #667,  2          // InterfaceMethod java/util/List.get:(I)Ljava/lang/Object;
+      92: checkcast     #1193               // class net/minecraft/world/item/Item
+      95: astore        4
+      97: getstatic     #990                // Field net/minecraft/core/registries/BuiltInRegistries.ITEM:Lnet/minecraft/core/DefaultedRegistry;
+     100: aload         4
+     102: invokeinterface #997,  2          // InterfaceMethod net/minecraft/core/DefaultedRegistry.getKey:(Ljava/lang/Object;)Lnet/minecraft/resources/ResourceLocation;
+     107: astore        5
+     109: aload         5
+     111: ifnonnull     118
+     114: aconst_null
+     115: goto          123
+     118: aload         5
+     120: invokevirtual #965                // Method net/minecraft/resources/ResourceLocation.toString:()Ljava/lang/String;
+     123: areturn
+    Exception table:
+       from    to  target type
+          29    56    59   Class java/lang/RuntimeException
+
+  private static void giveRealGu(net.minecraft.world.entity.Mob, java.lang.String);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: iconst_0
+       3: invokestatic  #950                // Method giveRealGu:(Lnet/minecraft/world/entity/Mob;Ljava/lang/String;Z)Z
+       6: pop
+       7: return
+
+  private static boolean giveRealGu(net.minecraft.world.entity.Mob, java.lang.String, boolean);
+    Code:
+       0: aload_1
+       1: invokestatic  #1013               // Method net/minecraft/resources/ResourceLocation.tryParse:(Ljava/lang/String;)Lnet/minecraft/resources/ResourceLocation;
+       4: astore_3
+       5: aload_3
+       6: ifnonnull     11
+       9: iconst_0
+      10: ireturn
+      11: getstatic     #990                // Field net/minecraft/core/registries/BuiltInRegistries.ITEM:Lnet/minecraft/core/DefaultedRegistry;
+      14: aload_3
+      15: invokeinterface #877,  2          // InterfaceMethod net/minecraft/core/DefaultedRegistry.get:(Lnet/minecraft/resources/ResourceLocation;)Ljava/lang/Object;
+      20: checkcast     #1193               // class net/minecraft/world/item/Item
+      23: astore        4
+      25: aload         4
+      27: ifnull        38
+      30: aload         4
+      32: getstatic     #1195               // Field net/minecraft/world/item/Items.AIR:Lnet/minecraft/world/item/Item;
+      35: if_acmpne     40
+      38: iconst_0
+      39: ireturn
+      40: iload_2
+      41: ifne          54
+      44: aload_0
+      45: aload_1
+      46: invokestatic  #1201               // Method isGuGranted:(Lnet/minecraft/world/entity/Mob;Ljava/lang/String;)Z
+      49: ifeq          54
+      52: iconst_0
+      53: ireturn
+      54: iload_2
+      55: ifne          68
+      58: aload_0
+      59: invokestatic  #1205               // Method guGrantedCount:(Lnet/minecraft/world/entity/Mob;)I
+      62: iconst_2
+      63: if_icmplt     68
+      66: iconst_0
+      67: ireturn
+      68: aload_0
+      69: invokestatic  #975                // Method com/guzhenrenlibrary/npc/combat/NpcCombatData.inventory:(Lnet/minecraft/world/entity/Mob;)Lcom/guzhenrenlibrary/npc/combat/NpcInventory;
+      72: astore        5
+      74: aload         5
+      76: invokevirtual #982                // Method com/guzhenrenlibrary/npc/combat/NpcInventory.guChongList:()Ljava/util/List;
+      79: invokeinterface #181,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+      84: astore        6
+      86: aload         6
+      88: invokeinterface #187,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+      93: ifeq          136
+      96: aload         6
+      98: invokeinterface #192,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     103: checkcast     #987                // class net/minecraft/world/item/ItemStack
+     106: astore        7
+     108: aload         7
+     110: invokevirtual #989                // Method net/minecraft/world/item/ItemStack.isEmpty:()Z
+     113: ifne          133
+     116: aload         7
+     118: invokevirtual #993                // Method net/minecraft/world/item/ItemStack.getItem:()Lnet/minecraft/world/item/Item;
+     121: aload         4
+     123: if_acmpne     133
+     126: aload_0
+     127: aload_1
+     128: invokestatic  #935                // Method markGuGranted:(Lnet/minecraft/world/entity/Mob;Ljava/lang/String;)V
+     131: iconst_0
+     132: ireturn
+     133: goto          86
+     136: aload         5
+     138: new           #987                // class net/minecraft/world/item/ItemStack
+     141: dup
+     142: aload         4
+     144: invokespecial #1209               // Method net/minecraft/world/item/ItemStack."<init>":(Lnet/minecraft/world/level/ItemLike;)V
+     147: invokevirtual #1212               // Method com/guzhenrenlibrary/npc/combat/NpcInventory.add:(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/item/ItemStack;
+     150: astore        6
+     152: aload         6
+     154: invokevirtual #989                // Method net/minecraft/world/item/ItemStack.isEmpty:()Z
+     157: ifne          162
+     160: iconst_0
+     161: ireturn
+     162: aload_0
+     163: aload_1
+     164: invokestatic  #935                // Method markGuGranted:(Lnet/minecraft/world/entity/Mob;Ljava/lang/String;)V
+     167: aload_0
+     168: getstatic     #1215               // Field com/guzhenrenlibrary/npc/combat/NpcCombatData.INVENTORY:Lnet/neoforged/neoforge/registries/DeferredHolder;
+     171: invokevirtual #1218               // Method net/minecraft/world/entity/Mob.getData:(Ljava/util/function/Supplier;)Ljava/lang/Object;
+     174: checkcast     #1219               // class com/guzhenrenlibrary/npc/combat/NpcCombatData$InventoryData
+     177: invokevirtual #1221               // Method com/guzhenrenlibrary/npc/combat/NpcCombatData$InventoryData.bumpVersion:()V
+     180: iconst_1
+     181: ireturn
+
+  public static java.lang.String guGrantedList(net.minecraft.world.entity.Mob);
+    Code:
+       0: aload_0
+       1: ifnonnull     10
+       4: ldc_w         #743                // String
+       7: goto          20
+      10: aload_0
+      11: invokevirtual #1224               // Method net/minecraft/world/entity/Mob.getPersistentData:()Lnet/minecraft/nbt/CompoundTag;
+      14: ldc_w         #1228               // String gzlib_gu_granted
+      17: invokevirtual #1230               // Method net/minecraft/nbt/CompoundTag.getString:(Ljava/lang/String;)Ljava/lang/String;
+      20: areturn
+
+  public static boolean isGuGranted(net.minecraft.world.entity.Mob, java.lang.String);
+    Code:
+       0: aload_0
+       1: ifnull        15
+       4: aload_1
+       5: ifnull        15
+       8: aload_1
+       9: invokevirtual #757                // Method java/lang/String.isBlank:()Z
+      12: ifeq          17
+      15: iconst_0
+      16: ireturn
+      17: aload_0
+      18: invokestatic  #1235               // Method guGrantedList:(Lnet/minecraft/world/entity/Mob;)Ljava/lang/String;
+      21: ldc_w         #1238               // String ,
+      24: invokevirtual #1240               // Method java/lang/String.split:(Ljava/lang/String;)[Ljava/lang/String;
+      27: astore_2
+      28: aload_2
+      29: arraylength
+      30: istore_3
+      31: iconst_0
+      32: istore        4
+      34: iload         4
+      36: iload_3
+      37: if_icmpge     66
+      40: aload_2
+      41: iload         4
+      43: aaload
+      44: astore        5
+      46: aload         5
+      48: invokevirtual #1244               // Method java/lang/String.trim:()Ljava/lang/String;
+      51: aload_1
+      52: invokevirtual #600                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+      55: ifeq          60
+      58: iconst_1
+      59: ireturn
+      60: iinc          4, 1
+      63: goto          34
+      66: iconst_0
+      67: ireturn
+
+  public static int guGrantedCount(net.minecraft.world.entity.Mob);
+    Code:
+       0: aload_0
+       1: invokestatic  #1235               // Method guGrantedList:(Lnet/minecraft/world/entity/Mob;)Ljava/lang/String;
+       4: astore_1
+       5: aload_1
+       6: invokevirtual #757                // Method java/lang/String.isBlank:()Z
+       9: ifeq          14
+      12: iconst_0
+      13: ireturn
+      14: iconst_0
+      15: istore_2
+      16: aload_1
+      17: ldc_w         #1238               // String ,
+      20: invokevirtual #1240               // Method java/lang/String.split:(Ljava/lang/String;)[Ljava/lang/String;
+      23: astore_3
+      24: aload_3
+      25: arraylength
+      26: istore        4
+      28: iconst_0
+      29: istore        5
+      31: iload         5
+      33: iload         4
+      35: if_icmpge     64
+      38: aload_3
+      39: iload         5
+      41: aaload
+      42: astore        6
+      44: aload         6
+      46: invokevirtual #1244               // Method java/lang/String.trim:()Ljava/lang/String;
+      49: invokevirtual #815                // Method java/lang/String.isEmpty:()Z
+      52: ifne          58
+      55: iinc          2, 1
+      58: iinc          5, 1
+      61: goto          31
+      64: iload_2
+      65: ireturn
+
+  public static void markGuGranted(net.minecraft.world.entity.Mob, java.lang.String);
+    Code:
+       0: aload_0
+       1: ifnull        23
+       4: aload_1
+       5: ifnull        23
+       8: aload_1
+       9: invokevirtual #757                // Method java/lang/String.isBlank:()Z
+      12: ifne          23
+      15: aload_0
+      16: aload_1
+      17: invokestatic  #1201               // Method isGuGranted:(Lnet/minecraft/world/entity/Mob;Ljava/lang/String;)Z
+      20: ifeq          24
+      23: return
+      24: aload_0
+      25: invokestatic  #1235               // Method guGrantedList:(Lnet/minecraft/world/entity/Mob;)Ljava/lang/String;
+      28: astore_2
+      29: aload_0
+      30: invokevirtual #1224               // Method net/minecraft/world/entity/Mob.getPersistentData:()Lnet/minecraft/nbt/CompoundTag;
+      33: ldc_w         #1228               // String gzlib_gu_granted
+      36: aload_2
+      37: invokevirtual #815                // Method java/lang/String.isEmpty:()Z
+      40: ifeq          47
+      43: aload_1
+      44: goto          54
+      47: aload_2
+      48: aload_1
+      49: invokedynamic #1247,  0           // InvokeDynamic #26:makeConcatWithConstants:(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+      54: invokevirtual #1248               // Method net/minecraft/nbt/CompoundTag.putString:(Ljava/lang/String;Ljava/lang/String;)V
+      57: return
+
+  private static com.guzhenrenlibrary.npc.life.Resident findPartnerCandidate(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.npc.life.Resident);
+    Code:
+       0: aload_0
+       1: invokestatic  #44                 // Method registry:(Lnet/minecraft/world/level/Level;)Lcom/guzhenrenlibrary/npc/life/ResidentRegistry;
+       4: astore_2
+       5: aload_2
+       6: invokevirtual #661                // Method com/guzhenrenlibrary/npc/life/ResidentRegistry.size:()I
+       9: iconst_2
+      10: if_icmpge     15
+      13: aconst_null
+      14: areturn
+      15: new           #662                // class java/util/ArrayList
+      18: dup
+      19: aload_2
+      20: invokevirtual #588                // Method com/guzhenrenlibrary/npc/life/ResidentRegistry.all:()Ljava/util/Collection;
+      23: invokespecial #664                // Method java/util/ArrayList."<init>":(Ljava/util/Collection;)V
+      26: astore_3
+      27: getstatic     #301                // Field RANDOM:Ljava/util/Random;
+      30: aload_3
+      31: invokeinterface #541,  1          // InterfaceMethod java/util/List.size:()I
+      36: invokevirtual #499                // Method java/util/Random.nextInt:(I)I
+      39: istore        4
+      41: iconst_0
+      42: istore        5
+      44: iload         5
+      46: aload_3
+      47: invokeinterface #541,  1          // InterfaceMethod java/util/List.size:()I
+      52: if_icmpge     168
+      55: aload_3
+      56: iload         4
+      58: iload         5
+      60: iadd
+      61: aload_3
+      62: invokeinterface #541,  1          // InterfaceMethod java/util/List.size:()I
+      67: irem
+      68: invokeinterface #667,  2          // InterfaceMethod java/util/List.get:(I)Ljava/lang/Object;
+      73: checkcast     #57                 // class com/guzhenrenlibrary/npc/life/Resident
+      76: astore        6
+      78: aload         6
+      80: invokevirtual #427                // Method com/guzhenrenlibrary/npc/life/Resident.npcId:()Ljava/util/UUID;
+      83: aload_1
+      84: invokevirtual #427                // Method com/guzhenrenlibrary/npc/life/Resident.npcId:()Ljava/util/UUID;
+      87: invokevirtual #670                // Method java/util/UUID.equals:(Ljava/lang/Object;)Z
+      90: ifne          162
+      93: aload         6
+      95: invokevirtual #250                // Method com/guzhenrenlibrary/npc/life/Resident.deceased:()Z
+      98: ifne          162
+     101: aload         6
+     103: invokevirtual #325                // Method com/guzhenrenlibrary/npc/life/Resident.partners:()Ljava/util/List;
+     106: invokeinterface #329,  1          // InterfaceMethod java/util/List.isEmpty:()Z
+     111: ifne          117
+     114: goto          162
+     117: aload         6
+     119: invokevirtual #514                // Method com/guzhenrenlibrary/npc/life/Resident.persona:()Lcom/guzhenrenlibrary/npc/NpcPersona;
+     122: invokevirtual #671                // Method com/guzhenrenlibrary/npc/NpcPersona.assigned:()Z
+     125: ifeq          162
+     128: aload_1
+     129: invokevirtual #514                // Method com/guzhenrenlibrary/npc/life/Resident.persona:()Lcom/guzhenrenlibrary/npc/NpcPersona;
+     132: invokevirtual #671                // Method com/guzhenrenlibrary/npc/NpcPersona.assigned:()Z
+     135: ifne          141
+     138: goto          162
+     141: aload         6
+     143: invokevirtual #598                // Method com/guzhenrenlibrary/npc/life/Resident.dimension:()Ljava/lang/String;
+     146: aload_1
+     147: invokevirtual #598                // Method com/guzhenrenlibrary/npc/life/Resident.dimension:()Ljava/lang/String;
+     150: invokevirtual #600                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     153: ifne          159
+     156: goto          162
+     159: aload         6
+     161: areturn
+     162: iinc          5, 1
+     165: goto          44
+     168: aconst_null
+     169: areturn
+
+  public static java.lang.String guName(java.lang.String);
+    Code:
+       0: aload_0
+       1: invokestatic  #1252               // Method stackOf:(Ljava/lang/String;)Lnet/minecraft/world/item/ItemStack;
+       4: astore_1
+       5: aload_1
+       6: invokevirtual #989                // Method net/minecraft/world/item/ItemStack.isEmpty:()Z
+       9: ifne          22
+      12: aload_1
+      13: invokevirtual #1256               // Method net/minecraft/world/item/ItemStack.getHoverName:()Lnet/minecraft/network/chat/Component;
+      16: invokeinterface #1260,  1         // InterfaceMethod net/minecraft/network/chat/Component.getString:()Ljava/lang/String;
+      21: areturn
+      22: aload_0
+      23: bipush        58
+      25: invokevirtual #1262               // Method java/lang/String.indexOf:(I)I
+      28: istore_2
+      29: iload_2
+      30: ifge          37
+      33: aload_0
+      34: goto          44
+      37: aload_0
+      38: iload_2
+      39: iconst_1
+      40: iadd
+      41: invokevirtual #1265               // Method java/lang/String.substring:(I)Ljava/lang/String;
+      44: areturn
+
+  public static net.minecraft.world.item.ItemStack stackOf(java.lang.String);
+    Code:
+       0: aload_0
+       1: invokestatic  #1013               // Method net/minecraft/resources/ResourceLocation.tryParse:(Ljava/lang/String;)Lnet/minecraft/resources/ResourceLocation;
+       4: astore_1
+       5: aload_1
+       6: ifnonnull     13
+       9: getstatic     #1268               // Field net/minecraft/world/item/ItemStack.EMPTY:Lnet/minecraft/world/item/ItemStack;
+      12: areturn
+      13: getstatic     #990                // Field net/minecraft/core/registries/BuiltInRegistries.ITEM:Lnet/minecraft/core/DefaultedRegistry;
+      16: aload_1
+      17: invokeinterface #877,  2          // InterfaceMethod net/minecraft/core/DefaultedRegistry.get:(Lnet/minecraft/resources/ResourceLocation;)Ljava/lang/Object;
+      22: checkcast     #1193               // class net/minecraft/world/item/Item
+      25: astore_2
+      26: aload_2
+      27: ifnull        37
+      30: aload_2
+      31: getstatic     #1195               // Field net/minecraft/world/item/Items.AIR:Lnet/minecraft/world/item/Item;
+      34: if_acmpne     43
+      37: getstatic     #1268               // Field net/minecraft/world/item/ItemStack.EMPTY:Lnet/minecraft/world/item/ItemStack;
+      40: goto          51
+      43: new           #987                // class net/minecraft/world/item/ItemStack
+      46: dup
+      47: aload_2
+      48: invokespecial #1209               // Method net/minecraft/world/item/ItemStack."<init>":(Lnet/minecraft/world/level/ItemLike;)V
+      51: areturn
+
+  public static java.lang.String zhuanshuName(int);
+    Code:
+       0: iconst_5
+       1: anewarray     #601                // class java/lang/String
+       4: dup
+       5: iconst_0
+       6: ldc_w         #1272               // String һ
+       9: aastore
+      10: dup
+      11: iconst_1
+      12: ldc_w         #1274               // String ��
+      15: aastore
+      16: dup
+      17: iconst_2
+      18: ldc_w         #1276               // String ��
+      21: aastore
+      22: dup
+      23: iconst_3
+      24: ldc_w         #1278               // String ��
+      27: aastore
+      28: dup
+      29: iconst_4
+      30: ldc_w         #1280               // String ��
+      33: aastore
+      34: astore_1
+      35: iload_0
+      36: iconst_1
+      37: if_icmplt     59
+      40: iload_0
+      41: aload_1
+      42: arraylength
+      43: if_icmpgt     59
+      46: aload_1
+      47: iload_0
+      48: iconst_1
+      49: isub
+      50: aaload
+      51: invokedynamic #1282,  0           // InvokeDynamic #27:makeConcatWithConstants:(Ljava/lang/String;)Ljava/lang/String;
+      56: goto          65
+      59: iload_0
+      60: invokedynamic #1283,  0           // InvokeDynamic #27:makeConcatWithConstants:(I)Ljava/lang/String;
+      65: areturn
+
+  public static java.lang.String dimensionName(net.minecraft.world.level.Level);
+    Code:
+       0: aload_0
+       1: invokevirtual #165                // Method net/minecraft/world/level/Level.dimension:()Lnet/minecraft/resources/ResourceKey;
+       4: invokevirtual #169                // Method net/minecraft/resources/ResourceKey.location:()Lnet/minecraft/resources/ResourceLocation;
+       7: invokevirtual #965                // Method net/minecraft/resources/ResourceLocation.toString:()Ljava/lang/String;
+      10: areturn
+
+  public static java.lang.String describeForProbe(net.minecraft.server.level.ServerLevel);
+    Code:
+       0: aload_0
+       1: invokestatic  #44                 // Method registry:(Lnet/minecraft/world/level/Level;)Lcom/guzhenrenlibrary/npc/life/ResidentRegistry;
+       4: astore_1
+       5: aload_1
+       6: invokevirtual #661                // Method com/guzhenrenlibrary/npc/life/ResidentRegistry.size:()I
+       9: aload_1
+      10: invokevirtual #1284               // Method com/guzhenrenlibrary/npc/life/ResidentRegistry.aliveCount:()I
+      13: aload_1
+      14: invokevirtual #1287               // Method com/guzhenrenlibrary/npc/life/ResidentRegistry.cursor:()I
+      17: invokestatic  #1290               // Method com/guzhenrenlibrary/npc/life/ResidentRules.describeForProbe:()Ljava/lang/String;
+      20: invokedynamic #1293,  0           // InvokeDynamic #28:makeConcatWithConstants:(IIILjava/lang/String;)Ljava/lang/String;
+      25: areturn
+
+  private static java.util.List lambda$pickGu$1(net.minecraft.core.HolderSet$Named);
+    Code:
+       0: aload_0
+       1: invokevirtual #1296               // Method net/minecraft/core/HolderSet$Named.stream:()Ljava/util/stream/Stream;
+       4: invokedynamic #1302,  0           // InvokeDynamic #29:apply:()Ljava/util/function/Function;
+       9: invokeinterface #1303,  2         // InterfaceMethod java/util/stream/Stream.map:(Ljava/util/function/Function;)Ljava/util/stream/Stream;
+      14: invokeinterface #1308,  1         // InterfaceMethod java/util/stream/Stream.toList:()Ljava/util/List;
+      19: areturn
+
+  private static net.minecraft.world.item.Item lambda$pickGu$0(net.minecraft.core.Holder);
+    Code:
+       0: aload_0
+       1: invokeinterface #1311,  1         // InterfaceMethod net/minecraft/core/Holder.value:()Ljava/lang/Object;
+       6: checkcast     #1193               // class net/minecraft/world/item/Item
+       9: areturn
+
+  static {};
+    Code:
+       0: invokestatic  #1316               // Method java/util/concurrent/ConcurrentHashMap.newKeySet:()Ljava/util/concurrent/ConcurrentHashMap$KeySetView;
+       3: putstatic     #1038               // Field HELD:Ljava/util/Set;
+       6: new           #1317               // class java/util/concurrent/ConcurrentHashMap
+       9: dup
+      10: invokespecial #1322               // Method java/util/concurrent/ConcurrentHashMap."<init>":()V
+      13: putstatic     #1123               // Field LAST_SPOKE:Ljava/util/Map;
+      16: new           #306                // class java/util/Random
+      19: dup
+      20: ldc2_w        #1323               // long 113754262759778l
+      23: invokespecial #1325               // Method java/util/Random."<init>":(J)V
+      26: putstatic     #301                // Field RANDOM:Ljava/util/Random;
+      29: return
+}

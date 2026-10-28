@@ -1,0 +1,266 @@
+[
+  {
+    "project": "tianfu",
+    "relative": "version.properties",
+    "source": "D:\\daima\\mcmod\\天意\\audit-20261026\\work\\tianfu\\version.properties",
+    "target": "D:\\daima\\mcmod\\蛊真人附属\\version.properties",
+    "before": "0282d9da36b4c557a205d12c71f3b31b4fe9cf919134b0c49be9d7f77b039a6b",
+    "after": "803aa07465ef1dc81babd7531e671afede38b6eaaf7bbfd1fb0704b1621e5d1d"
+  },
+  {
+    "project": "tianfu",
+    "relative": "docs/2026-10-26-bugfix.md",
+    "source": "D:\\daima\\mcmod\\天意\\audit-20261026\\work\\tianfu\\docs\\2026-10-26-bugfix.md",
+    "target": "D:\\daima\\mcmod\\蛊真人附属\\docs\\2026-10-26-bugfix.md",
+    "before": null,
+    "after": "e0085376ea66f85b7233176b957714d30e87cf8651eabe5185b1dfdea6d595b3"
+  },
+  {
+    "project": "tianfu",
+    "relative": "docs/天赋系统介绍文档.md",
+    "source": "D:\\daima\\mcmod\\天意\\audit-20261026\\work\\tianfu\\docs\\天赋系统介绍文档.md",
+    "target": "D:\\daima\\mcmod\\蛊真人附属\\docs\\天赋系统介绍文档.md",
+    "before": "7525b7c6411f99648ac9fcc96b3d212805c9eeaa16476a0c3f5065ba494775ba",
+    "after": "628871d78a6e8caea753aa291a9e42da94b4681fd94fd538d2ad352a4ed619a8"
+  },
+  {
+    "project": "tianfu",
+    "relative": "docs/宣传文档.md",
+    "source": "D:\\daima\\mcmod\\天意\\audit-20261026\\work\\tianfu\\docs\\宣传文档.md",
+    "target": "D:\\daima\\mcmod\\蛊真人附属\\docs\\宣传文档.md",
+    "before": "d994237f188aab34de167d60034262a8d18dc94b36a19e8636f0ec1d162358b6",
+    "after": "97667ae5ddbbfff73797f552dd23cd90a7aef6cfbf850ffe6ee9f22b40a1ac47"
+  },
+  {
+    "project": "tianfu",
+    "relative": "src/main/java/net/guzhenren/tianfu/TianfuCombat.java",
+    "source": "D:\\daima\\mcmod\\天意\\audit-20261026\\work\\tianfu\\src\\main\\java\\net\\guzhenren\\tianfu\\TianfuCombat.java",
+    "target": "D:\\daima\\mcmod\\蛊真人附属\\src\\main\\java\\net\\guzhenren\\tianfu\\TianfuCombat.java",
+    "before": "55f42e1239644056ad96dbc3915cdb59985f7c7212a92f680b3eb1f0ab22b2d2",
+    "after": "a1f127d15bb7f344cf3644107196b35c0a0a61cb36ef3b01cab508d9ca56e75a"
+  },
+  {
+    "project": "tianfu",
+    "relative": "src/main/java/net/guzhenren/tianfu/TianfuEffects.java",
+    "source": "D:\\daima\\mcmod\\天意\\audit-20261026\\work\\tianfu\\src\\main\\java\\net\\guzhenren\\tianfu\\TianfuEffects.java",
+    "target": "D:\\daima\\mcmod\\蛊真人附属\\src\\main\\java\\net\\guzhenren\\tianfu\\TianfuEffects.java",
+    "before": "d61d0ae4a11ffd8a166a2903a564d0df251b7e507e355375caaeeea3e068f31e",
+    "after": "006ecee9a7aa4eda0bb79d5fe32c5b87a99ca6c8d9f8c7fd6155926d310f018b"
+  },
+  {
+    "project": "tianfu",
+    "relative": "src/main/java/net/guzhenren/tianfu/TianfuEvents.java",
+    "source": "D:\\daima\\mcmod\\天意\\audit-20261026\\work\\tianfu\\src\\main\\java\\net\\guzhenren\\tianfu\\TianfuEvents.java",
+    "target": "D:\\daima\\mcmod\\蛊真人附属\\src\\main\\java\\net\\guzhenren\\tianfu\\TianfuEvents.java",
+    "before": "3538cc0b768f33a1adc4d225f314387452137460f2f456a79ef58add2b8afc91",
+    "after": "7914971d6aca9f3b53f368fbbd788b5070c4f8b38b3002d691be4c7abfb13aa4"
+  },
+  {
+    "project": "tianfu",
+    "relative": "src/main/java/net/guzhenren/tianfu/TianfuSlay.java",
+    "source": "D:\\daima\\mcmod\\天意\\audit-20261026\\work\\tianfu\\src\\main\\java\\net\\guzhenren\\tianfu\\TianfuSlay.java",
+    "target": "D:\\daima\\mcmod\\蛊真人附属\\src\\main\\java\\net\\guzhenren\\tianfu\\TianfuSlay.java",
+    "before": "a2cb328cef0433df228feb8e5465b4518c7c3bff034d6ba4c8b195379e337548",
+    "after": "e02553bca22029cfcd8025401d6b6d1b06334f4fbdf157ca1f773fa6257bd934"
+  },
+  {
+    "project": "tianfu",
+    "relative": "src/main/java/net/guzhenren/tianfu/net/TianfuOriginPayload.java",
+    "source": "D:\\daima\\mcmod\\天意\\audit-20261026\\work\\tianfu\\src\\main\\java\\net\\guzhenren\\tianfu\\net\\TianfuOriginPayload.java",
+    "target": "D:\\daima\\mcmod\\蛊真人附属\\src\\main\\java\\net\\guzhenren\\tianfu\\net\\TianfuOriginPayload.java",
+    "before": "61346fc38bd6c7e0afe8ddf9b1547aa157ecaf8192b2604ed467dba38b631364",
+    "after": "c4f957c950af55340e0608727f92bb11540710435626a4b20970833397d1dc4c"
+  },
+  {
+    "project": "tianfu",
+    "relative": "src/main/java/net/guzhenren/tianfu/v2/NeoForge1211Adapter.java",
+    "source": "D:\\daima\\mcmod\\天意\\audit-20261026\\work\\tianfu\\src\\main\\java\\net\\guzhenren\\tianfu\\v2\\NeoForge1211Adapter.java",
+    "target": "D:\\daima\\mcmod\\蛊真人附属\\src\\main\\java\\net\\guzhenren\\tianfu\\v2\\NeoForge1211Adapter.java",
+    "before": "d4d25fef3138966ce27cd5590ddd993ffca59df85e9b214111e2ea3a3e84d714",
+    "after": "73a0d2360e7a0a5f48da073e6931fd7dbd615f6829c33dec8d161b9a8977726a"
+  },
+  {
+    "project": "tianfu",
+    "relative": "src/main/java/net/guzhenren/tianfu/v2/TianfuEconomy.java",
+    "source": "D:\\daima\\mcmod\\天意\\audit-20261026\\work\\tianfu\\src\\main\\java\\net\\guzhenren\\tianfu\\v2\\TianfuEconomy.java",
+    "target": "D:\\daima\\mcmod\\蛊真人附属\\src\\main\\java\\net\\guzhenren\\tianfu\\v2\\TianfuEconomy.java",
+    "before": "4beebc38a9da0e4a86dbca97c36b14014dcdd9d51c10c4e3962bb48026b6d7b7",
+    "after": "af94707c27de89029a48b9294f0d56014f2027d8ba5de2761d4b0ab8967029e0"
+  },
+  {
+    "project": "tianfu",
+    "relative": "src/main/java/net/guzhenren/tianfu/v2/TianfuV2Store.java",
+    "source": "D:\\daima\\mcmod\\天意\\audit-20261026\\work\\tianfu\\src\\main\\java\\net\\guzhenren\\tianfu\\v2\\TianfuV2Store.java",
+    "target": "D:\\daima\\mcmod\\蛊真人附属\\src\\main\\java\\net\\guzhenren\\tianfu\\v2\\TianfuV2Store.java",
+    "before": "992c1c096924201223fab702c19e1aa8ab5f2a996e61288a0eea1ee30f52d5b4",
+    "after": "537727304f0ec955926c62cf22a6ae918fc36e13f1241dd4fecb0a341ea96042"
+  },
+  {
+    "project": "tianfu",
+    "relative": "src/main/resources/META-INF/neoforge.mods.toml",
+    "source": "D:\\daima\\mcmod\\天意\\audit-20261026\\work\\tianfu\\src\\main\\resources\\META-INF\\neoforge.mods.toml",
+    "target": "D:\\daima\\mcmod\\蛊真人附属\\src\\main\\resources\\META-INF\\neoforge.mods.toml",
+    "before": "1d55a33f25b78aa7faca847332b5bdd4d0e0cdf2a3db0da95ad6a0e8f4467f90",
+    "after": "40ae220e74becfbdb1fd88fbab41dbf65e68d01cc4e925d61807a5647f54ce9b"
+  },
+  {
+    "project": "tianfu",
+    "relative": "build/libs/tianfu-1.3.5.jar",
+    "source": "D:\\daima\\mcmod\\天意\\audit-20261026\\release\\tianfu-1.3.5.jar",
+    "target": "D:\\daima\\mcmod\\蛊真人附属\\build\\libs\\tianfu-1.3.5.jar",
+    "before": null,
+    "after": "54f9c3664c464d3af6a09d6d82aa51ff2e160a145506b864c051bc93d435cbdb"
+  },
+  {
+    "project": "daotu",
+    "relative": "version.properties",
+    "source": "D:\\daima\\mcmod\\天意\\audit-20261026\\work\\daotu\\version.properties",
+    "target": "D:\\daima\\mcmod\\道途附属\\version.properties",
+    "before": "45a0831ae7a07e98541d090d739d55045c5ffa060e6fed971aee4aa9ab0a7676",
+    "after": "952babebcb79f856b19c14e519ad58b2437095d25fa4ce2b55c7fd540456f0d0"
+  },
+  {
+    "project": "daotu",
+    "relative": "docs/2026-10-26-bugfix.md",
+    "source": "D:\\daima\\mcmod\\天意\\audit-20261026\\work\\daotu\\docs\\2026-10-26-bugfix.md",
+    "target": "D:\\daima\\mcmod\\道途附属\\docs\\2026-10-26-bugfix.md",
+    "before": null,
+    "after": "0fbd2fa7fa2a553862ec4c551d80b58d8385da258a9e527c500e53224378ce08"
+  },
+  {
+    "project": "daotu",
+    "relative": "src/main/java/net/guzhenren/daotu/DaotuDraw.java",
+    "source": "D:\\daima\\mcmod\\天意\\audit-20261026\\work\\daotu\\src\\main\\java\\net\\guzhenren\\daotu\\DaotuDraw.java",
+    "target": "D:\\daima\\mcmod\\道途附属\\src\\main\\java\\net\\guzhenren\\daotu\\DaotuDraw.java",
+    "before": "6c821f3324585c49b8d10409ea912da6fbcc851e38d3b017347c9960ea7064ff",
+    "after": "b64cb8bbda506c1df189857df5854988631ad3587e3929285eaa38ddd484327e"
+  },
+  {
+    "project": "daotu",
+    "relative": "src/main/java/net/guzhenren/daotu/DaotuLiLian.java",
+    "source": "D:\\daima\\mcmod\\天意\\audit-20261026\\work\\daotu\\src\\main\\java\\net\\guzhenren\\daotu\\DaotuLiLian.java",
+    "target": "D:\\daima\\mcmod\\道途附属\\src\\main\\java\\net\\guzhenren\\daotu\\DaotuLiLian.java",
+    "before": "67f24cfa4412857e9c436c9dff1a3177b2e4db6e45b4facdf8c40fa120d28856",
+    "after": "4b18d23d56f0ffce1cd2f2588ceb49cacf5e8d7557dd324b8cc2e768f790dcde"
+  },
+  {
+    "project": "daotu",
+    "relative": "src/main/java/net/guzhenren/daotu/DaotuMigrate.java",
+    "source": "D:\\daima\\mcmod\\天意\\audit-20261026\\work\\daotu\\src\\main\\java\\net\\guzhenren\\daotu\\DaotuMigrate.java",
+    "target": "D:\\daima\\mcmod\\道途附属\\src\\main\\java\\net\\guzhenren\\daotu\\DaotuMigrate.java",
+    "before": "678637f607d382eeb4c24313886f46a593d816356dc6371805953c0faedf6e06",
+    "after": "eb576768ec78741ac479bf06342a6f036076b306a35ead2fc9ba7363205406c5"
+  },
+  {
+    "project": "daotu",
+    "relative": "src/main/java/net/guzhenren/daotu/DaotuOpening.java",
+    "source": "D:\\daima\\mcmod\\天意\\audit-20261026\\work\\daotu\\src\\main\\java\\net\\guzhenren\\daotu\\DaotuOpening.java",
+    "target": "D:\\daima\\mcmod\\道途附属\\src\\main\\java\\net\\guzhenren\\daotu\\DaotuOpening.java",
+    "before": "8eb68a3d9d8cb12512ff86a174c179dfdec21b191d609372032bc8c3f9afe0fa",
+    "after": "92c5ded94f7c6b8c0410ef31cfeba968538c63e042cbebfe72d6da266c364311"
+  },
+  {
+    "project": "daotu",
+    "relative": "src/main/java/net/guzhenren/daotu/chronicle/ChronicleCoordinator.java",
+    "source": "D:\\daima\\mcmod\\天意\\audit-20261026\\work\\daotu\\src\\main\\java\\net\\guzhenren\\daotu\\chronicle\\ChronicleCoordinator.java",
+    "target": "D:\\daima\\mcmod\\道途附属\\src\\main\\java\\net\\guzhenren\\daotu\\chronicle\\ChronicleCoordinator.java",
+    "before": "f2b71c20b1cdb78b576ead53d8741222177097e806fe09936d6a98fa4d7ec2c9",
+    "after": "ad402e5802393c4b5760b436bf246e7a00bc9ff55de0312eecde93c29adb9137"
+  },
+  {
+    "project": "daotu",
+    "relative": "src/main/java/net/guzhenren/daotu/chronicle/FactionJournalModule.java",
+    "source": "D:\\daima\\mcmod\\天意\\audit-20261026\\work\\daotu\\src\\main\\java\\net\\guzhenren\\daotu\\chronicle\\FactionJournalModule.java",
+    "target": "D:\\daima\\mcmod\\道途附属\\src\\main\\java\\net\\guzhenren\\daotu\\chronicle\\FactionJournalModule.java",
+    "before": "2dfef1e5e82da9af2d38b54ba5a5dfbcabda4400a0e88c297d1c5cce35b93e7c",
+    "after": "f488312642597621926caaaf78c760abb1d22f51396866065e7e44185c71d1af"
+  },
+  {
+    "project": "daotu",
+    "relative": "src/main/java/net/guzhenren/daotu/chronicle/MeritArchiveModule.java",
+    "source": "D:\\daima\\mcmod\\天意\\audit-20261026\\work\\daotu\\src\\main\\java\\net\\guzhenren\\daotu\\chronicle\\MeritArchiveModule.java",
+    "target": "D:\\daima\\mcmod\\道途附属\\src\\main\\java\\net\\guzhenren\\daotu\\chronicle\\MeritArchiveModule.java",
+    "before": "d533624fff3ab996b978beb4776dc9dbe45350eaaf00c00d8f49ce691f8b656e",
+    "after": "205fe0e4af0781b24de9ce0dac44109d72021d8d801a16613b10132c8d5672ca"
+  },
+  {
+    "project": "daotu",
+    "relative": "src/main/java/net/guzhenren/daotu/chronicle/NbtChronicleRepository.java",
+    "source": "D:\\daima\\mcmod\\天意\\audit-20261026\\work\\daotu\\src\\main\\java\\net\\guzhenren\\daotu\\chronicle\\NbtChronicleRepository.java",
+    "target": "D:\\daima\\mcmod\\道途附属\\src\\main\\java\\net\\guzhenren\\daotu\\chronicle\\NbtChronicleRepository.java",
+    "before": "12294db15c40543ce65ecf8b88bbe52a84a06d82e60e7a54d4764681ec9c6e95",
+    "after": "ab1a4019f3cfe20c057dea00fd91a86795193e29a1451040e379efa0b1745005"
+  },
+  {
+    "project": "daotu",
+    "relative": "src/main/java/net/guzhenren/daotu/chronicle/ReputationJournalModule.java",
+    "source": "D:\\daima\\mcmod\\天意\\audit-20261026\\work\\daotu\\src\\main\\java\\net\\guzhenren\\daotu\\chronicle\\ReputationJournalModule.java",
+    "target": "D:\\daima\\mcmod\\道途附属\\src\\main\\java\\net\\guzhenren\\daotu\\chronicle\\ReputationJournalModule.java",
+    "before": "377df57dcc08c0ee9d8a18bb3f13c6dc438ff6b8bab7e38e6550e205ac3c6ec1",
+    "after": "d0c7530bf1172cba3be92eca05a35b65eb6373e32d274f92f47c36dfc780057e"
+  },
+  {
+    "project": "daotu",
+    "relative": "src/main/resources/META-INF/neoforge.mods.toml",
+    "source": "D:\\daima\\mcmod\\天意\\audit-20261026\\work\\daotu\\src\\main\\resources\\META-INF\\neoforge.mods.toml",
+    "target": "D:\\daima\\mcmod\\道途附属\\src\\main\\resources\\META-INF\\neoforge.mods.toml",
+    "before": "044a2caab76101a6ef7466f5db8bd76ab94f5dde976f5a42b2db64f2b278306c",
+    "after": "09dc1196163430b527e6a2440dde8ae559bad6831c243c2783a8c021d251174b"
+  },
+  {
+    "project": "daotu",
+    "relative": "build/libs/daotu-1.6.1.jar",
+    "source": "D:\\daima\\mcmod\\天意\\audit-20261026\\release\\daotu-1.6.1.jar",
+    "target": "D:\\daima\\mcmod\\道途附属\\build\\libs\\daotu-1.6.1.jar",
+    "before": null,
+    "after": "320f53e8dbaadf375651bf7448b5d45bc0ffb97d262426c6ee9f9dd52f3650b1"
+  },
+  {
+    "project": "malice",
+    "relative": "version.properties",
+    "source": "D:\\daima\\mcmod\\天意\\audit-20261026\\work\\malice\\version.properties",
+    "target": "D:\\daima\\mcmod\\蛊真人恶意\\version.properties",
+    "before": "2116c9de37af39b3782c6ab52171aba13afa2d43b1d9ccc641d8e20d2b8223ad",
+    "after": "bbae1fec0bf2c85aa7fbd936e024873d873d59c16a5f46f1a75df23757dff1bf"
+  },
+  {
+    "project": "malice",
+    "relative": "docs/2026-10-26-bugfix.md",
+    "source": "D:\\daima\\mcmod\\天意\\audit-20261026\\work\\malice\\docs\\2026-10-26-bugfix.md",
+    "target": "D:\\daima\\mcmod\\蛊真人恶意\\docs\\2026-10-26-bugfix.md",
+    "before": null,
+    "after": "25ea4c40cb0c979235d13cbe90ff6337347ae253f44ebd41779842d086033120"
+  },
+  {
+    "project": "malice",
+    "relative": "docs/适配说明.md",
+    "source": "D:\\daima\\mcmod\\天意\\audit-20261026\\work\\malice\\docs\\适配说明.md",
+    "target": "D:\\daima\\mcmod\\蛊真人恶意\\docs\\适配说明.md",
+    "before": "4cea44069837c6c5fe7fee2e5d61a41f0aad117f25f27f1de7d7d87428973de5",
+    "after": "a4dcf415f0d911ca942fdb1513b077fe33b548b8d662ed64939e45e373a58575"
+  },
+  {
+    "project": "malice",
+    "relative": "src/main/java/net/guzhenren/malice/MaliceEvents.java",
+    "source": "D:\\daima\\mcmod\\天意\\audit-20261026\\work\\malice\\src\\main\\java\\net\\guzhenren\\malice\\MaliceEvents.java",
+    "target": "D:\\daima\\mcmod\\蛊真人恶意\\src\\main\\java\\net\\guzhenren\\malice\\MaliceEvents.java",
+    "before": "e88c2fa54f1dc19eae5cb5cd70cdaa79909234d233906416e542345edbd547e7",
+    "after": "4edb496b04a2f10be032114afe65c76e3e5541c9876533fe884172721747d155"
+  },
+  {
+    "project": "malice",
+    "relative": "src/main/resources/META-INF/neoforge.mods.toml",
+    "source": "D:\\daima\\mcmod\\天意\\audit-20261026\\work\\malice\\src\\main\\resources\\META-INF\\neoforge.mods.toml",
+    "target": "D:\\daima\\mcmod\\蛊真人恶意\\src\\main\\resources\\META-INF\\neoforge.mods.toml",
+    "before": "70de00087964882959123753aec0745474adaa471de6ddbe3ac2016562617b0d",
+    "after": "243211549555cca1a1f4934643046da9b89a5822668cd7a4ff9fb5730225b64c"
+  },
+  {
+    "project": "malice",
+    "relative": "build/libs/guzhenren_malice-1.1.1-mc1020.jar",
+    "source": "D:\\daima\\mcmod\\天意\\audit-20261026\\release\\guzhenren_malice-1.1.1-mc1020.jar",
+    "target": "D:\\daima\\mcmod\\蛊真人恶意\\build\\libs\\guzhenren_malice-1.1.1-mc1020.jar",
+    "before": null,
+    "after": "5b7d12d8eb3e5b51830c8be02cf2bd5beae0395034b1b0ffdcbf23ada9d5d6e5"
+  }
+]

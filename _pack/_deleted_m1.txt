@@ -1,0 +1,9 @@
+M1 删除清单
+========================================
+删除目录 open/: 48 文件 / 9093 行
+删除目录 path/: 31 文件 / 5321 行
+删除目录 shop/: 37 文件 / 16536 行
+删除文件 TianyiPrice.java: 161 行
+删除文件 TianyiTalentShop.java: 184 行
+删除 mixin 配置 tianyi.open.mixins.json
+删除 mixin 配置 tianyi.shop.mixins.json

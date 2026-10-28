@@ -1,0 +1,1287 @@
+Compiled from "MobTraitCap.java"
+public class dev.xkmc.l2hostility.content.capability.mob.MobTraitCap extends dev.xkmc.l2core.capability.attachment.GeneralCapabilityTemplate<net.minecraft.world.entity.LivingEntity, dev.xkmc.l2hostility.content.capability.mob.MobTraitCap> {
+  public final java.util.LinkedHashMap<dev.xkmc.l2hostility.content.traits.base.MobTrait, java.lang.Integer> traits;
+
+  private dev.xkmc.l2hostility.content.capability.mob.MobTraitCap$Stage stage;
+
+  public int lv;
+
+  private final java.util.HashMap<net.minecraft.resources.ResourceLocation, dev.xkmc.l2hostility.content.capability.mob.CapStorageData> data;
+
+  public boolean summoned;
+
+  public boolean minion;
+
+  public boolean noDrop;
+
+  public boolean fullDrop;
+
+  public boolean copied;
+
+  public double dropRate;
+
+  public net.minecraft.core.BlockPos pos;
+
+  public dev.xkmc.l2hostility.content.capability.mob.MinionData asMinion;
+
+  public dev.xkmc.l2hostility.content.capability.mob.MasterData asMaster;
+
+  private dev.xkmc.l2hostility.content.item.spawner.TraitSpawnerBlockEntity summoner;
+
+  private boolean inherited;
+
+  private boolean ticking;
+
+  private dev.xkmc.l2hostility.content.config.EntityConfig$Config configCache;
+
+  private final java.util.ArrayList<com.mojang.datafixers.util.Pair<dev.xkmc.l2hostility.content.traits.base.MobTrait, java.lang.Integer>> pending;
+
+  public dev.xkmc.l2hostility.content.capability.mob.MobTraitCap();
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method dev/xkmc/l2core/capability/attachment/GeneralCapabilityTemplate."<init>":()V
+       4: aload_0
+       5: new           #7                  // class java/util/LinkedHashMap
+       8: dup
+       9: invokespecial #9                  // Method java/util/LinkedHashMap."<init>":()V
+      12: putfield      #10                 // Field traits:Ljava/util/LinkedHashMap;
+      15: aload_0
+      16: getstatic     #16                 // Field dev/xkmc/l2hostility/content/capability/mob/MobTraitCap$Stage.PRE_INIT:Ldev/xkmc/l2hostility/content/capability/mob/MobTraitCap$Stage;
+      19: putfield      #22                 // Field stage:Ldev/xkmc/l2hostility/content/capability/mob/MobTraitCap$Stage;
+      22: aload_0
+      23: new           #25                 // class java/util/HashMap
+      26: dup
+      27: invokespecial #27                 // Method java/util/HashMap."<init>":()V
+      30: putfield      #28                 // Field data:Ljava/util/HashMap;
+      33: aload_0
+      34: iconst_0
+      35: putfield      #32                 // Field summoned:Z
+      38: aload_0
+      39: iconst_0
+      40: putfield      #36                 // Field minion:Z
+      43: aload_0
+      44: iconst_0
+      45: putfield      #39                 // Field noDrop:Z
+      48: aload_0
+      49: iconst_0
+      50: putfield      #42                 // Field fullDrop:Z
+      53: aload_0
+      54: iconst_0
+      55: putfield      #45                 // Field copied:Z
+      58: aload_0
+      59: dconst_1
+      60: putfield      #48                 // Field dropRate:D
+      63: aload_0
+      64: aconst_null
+      65: putfield      #52                 // Field pos:Lnet/minecraft/core/BlockPos;
+      68: aload_0
+      69: aconst_null
+      70: putfield      #56                 // Field asMinion:Ldev/xkmc/l2hostility/content/capability/mob/MinionData;
+      73: aload_0
+      74: aconst_null
+      75: putfield      #60                 // Field asMaster:Ldev/xkmc/l2hostility/content/capability/mob/MasterData;
+      78: aload_0
+      79: aconst_null
+      80: putfield      #64                 // Field summoner:Ldev/xkmc/l2hostility/content/item/spawner/TraitSpawnerBlockEntity;
+      83: aload_0
+      84: iconst_0
+      85: putfield      #68                 // Field inherited:Z
+      88: aload_0
+      89: iconst_0
+      90: putfield      #71                 // Field ticking:Z
+      93: aload_0
+      94: aconst_null
+      95: putfield      #74                 // Field configCache:Ldev/xkmc/l2hostility/content/config/EntityConfig$Config;
+      98: aload_0
+      99: new           #78                 // class java/util/ArrayList
+     102: dup
+     103: invokespecial #80                 // Method java/util/ArrayList."<init>":()V
+     106: putfield      #81                 // Field pending:Ljava/util/ArrayList;
+     109: return
+
+  public void syncToClient(net.minecraft.world.entity.LivingEntity);
+    Code:
+       0: getstatic     #85                 // Field dev/xkmc/l2hostility/init/L2Hostility.HANDLER:Ldev/xkmc/l2core/serial/config/PacketHandlerWithConfig;
+       3: aload_1
+       4: aload_0
+       5: invokestatic  #91                 // Method dev/xkmc/l2hostility/content/capability/mob/MobCapSyncToClient.of:(Lnet/minecraft/world/entity/LivingEntity;Ldev/xkmc/l2hostility/content/capability/mob/MobTraitCap;)Ldev/xkmc/l2hostility/content/capability/mob/MobCapSyncToClient;
+       8: aload_1
+       9: invokevirtual #97                 // Method dev/xkmc/l2core/serial/config/PacketHandlerWithConfig.toTrackingPlayers:(Ldev/xkmc/l2serial/network/SimplePacketBase;Lnet/minecraft/world/entity/Entity;)V
+      12: return
+
+  public void syncToPlayer(net.minecraft.world.entity.LivingEntity, net.minecraft.server.level.ServerPlayer);
+    Code:
+       0: getstatic     #85                 // Field dev/xkmc/l2hostility/init/L2Hostility.HANDLER:Ldev/xkmc/l2core/serial/config/PacketHandlerWithConfig;
+       3: aload_1
+       4: aload_0
+       5: invokestatic  #91                 // Method dev/xkmc/l2hostility/content/capability/mob/MobCapSyncToClient.of:(Lnet/minecraft/world/entity/LivingEntity;Ldev/xkmc/l2hostility/content/capability/mob/MobTraitCap;)Ldev/xkmc/l2hostility/content/capability/mob/MobCapSyncToClient;
+       8: aload_2
+       9: invokevirtual #103                // Method dev/xkmc/l2core/serial/config/PacketHandlerWithConfig.toClientPlayer:(Ldev/xkmc/l2serial/network/SimplePacketBase;Lnet/minecraft/server/level/ServerPlayer;)V
+      12: return
+
+  public void deinit();
+    Code:
+       0: aload_0
+       1: iconst_0
+       2: putfield      #45                 // Field copied:Z
+       5: aload_0
+       6: getfield      #10                 // Field traits:Ljava/util/LinkedHashMap;
+       9: invokevirtual #107                // Method java/util/LinkedHashMap.clear:()V
+      12: aload_0
+      13: iconst_0
+      14: putfield      #110                // Field lv:I
+      17: aload_0
+      18: getstatic     #16                 // Field dev/xkmc/l2hostility/content/capability/mob/MobTraitCap$Stage.PRE_INIT:Ldev/xkmc/l2hostility/content/capability/mob/MobTraitCap$Stage;
+      21: putfield      #22                 // Field stage:Ldev/xkmc/l2hostility/content/capability/mob/MobTraitCap$Stage;
+      24: return
+
+  public boolean reinit(net.minecraft.world.entity.LivingEntity, int, boolean);
+    Code:
+       0: aload_0
+       1: invokevirtual #114                // Method deinit:()V
+       4: aload_0
+       5: aload_1
+       6: invokevirtual #117                // Method net/minecraft/world/entity/LivingEntity.level:()Lnet/minecraft/world/level/Level;
+       9: aload_1
+      10: iload_2
+      11: iload_3
+      12: invokedynamic #123,  0            // InvokeDynamic #0:modifyInstance:(IZ)Ldev/xkmc/l2hostility/content/capability/chunk/RegionalDifficultyModifier;
+      17: invokevirtual #127                // Method init:(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Ldev/xkmc/l2hostility/content/capability/chunk/RegionalDifficultyModifier;)V
+      20: iconst_1
+      21: ireturn
+
+  public dev.xkmc.l2hostility.content.config.EntityConfig$Config getConfigCache(net.minecraft.world.entity.LivingEntity);
+    Code:
+       0: aload_0
+       1: getfield      #74                 // Field configCache:Ldev/xkmc/l2hostility/content/config/EntityConfig$Config;
+       4: ifnonnull     27
+       7: aload_0
+       8: getstatic     #131                // Field dev/xkmc/l2hostility/init/L2Hostility.ENTITY:Ldev/xkmc/l2core/serial/config/ConfigTypeEntry;
+      11: invokevirtual #135                // Method dev/xkmc/l2core/serial/config/ConfigTypeEntry.getMerged:()Ldev/xkmc/l2core/serial/config/BaseConfig;
+      14: checkcast     #141                // class dev/xkmc/l2hostility/content/config/EntityConfig
+      17: aload_1
+      18: invokevirtual #143                // Method net/minecraft/world/entity/LivingEntity.getType:()Lnet/minecraft/world/entity/EntityType;
+      21: invokevirtual #147                // Method dev/xkmc/l2hostility/content/config/EntityConfig.get:(Lnet/minecraft/world/entity/EntityType;)Ldev/xkmc/l2hostility/content/config/EntityConfig$Config;
+      24: putfield      #74                 // Field configCache:Ldev/xkmc/l2hostility/content/config/EntityConfig$Config;
+      27: aload_0
+      28: getfield      #74                 // Field configCache:Ldev/xkmc/l2hostility/content/config/EntityConfig$Config;
+      31: ifnonnull     76
+      34: aload_1
+      35: invokevirtual #117                // Method net/minecraft/world/entity/LivingEntity.level:()Lnet/minecraft/world/level/Level;
+      38: astore_3
+      39: aload_3
+      40: instanceof    #151                // class net/minecraft/server/level/ServerLevel
+      43: ifeq          76
+      46: aload_3
+      47: checkcast     #151                // class net/minecraft/server/level/ServerLevel
+      50: astore_2
+      51: aload_0
+      52: getstatic     #153                // Field dev/xkmc/l2hostility/init/L2Hostility.DIFFICULTY:Ldev/xkmc/l2core/serial/config/ConfigTypeEntry;
+      55: invokevirtual #135                // Method dev/xkmc/l2core/serial/config/ConfigTypeEntry.getMerged:()Ldev/xkmc/l2core/serial/config/BaseConfig;
+      58: checkcast     #156                // class dev/xkmc/l2hostility/content/config/WorldDifficultyConfig
+      61: aload_2
+      62: aload_1
+      63: invokevirtual #158                // Method net/minecraft/world/entity/LivingEntity.blockPosition:()Lnet/minecraft/core/BlockPos;
+      66: aload_1
+      67: invokevirtual #143                // Method net/minecraft/world/entity/LivingEntity.getType:()Lnet/minecraft/world/entity/EntityType;
+      70: invokevirtual #162                // Method dev/xkmc/l2hostility/content/config/WorldDifficultyConfig.get:(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/EntityType;)Ldev/xkmc/l2hostility/content/config/EntityConfig$Config;
+      73: putfield      #74                 // Field configCache:Ldev/xkmc/l2hostility/content/config/EntityConfig$Config;
+      76: aload_0
+      77: getfield      #74                 // Field configCache:Ldev/xkmc/l2hostility/content/config/EntityConfig$Config;
+      80: ifnonnull     113
+      83: aload_0
+      84: getstatic     #153                // Field dev/xkmc/l2hostility/init/L2Hostility.DIFFICULTY:Ldev/xkmc/l2core/serial/config/ConfigTypeEntry;
+      87: invokevirtual #135                // Method dev/xkmc/l2core/serial/config/ConfigTypeEntry.getMerged:()Ldev/xkmc/l2core/serial/config/BaseConfig;
+      90: checkcast     #156                // class dev/xkmc/l2hostility/content/config/WorldDifficultyConfig
+      93: aload_1
+      94: invokevirtual #117                // Method net/minecraft/world/entity/LivingEntity.level:()Lnet/minecraft/world/level/Level;
+      97: invokevirtual #165                // Method net/minecraft/world/level/Level.dimension:()Lnet/minecraft/resources/ResourceKey;
+     100: invokevirtual #171                // Method net/minecraft/resources/ResourceKey.location:()Lnet/minecraft/resources/ResourceLocation;
+     103: aload_1
+     104: invokevirtual #143                // Method net/minecraft/world/entity/LivingEntity.getType:()Lnet/minecraft/world/entity/EntityType;
+     107: invokevirtual #177                // Method dev/xkmc/l2hostility/content/config/WorldDifficultyConfig.get:(Lnet/minecraft/resources/ResourceLocation;Lnet/minecraft/world/entity/EntityType;)Ldev/xkmc/l2hostility/content/config/EntityConfig$Config;
+     110: putfield      #74                 // Field configCache:Ldev/xkmc/l2hostility/content/config/EntityConfig$Config;
+     113: aload_0
+     114: getfield      #74                 // Field configCache:Ldev/xkmc/l2hostility/content/config/EntityConfig$Config;
+     117: areturn
+
+  public void setConfigCache(dev.xkmc.l2hostility.content.config.EntityConfig$Config);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: putfield      #74                 // Field configCache:Ldev/xkmc/l2hostility/content/config/EntityConfig$Config;
+       5: return
+
+  public void init(net.minecraft.world.level.Level, net.minecraft.world.entity.LivingEntity, dev.xkmc.l2hostility.content.capability.chunk.RegionalDifficultyModifier);
+    Code:
+       0: getstatic     #180                // Field dev/xkmc/l2hostility/init/data/LHConfig.SERVER:Ldev/xkmc/l2hostility/init/data/LHConfig$Server;
+       3: getfield      #186                // Field dev/xkmc/l2hostility/init/data/LHConfig$Server.allowNoAI:Lnet/neoforged/neoforge/common/ModConfigSpec$BooleanValue;
+       6: invokevirtual #192                // Method net/neoforged/neoforge/common/ModConfigSpec$BooleanValue.get:()Ljava/lang/Object;
+       9: checkcast     #197                // class java/lang/Boolean
+      12: invokevirtual #199                // Method java/lang/Boolean.booleanValue:()Z
+      15: ifne          43
+      18: aload_2
+      19: instanceof    #203                // class net/minecraft/world/entity/Mob
+      22: ifeq          43
+      25: aload_2
+      26: checkcast     #203                // class net/minecraft/world/entity/Mob
+      29: astore        5
+      31: aload         5
+      33: invokevirtual #205                // Method net/minecraft/world/entity/Mob.isNoAi:()Z
+      36: ifeq          43
+      39: iconst_1
+      40: goto          44
+      43: iconst_0
+      44: istore        4
+      46: new           #208                // class dev/xkmc/l2hostility/content/logic/MobDifficultyCollector
+      49: dup
+      50: invokespecial #210                // Method dev/xkmc/l2hostility/content/logic/MobDifficultyCollector."<init>":()V
+      53: astore        5
+      55: aload_0
+      56: aload_2
+      57: invokevirtual #211                // Method getConfigCache:(Lnet/minecraft/world/entity/LivingEntity;)Ldev/xkmc/l2hostility/content/config/EntityConfig$Config;
+      60: astore        6
+      62: aload         6
+      64: ifnull        77
+      67: aload         5
+      69: aload         6
+      71: invokevirtual #215                // Method dev/xkmc/l2hostility/content/config/EntityConfig$Config.difficulty:()Ldev/xkmc/l2hostility/content/config/WorldDifficultyConfig$DifficultyConfig;
+      74: invokevirtual #221                // Method dev/xkmc/l2hostility/content/logic/MobDifficultyCollector.acceptConfig:(Ldev/xkmc/l2hostility/content/config/WorldDifficultyConfig$DifficultyConfig;)V
+      77: aload_3
+      78: aload_2
+      79: invokevirtual #158                // Method net/minecraft/world/entity/LivingEntity.blockPosition:()Lnet/minecraft/core/BlockPos;
+      82: aload         5
+      84: invokeinterface #225,  3          // InterfaceMethod dev/xkmc/l2hostility/content/capability/chunk/RegionalDifficultyModifier.modifyInstance:(Lnet/minecraft/core/BlockPos;Ldev/xkmc/l2hostility/content/logic/MobDifficultyCollector;)V
+      89: aload_1
+      90: aload_2
+      91: invokestatic  #230                // Method dev/xkmc/l2hostility/content/logic/PlayerFinder.getNearestPlayer:(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraft/world/entity/player/Player;
+      94: astore        7
+      96: aload         7
+      98: ifnull        180
+     101: getstatic     #236                // Field dev/xkmc/l2hostility/init/registrate/LHMiscs.PLAYER:Ldev/xkmc/l2core/init/reg/simple/AttVal$PlayerVal;
+     104: invokeinterface #242,  1          // InterfaceMethod dev/xkmc/l2core/init/reg/simple/AttVal$PlayerVal.type:()Ldev/xkmc/l2core/capability/attachment/AttachmentDef;
+     109: checkcast     #248                // class dev/xkmc/l2core/capability/player/PlayerCapabilityHolder
+     112: aload         7
+     114: invokevirtual #250                // Method dev/xkmc/l2core/capability/player/PlayerCapabilityHolder.isProper:(Lnet/neoforged/neoforge/attachment/IAttachmentHolder;)Z
+     117: ifeq          180
+     120: getstatic     #236                // Field dev/xkmc/l2hostility/init/registrate/LHMiscs.PLAYER:Ldev/xkmc/l2core/init/reg/simple/AttVal$PlayerVal;
+     123: invokeinterface #242,  1          // InterfaceMethod dev/xkmc/l2core/init/reg/simple/AttVal$PlayerVal.type:()Ldev/xkmc/l2core/capability/attachment/AttachmentDef;
+     128: checkcast     #248                // class dev/xkmc/l2core/capability/player/PlayerCapabilityHolder
+     131: aload         7
+     133: invokevirtual #254                // Method dev/xkmc/l2core/capability/player/PlayerCapabilityHolder.getOrCreate:(Lnet/neoforged/neoforge/attachment/IAttachmentHolder;)Ldev/xkmc/l2core/capability/attachment/GeneralCapabilityTemplate;
+     136: checkcast     #258                // class dev/xkmc/l2hostility/content/capability/player/PlayerDifficulty
+     139: astore        8
+     141: aload         8
+     143: aload         7
+     145: aload         5
+     147: invokevirtual #260                // Method dev/xkmc/l2hostility/content/capability/player/PlayerDifficulty.apply:(Lnet/minecraft/world/entity/player/Player;Ldev/xkmc/l2hostility/content/logic/MobDifficultyCollector;)V
+     150: getstatic     #180                // Field dev/xkmc/l2hostility/init/data/LHConfig.SERVER:Ldev/xkmc/l2hostility/init/data/LHConfig$Server;
+     153: getfield      #264                // Field dev/xkmc/l2hostility/init/data/LHConfig$Server.allowPlayerAllies:Lnet/neoforged/neoforge/common/ModConfigSpec$BooleanValue;
+     156: invokevirtual #192                // Method net/neoforged/neoforge/common/ModConfigSpec$BooleanValue.get:()Ljava/lang/Object;
+     159: checkcast     #197                // class java/lang/Boolean
+     162: invokevirtual #199                // Method java/lang/Boolean.booleanValue:()Z
+     165: ifne          180
+     168: aload_2
+     169: aload         7
+     171: invokevirtual #267                // Method net/minecraft/world/entity/LivingEntity.isAlliedTo:(Lnet/minecraft/world/entity/Entity;)Z
+     174: ifeq          180
+     177: iconst_1
+     178: istore        4
+     180: iload         4
+     182: ifne          213
+     185: getstatic     #271                // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+     188: new           #277                // class dev/xkmc/l2hostility/events/HostilityInitEvent$Pre
+     191: dup
+     192: aload_2
+     193: aload_0
+     194: getstatic     #279                // Field dev/xkmc/l2hostility/events/HostilityInitEvent$InitPhase.INIT:Ldev/xkmc/l2hostility/events/HostilityInitEvent$InitPhase;
+     197: invokespecial #285                // Method dev/xkmc/l2hostility/events/HostilityInitEvent$Pre."<init>":(Lnet/minecraft/world/entity/LivingEntity;Ldev/xkmc/l2hostility/content/capability/mob/MobTraitCap;Ldev/xkmc/l2hostility/events/HostilityInitEvent$InitPhase;)V
+     200: invokeinterface #288,  2          // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+     205: checkcast     #277                // class dev/xkmc/l2hostility/events/HostilityInitEvent$Pre
+     208: invokevirtual #294                // Method dev/xkmc/l2hostility/events/HostilityInitEvent$Pre.isCanceled:()Z
+     211: istore        4
+     213: aload_0
+     214: iload         4
+     216: ifeq          223
+     219: iconst_0
+     220: goto          234
+     223: aload_0
+     224: aload_2
+     225: aload_0
+     226: getfield      #10                 // Field traits:Ljava/util/LinkedHashMap;
+     229: aload         5
+     231: invokestatic  #297                // Method dev/xkmc/l2hostility/content/logic/TraitManager.fill:(Ldev/xkmc/l2hostility/content/capability/mob/MobTraitCap;Lnet/minecraft/world/entity/LivingEntity;Ljava/util/HashMap;Ldev/xkmc/l2hostility/content/logic/MobDifficultyCollector;)I
+     234: putfield      #110                // Field lv:I
+     237: aload_0
+     238: aload         5
+     240: invokevirtual #303                // Method dev/xkmc/l2hostility/content/logic/MobDifficultyCollector.isFullDrop:()Z
+     243: putfield      #42                 // Field fullDrop:Z
+     246: getstatic     #271                // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+     249: new           #306                // class dev/xkmc/l2hostility/events/HostilityInitEvent$Post
+     252: dup
+     253: aload_2
+     254: aload_0
+     255: getstatic     #279                // Field dev/xkmc/l2hostility/events/HostilityInitEvent$InitPhase.INIT:Ldev/xkmc/l2hostility/events/HostilityInitEvent$InitPhase;
+     258: invokespecial #308                // Method dev/xkmc/l2hostility/events/HostilityInitEvent$Post."<init>":(Lnet/minecraft/world/entity/LivingEntity;Ldev/xkmc/l2hostility/content/capability/mob/MobTraitCap;Ldev/xkmc/l2hostility/events/HostilityInitEvent$InitPhase;)V
+     261: invokeinterface #288,  2          // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+     266: pop
+     267: aload_0
+     268: getstatic     #309                // Field dev/xkmc/l2hostility/content/capability/mob/MobTraitCap$Stage.INIT:Ldev/xkmc/l2hostility/content/capability/mob/MobTraitCap$Stage;
+     271: putfield      #22                 // Field stage:Ldev/xkmc/l2hostility/content/capability/mob/MobTraitCap$Stage;
+     274: aload_0
+     275: aload_2
+     276: invokevirtual #311                // Method syncToClient:(Lnet/minecraft/world/entity/LivingEntity;)V
+     279: return
+
+  public void copyFrom(net.minecraft.world.entity.LivingEntity, net.minecraft.world.entity.LivingEntity, dev.xkmc.l2hostility.content.capability.mob.MobTraitCap);
+    Code:
+       0: aload_0
+       1: invokevirtual #114                // Method deinit:()V
+       4: new           #315                // class dev/xkmc/l2hostility/content/logic/InheritContext
+       7: dup
+       8: aload_1
+       9: aload_3
+      10: aload_2
+      11: aload_0
+      12: aload_3
+      13: getfield      #68                 // Field inherited:Z
+      16: ifne          23
+      19: iconst_1
+      20: goto          24
+      23: iconst_0
+      24: invokespecial #317                // Method dev/xkmc/l2hostility/content/logic/InheritContext."<init>":(Lnet/minecraft/world/entity/LivingEntity;Ldev/xkmc/l2hostility/content/capability/mob/MobTraitCap;Lnet/minecraft/world/entity/LivingEntity;Ldev/xkmc/l2hostility/content/capability/mob/MobTraitCap;Z)V
+      27: astore        4
+      29: aload_3
+      30: iconst_1
+      31: putfield      #68                 // Field inherited:Z
+      34: aload_0
+      35: aload_3
+      36: getfield      #110                // Field lv:I
+      39: putfield      #110                // Field lv:I
+      42: aload_0
+      43: aload_3
+      44: getfield      #32                 // Field summoned:Z
+      47: putfield      #32                 // Field summoned:Z
+      50: aload_0
+      51: aload_3
+      52: getfield      #36                 // Field minion:Z
+      55: putfield      #36                 // Field minion:Z
+      58: aload_0
+      59: aload_3
+      60: getfield      #39                 // Field noDrop:Z
+      63: putfield      #39                 // Field noDrop:Z
+      66: aload_0
+      67: aload_3
+      68: getfield      #48                 // Field dropRate:D
+      71: getstatic     #180                // Field dev/xkmc/l2hostility/init/data/LHConfig.SERVER:Ldev/xkmc/l2hostility/init/data/LHConfig$Server;
+      74: getfield      #320                // Field dev/xkmc/l2hostility/init/data/LHConfig$Server.splitDropRateFactor:Lnet/neoforged/neoforge/common/ModConfigSpec$DoubleValue;
+      77: invokevirtual #324                // Method net/neoforged/neoforge/common/ModConfigSpec$DoubleValue.get:()Ljava/lang/Object;
+      80: checkcast     #327                // class java/lang/Double
+      83: invokevirtual #329                // Method java/lang/Double.doubleValue:()D
+      86: dmul
+      87: putfield      #48                 // Field dropRate:D
+      90: getstatic     #271                // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      93: new           #277                // class dev/xkmc/l2hostility/events/HostilityInitEvent$Pre
+      96: dup
+      97: aload_2
+      98: aload_0
+      99: getstatic     #333                // Field dev/xkmc/l2hostility/events/HostilityInitEvent$InitPhase.COPY:Ldev/xkmc/l2hostility/events/HostilityInitEvent$InitPhase;
+     102: invokespecial #285                // Method dev/xkmc/l2hostility/events/HostilityInitEvent$Pre."<init>":(Lnet/minecraft/world/entity/LivingEntity;Ldev/xkmc/l2hostility/content/capability/mob/MobTraitCap;Ldev/xkmc/l2hostility/events/HostilityInitEvent$InitPhase;)V
+     105: invokeinterface #288,  2          // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+     110: checkcast     #277                // class dev/xkmc/l2hostility/events/HostilityInitEvent$Pre
+     113: invokevirtual #294                // Method dev/xkmc/l2hostility/events/HostilityInitEvent$Pre.isCanceled:()Z
+     116: ifne          217
+     119: aload_3
+     120: getfield      #10                 // Field traits:Ljava/util/LinkedHashMap;
+     123: invokevirtual #336                // Method java/util/LinkedHashMap.entrySet:()Ljava/util/Set;
+     126: invokeinterface #340,  1          // InterfaceMethod java/util/Set.iterator:()Ljava/util/Iterator;
+     131: astore        5
+     133: aload         5
+     135: invokeinterface #346,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+     140: ifeq          217
+     143: aload         5
+     145: invokeinterface #351,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     150: checkcast     #354                // class java/util/Map$Entry
+     153: astore        6
+     155: aload         6
+     157: invokeinterface #356,  1          // InterfaceMethod java/util/Map$Entry.getKey:()Ljava/lang/Object;
+     162: checkcast     #359                // class dev/xkmc/l2hostility/content/traits/base/MobTrait
+     165: aload_0
+     166: aload         6
+     168: invokeinterface #361,  1          // InterfaceMethod java/util/Map$Entry.getValue:()Ljava/lang/Object;
+     173: checkcast     #364                // class java/lang/Integer
+     176: invokevirtual #366                // Method java/lang/Integer.intValue:()I
+     179: aload         4
+     181: invokevirtual #370                // Method dev/xkmc/l2hostility/content/traits/base/MobTrait.inherited:(Ldev/xkmc/l2hostility/content/capability/mob/MobTraitCap;ILdev/xkmc/l2hostility/content/logic/InheritContext;)I
+     184: istore        7
+     186: iload         7
+     188: ifle          214
+     191: aload_0
+     192: getfield      #10                 // Field traits:Ljava/util/LinkedHashMap;
+     195: aload         6
+     197: invokeinterface #356,  1          // InterfaceMethod java/util/Map$Entry.getKey:()Ljava/lang/Object;
+     202: checkcast     #359                // class dev/xkmc/l2hostility/content/traits/base/MobTrait
+     205: iload         7
+     207: invokestatic  #373                // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     210: invokevirtual #377                // Method java/util/LinkedHashMap.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+     213: pop
+     214: goto          133
+     217: aload_0
+     218: aload_2
+     219: aload_0
+     220: getfield      #10                 // Field traits:Ljava/util/LinkedHashMap;
+     223: aload_0
+     224: getfield      #110                // Field lv:I
+     227: invokestatic  #381                // Method dev/xkmc/l2hostility/content/logic/MobDifficultyCollector.noTrait:(I)Ldev/xkmc/l2hostility/content/logic/MobDifficultyCollector;
+     230: invokestatic  #297                // Method dev/xkmc/l2hostility/content/logic/TraitManager.fill:(Ldev/xkmc/l2hostility/content/capability/mob/MobTraitCap;Lnet/minecraft/world/entity/LivingEntity;Ljava/util/HashMap;Ldev/xkmc/l2hostility/content/logic/MobDifficultyCollector;)I
+     233: pop
+     234: getstatic     #271                // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+     237: new           #306                // class dev/xkmc/l2hostility/events/HostilityInitEvent$Post
+     240: dup
+     241: aload_2
+     242: aload_0
+     243: getstatic     #333                // Field dev/xkmc/l2hostility/events/HostilityInitEvent$InitPhase.COPY:Ldev/xkmc/l2hostility/events/HostilityInitEvent$InitPhase;
+     246: invokespecial #308                // Method dev/xkmc/l2hostility/events/HostilityInitEvent$Post."<init>":(Lnet/minecraft/world/entity/LivingEntity;Ldev/xkmc/l2hostility/content/capability/mob/MobTraitCap;Ldev/xkmc/l2hostility/events/HostilityInitEvent$InitPhase;)V
+     249: invokeinterface #288,  2          // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+     254: pop
+     255: aload_0
+     256: iconst_1
+     257: putfield      #45                 // Field copied:Z
+     260: aload_0
+     261: getstatic     #309                // Field dev/xkmc/l2hostility/content/capability/mob/MobTraitCap$Stage.INIT:Ldev/xkmc/l2hostility/content/capability/mob/MobTraitCap$Stage;
+     264: putfield      #22                 // Field stage:Ldev/xkmc/l2hostility/content/capability/mob/MobTraitCap$Stage;
+     267: return
+
+  public int getLevel();
+    Code:
+       0: aload_0
+       1: getfield      #110                // Field lv:I
+       4: ireturn
+
+  public void setLevel(net.minecraft.world.entity.LivingEntity, int);
+    Code:
+       0: aload_0
+       1: aload_0
+       2: aload_1
+       3: iload_2
+       4: invokevirtual #385                // Method clampLevel:(Lnet/minecraft/world/entity/LivingEntity;I)I
+       7: putfield      #110                // Field lv:I
+      10: aload_0
+      11: aload_1
+      12: aload_0
+      13: getfield      #110                // Field lv:I
+      16: invokestatic  #389                // Method dev/xkmc/l2hostility/content/logic/TraitManager.scale:(Ldev/xkmc/l2hostility/content/capability/mob/MobTraitCap;Lnet/minecraft/world/entity/LivingEntity;I)V
+      19: return
+
+  public int clampLevel(net.minecraft.world.entity.LivingEntity, int);
+    Code:
+       0: getstatic     #180                // Field dev/xkmc/l2hostility/init/data/LHConfig.SERVER:Ldev/xkmc/l2hostility/init/data/LHConfig$Server;
+       3: getfield      #393                // Field dev/xkmc/l2hostility/init/data/LHConfig$Server.maxMobLevel:Lnet/neoforged/neoforge/common/ModConfigSpec$IntValue;
+       6: invokevirtual #397                // Method net/neoforged/neoforge/common/ModConfigSpec$IntValue.get:()Ljava/lang/Object;
+       9: checkcast     #364                // class java/lang/Integer
+      12: invokevirtual #366                // Method java/lang/Integer.intValue:()I
+      15: istore_3
+      16: aload_0
+      17: aload_1
+      18: invokevirtual #211                // Method getConfigCache:(Lnet/minecraft/world/entity/LivingEntity;)Ldev/xkmc/l2hostility/content/config/EntityConfig$Config;
+      21: astore        4
+      23: aload         4
+      25: ifnull        46
+      28: aload         4
+      30: getfield      #400                // Field dev/xkmc/l2hostility/content/config/EntityConfig$Config.maxLevel:I
+      33: ifle          46
+      36: aload         4
+      38: getfield      #400                // Field dev/xkmc/l2hostility/content/config/EntityConfig$Config.maxLevel:I
+      41: iload_3
+      42: invokestatic  #403                // Method java/lang/Math.min:(II)I
+      45: istore_3
+      46: iload_3
+      47: iload_2
+      48: invokestatic  #403                // Method java/lang/Math.min:(II)I
+      51: ireturn
+
+  public boolean isInitialized();
+    Code:
+       0: aload_0
+       1: getfield      #22                 // Field stage:Ldev/xkmc/l2hostility/content/capability/mob/MobTraitCap$Stage;
+       4: getstatic     #16                 // Field dev/xkmc/l2hostility/content/capability/mob/MobTraitCap$Stage.PRE_INIT:Ldev/xkmc/l2hostility/content/capability/mob/MobTraitCap$Stage;
+       7: if_acmpeq     14
+      10: iconst_1
+      11: goto          15
+      14: iconst_0
+      15: ireturn
+
+  public int getTraitLevel(dev.xkmc.l2hostility.content.traits.base.MobTrait);
+    Code:
+       0: aload_0
+       1: getfield      #10                 // Field traits:Ljava/util/LinkedHashMap;
+       4: aload_1
+       5: iconst_0
+       6: invokestatic  #373                // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+       9: invokevirtual #409                // Method java/util/LinkedHashMap.getOrDefault:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+      12: checkcast     #364                // class java/lang/Integer
+      15: invokevirtual #366                // Method java/lang/Integer.intValue:()I
+      18: ireturn
+
+  public boolean hasTrait(dev.xkmc.l2hostility.content.traits.base.MobTrait);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokevirtual #412                // Method getTraitLevel:(Ldev/xkmc/l2hostility/content/traits/base/MobTrait;)I
+       5: ifle          12
+       8: iconst_1
+       9: goto          13
+      12: iconst_0
+      13: ireturn
+
+  public void traitEvent(java.util.function.BiConsumer<dev.xkmc.l2hostility.content.traits.base.MobTrait, java.lang.Integer>);
+    Code:
+       0: aload_0
+       1: getfield      #10                 // Field traits:Ljava/util/LinkedHashMap;
+       4: aload_1
+       5: invokevirtual #416                // Method java/util/LinkedHashMap.forEach:(Ljava/util/function/BiConsumer;)V
+       8: return
+
+  public void setTrait(dev.xkmc.l2hostility.content.traits.base.MobTrait, int);
+    Code:
+       0: aload_0
+       1: getfield      #81                 // Field pending:Ljava/util/ArrayList;
+       4: aload_1
+       5: iload_2
+       6: invokestatic  #373                // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+       9: invokestatic  #420                // Method com/mojang/datafixers/util/Pair.of:(Ljava/lang/Object;Ljava/lang/Object;)Lcom/mojang/datafixers/util/Pair;
+      12: invokevirtual #425                // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      15: pop
+      16: return
+
+  public void removeTrait(dev.xkmc.l2hostility.content.traits.base.MobTrait);
+    Code:
+       0: aload_0
+       1: getfield      #10                 // Field traits:Ljava/util/LinkedHashMap;
+       4: aload_1
+       5: invokevirtual #429                // Method java/util/LinkedHashMap.containsKey:(Ljava/lang/Object;)Z
+       8: ifne          12
+      11: return
+      12: aload_0
+      13: getfield      #71                 // Field ticking:Z
+      16: ifeq          28
+      19: aload_0
+      20: aload_1
+      21: iconst_0
+      22: invokevirtual #432                // Method setTrait:(Ldev/xkmc/l2hostility/content/traits/base/MobTrait;I)V
+      25: goto          37
+      28: aload_0
+      29: getfield      #10                 // Field traits:Ljava/util/LinkedHashMap;
+      32: aload_1
+      33: invokevirtual #436                // Method java/util/LinkedHashMap.remove:(Ljava/lang/Object;)Ljava/lang/Object;
+      36: pop
+      37: return
+
+  private boolean clearPending(net.minecraft.world.entity.LivingEntity);
+    Code:
+       0: aload_0
+       1: getfield      #81                 // Field pending:Ljava/util/ArrayList;
+       4: invokevirtual #440                // Method java/util/ArrayList.isEmpty:()Z
+       7: ifeq          12
+      10: iconst_0
+      11: ireturn
+      12: aload_0
+      13: getfield      #81                 // Field pending:Ljava/util/ArrayList;
+      16: invokevirtual #440                // Method java/util/ArrayList.isEmpty:()Z
+      19: ifne          228
+      22: new           #78                 // class java/util/ArrayList
+      25: dup
+      26: aload_0
+      27: getfield      #81                 // Field pending:Ljava/util/ArrayList;
+      30: invokespecial #443                // Method java/util/ArrayList."<init>":(Ljava/util/Collection;)V
+      33: astore_2
+      34: aload_0
+      35: getfield      #81                 // Field pending:Ljava/util/ArrayList;
+      38: invokevirtual #446                // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      41: astore_3
+      42: aload_3
+      43: invokeinterface #346,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+      48: ifeq          89
+      51: aload_3
+      52: invokeinterface #351,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      57: checkcast     #421                // class com/mojang/datafixers/util/Pair
+      60: astore        4
+      62: aload_0
+      63: getfield      #10                 // Field traits:Ljava/util/LinkedHashMap;
+      66: aload         4
+      68: invokevirtual #447                // Method com/mojang/datafixers/util/Pair.getFirst:()Ljava/lang/Object;
+      71: checkcast     #359                // class dev/xkmc/l2hostility/content/traits/base/MobTrait
+      74: aload         4
+      76: invokevirtual #450                // Method com/mojang/datafixers/util/Pair.getSecond:()Ljava/lang/Object;
+      79: checkcast     #364                // class java/lang/Integer
+      82: invokevirtual #377                // Method java/util/LinkedHashMap.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+      85: pop
+      86: goto          42
+      89: aload_0
+      90: getfield      #81                 // Field pending:Ljava/util/ArrayList;
+      93: invokevirtual #453                // Method java/util/ArrayList.clear:()V
+      96: aload_2
+      97: invokevirtual #446                // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+     100: astore_3
+     101: aload_3
+     102: invokeinterface #346,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+     107: ifeq          170
+     110: aload_3
+     111: invokeinterface #351,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     116: checkcast     #421                // class com/mojang/datafixers/util/Pair
+     119: astore        4
+     121: aload         4
+     123: invokevirtual #447                // Method com/mojang/datafixers/util/Pair.getFirst:()Ljava/lang/Object;
+     126: checkcast     #359                // class dev/xkmc/l2hostility/content/traits/base/MobTrait
+     129: aload_1
+     130: aload         4
+     132: invokevirtual #450                // Method com/mojang/datafixers/util/Pair.getSecond:()Ljava/lang/Object;
+     135: checkcast     #364                // class java/lang/Integer
+     138: invokevirtual #366                // Method java/lang/Integer.intValue:()I
+     141: invokevirtual #454                // Method dev/xkmc/l2hostility/content/traits/base/MobTrait.initialize:(Lnet/minecraft/world/entity/LivingEntity;I)V
+     144: aload         4
+     146: invokevirtual #447                // Method com/mojang/datafixers/util/Pair.getFirst:()Ljava/lang/Object;
+     149: checkcast     #359                // class dev/xkmc/l2hostility/content/traits/base/MobTrait
+     152: aload_1
+     153: aload         4
+     155: invokevirtual #450                // Method com/mojang/datafixers/util/Pair.getSecond:()Ljava/lang/Object;
+     158: checkcast     #364                // class java/lang/Integer
+     161: invokevirtual #366                // Method java/lang/Integer.intValue:()I
+     164: invokevirtual #458                // Method dev/xkmc/l2hostility/content/traits/base/MobTrait.postInit:(Lnet/minecraft/world/entity/LivingEntity;I)V
+     167: goto          101
+     170: aload_2
+     171: invokevirtual #446                // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+     174: astore_3
+     175: aload_3
+     176: invokeinterface #346,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+     181: ifeq          225
+     184: aload_3
+     185: invokeinterface #351,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     190: checkcast     #421                // class com/mojang/datafixers/util/Pair
+     193: astore        4
+     195: aload         4
+     197: invokevirtual #450                // Method com/mojang/datafixers/util/Pair.getSecond:()Ljava/lang/Object;
+     200: checkcast     #364                // class java/lang/Integer
+     203: invokevirtual #366                // Method java/lang/Integer.intValue:()I
+     206: ifne          222
+     209: aload_0
+     210: getfield      #10                 // Field traits:Ljava/util/LinkedHashMap;
+     213: aload         4
+     215: invokevirtual #447                // Method com/mojang/datafixers/util/Pair.getFirst:()Ljava/lang/Object;
+     218: invokevirtual #436                // Method java/util/LinkedHashMap.remove:(Ljava/lang/Object;)Ljava/lang/Object;
+     221: pop
+     222: goto          175
+     225: goto          12
+     228: iconst_1
+     229: ireturn
+
+  public void tick(net.minecraft.world.entity.LivingEntity);
+    Code:
+       0: iconst_0
+       1: istore_2
+       2: aload_0
+       3: iconst_1
+       4: putfield      #71                 // Field ticking:Z
+       7: aload_1
+       8: invokevirtual #117                // Method net/minecraft/world/entity/LivingEntity.level:()Lnet/minecraft/world/level/Level;
+      11: invokevirtual #461                // Method net/minecraft/world/level/Level.isClientSide:()Z
+      14: ifne          272
+      17: aload_0
+      18: invokevirtual #464                // Method isInitialized:()Z
+      21: ifne          47
+      24: aload_1
+      25: invokevirtual #117                // Method net/minecraft/world/entity/LivingEntity.level:()Lnet/minecraft/world/level/Level;
+      28: aload_1
+      29: invokevirtual #158                // Method net/minecraft/world/entity/LivingEntity.blockPosition:()Lnet/minecraft/core/BlockPos;
+      32: invokestatic  #467                // Method dev/xkmc/l2hostility/content/capability/chunk/ChunkDifficulty.at:(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)Ljava/util/Optional;
+      35: astore_3
+      36: aload_3
+      37: aload_0
+      38: aload_1
+      39: invokedynamic #473,  0            // InvokeDynamic #1:accept:(Ldev/xkmc/l2hostility/content/capability/mob/MobTraitCap;Lnet/minecraft/world/entity/LivingEntity;)Ljava/util/function/Consumer;
+      44: invokevirtual #477                // Method java/util/Optional.ifPresent:(Ljava/util/function/Consumer;)V
+      47: aload_0
+      48: getfield      #22                 // Field stage:Ldev/xkmc/l2hostility/content/capability/mob/MobTraitCap$Stage;
+      51: getstatic     #309                // Field dev/xkmc/l2hostility/content/capability/mob/MobTraitCap$Stage.INIT:Ldev/xkmc/l2hostility/content/capability/mob/MobTraitCap$Stage;
+      54: if_acmpne     148
+      57: aload_0
+      58: getstatic     #483                // Field dev/xkmc/l2hostility/content/capability/mob/MobTraitCap$Stage.POST_INIT:Ldev/xkmc/l2hostility/content/capability/mob/MobTraitCap$Stage;
+      61: putfield      #22                 // Field stage:Ldev/xkmc/l2hostility/content/capability/mob/MobTraitCap$Stage;
+      64: getstatic     #271                // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      67: new           #277                // class dev/xkmc/l2hostility/events/HostilityInitEvent$Pre
+      70: dup
+      71: aload_1
+      72: aload_0
+      73: getstatic     #486                // Field dev/xkmc/l2hostility/events/HostilityInitEvent$InitPhase.WEAPON:Ldev/xkmc/l2hostility/events/HostilityInitEvent$InitPhase;
+      76: invokespecial #285                // Method dev/xkmc/l2hostility/events/HostilityInitEvent$Pre."<init>":(Lnet/minecraft/world/entity/LivingEntity;Ldev/xkmc/l2hostility/content/capability/mob/MobTraitCap;Ldev/xkmc/l2hostility/events/HostilityInitEvent$InitPhase;)V
+      79: invokeinterface #288,  2          // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      84: checkcast     #277                // class dev/xkmc/l2hostility/events/HostilityInitEvent$Pre
+      87: invokevirtual #294                // Method dev/xkmc/l2hostility/events/HostilityInitEvent$Pre.isCanceled:()Z
+      90: ifne          119
+      93: aload_0
+      94: aload_1
+      95: invokestatic  #489                // Method dev/xkmc/l2hostility/content/logic/ItemPopulator.postFill:(Ldev/xkmc/l2hostility/content/capability/mob/MobTraitCap;Lnet/minecraft/world/entity/LivingEntity;)V
+      98: getstatic     #271                // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+     101: new           #306                // class dev/xkmc/l2hostility/events/HostilityInitEvent$Post
+     104: dup
+     105: aload_1
+     106: aload_0
+     107: getstatic     #486                // Field dev/xkmc/l2hostility/events/HostilityInitEvent$InitPhase.WEAPON:Ldev/xkmc/l2hostility/events/HostilityInitEvent$InitPhase;
+     110: invokespecial #308                // Method dev/xkmc/l2hostility/events/HostilityInitEvent$Post."<init>":(Lnet/minecraft/world/entity/LivingEntity;Ldev/xkmc/l2hostility/content/capability/mob/MobTraitCap;Ldev/xkmc/l2hostility/events/HostilityInitEvent$InitPhase;)V
+     113: invokeinterface #288,  2          // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+     118: pop
+     119: aload_0
+     120: getfield      #10                 // Field traits:Ljava/util/LinkedHashMap;
+     123: aload_1
+     124: invokedynamic #495,  0            // InvokeDynamic #2:accept:(Lnet/minecraft/world/entity/LivingEntity;)Ljava/util/function/BiConsumer;
+     129: invokevirtual #416                // Method java/util/LinkedHashMap.forEach:(Ljava/util/function/BiConsumer;)V
+     132: aload_0
+     133: aload_1
+     134: invokevirtual #498                // Method clearPending:(Lnet/minecraft/world/entity/LivingEntity;)Z
+     137: pop
+     138: aload_1
+     139: aload_1
+     140: invokevirtual #502                // Method net/minecraft/world/entity/LivingEntity.getMaxHealth:()F
+     143: invokevirtual #506                // Method net/minecraft/world/entity/LivingEntity.setHealth:(F)V
+     146: iconst_1
+     147: istore_2
+     148: aload_0
+     149: getfield      #10                 // Field traits:Ljava/util/LinkedHashMap;
+     152: invokevirtual #510                // Method java/util/LinkedHashMap.isEmpty:()Z
+     155: ifne          272
+     158: aload_1
+     159: instanceof    #511                // class net/minecraft/world/entity/OwnableEntity
+     162: ifeq          188
+     165: aload_1
+     166: checkcast     #511                // class net/minecraft/world/entity/OwnableEntity
+     169: astore        4
+     171: aload         4
+     173: invokeinterface #513,  1          // InterfaceMethod net/minecraft/world/entity/OwnableEntity.getOwner:()Lnet/minecraft/world/entity/LivingEntity;
+     178: instanceof    #517                // class net/minecraft/world/entity/player/Player
+     181: ifeq          188
+     184: iconst_1
+     185: goto          189
+     188: iconst_0
+     189: istore_3
+     190: aload_1
+     191: instanceof    #203                // class net/minecraft/world/entity/Mob
+     194: ifeq          215
+     197: aload_1
+     198: checkcast     #203                // class net/minecraft/world/entity/Mob
+     201: astore        5
+     203: aload         5
+     205: invokevirtual #205                // Method net/minecraft/world/entity/Mob.isNoAi:()Z
+     208: ifeq          215
+     211: iconst_1
+     212: goto          216
+     215: iconst_0
+     216: istore        4
+     218: getstatic     #180                // Field dev/xkmc/l2hostility/init/data/LHConfig.SERVER:Ldev/xkmc/l2hostility/init/data/LHConfig$Server;
+     221: getfield      #519                // Field dev/xkmc/l2hostility/init/data/LHConfig$Server.allowTraitOnOwnable:Lnet/neoforged/neoforge/common/ModConfigSpec$BooleanValue;
+     224: invokevirtual #192                // Method net/neoforged/neoforge/common/ModConfigSpec$BooleanValue.get:()Ljava/lang/Object;
+     227: checkcast     #197                // class java/lang/Boolean
+     230: invokevirtual #199                // Method java/lang/Boolean.booleanValue:()Z
+     233: ifne          240
+     236: iload_3
+     237: ifne          263
+     240: getstatic     #180                // Field dev/xkmc/l2hostility/init/data/LHConfig.SERVER:Ldev/xkmc/l2hostility/init/data/LHConfig$Server;
+     243: getfield      #186                // Field dev/xkmc/l2hostility/init/data/LHConfig$Server.allowNoAI:Lnet/neoforged/neoforge/common/ModConfigSpec$BooleanValue;
+     246: invokevirtual #192                // Method net/neoforged/neoforge/common/ModConfigSpec$BooleanValue.get:()Ljava/lang/Object;
+     249: checkcast     #197                // class java/lang/Boolean
+     252: invokevirtual #199                // Method java/lang/Boolean.booleanValue:()Z
+     255: ifne          272
+     258: iload         4
+     260: ifeq          272
+     263: aload_0
+     264: getfield      #10                 // Field traits:Ljava/util/LinkedHashMap;
+     267: invokevirtual #107                // Method java/util/LinkedHashMap.clear:()V
+     270: iconst_1
+     271: istore_2
+     272: aload_0
+     273: invokevirtual #464                // Method isInitialized:()Z
+     276: ifeq          361
+     279: aload_0
+     280: getfield      #10                 // Field traits:Ljava/util/LinkedHashMap;
+     283: invokevirtual #510                // Method java/util/LinkedHashMap.isEmpty:()Z
+     286: ifne          353
+     289: aload_1
+     290: getfield      #522                // Field net/minecraft/world/entity/LivingEntity.tickCount:I
+     293: invokestatic  #525                // Method dev/xkmc/l2hostility/content/capability/mob/PerformanceConstants.removeTraitInterval:()I
+     296: irem
+     297: ifne          340
+     300: iload_2
+     301: aload_0
+     302: getfield      #10                 // Field traits:Ljava/util/LinkedHashMap;
+     305: invokevirtual #530                // Method java/util/LinkedHashMap.keySet:()Ljava/util/Set;
+     308: invokedynamic #533,  0            // InvokeDynamic #3:test:()Ljava/util/function/Predicate;
+     313: invokeinterface #537,  2          // InterfaceMethod java/util/Set.removeIf:(Ljava/util/function/Predicate;)Z
+     318: ior
+     319: istore_2
+     320: iload_2
+     321: aload_0
+     322: getfield      #10                 // Field traits:Ljava/util/LinkedHashMap;
+     325: invokevirtual #530                // Method java/util/LinkedHashMap.keySet:()Ljava/util/Set;
+     328: invokedynamic #541,  0            // InvokeDynamic #4:test:()Ljava/util/function/Predicate;
+     333: invokeinterface #537,  2          // InterfaceMethod java/util/Set.removeIf:(Ljava/util/function/Predicate;)Z
+     338: ior
+     339: istore_2
+     340: aload_0
+     341: getfield      #10                 // Field traits:Ljava/util/LinkedHashMap;
+     344: aload_1
+     345: invokedynamic #542,  0            // InvokeDynamic #5:accept:(Lnet/minecraft/world/entity/LivingEntity;)Ljava/util/function/BiConsumer;
+     350: invokevirtual #416                // Method java/util/LinkedHashMap.forEach:(Ljava/util/function/BiConsumer;)V
+     353: iload_2
+     354: aload_0
+     355: aload_1
+     356: invokevirtual #498                // Method clearPending:(Lnet/minecraft/world/entity/LivingEntity;)Z
+     359: ior
+     360: istore_2
+     361: aload_1
+     362: invokevirtual #117                // Method net/minecraft/world/entity/LivingEntity.level:()Lnet/minecraft/world/level/Level;
+     365: invokevirtual #461                // Method net/minecraft/world/level/Level.isClientSide:()Z
+     368: ifne          438
+     371: aload_0
+     372: getfield      #52                 // Field pos:Lnet/minecraft/core/BlockPos;
+     375: ifnull        438
+     378: aload_0
+     379: getfield      #64                 // Field summoner:Ldev/xkmc/l2hostility/content/item/spawner/TraitSpawnerBlockEntity;
+     382: ifnonnull     417
+     385: aload_1
+     386: invokevirtual #117                // Method net/minecraft/world/entity/LivingEntity.level:()Lnet/minecraft/world/level/Level;
+     389: aload_0
+     390: getfield      #52                 // Field pos:Lnet/minecraft/core/BlockPos;
+     393: invokevirtual #543                // Method net/minecraft/world/level/Level.getBlockEntity:(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/entity/BlockEntity;
+     396: astore        4
+     398: aload         4
+     400: instanceof    #547                // class dev/xkmc/l2hostility/content/item/spawner/TraitSpawnerBlockEntity
+     403: ifeq          417
+     406: aload         4
+     408: checkcast     #547                // class dev/xkmc/l2hostility/content/item/spawner/TraitSpawnerBlockEntity
+     411: astore_3
+     412: aload_0
+     413: aload_3
+     414: putfield      #64                 // Field summoner:Ldev/xkmc/l2hostility/content/item/spawner/TraitSpawnerBlockEntity;
+     417: aload_0
+     418: getfield      #64                 // Field summoner:Ldev/xkmc/l2hostility/content/item/spawner/TraitSpawnerBlockEntity;
+     421: ifnull        434
+     424: aload_0
+     425: getfield      #64                 // Field summoner:Ldev/xkmc/l2hostility/content/item/spawner/TraitSpawnerBlockEntity;
+     428: invokevirtual #549                // Method dev/xkmc/l2hostility/content/item/spawner/TraitSpawnerBlockEntity.isRemoved:()Z
+     431: ifeq          438
+     434: aload_1
+     435: invokevirtual #552                // Method net/minecraft/world/entity/LivingEntity.discard:()V
+     438: aload_0
+     439: getfield      #56                 // Field asMinion:Ldev/xkmc/l2hostility/content/capability/mob/MinionData;
+     442: ifnull        456
+     445: iload_2
+     446: aload_0
+     447: getfield      #56                 // Field asMinion:Ldev/xkmc/l2hostility/content/capability/mob/MinionData;
+     450: aload_1
+     451: invokevirtual #555                // Method dev/xkmc/l2hostility/content/capability/mob/MinionData.tick:(Lnet/minecraft/world/entity/LivingEntity;)Z
+     454: ior
+     455: istore_2
+     456: aload_0
+     457: getstatic     #560                // Field dev/xkmc/l2hostility/init/registrate/LHTraits.MASTER:Ldev/xkmc/l2hostility/init/entries/TraitEntry;
+     460: invokevirtual #566                // Method dev/xkmc/l2hostility/init/entries/TraitEntry.get:()Ljava/lang/Object;
+     463: checkcast     #359                // class dev/xkmc/l2hostility/content/traits/base/MobTrait
+     466: invokevirtual #569                // Method hasTrait:(Ldev/xkmc/l2hostility/content/traits/base/MobTrait;)Z
+     469: ifeq          573
+     472: aload_1
+     473: invokevirtual #117                // Method net/minecraft/world/entity/LivingEntity.level:()Lnet/minecraft/world/level/Level;
+     476: invokevirtual #461                // Method net/minecraft/world/level/Level.isClientSide:()Z
+     479: ifne          502
+     482: aload_0
+     483: getfield      #60                 // Field asMaster:Ldev/xkmc/l2hostility/content/capability/mob/MasterData;
+     486: ifnonnull     502
+     489: aload_0
+     490: new           #573                // class dev/xkmc/l2hostility/content/capability/mob/MasterData
+     493: dup
+     494: invokespecial #575                // Method dev/xkmc/l2hostility/content/capability/mob/MasterData."<init>":()V
+     497: putfield      #60                 // Field asMaster:Ldev/xkmc/l2hostility/content/capability/mob/MasterData;
+     500: iconst_1
+     501: istore_2
+     502: aload_1
+     503: instanceof    #203                // class net/minecraft/world/entity/Mob
+     506: ifeq          533
+     509: aload_1
+     510: checkcast     #203                // class net/minecraft/world/entity/Mob
+     513: astore_3
+     514: aload_0
+     515: getfield      #60                 // Field asMaster:Ldev/xkmc/l2hostility/content/capability/mob/MasterData;
+     518: ifnull        533
+     521: iload_2
+     522: aload_0
+     523: getfield      #60                 // Field asMaster:Ldev/xkmc/l2hostility/content/capability/mob/MasterData;
+     526: aload_0
+     527: aload_3
+     528: invokevirtual #576                // Method dev/xkmc/l2hostility/content/capability/mob/MasterData.tick:(Ldev/xkmc/l2hostility/content/capability/mob/MobTraitCap;Lnet/minecraft/world/entity/Mob;)Z
+     531: ior
+     532: istore_2
+     533: aload_1
+     534: invokevirtual #117                // Method net/minecraft/world/entity/LivingEntity.level:()Lnet/minecraft/world/level/Level;
+     537: invokevirtual #461                // Method net/minecraft/world/level/Level.isClientSide:()Z
+     540: ifeq          573
+     543: aload_1
+     544: instanceof    #203                // class net/minecraft/world/entity/Mob
+     547: ifeq          565
+     550: aload_1
+     551: checkcast     #203                // class net/minecraft/world/entity/Mob
+     554: astore_3
+     555: getstatic     #579                // Field dev/xkmc/l2hostility/events/ClientEvents.MASTERS:Ljava/util/List;
+     558: aload_3
+     559: invokeinterface #585,  2          // InterfaceMethod java/util/List.add:(Ljava/lang/Object;)Z
+     564: pop
+     565: aload_1
+     566: ldc_w         #588                // String HostilityGlowing
+     569: invokevirtual #590                // Method net/minecraft/world/entity/LivingEntity.addTag:(Ljava/lang/String;)Z
+     572: pop
+     573: aload_0
+     574: getfield      #32                 // Field summoned:Z
+     577: ifeq          598
+     580: aload_1
+     581: invokevirtual #117                // Method net/minecraft/world/entity/LivingEntity.level:()Lnet/minecraft/world/level/Level;
+     584: invokevirtual #461                // Method net/minecraft/world/level/Level.isClientSide:()Z
+     587: ifeq          598
+     590: aload_1
+     591: ldc_w         #588                // String HostilityGlowing
+     594: invokevirtual #590                // Method net/minecraft/world/entity/LivingEntity.addTag:(Ljava/lang/String;)Z
+     597: pop
+     598: aload_1
+     599: invokevirtual #117                // Method net/minecraft/world/entity/LivingEntity.level:()Lnet/minecraft/world/level/Level;
+     602: invokevirtual #461                // Method net/minecraft/world/level/Level.isClientSide:()Z
+     605: ifne          624
+     608: iload_2
+     609: ifeq          624
+     612: aload_1
+     613: invokevirtual #594                // Method net/minecraft/world/entity/LivingEntity.isRemoved:()Z
+     616: ifne          624
+     619: aload_0
+     620: aload_1
+     621: invokevirtual #311                // Method syncToClient:(Lnet/minecraft/world/entity/LivingEntity;)V
+     624: aload_0
+     625: iconst_0
+     626: putfield      #71                 // Field ticking:Z
+     629: return
+
+  public boolean shouldDiscard(net.minecraft.world.entity.LivingEntity);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokevirtual #211                // Method getConfigCache:(Lnet/minecraft/world/entity/LivingEntity;)Ldev/xkmc/l2hostility/content/config/EntityConfig$Config;
+       5: astore_2
+       6: aload_2
+       7: ifnull        17
+      10: aload_2
+      11: getfield      #595                // Field dev/xkmc/l2hostility/content/config/EntityConfig$Config.minSpawnLevel:I
+      14: ifgt          19
+      17: iconst_0
+      18: ireturn
+      19: aload_0
+      20: getfield      #110                // Field lv:I
+      23: aload_2
+      24: getfield      #595                // Field dev/xkmc/l2hostility/content/config/EntityConfig$Config.minSpawnLevel:I
+      27: if_icmpge     34
+      30: iconst_1
+      31: goto          35
+      34: iconst_0
+      35: ireturn
+
+  public void onKilled(net.minecraft.world.entity.LivingEntity, net.minecraft.world.entity.player.Player);
+    Code:
+       0: aload_0
+       1: getfield      #64                 // Field summoner:Ldev/xkmc/l2hostility/content/item/spawner/TraitSpawnerBlockEntity;
+       4: ifnull        28
+       7: aload_0
+       8: getfield      #64                 // Field summoner:Ldev/xkmc/l2hostility/content/item/spawner/TraitSpawnerBlockEntity;
+      11: invokevirtual #549                // Method dev/xkmc/l2hostility/content/item/spawner/TraitSpawnerBlockEntity.isRemoved:()Z
+      14: ifne          28
+      17: aload_0
+      18: getfield      #64                 // Field summoner:Ldev/xkmc/l2hostility/content/item/spawner/TraitSpawnerBlockEntity;
+      21: getfield      #598                // Field dev/xkmc/l2hostility/content/item/spawner/TraitSpawnerBlockEntity.data:Ldev/xkmc/l2hostility/content/item/spawner/TraitSpawnerData;
+      24: aload_1
+      25: invokevirtual #601                // Method dev/xkmc/l2hostility/content/item/spawner/TraitSpawnerData.onDeath:(Lnet/minecraft/world/entity/LivingEntity;)V
+      28: aload_2
+      29: instanceof    #606                // class net/minecraft/server/level/ServerPlayer
+      32: ifeq          122
+      35: aload_2
+      36: checkcast     #606                // class net/minecraft/server/level/ServerPlayer
+      39: astore_3
+      40: getstatic     #608                // Field dev/xkmc/l2hostility/init/advancements/HostilityTriggers.TRAIT_LEVEL:Ldev/xkmc/l2core/init/reg/simple/Val;
+      43: invokeinterface #614,  1          // InterfaceMethod dev/xkmc/l2core/init/reg/simple/Val.get:()Ljava/lang/Object;
+      48: checkcast     #617                // class dev/xkmc/l2hostility/init/advancements/KillTraitLevelTrigger
+      51: aload_3
+      52: aload_0
+      53: invokevirtual #619                // Method dev/xkmc/l2hostility/init/advancements/KillTraitLevelTrigger.trigger:(Lnet/minecraft/server/level/ServerPlayer;Ldev/xkmc/l2hostility/content/capability/mob/MobTraitCap;)V
+      56: getstatic     #623                // Field dev/xkmc/l2hostility/init/advancements/HostilityTriggers.TRAIT_COUNT:Ldev/xkmc/l2core/init/reg/simple/Val;
+      59: invokeinterface #614,  1          // InterfaceMethod dev/xkmc/l2core/init/reg/simple/Val.get:()Ljava/lang/Object;
+      64: checkcast     #626                // class dev/xkmc/l2hostility/init/advancements/KillTraitCountTrigger
+      67: aload_3
+      68: aload_0
+      69: invokevirtual #628                // Method dev/xkmc/l2hostility/init/advancements/KillTraitCountTrigger.trigger:(Lnet/minecraft/server/level/ServerPlayer;Ldev/xkmc/l2hostility/content/capability/mob/MobTraitCap;)V
+      72: getstatic     #629                // Field dev/xkmc/l2hostility/init/advancements/HostilityTriggers.KILL_TRAITS:Ldev/xkmc/l2core/init/reg/simple/Val;
+      75: invokeinterface #614,  1          // InterfaceMethod dev/xkmc/l2core/init/reg/simple/Val.get:()Ljava/lang/Object;
+      80: checkcast     #632                // class dev/xkmc/l2hostility/init/advancements/KillTraitsTrigger
+      83: aload_3
+      84: aload_0
+      85: invokevirtual #634                // Method dev/xkmc/l2hostility/init/advancements/KillTraitsTrigger.trigger:(Lnet/minecraft/server/level/ServerPlayer;Ldev/xkmc/l2hostility/content/capability/mob/MobTraitCap;)V
+      88: getstatic     #635                // Field dev/xkmc/l2hostility/init/advancements/HostilityTriggers.TRAIT_FLAME:Ldev/xkmc/l2core/init/reg/simple/Val;
+      91: invokeinterface #614,  1          // InterfaceMethod dev/xkmc/l2core/init/reg/simple/Val.get:()Ljava/lang/Object;
+      96: checkcast     #638                // class dev/xkmc/l2hostility/init/advancements/KillTraitFlameTrigger
+      99: aload_3
+     100: aload_1
+     101: aload_0
+     102: invokevirtual #640                // Method dev/xkmc/l2hostility/init/advancements/KillTraitFlameTrigger.trigger:(Lnet/minecraft/server/level/ServerPlayer;Lnet/minecraft/world/entity/LivingEntity;Ldev/xkmc/l2hostility/content/capability/mob/MobTraitCap;)V
+     105: getstatic     #643                // Field dev/xkmc/l2hostility/init/advancements/HostilityTriggers.TRAIT_EFFECT:Ldev/xkmc/l2core/init/reg/simple/Val;
+     108: invokeinterface #614,  1          // InterfaceMethod dev/xkmc/l2core/init/reg/simple/Val.get:()Ljava/lang/Object;
+     113: checkcast     #646                // class dev/xkmc/l2hostility/init/advancements/KillTraitEffectTrigger
+     116: aload_3
+     117: aload_1
+     118: aload_0
+     119: invokevirtual #648                // Method dev/xkmc/l2hostility/init/advancements/KillTraitEffectTrigger.trigger:(Lnet/minecraft/server/level/ServerPlayer;Lnet/minecraft/world/entity/LivingEntity;Ldev/xkmc/l2hostility/content/capability/mob/MobTraitCap;)V
+     122: return
+
+  public boolean isSummoned();
+    Code:
+       0: aload_0
+       1: getfield      #32                 // Field summoned:Z
+       4: ifne          14
+       7: aload_0
+       8: getfield      #36                 // Field minion:Z
+      11: ifeq          18
+      14: iconst_1
+      15: goto          19
+      18: iconst_0
+      19: ireturn
+
+  public boolean isMasterProtected();
+    Code:
+       0: aload_0
+       1: getfield      #60                 // Field asMaster:Ldev/xkmc/l2hostility/content/capability/mob/MasterData;
+       4: ifnull        106
+       7: aload_0
+       8: getfield      #60                 // Field asMaster:Ldev/xkmc/l2hostility/content/capability/mob/MasterData;
+      11: getfield      #649                // Field dev/xkmc/l2hostility/content/capability/mob/MasterData.data:Ljava/util/ArrayList;
+      14: invokevirtual #446                // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+      17: astore_1
+      18: aload_1
+      19: invokeinterface #346,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+      24: ifeq          106
+      27: aload_1
+      28: invokeinterface #351,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      33: checkcast     #651                // class dev/xkmc/l2hostility/content/capability/mob/MasterData$Minion
+      36: astore_2
+      37: aload_2
+      38: getfield      #653                // Field dev/xkmc/l2hostility/content/capability/mob/MasterData$Minion.minion:Lnet/minecraft/world/entity/Mob;
+      41: ifnonnull     47
+      44: goto          18
+      47: getstatic     #656                // Field dev/xkmc/l2hostility/init/registrate/LHMiscs.MOB:Ldev/xkmc/l2core/init/reg/simple/AttVal$CapVal;
+      50: invokeinterface #660,  1          // InterfaceMethod dev/xkmc/l2core/init/reg/simple/AttVal$CapVal.type:()Ldev/xkmc/l2core/capability/attachment/AttachmentDef;
+      55: checkcast     #663                // class dev/xkmc/l2core/capability/attachment/GeneralCapabilityHolder
+      58: aload_2
+      59: getfield      #653                // Field dev/xkmc/l2hostility/content/capability/mob/MasterData$Minion.minion:Lnet/minecraft/world/entity/Mob;
+      62: invokevirtual #665                // Method dev/xkmc/l2core/capability/attachment/GeneralCapabilityHolder.getExisting:(Lnet/neoforged/neoforge/attachment/IAttachmentHolder;)Ljava/util/Optional;
+      65: astore_3
+      66: aload_3
+      67: invokevirtual #669                // Method java/util/Optional.isPresent:()Z
+      70: ifeq          103
+      73: aload_3
+      74: invokevirtual #672                // Method java/util/Optional.get:()Ljava/lang/Object;
+      77: checkcast     #11                 // class dev/xkmc/l2hostility/content/capability/mob/MobTraitCap
+      80: astore        4
+      82: aload         4
+      84: getfield      #56                 // Field asMinion:Ldev/xkmc/l2hostility/content/capability/mob/MinionData;
+      87: ifnull        103
+      90: aload         4
+      92: getfield      #56                 // Field asMinion:Ldev/xkmc/l2hostility/content/capability/mob/MinionData;
+      95: getfield      #673                // Field dev/xkmc/l2hostility/content/capability/mob/MinionData.protectMaster:Z
+      98: ifeq          103
+     101: iconst_1
+     102: ireturn
+     103: goto          18
+     106: iconst_0
+     107: ireturn
+
+  public <T extends dev.xkmc.l2hostility.content.capability.mob.CapStorageData> T getData(net.minecraft.resources.ResourceLocation);
+    Code:
+       0: aload_0
+       1: getfield      #28                 // Field data:Ljava/util/HashMap;
+       4: aload_1
+       5: invokevirtual #676                // Method java/util/HashMap.get:(Ljava/lang/Object;)Ljava/lang/Object;
+       8: checkcast     #678                // class dev/xkmc/l2hostility/content/capability/mob/CapStorageData
+      11: invokestatic  #680                // Method dev/xkmc/l2serial/util/Wrappers.cast:(Ljava/lang/Object;)Ljava/lang/Object;
+      14: checkcast     #678                // class dev/xkmc/l2hostility/content/capability/mob/CapStorageData
+      17: areturn
+
+  public <T extends dev.xkmc.l2hostility.content.capability.mob.CapStorageData> T getOrCreateData(net.minecraft.resources.ResourceLocation, java.util.function.Supplier<T>);
+    Code:
+       0: aload_0
+       1: getfield      #28                 // Field data:Ljava/util/HashMap;
+       4: aload_1
+       5: aload_2
+       6: invokedynamic #685,  0            // InvokeDynamic #6:apply:(Ljava/util/function/Supplier;)Ljava/util/function/Function;
+      11: invokevirtual #688                // Method java/util/HashMap.computeIfAbsent:(Ljava/lang/Object;Ljava/util/function/Function;)Ljava/lang/Object;
+      14: checkcast     #678                // class dev/xkmc/l2hostility/content/capability/mob/CapStorageData
+      17: invokestatic  #680                // Method dev/xkmc/l2serial/util/Wrappers.cast:(Ljava/lang/Object;)Ljava/lang/Object;
+      20: checkcast     #678                // class dev/xkmc/l2hostility/content/capability/mob/CapStorageData
+      23: areturn
+
+  public java.util.List<net.minecraft.network.chat.Component> getTitle(boolean, boolean);
+    Code:
+       0: new           #78                 // class java/util/ArrayList
+       3: dup
+       4: invokespecial #80                 // Method java/util/ArrayList."<init>":()V
+       7: astore_3
+       8: iload_1
+       9: ifeq          92
+      12: aload_0
+      13: getfield      #110                // Field lv:I
+      16: ifle          92
+      19: aload_3
+      20: getstatic     #692                // Field dev/xkmc/l2hostility/init/data/LangData.LV:Ldev/xkmc/l2hostility/init/data/LangData;
+      23: iconst_1
+      24: anewarray     #698                // class java/lang/Object
+      27: dup
+      28: iconst_0
+      29: aload_0
+      30: getfield      #110                // Field lv:I
+      33: invokestatic  #373                // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      36: aastore
+      37: invokevirtual #700                // Method dev/xkmc/l2hostility/init/data/LangData.get:([Ljava/lang/Object;)Lnet/minecraft/network/chat/MutableComponent;
+      40: getstatic     #703                // Field net/minecraft/network/chat/Style.EMPTY:Lnet/minecraft/network/chat/Style;
+      43: aload_0
+      44: getfield      #42                 // Field fullDrop:Z
+      47: ifeq          65
+      50: getstatic     #709                // Field dev/xkmc/l2hostility/init/data/LHConfig.CLIENT:Ldev/xkmc/l2hostility/init/data/LHConfig$Client;
+      53: getfield      #713                // Field dev/xkmc/l2hostility/init/data/LHConfig$Client.overHeadLevelColorAbyss:Lnet/neoforged/neoforge/common/ModConfigSpec$IntValue;
+      56: invokevirtual #397                // Method net/neoforged/neoforge/common/ModConfigSpec$IntValue.get:()Ljava/lang/Object;
+      59: checkcast     #364                // class java/lang/Integer
+      62: goto          77
+      65: getstatic     #709                // Field dev/xkmc/l2hostility/init/data/LHConfig.CLIENT:Ldev/xkmc/l2hostility/init/data/LHConfig$Client;
+      68: getfield      #718                // Field dev/xkmc/l2hostility/init/data/LHConfig$Client.overHeadLevelColor:Lnet/neoforged/neoforge/common/ModConfigSpec$IntValue;
+      71: invokevirtual #397                // Method net/neoforged/neoforge/common/ModConfigSpec$IntValue.get:()Ljava/lang/Object;
+      74: checkcast     #364                // class java/lang/Integer
+      77: invokevirtual #366                // Method java/lang/Integer.intValue:()I
+      80: invokevirtual #721                // Method net/minecraft/network/chat/Style.withColor:(I)Lnet/minecraft/network/chat/Style;
+      83: invokevirtual #725                // Method net/minecraft/network/chat/MutableComponent.withStyle:(Lnet/minecraft/network/chat/Style;)Lnet/minecraft/network/chat/MutableComponent;
+      86: invokeinterface #585,  2          // InterfaceMethod java/util/List.add:(Ljava/lang/Object;)Z
+      91: pop
+      92: iload_2
+      93: ifne          98
+      96: aload_3
+      97: areturn
+      98: aconst_null
+      99: astore        4
+     101: iconst_0
+     102: istore        5
+     104: aload_0
+     105: getfield      #10                 // Field traits:Ljava/util/LinkedHashMap;
+     108: invokevirtual #336                // Method java/util/LinkedHashMap.entrySet:()Ljava/util/Set;
+     111: invokeinterface #340,  1          // InterfaceMethod java/util/Set.iterator:()Ljava/util/Iterator;
+     116: astore        6
+     118: aload         6
+     120: invokeinterface #346,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+     125: ifeq          230
+     128: aload         6
+     130: invokeinterface #351,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     135: checkcast     #354                // class java/util/Map$Entry
+     138: astore        7
+     140: aload         7
+     142: invokeinterface #356,  1          // InterfaceMethod java/util/Map$Entry.getKey:()Ljava/lang/Object;
+     147: checkcast     #359                // class dev/xkmc/l2hostility/content/traits/base/MobTrait
+     150: aload         7
+     152: invokeinterface #361,  1          // InterfaceMethod java/util/Map$Entry.getValue:()Ljava/lang/Object;
+     157: checkcast     #364                // class java/lang/Integer
+     160: invokevirtual #731                // Method dev/xkmc/l2hostility/content/traits/base/MobTrait.getFullDesc:(Ljava/lang/Integer;)Lnet/minecraft/network/chat/MutableComponent;
+     163: astore        8
+     165: aload         4
+     167: ifnonnull     180
+     170: aload         8
+     172: astore        4
+     174: iconst_1
+     175: istore        5
+     177: goto          227
+     180: aload         4
+     182: ldc_w         #735                // String  /
+     185: invokestatic  #737                // InterfaceMethod net/minecraft/network/chat/Component.literal:(Ljava/lang/String;)Lnet/minecraft/network/chat/MutableComponent;
+     188: getstatic     #743                // Field net/minecraft/ChatFormatting.WHITE:Lnet/minecraft/ChatFormatting;
+     191: invokevirtual #749                // Method net/minecraft/network/chat/MutableComponent.withStyle:(Lnet/minecraft/ChatFormatting;)Lnet/minecraft/network/chat/MutableComponent;
+     194: invokevirtual #752                // Method net/minecraft/network/chat/MutableComponent.append:(Lnet/minecraft/network/chat/Component;)Lnet/minecraft/network/chat/MutableComponent;
+     197: aload         8
+     199: invokevirtual #752                // Method net/minecraft/network/chat/MutableComponent.append:(Lnet/minecraft/network/chat/Component;)Lnet/minecraft/network/chat/MutableComponent;
+     202: pop
+     203: iinc          5, 1
+     206: iload         5
+     208: iconst_3
+     209: if_icmplt     227
+     212: aload_3
+     213: aload         4
+     215: invokeinterface #585,  2          // InterfaceMethod java/util/List.add:(Ljava/lang/Object;)Z
+     220: pop
+     221: iconst_0
+     222: istore        5
+     224: aconst_null
+     225: astore        4
+     227: goto          118
+     230: iload         5
+     232: ifle          244
+     235: aload_3
+     236: aload         4
+     238: invokeinterface #585,  2          // InterfaceMethod java/util/List.add:(Ljava/lang/Object;)Z
+     243: pop
+     244: aload_3
+     245: areturn
+
+  public void tick(java.lang.Object);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: checkcast     #118                // class net/minecraft/world/entity/LivingEntity
+       5: invokevirtual #756                // Method tick:(Lnet/minecraft/world/entity/LivingEntity;)V
+       8: return
+
+  private static dev.xkmc.l2hostility.content.capability.mob.CapStorageData lambda$getOrCreateData$4(java.util.function.Supplier, net.minecraft.resources.ResourceLocation);
+    Code:
+       0: aload_0
+       1: invokeinterface #758,  1          // InterfaceMethod java/util/function/Supplier.get:()Ljava/lang/Object;
+       6: checkcast     #678                // class dev/xkmc/l2hostility/content/capability/mob/CapStorageData
+       9: areturn
+
+  private static void lambda$tick$3(net.minecraft.world.entity.LivingEntity, dev.xkmc.l2hostility.content.traits.base.MobTrait, java.lang.Integer);
+    Code:
+       0: aload_1
+       1: aload_0
+       2: aload_2
+       3: invokevirtual #366                // Method java/lang/Integer.intValue:()I
+       6: invokevirtual #761                // Method dev/xkmc/l2hostility/content/traits/base/MobTrait.tick:(Lnet/minecraft/world/entity/LivingEntity;I)V
+       9: return
+
+  private static void lambda$tick$2(net.minecraft.world.entity.LivingEntity, dev.xkmc.l2hostility.content.traits.base.MobTrait, java.lang.Integer);
+    Code:
+       0: aload_1
+       1: aload_0
+       2: aload_2
+       3: invokevirtual #366                // Method java/lang/Integer.intValue:()I
+       6: invokevirtual #458                // Method dev/xkmc/l2hostility/content/traits/base/MobTrait.postInit:(Lnet/minecraft/world/entity/LivingEntity;I)V
+       9: return
+
+  private void lambda$tick$1(net.minecraft.world.entity.LivingEntity, dev.xkmc.l2hostility.content.capability.chunk.ChunkCapHolder);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokevirtual #117                // Method net/minecraft/world/entity/LivingEntity.level:()Lnet/minecraft/world/level/Level;
+       5: aload_1
+       6: aload_2
+       7: invokevirtual #127                // Method init:(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Ldev/xkmc/l2hostility/content/capability/chunk/RegionalDifficultyModifier;)V
+      10: return
+
+  private static void lambda$reinit$0(int, boolean, net.minecraft.core.BlockPos, dev.xkmc.l2hostility.content.logic.MobDifficultyCollector);
+    Code:
+       0: aload_3
+       1: iload_0
+       2: putfield      #763                // Field dev/xkmc/l2hostility/content/logic/MobDifficultyCollector.base:I
+       5: iload_1
+       6: ifeq          13
+       9: aload_3
+      10: invokevirtual #766                // Method dev/xkmc/l2hostility/content/logic/MobDifficultyCollector.setFullChance:()V
+      13: return
+}

@@ -1,0 +1,401 @@
+### com.guzhenrenlibrary.npc.life.Resident   [outer]
+Compiled from "Resident.java"
+public final class com.guzhenrenlibrary.npc.life.Resident {
+  public static final int LOG_MAX;
+  public static final int ZHUANSHU_MAX;
+  private final java.util.UUID npcId;
+  private com.guzhenrenlibrary.npc.NpcPersona persona;
+  private double zhuanshu;
+  private java.lang.String dimension;
+  private double x;
+  private double y;
+  private double z;
+  private boolean positionKnown;
+  private double homeX;
+  private double homeZ;
+  private boolean homeKnown;
+  private int cultivation;
+  private com.guzhenrenlibrary.npc.life.Resident$State state;
+  private long stateUntil;
+  private long lastSimTick;
+  private long lastSeenTick;
+  private int missingTicks;
+  private boolean deceased;
+  private final java.util.List<java.lang.String> gu;
+  private final java.util.List<java.lang.String> guGranted;
+  private final java.util.List<java.util.UUID> partners;
+  private final java.util.List<java.util.UUID> feuds;
+  private java.lang.String household;
+  private boolean householdLord;
+  private double householdX;
+  private double householdZ;
+  private final java.util.List<java.lang.String> log;
+  public com.guzhenrenlibrary.npc.life.Resident(java.util.UUID, com.guzhenrenlibrary.npc.NpcPersona, double, long);
+  public java.util.UUID npcId();
+  public com.guzhenrenlibrary.npc.NpcPersona persona();
+  public java.lang.String displayName();
+  public double zhuanshu();
+  public int zhuanshuInt();
+  public int cultivation();
+  public java.lang.String dimension();
+  public double x();
+  public double y();
+  public double z();
+  public boolean positionKnown();
+  public boolean homeKnown();
+  public double homeX();
+  public double homeZ();
+  public void setHome(double, double);
+  public void travelTo(double, double, double);
+  public com.guzhenrenlibrary.npc.life.Resident$State state();
+  public long stateUntil();
+  public long lastSimTick();
+  public long lastSeenTick();
+  public int missingTicks();
+  public boolean deceased();
+  public java.util.List<java.lang.String> gu();
+  public java.util.List<java.util.UUID> partners();
+  public java.util.List<java.lang.String> log();
+  public java.lang.String latestLog();
+  public boolean hasPartner(java.util.UUID);
+  public java.util.List<java.util.UUID> feuds();
+  public boolean hasFeud(java.util.UUID);
+  public java.lang.String household();
+  public boolean isHouseholdLord();
+  public boolean inHousehold();
+  public double householdX();
+  public double householdZ();
+  public double distanceToHousehold(double, double);
+  public java.lang.String describe();
+  public void setPersona(com.guzhenrenlibrary.npc.NpcPersona);
+  public void setZhuanshu(double);
+  public void at(java.lang.String, double, double, double, long);
+  public void setState(com.guzhenrenlibrary.npc.life.Resident$State, long);
+  public void setLastSimTick(long);
+  public void setMissingTicks(int);
+  public void markDeceased();
+  public boolean gainCultivation(int);
+  public void breakthrough();
+  public void rememberGu(java.lang.String);
+  public void forgetGu(java.lang.String);
+  public java.util.List<java.lang.String> guGranted();
+  public boolean guGranted(java.lang.String);
+  public boolean grantGu(java.lang.String);
+  public boolean everKitted();
+  public void addPartner(java.util.UUID);
+  public void removePartner(java.util.UUID);
+  public void addFeud(java.util.UUID);
+  public void removeFeud(java.util.UUID);
+  public void foundHousehold(java.lang.String, double, double);
+  public void joinHousehold(java.lang.String, double, double);
+  public void leaveHousehold();
+  public void remember(java.lang.String, long);
+  public net.minecraft.nbt.CompoundTag toTag();
+  public static com.guzhenrenlibrary.npc.life.Resident fromTag(net.minecraft.nbt.CompoundTag);
+  public java.lang.String toString();
+}
+
+### com.guzhenrenlibrary.npc.life.Resident$State   [outer]
+Compiled from "Resident.java"
+public final class com.guzhenrenlibrary.npc.life.Resident$State extends java.lang.Enum<com.guzhenrenlibrary.npc.life.Resident$State> {
+  public static final com.guzhenrenlibrary.npc.life.Resident$State IDLE;
+  public static final com.guzhenrenlibrary.npc.life.Resident$State CULTIVATING;
+  public static final com.guzhenrenlibrary.npc.life.Resident$State TRAVELLING;
+  public static final com.guzhenrenlibrary.npc.life.Resident$State SEEKING_GU;
+  public static final com.guzhenrenlibrary.npc.life.Resident$State VISITING;
+  public static final com.guzhenrenlibrary.npc.life.Resident$State WITH_PARTNER;
+  private final java.lang.String chineseName;
+  private static final com.guzhenrenlibrary.npc.life.Resident$State[] $VALUES;
+  public static com.guzhenrenlibrary.npc.life.Resident$State[] values();
+  public static com.guzhenrenlibrary.npc.life.Resident$State valueOf(java.lang.String);
+  private com.guzhenrenlibrary.npc.life.Resident$State(java.lang.String);
+  public java.lang.String chineseName();
+  public static com.guzhenrenlibrary.npc.life.Resident$State byOrdinal(int);
+  private static com.guzhenrenlibrary.npc.life.Resident$State[] $values();
+  static {};
+}
+
+### com.guzhenrenlibrary.npc.life.ResidentService   [outer]
+Compiled from "ResidentService.java"
+public final class com.guzhenrenlibrary.npc.life.ResidentService {
+  private static final java.util.Set<java.util.UUID> HELD;
+  public static final int SPEAK_COOLDOWN_TICKS;
+  public static final double SPEAK_RANGE;
+  public static final double NOTICE_RANGE;
+  private static final java.util.Map<java.util.UUID, java.lang.Long> LAST_SPOKE;
+  private static final java.util.Random RANDOM;
+  public static final java.lang.String GU_GRANT_KEY;
+  public static final int GU_GAIN_CAP;
+  private com.guzhenrenlibrary.npc.life.ResidentService();
+  public static com.guzhenrenlibrary.npc.life.ResidentRegistry registry(net.minecraft.world.level.Level);
+  private static net.minecraft.server.level.ServerLevel overworldOf(net.minecraft.world.level.Level);
+  public static com.guzhenrenlibrary.npc.life.Resident residentOf(net.minecraft.world.entity.Entity);
+  public static java.lang.String lastLifeLine(java.util.UUID, net.minecraft.world.level.Level);
+  public static java.lang.String lifeStateName(java.util.UUID, net.minecraft.world.level.Level);
+  public static void enroll(net.minecraft.world.entity.Entity);
+  public static void enrollAll(java.util.List<? extends net.minecraft.world.entity.Entity>);
+  public static void tick(net.minecraft.server.level.ServerLevel);
+  public static void onDeath(net.minecraft.world.entity.Entity);
+  public static void simulate(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.npc.life.Resident, long);
+  public static void simulate(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.npc.life.Resident, long, java.util.Map<java.lang.String, com.guzhenrenlibrary.faction.FactionDef>);
+  private static void lifeEvent(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.npc.life.Resident, long);
+  private static boolean contestGu(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.npc.life.Resident, java.lang.String, long);
+  private static int contestScore(com.guzhenrenlibrary.npc.life.Resident);
+  private static boolean quarrel(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.npc.life.Resident, long);
+  private static boolean maybeFoundHousehold(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.npc.life.Resident, long);
+  private static boolean maybeJoinHousehold(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.npc.life.Resident, long);
+  private static com.guzhenrenlibrary.npc.life.Resident findHouseholdLord(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.npc.life.Resident);
+  public static int householdSize(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.npc.life.Resident);
+  public static java.lang.String householdName(com.guzhenrenlibrary.npc.life.Resident);
+  private static com.guzhenrenlibrary.npc.life.Resident findRival(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.npc.life.Resident);
+  public static net.minecraft.world.entity.Mob findDuelTarget(net.minecraft.world.entity.Mob);
+  public static java.util.List<net.minecraft.world.entity.Mob> socialTargets(net.minecraft.world.entity.Mob);
+  public static net.minecraft.world.entity.Mob findSocialTarget(net.minecraft.world.entity.Mob);
+  public static void recordSocial(net.minecraft.world.entity.Mob, net.minecraft.world.entity.Mob, boolean);
+  private static java.lang.String firstGu(com.guzhenrenlibrary.npc.life.Resident);
+  public static void beginDuel(net.minecraft.world.entity.Mob, net.minecraft.world.entity.Mob);
+  public static void keepDuel(net.minecraft.world.entity.Mob, net.minecraft.world.entity.Mob);
+  public static void endDuel(net.minecraft.world.entity.Mob, net.minecraft.world.entity.Mob, net.minecraft.world.entity.Mob, java.lang.String);
+  public static net.minecraft.world.entity.Mob yieldCheck(net.minecraft.world.entity.Mob, net.minecraft.world.entity.Entity, float);
+  public static java.lang.String nameOf(net.minecraft.world.entity.Mob);
+  private static double clampToHome(double, double);
+  private static void materialize(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.npc.life.Resident, long);
+  private static com.guzhenrenlibrary.npc.life.Resident spawn(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.npc.life.Resident, net.minecraft.core.BlockPos);
+  public static void applyToEntity(com.guzhenrenlibrary.npc.life.Resident, net.minecraft.world.entity.Mob);
+  public static void syncFromEntity(com.guzhenrenlibrary.npc.life.Resident, net.minecraft.world.entity.Mob, long);
+  public static net.minecraft.world.entity.Mob findLive(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.npc.life.Resident);
+  private static net.minecraft.server.level.ServerLevel dimensionOf(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.npc.life.Resident);
+  private static boolean hasPlayerNear(net.minecraft.server.level.ServerLevel, double, double, double, double);
+  public static void ambientTick(net.minecraft.world.entity.Mob);
+  private static void hold(net.minecraft.world.entity.Mob);
+  private static void release(net.minecraft.world.entity.Mob);
+  public static boolean heldForCultivation(java.util.UUID);
+  public static boolean wantsToSpeak(net.minecraft.server.level.ServerPlayer, net.minecraft.world.entity.Mob);
+  public static void speakTo(net.minecraft.server.level.ServerPlayer, net.minecraft.world.entity.Mob);
+  public static long lastSpokeAt(java.util.UUID);
+  private static int between(java.util.Random, int, int);
+  public static java.lang.String pickGu(int);
+  private static void giveRealGu(net.minecraft.world.entity.Mob, java.lang.String);
+  private static boolean giveRealGu(net.minecraft.world.entity.Mob, java.lang.String, boolean);
+  public static java.lang.String guGrantedList(net.minecraft.world.entity.Mob);
+  public static boolean isGuGranted(net.minecraft.world.entity.Mob, java.lang.String);
+  public static int guGrantedCount(net.minecraft.world.entity.Mob);
+  public static void markGuGranted(net.minecraft.world.entity.Mob, java.lang.String);
+  private static com.guzhenrenlibrary.npc.life.Resident findPartnerCandidate(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.npc.life.Resident);
+  public static java.lang.String guName(java.lang.String);
+  public static net.minecraft.world.item.ItemStack stackOf(java.lang.String);
+  public static java.lang.String zhuanshuName(int);
+  public static java.lang.String dimensionName(net.minecraft.world.level.Level);
+  public static java.lang.String describeForProbe(net.minecraft.server.level.ServerLevel);
+  private static java.util.List lambda$pickGu$1(net.minecraft.core.HolderSet$Named);
+  private static net.minecraft.world.item.Item lambda$pickGu$0(net.minecraft.core.Holder);
+  static {};
+}
+
+### com.guzhenrenlibrary.npc.life.ResidentData   [outer]
+Compiled from "ResidentData.java"
+public final class com.guzhenrenlibrary.npc.life.ResidentData {
+  public static final net.neoforged.neoforge.registries.DeferredRegister<net.neoforged.neoforge.attachment.AttachmentType<?>> ATTACHMENTS;
+  public static final net.neoforged.neoforge.registries.DeferredHolder<net.neoforged.neoforge.attachment.AttachmentType<?>, net.neoforged.neoforge.attachment.AttachmentType<com.guzhenrenlibrary.npc.life.ResidentRegistry>> REGISTRY;
+  private com.guzhenrenlibrary.npc.life.ResidentData();
+  private static net.neoforged.neoforge.attachment.AttachmentType lambda$static$0();
+  static {};
+}
+
+### com.guzhenrenlibrary.npc.life.ResidentRegistry   [outer]
+Compiled from "ResidentRegistry.java"
+public final class com.guzhenrenlibrary.npc.life.ResidentRegistry {
+  public static final com.mojang.serialization.Codec<com.guzhenrenlibrary.npc.life.ResidentRegistry> CODEC;
+  private final java.util.Map<java.util.UUID, com.guzhenrenlibrary.npc.life.Resident> all;
+  private int cursor;
+  private long lastSimTick;
+  public com.guzhenrenlibrary.npc.life.ResidentRegistry();
+  public static com.guzhenrenlibrary.npc.life.ResidentRegistry of(net.minecraft.world.level.Level);
+  public int size();
+  public boolean isEmpty();
+  public java.util.Collection<com.guzhenrenlibrary.npc.life.Resident> all();
+  public com.guzhenrenlibrary.npc.life.Resident get(java.util.UUID);
+  public boolean contains(java.util.UUID);
+  public long lastSimTick();
+  public void setLastSimTick(long);
+  public int cursor();
+  public int aliveCount();
+  public com.guzhenrenlibrary.npc.life.Resident enroll(java.util.UUID, com.guzhenrenlibrary.npc.NpcPersona, double, long);
+  public void put(com.guzhenrenlibrary.npc.life.Resident);
+  public boolean remove(java.util.UUID);
+  public void clear();
+  public java.util.List<com.guzhenrenlibrary.npc.life.Resident> nextBatch(int);
+  public net.minecraft.nbt.CompoundTag toTag();
+  public static com.guzhenrenlibrary.npc.life.ResidentRegistry fromTag(net.minecraft.nbt.CompoundTag);
+  public java.lang.String toString();
+  static {};
+}
+
+### com.guzhenrenlibrary.npc.life.ResidentRules   [outer]
+Compiled from "ResidentRules.java"
+public final class com.guzhenrenlibrary.npc.life.ResidentRules {
+  public static final int MAX_RESIDENTS;
+  public static final int SIM_INTERVAL_TICKS;
+  public static final int SIM_BATCH;
+  public static final int MAX_CATCHUP_DAYS;
+  public static final int DAY_TICKS;
+  public static final int[] BREAKTHROUGH_DAYS;
+  public static final float BREAKTHROUGH_CHANCE;
+  public static final int CULTIVATION_PER_DAY;
+  public static final float CULTIVATING_FACTOR;
+  public static final float IDLE_FACTOR;
+  public static final float EVENT_DAYS;
+  public static final int STATE_MIN_TICKS;
+  public static final int STATE_MAX_TICKS;
+  public static final int TRAVEL_MIN;
+  public static final int TRAVEL_MAX;
+  public static final int HOME_RADIUS;
+  public static final int SEEK_GU_MIN_ZHUANSHU;
+  public static final float SEEK_GU_CHANCE;
+  public static final int GU_LIST_MAX;
+  public static final int PARTNER_ZHUANSHU_GAP;
+  public static final float FIND_PARTNER_CHANCE;
+  public static final int MATERIALIZE_RANGE;
+  public static final int MISSING_GRACE;
+  public static final int ENROLL_RANGE;
+  public static final float FEUD_CHANCE;
+  public static final float DUEL_CHANCE;
+  public static final float FOUND_HOUSEHOLD_CHANCE;
+  public static final int FOUND_HOUSEHOLD_MIN_ZHUANSHU;
+  public static final int FOUND_HOUSEHOLD_MIN_GU;
+  public static final int HOUSEHOLD_MAX_MEMBERS;
+  public static final int FEUD_LIST_MAX;
+  public static final double DUEL_RANGE;
+  public static final int DUEL_TIMEOUT_TICKS;
+  public static final int HOUSEHOLD_RADIUS;
+  public static final float DUEL_YIELD_RATIO;
+  private com.guzhenrenlibrary.npc.life.ResidentRules();
+  public static int breakthroughNeed(int);
+  public static int maxCatchupTicks();
+  public static int eventIntervalTicks();
+  public static com.guzhenrenlibrary.npc.life.Resident$State rollState(int, boolean, java.util.Random);
+  public static boolean findsGu(com.guzhenrenlibrary.npc.life.Resident$State, java.util.Random);
+  public static boolean seeksPartner(com.guzhenrenlibrary.npc.life.Resident$State, boolean, int, int, java.util.Random);
+  public static boolean feudRoll(boolean, java.util.Random);
+  public static java.lang.String describeForProbe();
+  static {};
+}
+
+### com.guzhenrenlibrary.npc.NpcTrade   [outer]
+Compiled from "NpcTrade.java"
+public final class com.guzhenrenlibrary.npc.NpcTrade {
+  private static final int[] PRICE_TIERS;
+  private static final com.guzhenrenlibrary.npc.NpcTrade$PaimaihangTier[] PAIMAIHANG_TABLE;
+  private static final int YUANSHI_PER_WAN;
+  public static final net.minecraft.tags.TagKey<net.minecraft.world.item.Item> YUANSHI_TAG;
+  public static final java.lang.String YUANSHI_IN_GU_KEY;
+  private static com.guzhenrenlibrary.npc.NpcTrade$PaimaihangTier tier(java.lang.String, int, int);
+  private com.guzhenrenlibrary.npc.NpcTrade();
+  private static net.minecraft.tags.TagKey<net.minecraft.world.item.Item> tag(java.lang.String);
+  private static net.minecraft.tags.TagKey<net.minecraft.world.item.Item> paimaihangTag(int);
+  private static java.lang.String[] legacyTierTags(int);
+  public static net.minecraft.world.item.Item currency();
+  public static java.lang.String currencyName();
+  public static int countPlainCurrency(net.minecraft.world.entity.player.Player);
+  public static int countCurrency(net.minecraft.world.entity.player.Player);
+  public static boolean consumeCurrency(net.minecraft.world.entity.player.Player, int);
+  public static int yuanlaoGuValue(net.minecraft.world.item.ItemStack);
+  private static void setYuanlaoGuValue(net.minecraft.world.item.ItemStack, int);
+  public static int countYuanlaoGu(net.minecraft.world.entity.player.Player);
+  public static int countYuanlaoGuItems(net.minecraft.world.entity.player.Player);
+  public static java.lang.String walletText(net.minecraft.world.entity.player.Player);
+  private static net.minecraft.world.item.ItemStack[] snapshotOf(net.minecraft.world.entity.player.Player);
+  public static int[] splitPayment(int[], int);
+  public static boolean covers(int[], int);
+  public static com.guzhenrenlibrary.npc.NpcTrade$Payment pay(net.minecraft.world.entity.player.Player, int);
+  private static int drainYuanlaoGu(net.minecraft.world.entity.player.Player, int);
+  private static int drainPlainCurrency(net.minecraft.world.entity.player.Player, int);
+  public static int paimaihangPrice(int);
+  public static int[] paimaihangWanTiers();
+  public static com.guzhenrenlibrary.npc.NpcTrade$PaimaihangTier[] paimaihangTiers();
+  public static int[] legacyTiersForCheck();
+  public static int yuanshiPerWan();
+  public static int priceOf(net.minecraft.world.item.Item);
+  public static int auctionPrice(net.minecraft.world.item.Item);
+  public static int legacyPrice(net.minecraft.world.item.Item);
+  public static net.minecraft.tags.TagKey<net.minecraft.world.item.Item>[] auctionPriceTags();
+  public static net.minecraft.tags.TagKey<net.minecraft.world.item.Item>[] legacyPriceTags();
+  private static int defaultPrice(com.guzhenrenlibrary.npc.GiftCategory);
+  public static int discountPercent(com.guzhenrenlibrary.npc.NpcPersona, int);
+  public static java.util.List<com.guzhenrenlibrary.npc.NpcTrade$Offer> shelf(net.minecraft.world.entity.Mob, com.guzhenrenlibrary.npc.NpcPersona, int);
+  public static int countInInventory(net.minecraft.world.entity.Mob, net.minecraft.world.item.Item);
+  public static boolean takeOne(net.minecraft.world.entity.Mob, net.minecraft.world.item.Item);
+  public static int availableKinds(java.util.List<com.guzhenrenlibrary.npc.NpcTrade$Offer>);
+  private static int lambda$drainYuanlaoGu$0(int[], int[]);
+  static {};
+}
+
+### com.guzhenrenlibrary.npc.NpcTrade$Offer   [outer]
+Compiled from "NpcTrade.java"
+public final class com.guzhenrenlibrary.npc.NpcTrade$Offer extends java.lang.Record {
+  private final net.minecraft.world.item.Item item;
+  private final int basePrice;
+  private final int price;
+  private final com.guzhenrenlibrary.npc.GiftCategory category;
+  private final int stock;
+  public com.guzhenrenlibrary.npc.NpcTrade$Offer(net.minecraft.world.item.Item, int, int, com.guzhenrenlibrary.npc.GiftCategory, int);
+  public boolean soldOut();
+  public java.lang.String label();
+  public final java.lang.String toString();
+  public final int hashCode();
+  public final boolean equals(java.lang.Object);
+  public net.minecraft.world.item.Item item();
+  public int basePrice();
+  public int price();
+  public com.guzhenrenlibrary.npc.GiftCategory category();
+  public int stock();
+}
+
+### com.guzhenrenlibrary.npc.NpcStock   [outer]
+Compiled from "NpcStock.java"
+public final class com.guzhenrenlibrary.npc.NpcStock {
+  public static final int RESTOCK_INTERVAL_TICKS;
+  public static final int MAX_KINDS_PER_CYCLE;
+  public static final int STACK_MIN;
+  public static final int STACK_MAX;
+  public static final int MAX_USED_MAIN_SLOTS;
+  public static final java.lang.String PROTECTED_KEY;
+  public static final java.lang.String RESTOCK_KEY;
+  public static final java.lang.String LONGEVITY_KEYWORD;
+  private static final java.util.Set<java.lang.String> LONGEVITY_IDS;
+  private static final net.minecraft.tags.TagKey<net.minecraft.world.item.Item> TAG_GUFANG;
+  private static final net.minecraft.tags.TagKey<net.minecraft.world.item.Item> TAG_GUJUAN;
+  private static final net.minecraft.tags.TagKey<net.minecraft.world.item.Item> TAG_FANGJU;
+  private static final java.lang.String[] WINE_PATHS;
+  private static final net.minecraft.resources.ResourceLocation[] FALLBACK_IDS;
+  private com.guzhenrenlibrary.npc.NpcStock();
+  private static net.minecraft.tags.TagKey<net.minecraft.world.item.Item> tag(java.lang.String);
+  public static boolean dueForRestock(long, long);
+  public static boolean longevityName(java.lang.String);
+  public static java.util.Set<java.lang.String> longevityIds();
+  public static boolean protectedId(java.lang.String, java.lang.String);
+  public static int shelfSize(com.guzhenrenlibrary.npc.NpcIdentityType);
+  public static void rememberKit(net.minecraft.world.entity.Mob, java.util.List<net.minecraft.world.item.ItemStack>);
+  public static java.lang.String protectedList(net.minecraft.world.entity.Mob);
+  public static java.lang.String mergeProtectedList(java.lang.String, java.lang.String);
+  public static boolean rememberKitItem(net.minecraft.world.entity.Mob, java.lang.String);
+  public static int rememberKitLegacy(net.minecraft.world.entity.Mob);
+  public static boolean isProtected(net.minecraft.world.entity.Mob, net.minecraft.world.item.ItemStack);
+  public static boolean isLongevityGu(net.minecraft.world.item.ItemStack);
+  public static boolean isCurrency(net.minecraft.world.item.ItemStack);
+  public static boolean isTradeable(net.minecraft.world.entity.Mob, net.minecraft.world.item.ItemStack);
+  public static int tick(net.minecraft.world.entity.Mob);
+  public static int restock(net.minecraft.world.entity.Mob);
+  public static int tradeableKinds(net.minecraft.world.entity.Mob);
+  public static int usedMainSlots(com.guzhenrenlibrary.npc.combat.NpcInventory);
+  private static boolean alreadyStocked(net.minecraft.world.entity.Mob, net.minecraft.world.item.Item);
+  private static java.util.List<net.minecraft.world.item.Item> pool(net.minecraft.world.entity.Mob);
+  public static boolean poolHasGu(net.minecraft.world.entity.Mob);
+  public static boolean isCompleteFormula(net.minecraft.world.item.Item);
+  public static int poolSize(net.minecraft.world.entity.Mob);
+  public static boolean knowsAllLongevityIds(java.lang.String...);
+  private static boolean lambda$pool$2(net.minecraft.world.item.Item);
+  private static boolean lambda$pool$1(net.minecraft.world.item.Item);
+  private static boolean lambda$pool$0(net.minecraft.world.item.Item);
+  static {};
+}

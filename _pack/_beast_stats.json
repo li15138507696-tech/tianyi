@@ -1,0 +1,892 @@
+[
+ {
+  "tier": 2,
+  "dao": "LV",
+  "id": "guzhenren:gangjiagui",
+  "name": "刚甲龟",
+  "hp": 1000.0,
+  "armor": 60.0,
+  "atk": 100.0,
+  "cls": "GangjiaguiEntity"
+ },
+ {
+  "tier": 3,
+  "dao": "LV",
+  "id": "guzhenren:shangjianxuangui",
+  "name": "伤坚玄龟",
+  "hp": 1000.0,
+  "armor": 60.0,
+  "atk": 100.0,
+  "cls": "ShangjianxuanguiEntity"
+ },
+ {
+  "tier": 4,
+  "dao": "LV",
+  "id": "guzhenren:huishangao",
+  "name": "毁伤鳌",
+  "hp": 1000.0,
+  "armor": 60.0,
+  "atk": 100.0,
+  "cls": "HuishangaoEntity"
+ },
+ {
+  "tier": 5,
+  "dao": "LV",
+  "id": "guzhenren:bumiexuanwu",
+  "name": "不灭玄武",
+  "hp": 1000.0,
+  "armor": 60.0,
+  "atk": 100.0,
+  "cls": "BumiexuanwuEntity"
+ },
+ {
+  "tier": 2,
+  "dao": "LEI",
+  "id": "guzhenren:hao_dian_lang",
+  "name": "豪电狼",
+  "hp": 250.0,
+  "armor": 10.0,
+  "atk": 26.0,
+  "cls": "HaoDianLangEntity"
+ },
+ {
+  "tier": 3,
+  "dao": "LEI",
+  "id": "guzhenren:lei_dian_lang",
+  "name": "狂电狼",
+  "hp": 1000.0,
+  "armor": 50.0,
+  "atk": 90.0,
+  "cls": "LeiDianLangEntity"
+ },
+ {
+  "tier": 4,
+  "dao": "LEI",
+  "id": "guzhenren:lei_guan_tou_lang",
+  "name": "雷冠头狼",
+  "hp": 1024.0,
+  "armor": 70.0,
+  "atk": 200.0,
+  "cls": "LeiGuanTouLangEntity"
+ },
+ {
+  "tier": 5,
+  "dao": "LEI",
+  "id": "guzhenren:fengleidianlanghuang",
+  "name": "风雷电狼皇",
+  "hp": 1024.0,
+  "armor": 70.0,
+  "atk": 200.0,
+  "cls": "FengleidianlanghuangEntity"
+ },
+ {
+  "tier": 2,
+  "dao": "YAN",
+  "id": "guzhenren:huoyanxiong",
+  "name": "火焰熊",
+  "hp": 380.0,
+  "armor": 15.0,
+  "atk": 35.0,
+  "cls": "HuoyanxiongEntity"
+ },
+ {
+  "tier": 3,
+  "dao": "YAN",
+  "id": "guzhenren:lieyanxiong",
+  "name": "烈焰熊",
+  "hp": 1000.0,
+  "armor": 60.0,
+  "atk": 100.0,
+  "cls": "LieyanxiongEntity"
+ },
+ {
+  "tier": 4,
+  "dao": "YAN",
+  "id": "guzhenren:liaoyuanhuoxiong",
+  "name": "燎原火熊",
+  "hp": 1000.0,
+  "armor": 90.0,
+  "atk": 250.0,
+  "cls": "LiaoyuanhuoxiongEntity"
+ },
+ {
+  "tier": 5,
+  "dao": "YAN",
+  "id": "guzhenren:jinhuomoyanxiong",
+  "name": "烬火魔焰熊",
+  "hp": 1000.0,
+  "armor": 90.0,
+  "atk": 250.0,
+  "cls": "JinhuomoyanxiongEntity"
+ },
+ {
+  "tier": 2,
+  "dao": "JIN",
+  "id": "guzhenren:hu",
+  "name": "虎",
+  "hp": 480.0,
+  "armor": 20.0,
+  "atk": 60.0,
+  "cls": "HuEntity"
+ },
+ {
+  "tier": 3,
+  "dao": "JIN",
+  "id": "guzhenren:jinfenghu",
+  "name": "金锋虎",
+  "hp": 1000.0,
+  "armor": 60.0,
+  "atk": 100.0,
+  "cls": "JinfenghuEntity"
+ },
+ {
+  "tier": 4,
+  "dao": "JIN",
+  "id": "guzhenren:jinrenwanghu",
+  "name": "金刃王虎",
+  "hp": 1000.0,
+  "armor": 60.0,
+  "atk": 100.0,
+  "cls": "JinrenwanghuEntity"
+ },
+ {
+  "tier": 5,
+  "dao": "JIN",
+  "id": "guzhenren:xiongshabaihu",
+  "name": "凶煞白虎",
+  "hp": 1000.0,
+  "armor": 60.0,
+  "atk": 100.0,
+  "cls": "XiongshabaihuEntity"
+ },
+ {
+  "tier": 2,
+  "dao": "SHUI",
+  "id": "guzhenren:bishuiling",
+  "name": "碧水羚",
+  "hp": 260.0,
+  "armor": 13.0,
+  "atk": 15.0,
+  "cls": "BishuilingEntity"
+ },
+ {
+  "tier": 3,
+  "dao": "SHUI",
+  "id": "guzhenren:yuanyuelin",
+  "name": "渊跃羚",
+  "hp": 760.0,
+  "armor": 75.0,
+  "atk": 65.0,
+  "cls": "YuanyuelinEntity"
+ },
+ {
+  "tier": 4,
+  "dao": "SHUI",
+  "id": "guzhenren:cangyuelingjun",
+  "name": "苍月羚君",
+  "hp": 760.0,
+  "armor": 75.0,
+  "atk": 65.0,
+  "cls": "CangyuelingjunEntity"
+ },
+ {
+  "tier": 5,
+  "dao": "SHUI",
+  "id": "guzhenren:hhongtaofuhailing",
+  "name": "洪涛覆海羚",
+  "hp": 760.0,
+  "armor": 75.0,
+  "atk": 65.0,
+  "cls": "HhongtaofuhailingEntity"
+ },
+ {
+  "tier": 2,
+  "dao": "TU",
+  "id": "guzhenren:yan_xu_quan",
+  "name": "岩戌犬",
+  "hp": 280.0,
+  "armor": 25.0,
+  "atk": 23.0,
+  "cls": "YanXuQuanEntity"
+ },
+ {
+  "tier": 3,
+  "dao": "TU",
+  "id": "guzhenren:yao_ya_quan",
+  "name": "垚犽犬",
+  "hp": 800.0,
+  "armor": 100.0,
+  "atk": 100.0,
+  "cls": "YaoYaQuanEntity"
+ },
+ {
+  "tier": 4,
+  "dao": "TU",
+  "id": "guzhenren:yue_ao_yan_quan",
+  "name": "岳獒岩犬",
+  "hp": 1024.0,
+  "armor": 70.0,
+  "atk": 200.0,
+  "cls": "YueAoYanQuanEntity"
+ },
+ {
+  "tier": 5,
+  "dao": "TU",
+  "id": "guzhenren:shan_mai_di_yan_quan",
+  "name": "山脉地岩犬",
+  "hp": 1024.0,
+  "armor": 70.0,
+  "atk": 200.0,
+  "cls": "ShanMaiDiYanQuanEntity"
+ },
+ {
+  "tier": 2,
+  "dao": "FENG",
+  "id": "guzhenren:feng_huo_ying",
+  "name": "风火鹰",
+  "hp": 1024.0,
+  "armor": 70.0,
+  "atk": 200.0,
+  "cls": "FengHuoYingEntity"
+ },
+ {
+  "tier": 3,
+  "dao": "FENG",
+  "id": "guzhenren:lie_gang_feng_ying",
+  "name": "雷罡风鹰",
+  "hp": 1024.0,
+  "armor": 70.0,
+  "atk": 200.0,
+  "cls": "LieGangFengYingEntity"
+ },
+ {
+  "tier": 4,
+  "dao": "FENG",
+  "id": "guzhenren:yao_guang_feng_sun",
+  "name": "曜光风隼",
+  "hp": 1024.0,
+  "armor": 70.0,
+  "atk": 200.0,
+  "cls": "YaoGuangFengSunEntity"
+ },
+ {
+  "tier": 5,
+  "dao": "FENG",
+  "id": "guzhenren:ji_feng_lve_yun_diao",
+  "name": "疾风掠云雕",
+  "hp": 1024.0,
+  "armor": 70.0,
+  "atk": 200.0,
+  "cls": "JiFengLveYunDiaoEntity"
+ },
+ {
+  "tier": 2,
+  "dao": "YU",
+  "id": "guzhenren:xunjiejinbao",
+  "name": "巡界金豹",
+  "hp": 1000.0,
+  "armor": 60.0,
+  "atk": 100.0,
+  "cls": "XunjiejinbaoEntity"
+ },
+ {
+  "tier": 3,
+  "dao": "YU",
+  "id": "guzhenren:chuanyuqingbao",
+  "name": "穿宇青豹",
+  "hp": 1000.0,
+  "armor": 60.0,
+  "atk": 100.0,
+  "cls": "ChuanyuqingbaoEntity"
+ },
+ {
+  "tier": 4,
+  "dao": "YU",
+  "id": "guzhenren:zixiaojiebao",
+  "name": "紫霄界豹",
+  "hp": 1000.0,
+  "armor": 60.0,
+  "atk": 100.0,
+  "cls": "ZixiaojiebaoEntity"
+ },
+ {
+  "tier": 5,
+  "dao": "YU",
+  "id": "guzhenren:ziyaojiexingbao",
+  "name": "紫曜界行豹",
+  "hp": 1000.0,
+  "armor": 60.0,
+  "atk": 100.0,
+  "cls": "ZiyaojiexingbaoEntity"
+ },
+ {
+  "tier": 2,
+  "dao": "ZHOU",
+  "id": "guzhenren:ke_wen_she",
+  "name": "刻纹蛇",
+  "hp": 1024.0,
+  "armor": 5.0,
+  "atk": 200.0,
+  "cls": "KeWenSheEntity"
+ },
+ {
+  "tier": 3,
+  "dao": "ZHOU",
+  "id": "guzhenren:su_hui_she",
+  "name": "溯洄蛇",
+  "hp": 1024.0,
+  "armor": 20.0,
+  "atk": 200.0,
+  "cls": "SuHuiSheEntity"
+ },
+ {
+  "tier": 4,
+  "dao": "ZHOU",
+  "id": "guzhenren:zhou_shi_ling_ran",
+  "name": "宙蚀灵蚺",
+  "hp": 1024.0,
+  "armor": 40.0,
+  "atk": 200.0,
+  "cls": "ZhouShiLingRanEntity"
+ },
+ {
+  "tier": 5,
+  "dao": "ZHOU",
+  "id": "guzhenren:shi_kong_zhen_yu_mang",
+  "name": "时空镇狱蟒",
+  "hp": 1024.0,
+  "armor": 70.0,
+  "atk": 200.0,
+  "cls": "ShiKongZhenYuMangEntity"
+ },
+ {
+  "tier": 2,
+  "dao": "QI",
+  "id": "guzhenren:fengyun_he",
+  "name": "风云鹤",
+  "hp": 1024.0,
+  "armor": 70.0,
+  "atk": 200.0,
+  "cls": "FengyunHeEntity"
+ },
+ {
+  "tier": 3,
+  "dao": "QI",
+  "id": "guzhenren:lingbohe",
+  "name": "凌波鹤",
+  "hp": 1024.0,
+  "armor": 70.0,
+  "atk": 200.0,
+  "cls": "LingboheEntity"
+ },
+ {
+  "tier": 4,
+  "dao": "QI",
+  "id": "guzhenren:xueyingxionghe",
+  "name": "血影凶鹤",
+  "hp": 1024.0,
+  "armor": 70.0,
+  "atk": 200.0,
+  "cls": "XueyingxiongheEntity"
+ },
+ {
+  "tier": 5,
+  "dao": "QI",
+  "id": "guzhenren:yinyangshengsihe",
+  "name": "阴阳生死鹤",
+  "hp": 1024.0,
+  "armor": 70.0,
+  "atk": 200.0,
+  "cls": "YinyangshengsiheEntity"
+ },
+ {
+  "tier": 2,
+  "dao": "LIAN",
+  "id": "guzhenren:rongwenlu",
+  "name": "熔纹鹿",
+  "hp": 760.0,
+  "armor": 75.0,
+  "atk": 65.0,
+  "cls": "RongwenluEntity"
+ },
+ {
+  "tier": 3,
+  "dao": "LIAN",
+  "id": "guzhenren:lianchenlu",
+  "name": "炼尘鹿",
+  "hp": 760.0,
+  "armor": 75.0,
+  "atk": 65.0,
+  "cls": "LianchenluEntity"
+ },
+ {
+  "tier": 4,
+  "dao": "LIAN",
+  "id": "guzhenren:liandingjielu",
+  "name": "炼鼎劫鹿",
+  "hp": 760.0,
+  "armor": 75.0,
+  "atk": 65.0,
+  "cls": "LiandingjieluEntity"
+ },
+ {
+  "tier": 5,
+  "dao": "LIAN",
+  "id": "guzhenren:qianlianguichenlu",
+  "name": "千炼归尘鹿",
+  "hp": 760.0,
+  "armor": 75.0,
+  "atk": 65.0,
+  "cls": "QianlianguichenluEntity"
+ },
+ {
+  "tier": 2,
+  "dao": "ZHI",
+  "id": "guzhenren:huli_1",
+  "name": "金思狐",
+  "hp": 1000.0,
+  "armor": 60.0,
+  "atk": 100.0,
+  "cls": "Huli1Entity"
+ },
+ {
+  "tier": 3,
+  "dao": "ZHI",
+  "id": "guzhenren:huli_3",
+  "name": "妄谋狐",
+  "hp": 1000.0,
+  "armor": 60.0,
+  "atk": 100.0,
+  "cls": "Huli3Entity"
+ },
+ {
+  "tier": 4,
+  "dao": "ZHI",
+  "id": "guzhenren:huli_4",
+  "name": "绮云幻狐",
+  "hp": 1000.0,
+  "armor": 60.0,
+  "atk": 100.0,
+  "cls": "Huli4Entity"
+ },
+ {
+  "tier": 5,
+  "dao": "ZHI",
+  "id": "guzhenren:huli_5",
+  "name": "胭霞万象狐",
+  "hp": 1000.0,
+  "armor": 60.0,
+  "atk": 100.0,
+  "cls": "Huli5Entity"
+ },
+ {
+  "tier": 2,
+  "dao": "HUN",
+  "id": "guzhenren:hunshou_2",
+  "name": "魂兽·百兽王",
+  "hp": 1000.0,
+  "armor": 60.0,
+  "atk": 100.0,
+  "cls": "Hunshou2Entity"
+ },
+ {
+  "tier": 3,
+  "dao": "HUN",
+  "id": "guzhenren:hunshou_3",
+  "name": "魂兽·千兽王",
+  "hp": 1000.0,
+  "armor": 60.0,
+  "atk": 100.0,
+  "cls": "Hunshou3Entity"
+ },
+ {
+  "tier": 4,
+  "dao": "HUN",
+  "id": "guzhenren:hunshou_4",
+  "name": "魂兽·万兽王",
+  "hp": 1000.0,
+  "armor": 60.0,
+  "atk": 100.0,
+  "cls": "Hunshou4Entity"
+ },
+ {
+  "tier": 5,
+  "dao": "HUN",
+  "id": "guzhenren:hunshou",
+  "name": "魂兽·兽皇",
+  "hp": 1000.0,
+  "armor": 60.0,
+  "atk": 100.0,
+  "cls": "HunshouEntity"
+ },
+ {
+  "tier": 2,
+  "dao": "XUE",
+  "id": "guzhenren:xuxuyifu",
+  "name": "血翼蝠",
+  "hp": 1024.0,
+  "armor": 70.0,
+  "atk": 200.0,
+  "cls": "XuxuyifuEntity"
+ },
+ {
+  "tier": 3,
+  "dao": "XUE",
+  "id": "guzhenren:daochixuefu",
+  "name": "刀翅血蝠",
+  "hp": 1024.0,
+  "armor": 70.0,
+  "atk": 200.0,
+  "cls": "DaochixuefuEntity"
+ },
+ {
+  "tier": 4,
+  "dao": "XUE",
+  "id": "guzhenren:xueyuxingfu",
+  "name": "血雨腥蝠",
+  "hp": 1024.0,
+  "armor": 70.0,
+  "atk": 200.0,
+  "cls": "XueyuxingfuEntity"
+ },
+ {
+  "tier": 5,
+  "dao": "XUE",
+  "id": "guzhenren:lixuemofu",
+  "name": "沥血魔蝠",
+  "hp": 1024.0,
+  "armor": 70.0,
+  "atk": 200.0,
+  "cls": "LixuemofuEntity"
+ },
+ {
+  "tier": 2,
+  "dao": "MU",
+  "id": "guzhenren:mumeishujing_2",
+  "name": "木魅树精-百兽王",
+  "hp": 760.0,
+  "armor": 75.0,
+  "atk": 65.0,
+  "cls": "Mumeishujing2Entity"
+ },
+ {
+  "tier": 3,
+  "dao": "MU",
+  "id": "guzhenren:mumeishujing_3",
+  "name": "木魅树精-千兽王",
+  "hp": 760.0,
+  "armor": 75.0,
+  "atk": 65.0,
+  "cls": "Mumeishujing3Entity"
+ },
+ {
+  "tier": 4,
+  "dao": "MU",
+  "id": "guzhenren:mumeishujing_4",
+  "name": "木魅树精-万兽王",
+  "hp": 760.0,
+  "armor": 75.0,
+  "atk": 65.0,
+  "cls": "Mumeishujing4Entity"
+ },
+ {
+  "tier": 5,
+  "dao": "MU",
+  "id": "guzhenren:mumeishujing_5",
+  "name": "木魅树精-兽皇",
+  "hp": 760.0,
+  "armor": 75.0,
+  "atk": 65.0,
+  "cls": "Mumeishujing5Entity"
+ },
+ {
+  "tier": 2,
+  "dao": "BING",
+  "id": "guzhenren:bing_lin_sha",
+  "name": "冰鳞鲨",
+  "hp": 300.0,
+  "armor": 30.0,
+  "atk": 80.0,
+  "cls": "BingLinShaEntity"
+ },
+ {
+  "tier": 3,
+  "dao": "BING",
+  "id": "guzhenren:xuan_shuang_bing_sha",
+  "name": "玄霜鲛鲨",
+  "hp": 950.0,
+  "armor": 70.0,
+  "atk": 130.0,
+  "cls": "XuanShuangBingShaEntity"
+ },
+ {
+  "tier": 4,
+  "dao": "BING",
+  "id": "guzhenren:han_yuan_bing_sha",
+  "name": "寒渊冰鲨",
+  "hp": 1024.0,
+  "armor": 70.0,
+  "atk": 200.0,
+  "cls": "HanYuanBingShaEntity"
+ },
+ {
+  "tier": 2,
+  "dao": "TOU",
+  "id": "guzhenren:anduodiao",
+  "name": "暗夺雕",
+  "hp": 1024.0,
+  "armor": 70.0,
+  "atk": 200.0,
+  "cls": "AnduodiaoEntity"
+ },
+ {
+  "tier": 3,
+  "dao": "TOU",
+  "id": "guzhenren:lueshiying",
+  "name": "掠食鹰",
+  "hp": 1024.0,
+  "armor": 70.0,
+  "atk": 200.0,
+  "cls": "LueshiyingEntity"
+ },
+ {
+  "tier": 4,
+  "dao": "TOU",
+  "id": "guzhenren:qiebaoxuanying",
+  "name": "窃宝玄枭",
+  "hp": 1024.0,
+  "armor": 70.0,
+  "atk": 200.0,
+  "cls": "QiebaoxuanyingEntity"
+ },
+ {
+  "tier": 5,
+  "dao": "TOU",
+  "id": "guzhenren:shentouguiduoxiao",
+  "name": "神偷诡夺枭",
+  "hp": 1024.0,
+  "armor": 70.0,
+  "atk": 200.0,
+  "cls": "ShentouguiduoxiaoEntity"
+ },
+ {
+  "tier": 1,
+  "dao": "NONE",
+  "id": "guzhenren:hunshou_1",
+  "name": "魂兽",
+  "hp": 1000.0,
+  "armor": 60.0,
+  "atk": 100.0,
+  "cls": "Hunshou1Entity"
+ },
+ {
+  "tier": 1,
+  "dao": "MU",
+  "id": "guzhenren:mumeishujing_1",
+  "name": "木魅树精",
+  "hp": 760.0,
+  "armor": 75.0,
+  "atk": 65.0,
+  "cls": "Mumeishujing1Entity"
+ },
+ {
+  "tier": 1,
+  "dao": "JIN",
+  "id": "guzhenren:biao",
+  "name": "彪",
+  "hp": 1000.0,
+  "armor": 60.0,
+  "atk": 100.0,
+  "cls": "BiaoEntity"
+ },
+ {
+  "tier": 1,
+  "dao": "JIN",
+  "id": "guzhenren:huli_0",
+  "name": "赤狐",
+  "hp": 1000.0,
+  "armor": 60.0,
+  "atk": 100.0,
+  "cls": "Huli0Entity"
+ },
+ {
+  "tier": 1,
+  "dao": "LEI",
+  "id": "guzhenren:dian_lang",
+  "name": "电狼",
+  "hp": 60.0,
+  "armor": 3.0,
+  "atk": 5.0,
+  "cls": "DianLangEntity"
+ },
+ {
+  "tier": 1,
+  "dao": "LV",
+  "id": "guzhenren:yingkegui",
+  "name": "硬壳龟",
+  "hp": 20.0,
+  "armor": 20.0,
+  "atk": 10.0,
+  "cls": "YingkeguiEntity"
+ },
+ {
+  "tier": 1,
+  "dao": "YAN",
+  "id": "guzhenren:hong_xiong",
+  "name": "红熊",
+  "hp": 40.0,
+  "armor": 10.0,
+  "atk": 10.0,
+  "cls": "HongXiongEntity"
+ },
+ {
+  "tier": 1,
+  "dao": "XUE",
+  "id": "guzhenren:xuefu",
+  "name": "血蝠",
+  "hp": 1024.0,
+  "armor": 70.0,
+  "atk": 200.0,
+  "cls": "XuefuEntity"
+ },
+ {
+  "tier": 1,
+  "dao": "ZHOU",
+  "id": "guzhenren:shi_ying_she",
+  "name": "时影蛇",
+  "hp": 1024.0,
+  "armor": 0.0,
+  "atk": 200.0,
+  "cls": "ShiYingSheEntity"
+ },
+ {
+  "tier": 1,
+  "dao": "QI",
+  "id": "guzhenren:qiliu_he",
+  "name": "气流鹤",
+  "hp": 1024.0,
+  "armor": 70.0,
+  "atk": 200.0,
+  "cls": "QiliuHeEntity"
+ },
+ {
+  "tier": 1,
+  "dao": "YU",
+  "id": "guzhenren:bao",
+  "name": "豹",
+  "hp": 1000.0,
+  "armor": 60.0,
+  "atk": 100.0,
+  "cls": "BaoEntity"
+ },
+ {
+  "tier": 1,
+  "dao": "LIAN",
+  "id": "guzhenren:lu",
+  "name": "鹿",
+  "hp": 760.0,
+  "armor": 75.0,
+  "atk": 65.0,
+  "cls": "LuEntity"
+ },
+ {
+  "tier": 1,
+  "dao": "BING",
+  "id": "guzhenren:bing_po_long_wen_sha",
+  "name": "冰魄龙纹鲨",
+  "hp": 1024.0,
+  "armor": 70.0,
+  "atk": 200.0,
+  "cls": "BingPoLongWenShaEntity"
+ },
+ {
+  "tier": 1,
+  "dao": "BING",
+  "id": "guzhenren:bing_jiao_sha",
+  "name": "冰鲛鲨",
+  "hp": 80.0,
+  "armor": 5.0,
+  "atk": 10.0,
+  "cls": "BingJiaoShaEntity"
+ },
+ {
+  "tier": 1,
+  "dao": "TU",
+  "id": "guzhenren:xing_jun_yi",
+  "name": "行军蚁",
+  "hp": 100.0,
+  "armor": 35.0,
+  "atk": 30.0,
+  "cls": "XingJunYiEntity"
+ },
+ {
+  "tier": 1,
+  "dao": "TU",
+  "id": "guzhenren:jiang_jun_yi",
+  "name": "将军蚁",
+  "hp": 400.0,
+  "armor": 100.0,
+  "atk": 80.0,
+  "cls": "JiangJunYiEntity"
+ },
+ {
+  "tier": 1,
+  "dao": "TU",
+  "id": "guzhenren:gong_bing_yi",
+  "name": "工兵蚁",
+  "hp": 20.0,
+  "armor": 5.0,
+  "atk": 3.0,
+  "cls": "GongBingYiEntity"
+ },
+ {
+  "tier": 1,
+  "dao": "TU",
+  "id": "guzhenren:wang_yi",
+  "name": "王蚁",
+  "hp": 1024.0,
+  "armor": 70.0,
+  "atk": 200.0,
+  "cls": "WangYiEntity"
+ },
+ {
+  "tier": 1,
+  "dao": "NONE",
+  "id": "guzhenren:hui_lang",
+  "name": "灰狼",
+  "hp": 20.0,
+  "armor": 0.0,
+  "atk": 3.0,
+  "cls": "HuiLangEntity"
+ },
+ {
+  "tier": 1,
+  "dao": "NONE",
+  "id": "guzhenren:tu_lang",
+  "name": "土狼",
+  "hp": 20.0,
+  "armor": 0.0,
+  "atk": 3.0,
+  "cls": "TuLangEntity"
+ },
+ {
+  "tier": 1,
+  "dao": "NONE",
+  "id": "guzhenren:xiong",
+  "name": "熊",
+  "hp": 40.0,
+  "armor": 10.0,
+  "atk": 10.0,
+  "cls": "XiongEntity"
+ },
+ {
+  "tier": 1,
+  "dao": "NONE",
+  "id": "guzhenren:hui_xiong",
+  "name": "灰熊",
+  "hp": 40.0,
+  "armor": 10.0,
+  "atk": 10.0,
+  "cls": "HuiXiongEntity"
+ }
+]

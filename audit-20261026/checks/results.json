@@ -1,0 +1,38 @@
+[
+  {
+    "name": "tianfu-origin",
+    "exit": 0
+  },
+  {
+    "name": "tianfu-legacy-origin",
+    "exit": 0
+  },
+  {
+    "name": "tianfu-origin-gates",
+    "exit": 0
+  },
+  {
+    "name": "tianfu-roll",
+    "exit": 0
+  },
+  {
+    "name": "tianfu-transactions",
+    "exit": 0
+  },
+  {
+    "name": "tianfu-runtime",
+    "exit": 0
+  },
+  {
+    "name": "tianfu-lifecycle",
+    "exit": 0
+  },
+  {
+    "name": "daotu",
+    "exit": 0
+  },
+  {
+    "name": "malice",
+    "exit": 0
+  }
+]

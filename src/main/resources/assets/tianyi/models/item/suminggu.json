@@ -1,0 +1,14 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "tianyi:item/suminggu"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "tianyi:scarred": 1.0
+      },
+      "model": "tianyi:item/suminggu_damaged"
+    }
+  ]
+}

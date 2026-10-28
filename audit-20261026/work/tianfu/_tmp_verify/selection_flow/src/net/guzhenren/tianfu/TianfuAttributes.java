@@ -1,0 +1,2 @@
+package net.guzhenren.tianfu;
+public class TianfuAttributes { public static int syncs; public static boolean fail; public static void sync(net.minecraft.world.entity.player.Player p){syncs++;if(fail)throw new IllegalStateException("attribute unavailable");} }

@@ -1,0 +1,1 @@
+package net.guzhenren.daotu;public class DaotuGrowthApply{public static void refreshTitles(net.minecraft.world.entity.player.Player p){}public static boolean subDaohen(net.guzhenren.network.GuzhenrenModVariables.PlayerVariables v,String s,double d){return true;}}

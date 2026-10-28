@@ -1,0 +1,432 @@
+### com.guzhenrenlibrary.faction.FactionBrain   [outer]
+Compiled from "FactionBrain.java"
+public final class com.guzhenrenlibrary.faction.FactionBrain {
+  public static final int AI_INTERVAL_TICKS;
+  private static final int STANCE_STEP;
+  private static final int NEIGHBOUR_WEIGHT;
+  private static final double BROADCAST_RADIUS;
+  private com.guzhenrenlibrary.faction.FactionBrain();
+  public static void tick(net.minecraft.server.level.ServerLevel);
+  public static void runRound(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.faction.FactionTerritory, long);
+  private static com.guzhenrenlibrary.faction.FactionDef pickTarget(com.guzhenrenlibrary.faction.FactionDef, java.util.List<com.guzhenrenlibrary.faction.FactionDef>, net.minecraft.util.RandomSource);
+  private static void act(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.faction.FactionTerritory, com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.FactionDef, net.minecraft.util.RandomSource);
+  public static void ally(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.faction.FactionTerritory, com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.FactionDef);
+  public static void declareWar(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.faction.FactionTerritory, com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.FactionDef);
+  public static void blame(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.faction.FactionTerritory, com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.FactionDef);
+  public static void makePeace(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.faction.FactionTerritory, com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.FactionDef);
+  public static void absorb(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.faction.FactionTerritory, com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.FactionDef);
+  public static void exterminate(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.faction.FactionTerritory, com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.FactionDef);
+  static void record(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.faction.FactionTerritory, com.guzhenrenlibrary.faction.FactionDef, java.lang.String);
+  private static void announce(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.faction.FactionDef, java.lang.String);
+  private static void announceWorld(net.minecraft.server.level.ServerLevel, java.lang.String);
+}
+
+### com.guzhenrenlibrary.faction.FactionTerritory   [outer]
+Compiled from "FactionTerritory.java"
+public final class com.guzhenrenlibrary.faction.FactionTerritory {
+  private static final int BASE_TREASURY;
+  private static final int TREASURY_SPREAD;
+  public static final long TREASURY_CAP;
+  private final java.util.Map<java.lang.String, com.guzhenrenlibrary.faction.FactionTerritory$State> states;
+  private final java.util.Map<java.lang.String, java.lang.Integer> stances;
+  private final java.util.Map<java.lang.String, com.guzhenrenlibrary.faction.FactionTerritory$Standing> playerRanks;
+  private final java.util.Map<java.lang.String, java.lang.String> activeMissions;
+  private final java.util.Map<java.lang.String, java.lang.String> postOverrides;
+  private final java.util.Map<java.lang.String, java.lang.Long> postSince;
+  private final java.util.Map<java.lang.String, com.guzhenrenlibrary.faction.FactionTerritory$Application> applications;
+  private final java.util.Map<java.lang.String, java.lang.Long> playerSince;
+  private final java.util.Map<java.lang.String, java.lang.Long> lastApplicationDay;
+  private final java.util.Map<java.lang.String, java.lang.Long> envoyDay;
+  private final java.util.Map<java.lang.String, java.lang.Long> tradeDay;
+  private boolean relationsInit;
+  private final com.guzhenrenlibrary.faction.FactionInteractionLedger interactions;
+  private final com.guzhenrenlibrary.faction.journey.FactionJourneys journeys;
+  private final com.guzhenrenlibrary.faction.team.FactionTeams teams;
+  private final java.util.Map<java.lang.String, java.lang.String> roleOverrides;
+  private final java.util.Map<java.lang.String, java.lang.String> playerPosts;
+  private final java.util.Map<java.lang.String, java.lang.String> heirs;
+  private final java.util.Map<java.lang.String, java.lang.String> regents;
+  private final java.util.Map<java.lang.String, java.lang.Long> lastWithdraw;
+  private final java.util.Map<java.lang.String, java.lang.Long> anchors;
+  private final com.guzhenrenlibrary.faction.FactionChronicle chronicle;
+  private long lastAiTick;
+  private long lastSalaryPeriod;
+  private final java.util.Map<java.lang.String, com.guzhenrenlibrary.faction.FactionDef> dynastic;
+  private static final java.util.Map<java.lang.String, com.guzhenrenlibrary.faction.FactionDef> DYNAMIC;
+  private static final com.guzhenrenlibrary.faction.FactionTerritory$Standing VACANT;
+  public static final com.guzhenrenlibrary.faction.FactionTerritory$Posting VACANT_POST;
+  public static final int APPLICATION_MAX;
+  public static final int APPLICATION_TTL_DAYS;
+  public static final com.mojang.serialization.Codec<com.guzhenrenlibrary.faction.FactionTerritory> CODEC;
+  public com.guzhenrenlibrary.faction.FactionTerritory();
+  private static com.guzhenrenlibrary.faction.FactionTerritory$State initialState(com.guzhenrenlibrary.faction.FactionDef);
+  private static long hash(java.lang.String);
+  public com.guzhenrenlibrary.faction.FactionTerritory$State state(com.guzhenrenlibrary.faction.FactionDef);
+  public boolean isActive(com.guzhenrenlibrary.faction.FactionDef);
+  public com.guzhenrenlibrary.faction.FactionInteractionLedger interactions();
+  public com.guzhenrenlibrary.faction.journey.FactionJourneys journeys();
+  public com.guzhenrenlibrary.faction.team.FactionTeams teams();
+  public void recordInteraction(com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.FactionInteractionLedger$Kind, long);
+  public com.guzhenrenlibrary.faction.FactionDef ownerOf(com.guzhenrenlibrary.faction.FactionDef);
+  public com.guzhenrenlibrary.faction.FactionDef sovereignOf(com.guzhenrenlibrary.faction.FactionDef);
+  public long addTreasury(com.guzhenrenlibrary.faction.FactionDef, long);
+  public int addPower(com.guzhenrenlibrary.faction.FactionDef, int);
+  private static java.lang.String pairKey(com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.FactionDef);
+  public int stanceScore(com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.FactionDef);
+  public static int initialScoreOf(com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.FactionDef);
+  public static com.guzhenrenlibrary.faction.InitialRelation initialRelationOf(com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.FactionDef);
+  public com.guzhenrenlibrary.faction.FactionStance stance(com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.FactionDef);
+  public boolean relationsInit();
+  public int addStance(com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.FactionDef, int);
+  public void setStance(com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.FactionStance);
+  public void decayStances(int);
+  public java.util.Map<java.lang.String, java.lang.Integer> nonzeroStancesOf(com.guzhenrenlibrary.faction.FactionDef);
+  public void subjugate(com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.FactionDef);
+  public void destroy(com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.FactionDef);
+  public void revive(com.guzhenrenlibrary.faction.FactionDef);
+  public java.util.Map<java.lang.String, com.guzhenrenlibrary.faction.FactionDef> playerFactions();
+  public boolean isPlayerFounded(com.guzhenrenlibrary.faction.FactionDef);
+  public int totalFactionCount();
+  public com.guzhenrenlibrary.faction.FactionDef foundPlayerFaction(java.util.UUID, java.lang.String, com.guzhenrenlibrary.wuyu.WuyuLayout$Domain);
+  public static com.guzhenrenlibrary.faction.FactionDef dynamicByKey(java.lang.String);
+  public static java.util.Map<java.lang.String, com.guzhenrenlibrary.faction.FactionDef> allPlayerFactions();
+  public static void clearDynamicForProbe();
+  private static java.lang.String playerKey(java.util.UUID, com.guzhenrenlibrary.faction.FactionDef);
+  public com.guzhenrenlibrary.faction.FactionTerritory$Standing playerStanding(java.util.UUID, com.guzhenrenlibrary.faction.FactionDef);
+  public com.guzhenrenlibrary.faction.FactionRank playerRank(java.util.UUID, com.guzhenrenlibrary.faction.FactionDef);
+  public void setPlayerRank(java.util.UUID, com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.FactionRank);
+  public void rememberPlayerName(java.util.UUID, com.guzhenrenlibrary.faction.FactionDef, java.lang.String);
+  public java.lang.String playerName(java.util.UUID, com.guzhenrenlibrary.faction.FactionDef);
+  public java.lang.String activeMission(java.util.UUID, com.guzhenrenlibrary.faction.FactionDef);
+  public void setActiveMission(java.util.UUID, com.guzhenrenlibrary.faction.FactionDef, java.lang.String);
+  public int merit(java.util.UUID, com.guzhenrenlibrary.faction.FactionDef);
+  public int addMerit(java.util.UUID, com.guzhenrenlibrary.faction.FactionDef, int);
+  public void recordMission(java.util.UUID, com.guzhenrenlibrary.faction.FactionDef, int);
+  public java.util.Map<java.lang.String, java.lang.Integer> playerMemberships(java.util.UUID);
+  public java.util.Map<java.lang.String, com.guzhenrenlibrary.faction.FactionTerritory$Standing> allPlayerRanks();
+  public static java.lang.String factionIdOfPlayerEntry(java.lang.String);
+  public static java.util.UUID uuidOfPlayerEntry(java.lang.String);
+  private static java.lang.String memberKey(com.guzhenrenlibrary.faction.FactionDef, java.lang.String);
+  public com.guzhenrenlibrary.faction.FactionBuilding[] postOverride(com.guzhenrenlibrary.faction.FactionDef, java.lang.String);
+  public void setPostOverride(com.guzhenrenlibrary.faction.FactionDef, java.lang.String, com.guzhenrenlibrary.faction.FactionBuilding);
+  public void setPost(com.guzhenrenlibrary.faction.FactionDef, java.lang.String, com.guzhenrenlibrary.faction.FactionBuilding, com.guzhenrenlibrary.faction.FactionPost);
+  public void setPost(com.guzhenrenlibrary.faction.FactionDef, java.lang.String, com.guzhenrenlibrary.faction.FactionBuilding, com.guzhenrenlibrary.faction.FactionPost, long);
+  public long postSince(com.guzhenrenlibrary.faction.FactionDef, java.lang.String);
+  public com.guzhenrenlibrary.faction.FactionPost postRoleOverride(com.guzhenrenlibrary.faction.FactionDef, java.lang.String);
+  public java.util.Map<java.lang.String, java.lang.String> roleOverrideView();
+  public com.guzhenrenlibrary.faction.FactionTerritory$Posting playerPost(java.util.UUID, com.guzhenrenlibrary.faction.FactionDef);
+  public void setPlayerPost(java.util.UUID, com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.FactionBuilding, com.guzhenrenlibrary.faction.FactionPost);
+  public void setPlayerPost(java.util.UUID, com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.FactionBuilding, com.guzhenrenlibrary.faction.FactionPost, long);
+  public long playerPostSince(java.util.UUID, com.guzhenrenlibrary.faction.FactionDef);
+  private static java.lang.String appKey(com.guzhenrenlibrary.faction.FactionDef, java.lang.String);
+  public void putApplication(com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.FactionTerritory$Application);
+  public void removeApplication(com.guzhenrenlibrary.faction.FactionDef, java.lang.String);
+  public com.guzhenrenlibrary.faction.FactionTerritory$Application application(com.guzhenrenlibrary.faction.FactionDef, java.lang.String);
+  public int applicationCount(com.guzhenrenlibrary.faction.FactionDef);
+  public java.util.List<com.guzhenrenlibrary.faction.FactionTerritory$Application> applicationsOf(com.guzhenrenlibrary.faction.FactionDef, long);
+  public long applicationDayOf(com.guzhenrenlibrary.faction.FactionDef);
+  public void markApplicationDay(com.guzhenrenlibrary.faction.FactionDef, long);
+  public long envoyDayOf(com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.FactionDef);
+  public long tradeDayOf(com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.FactionDef);
+  public void markTradeDay(com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.FactionDef, long);
+  public void markEnvoyDay(com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.FactionDef, long);
+  public java.util.Map<java.lang.String, java.lang.String> playerPostView();
+  public java.lang.String heirOf(com.guzhenrenlibrary.faction.FactionDef);
+  public void setHeir(com.guzhenrenlibrary.faction.FactionDef, java.lang.String);
+  public java.util.UUID regentOf(com.guzhenrenlibrary.faction.FactionDef);
+  public void setRegent(com.guzhenrenlibrary.faction.FactionDef, java.util.UUID);
+  public boolean isPlayerRuled(com.guzhenrenlibrary.faction.FactionDef);
+  public long lastWithdrawPeriod(java.util.UUID, com.guzhenrenlibrary.faction.FactionDef);
+  public void setWithdrawPeriod(java.util.UUID, com.guzhenrenlibrary.faction.FactionDef, long);
+  public long withdrawable(java.util.UUID, com.guzhenrenlibrary.faction.FactionDef, long);
+  public void setAnchorChunk(com.guzhenrenlibrary.faction.FactionDef, int, int);
+  public void setPlacement(com.guzhenrenlibrary.faction.FactionDef, int, int, int);
+  public java.lang.Long anchorChunkOf(com.guzhenrenlibrary.faction.FactionDef);
+  public int[] placementOrigin(com.guzhenrenlibrary.faction.FactionDef);
+  public java.lang.Integer platformY(com.guzhenrenlibrary.faction.FactionDef);
+  public int placementY(com.guzhenrenlibrary.faction.FactionDef);
+  public int[] anchorChunk(com.guzhenrenlibrary.faction.FactionDef);
+  public int anchoredCount();
+  public int addSupplies(com.guzhenrenlibrary.faction.FactionDef, int);
+  public com.guzhenrenlibrary.faction.FactionChronicle chronicle();
+  public long lastAiTick();
+  public void setLastAiTick(long);
+  public long lastSalaryPeriod();
+  public void setLastSalaryPeriod(long);
+  public net.minecraft.nbt.CompoundTag toTag();
+  public static com.guzhenrenlibrary.faction.FactionTerritory fromTag(net.minecraft.nbt.CompoundTag);
+  public static com.guzhenrenlibrary.faction.FactionTerritory of(net.minecraft.world.level.Level);
+  private static com.guzhenrenlibrary.faction.FactionTerritory$State lambda$state$0(com.guzhenrenlibrary.faction.FactionDef, java.lang.String);
+  static {};
+}
+
+### com.guzhenrenlibrary.faction.FactionTerritory$State   [outer]
+Compiled from "FactionTerritory.java"
+public final class com.guzhenrenlibrary.faction.FactionTerritory$State {
+  public long treasury;
+  public int power;
+  public int supplies;
+  public boolean alive;
+  public java.lang.String owner;
+  public java.lang.String destroyedBy;
+  com.guzhenrenlibrary.faction.FactionTerritory$State(long, int);
+}
+
+### com.guzhenrenlibrary.faction.FactionTerritory$Standing   [outer]
+Compiled from "FactionTerritory.java"
+public final class com.guzhenrenlibrary.faction.FactionTerritory$Standing {
+  public int rankOrdinal;
+  public int merit;
+  public int missionsDone;
+  public java.lang.String name;
+  public com.guzhenrenlibrary.faction.FactionTerritory$Standing(int, int, int);
+  public com.guzhenrenlibrary.faction.FactionRank rank();
+}
+
+### com.guzhenrenlibrary.faction.FactionTerritory$Posting   [outer]
+Compiled from "FactionTerritory.java"
+public final class com.guzhenrenlibrary.faction.FactionTerritory$Posting extends java.lang.Record {
+  private final com.guzhenrenlibrary.faction.FactionBuilding post;
+  private final com.guzhenrenlibrary.faction.FactionPost role;
+  public com.guzhenrenlibrary.faction.FactionTerritory$Posting(com.guzhenrenlibrary.faction.FactionBuilding, com.guzhenrenlibrary.faction.FactionPost);
+  public boolean vacant();
+  public java.lang.String encode();
+  public static com.guzhenrenlibrary.faction.FactionTerritory$Posting decode(java.lang.String);
+  public final java.lang.String toString();
+  public final int hashCode();
+  public final boolean equals(java.lang.Object);
+  public com.guzhenrenlibrary.faction.FactionBuilding post();
+  public com.guzhenrenlibrary.faction.FactionPost role();
+}
+
+### com.guzhenrenlibrary.faction.FactionTerritory$Application   [outer]
+Compiled from "FactionTerritory.java"
+public final class com.guzhenrenlibrary.faction.FactionTerritory$Application extends java.lang.Record {
+  private final java.lang.String memberId;
+  private final com.guzhenrenlibrary.faction.FactionBuilding hall;
+  private final com.guzhenrenlibrary.faction.FactionPost role;
+  private final long appliedDay;
+  public com.guzhenrenlibrary.faction.FactionTerritory$Application(java.lang.String, com.guzhenrenlibrary.faction.FactionBuilding, com.guzhenrenlibrary.faction.FactionPost, long);
+  public final java.lang.String toString();
+  public final int hashCode();
+  public final boolean equals(java.lang.Object);
+  public java.lang.String memberId();
+  public com.guzhenrenlibrary.faction.FactionBuilding hall();
+  public com.guzhenrenlibrary.faction.FactionPost role();
+  public long appliedDay();
+}
+
+### com.guzhenrenlibrary.faction.journey.FactionJourney   [outer]
+Compiled from "FactionJourney.java"
+public final class com.guzhenrenlibrary.faction.journey.FactionJourney {
+  public static final int BATTLE_UNKNOWN;
+  public static final int BATTLE_WON;
+  public static final int BATTLE_LOST;
+  private final int id;
+  private final java.lang.String fromKey;
+  private final java.lang.String toKey;
+  private final com.guzhenrenlibrary.faction.journey.JourneyKind kind;
+  private final long startTick;
+  private final int duration;
+  private final int members;
+  private final long seed;
+  private final long payload;
+  private boolean settled;
+  private boolean failed;
+  private long doneAt;
+  private java.util.UUID escortId;
+  private java.util.UUID joinerId;
+  private int teamId;
+  private java.lang.String teamName;
+  private com.guzhenrenlibrary.faction.FactionBuilding hall;
+  private final java.util.List<java.lang.String> memberNames;
+  private final java.util.List<java.util.UUID> entityIds;
+  private int departed;
+  private int alive;
+  private double startX;
+  private double startZ;
+  private double endX;
+  private double endZ;
+  private double posX;
+  private double posZ;
+  private double totalDistance;
+  private com.guzhenrenlibrary.faction.journey.FactionJourney$Phase phase;
+  private boolean paused;
+  private int battleTicks;
+  private java.util.UUID commanderId;
+  private int battleResult;
+  private boolean explicitTeam;
+  private final java.util.List<java.lang.String> deadNames;
+  private final java.util.Map<java.lang.String, java.util.UUID> memberUuids;
+  private final java.util.Set<java.util.UUID> countedDeaths;
+  public com.guzhenrenlibrary.faction.journey.FactionJourney(int, java.lang.String, java.lang.String, com.guzhenrenlibrary.faction.journey.JourneyKind, long, int, int, long, long);
+  public com.guzhenrenlibrary.faction.journey.FactionJourney(int, java.lang.String, java.lang.String, com.guzhenrenlibrary.faction.journey.JourneyKind, long, int, long, long, com.guzhenrenlibrary.faction.team.FactionTeam, double, double, double, double);
+  public int id();
+  public java.lang.String fromKey();
+  public java.lang.String toKey();
+  public com.guzhenrenlibrary.faction.journey.JourneyKind kind();
+  public long startTick();
+  public int duration();
+  public int members();
+  public long seed();
+  public long payload();
+  public boolean settled();
+  public boolean failed();
+  public long doneAt();
+  public java.util.UUID escortId();
+  public java.util.UUID joinerId();
+  public boolean escort(java.util.UUID);
+  public boolean join(java.util.UUID);
+  public void markSettled();
+  public void touchDoneAt(long);
+  public void markFailed();
+  public boolean isTeam();
+  public int teamId();
+  public java.lang.String teamName();
+  public com.guzhenrenlibrary.faction.FactionBuilding hall();
+  public java.util.List<java.lang.String> memberNames();
+  public java.util.List<java.util.UUID> entityIds();
+  public void addEntityId(java.util.UUID);
+  public void removeEntityId(java.util.UUID);
+  public void clearEntityIds();
+  public int departed();
+  public int alive();
+  public double startX();
+  public double startZ();
+  public double endX();
+  public double endZ();
+  public double posX();
+  public double posZ();
+  public double totalDistance();
+  public com.guzhenrenlibrary.faction.journey.FactionJourney$Phase phase();
+  public void setPhase(com.guzhenrenlibrary.faction.journey.FactionJourney$Phase);
+  public boolean paused();
+  public void setPaused(boolean);
+  public int battleTicks();
+  public void setBattleTicks(int);
+  public int tickBattle();
+  public java.util.UUID commanderId();
+  public void setCommander(java.util.UUID);
+  public int battleResult();
+  public void setBattleResult(int);
+  public boolean battleWon();
+  public float progress(long);
+  public float progressNow();
+  public double travelled();
+  public void advance(double, double);
+  public void setPos(double, double);
+  public void setPath(double, double, double, double);
+  public static com.guzhenrenlibrary.faction.journey.FactionJourney forCheck(int, java.lang.String, java.lang.String, com.guzhenrenlibrary.faction.journey.JourneyKind, double, double, double, double, java.util.List<java.lang.String>);
+  public void assignEntity(java.lang.String, java.util.UUID);
+  public java.util.UUID entityOf(java.lang.String);
+  public java.lang.String memberNameOf(java.util.UUID);
+  public java.util.List<java.lang.String> deadMemberNames();
+  public void markMemberDead(java.lang.String);
+  public int noteMemberDead(java.util.UUID);
+  public boolean tooFewToFight();
+  public boolean arrived(long);
+  public boolean done(long);
+  public boolean active(long);
+  public static double[] straightAt(double, double, double, double, float);
+  public net.minecraft.nbt.CompoundTag toTag();
+  public static com.guzhenrenlibrary.faction.journey.FactionJourney fromTag(net.minecraft.nbt.CompoundTag);
+  public java.lang.String toString();
+  public boolean hasTag(java.lang.String);
+  private static boolean lambda$noteMemberDead$0(java.util.UUID, java.util.UUID);
+}
+
+### com.guzhenrenlibrary.faction.journey.FactionJourney$Phase   [outer]
+Compiled from "FactionJourney.java"
+public final class com.guzhenrenlibrary.faction.journey.FactionJourney$Phase extends java.lang.Enum<com.guzhenrenlibrary.faction.journey.FactionJourney$Phase> {
+  public static final com.guzhenrenlibrary.faction.journey.FactionJourney$Phase MARCHING;
+  public static final com.guzhenrenlibrary.faction.journey.FactionJourney$Phase FIGHTING;
+  public static final com.guzhenrenlibrary.faction.journey.FactionJourney$Phase AT_TARGET;
+  public static final com.guzhenrenlibrary.faction.journey.FactionJourney$Phase BATTLE;
+  public static final com.guzhenrenlibrary.faction.journey.FactionJourney$Phase SETTLED;
+  public static final com.guzhenrenlibrary.faction.journey.FactionJourney$Phase FAILED;
+  private static final com.guzhenrenlibrary.faction.journey.FactionJourney$Phase[] $VALUES;
+  public static com.guzhenrenlibrary.faction.journey.FactionJourney$Phase[] values();
+  public static com.guzhenrenlibrary.faction.journey.FactionJourney$Phase valueOf(java.lang.String);
+  private com.guzhenrenlibrary.faction.journey.FactionJourney$Phase();
+  public static com.guzhenrenlibrary.faction.journey.FactionJourney$Phase byOrdinal(int);
+  public boolean marching();
+  public boolean ended();
+  private static com.guzhenrenlibrary.faction.journey.FactionJourney$Phase[] $values();
+  static {};
+}
+
+### com.guzhenrenlibrary.faction.journey.FactionJourneys   [outer]
+Compiled from "FactionJourneys.java"
+public final class com.guzhenrenlibrary.faction.journey.FactionJourneys {
+  public static final double SPEED;
+  public static final double MIN_SPEED_MULTIPLIER;
+  public static final double MAX_SPEED_MULTIPLIER;
+  public static final java.lang.String SPEED_PROPERTY;
+  public static final int DONE_KEEP_TICKS;
+  public static final double MAX_PATH;
+  public static final int MIN_DURATION;
+  public static final int MAX_DURATION;
+  private static double debugMultiplier;
+  private static double propertyMultiplier;
+  private final java.util.List<com.guzhenrenlibrary.faction.journey.FactionJourney> journeys;
+  private int nextId;
+  public com.guzhenrenlibrary.faction.journey.FactionJourneys();
+  public java.util.List<com.guzhenrenlibrary.faction.journey.FactionJourney> all();
+  public int size();
+  public com.guzhenrenlibrary.faction.journey.FactionJourney byId(int);
+  public int activeCount(long);
+  public com.guzhenrenlibrary.faction.journey.FactionJourney inFlight(com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.journey.JourneyKind);
+  public static double speed();
+  public static double multiplier();
+  public static void setDebugSpeedMultiplier(double);
+  public static void resetSpeedMultiplier();
+  private static double clampMultiplier(double);
+  private static double propertyMultiplier();
+  public com.guzhenrenlibrary.faction.journey.FactionJourney record(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.journey.JourneyKind, long, long);
+  private com.guzhenrenlibrary.faction.journey.FactionJourney recordEnvoy(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.FactionDef, long, long);
+  private com.guzhenrenlibrary.faction.team.FactionTeam autoFormTeam(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.faction.FactionTerritory, com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.team.TeamKind);
+  public com.guzhenrenlibrary.faction.journey.FactionJourney recordTeam(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.team.FactionTeam, long, long);
+  public static int durationFor(com.guzhenrenlibrary.faction.journey.JourneyKind, double);
+  public void tick(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.faction.FactionTerritory, long);
+  private void tickTeam(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.faction.FactionTerritory, com.guzhenrenlibrary.faction.journey.FactionJourney, long);
+  private static void stepAlong(com.guzhenrenlibrary.faction.journey.FactionJourney);
+  private static boolean reachedEnd(com.guzhenrenlibrary.faction.journey.FactionJourney);
+  private void onArrive(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.faction.FactionTerritory, com.guzhenrenlibrary.faction.journey.FactionJourney, long);
+  public void settleTeam(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.faction.FactionTerritory, com.guzhenrenlibrary.faction.journey.FactionJourney, long);
+  private void settleArmy(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.faction.FactionTerritory, com.guzhenrenlibrary.faction.journey.FactionJourney, com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.FactionDef, long);
+  private void payCommander(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.faction.FactionTerritory, com.guzhenrenlibrary.faction.journey.FactionJourney, com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.FactionDef);
+  private static void settle(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.faction.FactionTerritory, com.guzhenrenlibrary.faction.journey.FactionJourney, long);
+  public void markFailed(com.guzhenrenlibrary.faction.journey.FactionJourney, com.guzhenrenlibrary.faction.FactionTerritory, long);
+  public static double[] shortenedEnds(double, double, double, double);
+  public static double[] pointAt(double, double, double, double, float, long);
+  public net.minecraft.nbt.CompoundTag toTag();
+  public void readTag(net.minecraft.nbt.ListTag);
+  public void readTag(net.minecraft.nbt.CompoundTag);
+  private static java.util.List<java.lang.String> hallMembers(com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.FactionTerritory, com.guzhenrenlibrary.faction.FactionBuilding);
+  private static boolean lambda$tick$0(long, com.guzhenrenlibrary.faction.journey.FactionJourney);
+  static {};
+}
+
+### com.guzhenrenlibrary.faction.journey.JourneyMaterializer   [outer]
+Compiled from "JourneyMaterializer.java"
+public final class com.guzhenrenlibrary.faction.journey.JourneyMaterializer {
+  public static final int VISIBLE_RANGE;
+  public static final java.lang.String TAG;
+  private static final java.util.Map<java.lang.Integer, java.util.List<java.util.UUID>> SPAWNED;
+  private static final java.util.Map<java.util.UUID, double[]> LAST_POS;
+  private com.guzhenrenlibrary.faction.journey.JourneyMaterializer();
+  public static void tick(net.minecraft.server.level.ServerLevel, long);
+  private static java.util.List<java.util.UUID> spawn(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.faction.journey.FactionJourney, com.guzhenrenlibrary.faction.FactionDef, double, double, com.guzhenrenlibrary.wuyu.WuyuLayout$Anchor, com.guzhenrenlibrary.wuyu.WuyuLayout$Anchor, float);
+  private static net.minecraft.world.entity.Entity spawnOne(net.minecraft.server.level.ServerLevel, net.minecraft.world.entity.EntityType<?>, double, double, com.guzhenrenlibrary.faction.journey.FactionJourney, com.guzhenrenlibrary.faction.FactionDef, int);
+  private static int[] formationOffset(com.guzhenrenlibrary.faction.journey.JourneyKind, int, int);
+  private static void move(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.faction.journey.FactionJourney, com.guzhenrenlibrary.faction.FactionDef, java.util.List<java.util.UUID>, double, double, com.guzhenrenlibrary.wuyu.WuyuLayout$Anchor, com.guzhenrenlibrary.wuyu.WuyuLayout$Anchor, float);
+  private static boolean anyPlayerNear(net.minecraft.server.level.ServerLevel, double, double, int);
+  private static void despawn(net.minecraft.server.level.ServerLevel, java.util.List<java.util.UUID>);
+  public static void sweepOrphans(net.minecraft.server.level.ServerLevel);
+  public static double distanceToPlayer(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.faction.journey.FactionJourney, net.minecraft.server.level.ServerPlayer);
+  public static double[] pointOf(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.faction.journey.FactionJourney);
+  public static void abandon(int);
+  public static int materializedCount();
+  public static int materializedMembers(int);
+  static {};
+}

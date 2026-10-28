@@ -1,0 +1,17 @@
+Compiled from "GuzhenrenModVariables.java"
+public class net.guzhenren.network.GuzhenrenModVariables {
+  public static final net.neoforged.neoforge.registries.DeferredRegister<net.neoforged.neoforge.attachment.AttachmentType<?>> ATTACHMENT_TYPES;
+  public static final java.util.function.Supplier<net.neoforged.neoforge.attachment.AttachmentType<net.guzhenren.network.GuzhenrenModVariables$PlayerVariables>> PLAYER_VARIABLES;
+  public net.guzhenren.network.GuzhenrenModVariables();
+  public static void onPlayerLoggedInSyncPlayerVariables(net.neoforged.neoforge.event.entity.player.PlayerEvent$PlayerLoggedInEvent);
+  public static void onPlayerRespawnedSyncPlayerVariables(net.neoforged.neoforge.event.entity.player.PlayerEvent$PlayerRespawnEvent);
+  public static void onPlayerChangedDimensionSyncPlayerVariables(net.neoforged.neoforge.event.entity.player.PlayerEvent$PlayerChangedDimensionEvent);
+  public static void onPlayerTickUpdateSyncPlayerVariables(net.neoforged.neoforge.event.tick.PlayerTickEvent$Post);
+  public static void clonePlayer(net.neoforged.neoforge.event.entity.player.PlayerEvent$Clone);
+  public static void onPlayerLoggedIn(net.neoforged.neoforge.event.entity.player.PlayerEvent$PlayerLoggedInEvent);
+  public static void onPlayerChangedDimension(net.neoforged.neoforge.event.entity.player.PlayerEvent$PlayerChangedDimensionEvent);
+  public static void onWorldTick(net.neoforged.neoforge.event.tick.LevelTickEvent$Post);
+  private static net.neoforged.neoforge.attachment.AttachmentType lambda$static$1();
+  private static net.guzhenren.network.GuzhenrenModVariables$PlayerVariables lambda$static$0();
+  static {};
+}

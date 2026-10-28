@@ -1,0 +1,2 @@
+package net.guzhenren.tianfu;
+public class TianfuMod { public static final String MODID="tianfu"; public static final Log LOGGER=new Log(); public static class Log {public void error(String s,Throwable t){}} }

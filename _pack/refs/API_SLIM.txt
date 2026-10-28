@@ -1,0 +1,722 @@
+======================================================================
+## faction
+
+### com.guzhenrenlibrary.faction.FactionBrain   [outer]
+   public final class com.guzhenrenlibrary.faction.FactionBrain {
+   public static final int AI_INTERVAL_TICKS;
+   public static void tick(net.minecraft.server.level.ServerLevel);
+   public static void runRound(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.faction.FactionTerritory, long);
+   public static void ally(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.faction.FactionTerritory, com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.FactionDef);
+   public static void declareWar(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.faction.FactionTerritory, com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.FactionDef);
+   public static void blame(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.faction.FactionTerritory, com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.FactionDef);
+   public static void makePeace(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.faction.FactionTerritory, com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.FactionDef);
+   public static void absorb(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.faction.FactionTerritory, com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.FactionDef);
+   public static void exterminate(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.faction.FactionTerritory, com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.FactionDef);
+   static void record(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.faction.FactionTerritory, com.guzhenrenlibrary.faction.FactionDef, java.lang.String);
+
+### com.guzhenrenlibrary.faction.FactionTerritory   [outer]
+   public final class com.guzhenrenlibrary.faction.FactionTerritory {
+   public static final long TREASURY_CAP;
+   private final java.util.Map<java.lang.String, com.guzhenrenlibrary.faction.FactionTerritory$State> states;
+   private final java.util.Map<java.lang.String, java.lang.Integer> stances;
+   private final java.util.Map<java.lang.String, com.guzhenrenlibrary.faction.FactionTerritory$Standing> playerRanks;
+   private final java.util.Map<java.lang.String, java.lang.String> activeMissions;
+   private final java.util.Map<java.lang.String, java.lang.String> postOverrides;
+   private final java.util.Map<java.lang.String, java.lang.Long> postSince;
+   private final java.util.Map<java.lang.String, com.guzhenrenlibrary.faction.FactionTerritory$Application> applications;
+   private final java.util.Map<java.lang.String, java.lang.Long> playerSince;
+   private final java.util.Map<java.lang.String, java.lang.Long> lastApplicationDay;
+   private final java.util.Map<java.lang.String, java.lang.Long> envoyDay;
+   private final java.util.Map<java.lang.String, java.lang.Long> tradeDay;
+   private final com.guzhenrenlibrary.faction.FactionInteractionLedger interactions;
+   private final com.guzhenrenlibrary.faction.journey.FactionJourneys journeys;
+   private final com.guzhenrenlibrary.faction.team.FactionTeams teams;
+   private final java.util.Map<java.lang.String, java.lang.String> roleOverrides;
+   private final java.util.Map<java.lang.String, java.lang.String> playerPosts;
+   private final java.util.Map<java.lang.String, java.lang.String> heirs;
+   private final java.util.Map<java.lang.String, java.lang.String> regents;
+   private final java.util.Map<java.lang.String, java.lang.Long> lastWithdraw;
+   private final java.util.Map<java.lang.String, java.lang.Long> anchors;
+   private final com.guzhenrenlibrary.faction.FactionChronicle chronicle;
+   private final java.util.Map<java.lang.String, com.guzhenrenlibrary.faction.FactionDef> dynastic;
+   public static final com.guzhenrenlibrary.faction.FactionTerritory$Posting VACANT_POST;
+   public static final int APPLICATION_MAX;
+   public static final int APPLICATION_TTL_DAYS;
+   public static final com.mojang.serialization.Codec<com.guzhenrenlibrary.faction.FactionTerritory> CODEC;
+   public com.guzhenrenlibrary.faction.FactionTerritory();
+   public com.guzhenrenlibrary.faction.FactionTerritory$State state(com.guzhenrenlibrary.faction.FactionDef);
+   public boolean isActive(com.guzhenrenlibrary.faction.FactionDef);
+   public com.guzhenrenlibrary.faction.FactionInteractionLedger interactions();
+   public com.guzhenrenlibrary.faction.journey.FactionJourneys journeys();
+   public com.guzhenrenlibrary.faction.team.FactionTeams teams();
+   public void recordInteraction(com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.FactionInteractionLedger$Kind, long);
+   public com.guzhenrenlibrary.faction.FactionDef ownerOf(com.guzhenrenlibrary.faction.FactionDef);
+   public com.guzhenrenlibrary.faction.FactionDef sovereignOf(com.guzhenrenlibrary.faction.FactionDef);
+   public long addTreasury(com.guzhenrenlibrary.faction.FactionDef, long);
+   public int addPower(com.guzhenrenlibrary.faction.FactionDef, int);
+   public int stanceScore(com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.FactionDef);
+   public static int initialScoreOf(com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.FactionDef);
+   public static com.guzhenrenlibrary.faction.InitialRelation initialRelationOf(com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.FactionDef);
+   public com.guzhenrenlibrary.faction.FactionStance stance(com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.FactionDef);
+   public boolean relationsInit();
+   public int addStance(com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.FactionDef, int);
+   public void setStance(com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.FactionStance);
+   public void decayStances(int);
+   public java.util.Map<java.lang.String, java.lang.Integer> nonzeroStancesOf(com.guzhenrenlibrary.faction.FactionDef);
+   public void subjugate(com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.FactionDef);
+   public void destroy(com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.FactionDef);
+   public void revive(com.guzhenrenlibrary.faction.FactionDef);
+   public java.util.Map<java.lang.String, com.guzhenrenlibrary.faction.FactionDef> playerFactions();
+   public boolean isPlayerFounded(com.guzhenrenlibrary.faction.FactionDef);
+   public int totalFactionCount();
+   public com.guzhenrenlibrary.faction.FactionDef foundPlayerFaction(java.util.UUID, java.lang.String, com.guzhenrenlibrary.wuyu.WuyuLayout$Domain);
+   public static com.guzhenrenlibrary.faction.FactionDef dynamicByKey(java.lang.String);
+   public static java.util.Map<java.lang.String, com.guzhenrenlibrary.faction.FactionDef> allPlayerFactions();
+   public static void clearDynamicForProbe();
+   public com.guzhenrenlibrary.faction.FactionTerritory$Standing playerStanding(java.util.UUID, com.guzhenrenlibrary.faction.FactionDef);
+   public com.guzhenrenlibrary.faction.FactionRank playerRank(java.util.UUID, com.guzhenrenlibrary.faction.FactionDef);
+   public void setPlayerRank(java.util.UUID, com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.FactionRank);
+   public void rememberPlayerName(java.util.UUID, com.guzhenrenlibrary.faction.FactionDef, java.lang.String);
+   public java.lang.String playerName(java.util.UUID, com.guzhenrenlibrary.faction.FactionDef);
+   public java.lang.String activeMission(java.util.UUID, com.guzhenrenlibrary.faction.FactionDef);
+   public void setActiveMission(java.util.UUID, com.guzhenrenlibrary.faction.FactionDef, java.lang.String);
+   public int merit(java.util.UUID, com.guzhenrenlibrary.faction.FactionDef);
+   public int addMerit(java.util.UUID, com.guzhenrenlibrary.faction.FactionDef, int);
+   public void recordMission(java.util.UUID, com.guzhenrenlibrary.faction.FactionDef, int);
+   public java.util.Map<java.lang.String, java.lang.Integer> playerMemberships(java.util.UUID);
+   public java.util.Map<java.lang.String, com.guzhenrenlibrary.faction.FactionTerritory$Standing> allPlayerRanks();
+   public static java.lang.String factionIdOfPlayerEntry(java.lang.String);
+   public static java.util.UUID uuidOfPlayerEntry(java.lang.String);
+   public com.guzhenrenlibrary.faction.FactionBuilding[] postOverride(com.guzhenrenlibrary.faction.FactionDef, java.lang.String);
+   public void setPostOverride(com.guzhenrenlibrary.faction.FactionDef, java.lang.String, com.guzhenrenlibrary.faction.FactionBuilding);
+   public void setPost(com.guzhenrenlibrary.faction.FactionDef, java.lang.String, com.guzhenrenlibrary.faction.FactionBuilding, com.guzhenrenlibrary.faction.FactionPost);
+   public void setPost(com.guzhenrenlibrary.faction.FactionDef, java.lang.String, com.guzhenrenlibrary.faction.FactionBuilding, com.guzhenrenlibrary.faction.FactionPost, long);
+   public long postSince(com.guzhenrenlibrary.faction.FactionDef, java.lang.String);
+   public com.guzhenrenlibrary.faction.FactionPost postRoleOverride(com.guzhenrenlibrary.faction.FactionDef, java.lang.String);
+   public java.util.Map<java.lang.String, java.lang.String> roleOverrideView();
+   public com.guzhenrenlibrary.faction.FactionTerritory$Posting playerPost(java.util.UUID, com.guzhenrenlibrary.faction.FactionDef);
+   public void setPlayerPost(java.util.UUID, com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.FactionBuilding, com.guzhenrenlibrary.faction.FactionPost);
+   public void setPlayerPost(java.util.UUID, com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.FactionBuilding, com.guzhenrenlibrary.faction.FactionPost, long);
+   public long playerPostSince(java.util.UUID, com.guzhenrenlibrary.faction.FactionDef);
+   public void putApplication(com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.FactionTerritory$Application);
+   public void removeApplication(com.guzhenrenlibrary.faction.FactionDef, java.lang.String);
+   public com.guzhenrenlibrary.faction.FactionTerritory$Application application(com.guzhenrenlibrary.faction.FactionDef, java.lang.String);
+   public int applicationCount(com.guzhenrenlibrary.faction.FactionDef);
+   public java.util.List<com.guzhenrenlibrary.faction.FactionTerritory$Application> applicationsOf(com.guzhenrenlibrary.faction.FactionDef, long);
+   public long applicationDayOf(com.guzhenrenlibrary.faction.FactionDef);
+   public void markApplicationDay(com.guzhenrenlibrary.faction.FactionDef, long);
+   public long envoyDayOf(com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.FactionDef);
+   public long tradeDayOf(com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.FactionDef);
+   public void markTradeDay(com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.FactionDef, long);
+   public void markEnvoyDay(com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.FactionDef, long);
+   public java.util.Map<java.lang.String, java.lang.String> playerPostView();
+   public java.lang.String heirOf(com.guzhenrenlibrary.faction.FactionDef);
+   public void setHeir(com.guzhenrenlibrary.faction.FactionDef, java.lang.String);
+   public java.util.UUID regentOf(com.guzhenrenlibrary.faction.FactionDef);
+   public void setRegent(com.guzhenrenlibrary.faction.FactionDef, java.util.UUID);
+   public boolean isPlayerRuled(com.guzhenrenlibrary.faction.FactionDef);
+   public long lastWithdrawPeriod(java.util.UUID, com.guzhenrenlibrary.faction.FactionDef);
+   public void setWithdrawPeriod(java.util.UUID, com.guzhenrenlibrary.faction.FactionDef, long);
+   public long withdrawable(java.util.UUID, com.guzhenrenlibrary.faction.FactionDef, long);
+   public void setAnchorChunk(com.guzhenrenlibrary.faction.FactionDef, int, int);
+   public void setPlacement(com.guzhenrenlibrary.faction.FactionDef, int, int, int);
+   public java.lang.Long anchorChunkOf(com.guzhenrenlibrary.faction.FactionDef);
+   public int[] placementOrigin(com.guzhenrenlibrary.faction.FactionDef);
+   public java.lang.Integer platformY(com.guzhenrenlibrary.faction.FactionDef);
+   public int placementY(com.guzhenrenlibrary.faction.FactionDef);
+   public int[] anchorChunk(com.guzhenrenlibrary.faction.FactionDef);
+   public int anchoredCount();
+   public int addSupplies(com.guzhenrenlibrary.faction.FactionDef, int);
+   public com.guzhenrenlibrary.faction.FactionChronicle chronicle();
+   public long lastAiTick();
+   public void setLastAiTick(long);
+   public long lastSalaryPeriod();
+   public void setLastSalaryPeriod(long);
+   public net.minecraft.nbt.CompoundTag toTag();
+   public static com.guzhenrenlibrary.faction.FactionTerritory fromTag(net.minecraft.nbt.CompoundTag);
+   public static com.guzhenrenlibrary.faction.FactionTerritory of(net.minecraft.world.level.Level);
+   static {};
+
+### com.guzhenrenlibrary.faction.FactionTerritory$State   [outer]
+   public final class com.guzhenrenlibrary.faction.FactionTerritory$State {
+   public long treasury;
+   public int power;
+   public int supplies;
+   public boolean alive;
+   public java.lang.String owner;
+   public java.lang.String destroyedBy;
+
+### com.guzhenrenlibrary.faction.FactionTerritory$Standing   [outer]
+   public final class com.guzhenrenlibrary.faction.FactionTerritory$Standing {
+   public int rankOrdinal;
+   public int merit;
+   public int missionsDone;
+   public java.lang.String name;
+   public com.guzhenrenlibrary.faction.FactionTerritory$Standing(int, int, int);
+   public com.guzhenrenlibrary.faction.FactionRank rank();
+
+### com.guzhenrenlibrary.faction.FactionTerritory$Posting   [outer]
+   public final class com.guzhenrenlibrary.faction.FactionTerritory$Posting extends java.lang.Record {
+   private final com.guzhenrenlibrary.faction.FactionBuilding post;
+   private final com.guzhenrenlibrary.faction.FactionPost role;
+   public com.guzhenrenlibrary.faction.FactionTerritory$Posting(com.guzhenrenlibrary.faction.FactionBuilding, com.guzhenrenlibrary.faction.FactionPost);
+   public boolean vacant();
+   public java.lang.String encode();
+   public static com.guzhenrenlibrary.faction.FactionTerritory$Posting decode(java.lang.String);
+   public final java.lang.String toString();
+   public final int hashCode();
+   public final boolean equals(java.lang.Object);
+   public com.guzhenrenlibrary.faction.FactionBuilding post();
+   public com.guzhenrenlibrary.faction.FactionPost role();
+
+### com.guzhenrenlibrary.faction.FactionTerritory$Application   [outer]
+   public final class com.guzhenrenlibrary.faction.FactionTerritory$Application extends java.lang.Record {
+   private final java.lang.String memberId;
+   private final com.guzhenrenlibrary.faction.FactionBuilding hall;
+   private final com.guzhenrenlibrary.faction.FactionPost role;
+   private final long appliedDay;
+   public com.guzhenrenlibrary.faction.FactionTerritory$Application(java.lang.String, com.guzhenrenlibrary.faction.FactionBuilding, com.guzhenrenlibrary.faction.FactionPost, long);
+   public final java.lang.String toString();
+   public final int hashCode();
+   public final boolean equals(java.lang.Object);
+   public java.lang.String memberId();
+   public com.guzhenrenlibrary.faction.FactionBuilding hall();
+   public com.guzhenrenlibrary.faction.FactionPost role();
+   public long appliedDay();
+
+### com.guzhenrenlibrary.faction.journey.FactionJourney   [outer]
+   public final class com.guzhenrenlibrary.faction.journey.FactionJourney {
+   public static final int BATTLE_UNKNOWN;
+   public static final int BATTLE_WON;
+   public static final int BATTLE_LOST;
+   private final int id;
+   private final java.lang.String fromKey;
+   private final java.lang.String toKey;
+   private final com.guzhenrenlibrary.faction.journey.JourneyKind kind;
+   private final long startTick;
+   private final int duration;
+   private final int members;
+   private final long seed;
+   private final long payload;
+   private final java.util.List<java.lang.String> memberNames;
+   private final java.util.List<java.util.UUID> entityIds;
+   private final java.util.List<java.lang.String> deadNames;
+   private final java.util.Map<java.lang.String, java.util.UUID> memberUuids;
+   private final java.util.Set<java.util.UUID> countedDeaths;
+   public com.guzhenrenlibrary.faction.journey.FactionJourney(int, java.lang.String, java.lang.String, com.guzhenrenlibrary.faction.journey.JourneyKind, long, int, int, long, long);
+   public com.guzhenrenlibrary.faction.journey.FactionJourney(int, java.lang.String, java.lang.String, com.guzhenrenlibrary.faction.journey.JourneyKind, long, int, long, long, com.guzhenrenlibrary.faction.team.FactionTeam, double, double, double, double);
+   public int id();
+   public java.lang.String fromKey();
+   public java.lang.String toKey();
+   public com.guzhenrenlibrary.faction.journey.JourneyKind kind();
+   public long startTick();
+   public int duration();
+   public int members();
+   public long seed();
+   public long payload();
+   public boolean settled();
+   public boolean failed();
+   public long doneAt();
+   public java.util.UUID escortId();
+   public java.util.UUID joinerId();
+   public boolean escort(java.util.UUID);
+   public boolean join(java.util.UUID);
+   public void markSettled();
+   public void touchDoneAt(long);
+   public void markFailed();
+   public boolean isTeam();
+   public int teamId();
+   public java.lang.String teamName();
+   public com.guzhenrenlibrary.faction.FactionBuilding hall();
+   public java.util.List<java.lang.String> memberNames();
+   public java.util.List<java.util.UUID> entityIds();
+   public void addEntityId(java.util.UUID);
+   public void removeEntityId(java.util.UUID);
+   public void clearEntityIds();
+   public int departed();
+   public int alive();
+   public double startX();
+   public double startZ();
+   public double endX();
+   public double endZ();
+   public double posX();
+   public double posZ();
+   public double totalDistance();
+   public com.guzhenrenlibrary.faction.journey.FactionJourney$Phase phase();
+   public void setPhase(com.guzhenrenlibrary.faction.journey.FactionJourney$Phase);
+   public boolean paused();
+   public void setPaused(boolean);
+   public int battleTicks();
+   public void setBattleTicks(int);
+   public int tickBattle();
+   public java.util.UUID commanderId();
+   public void setCommander(java.util.UUID);
+   public int battleResult();
+   public void setBattleResult(int);
+   public boolean battleWon();
+   public float progress(long);
+   public float progressNow();
+   public double travelled();
+   public void advance(double, double);
+   public void setPos(double, double);
+   public void setPath(double, double, double, double);
+   public static com.guzhenrenlibrary.faction.journey.FactionJourney forCheck(int, java.lang.String, java.lang.String, com.guzhenrenlibrary.faction.journey.JourneyKind, double, double, double, double, java.util.List<java.lang.String>);
+   public void assignEntity(java.lang.String, java.util.UUID);
+   public java.util.UUID entityOf(java.lang.String);
+   public java.lang.String memberNameOf(java.util.UUID);
+   public java.util.List<java.lang.String> deadMemberNames();
+   public void markMemberDead(java.lang.String);
+   public int noteMemberDead(java.util.UUID);
+   public boolean tooFewToFight();
+   public boolean arrived(long);
+   public boolean done(long);
+   public boolean active(long);
+   public static double[] straightAt(double, double, double, double, float);
+   public net.minecraft.nbt.CompoundTag toTag();
+   public static com.guzhenrenlibrary.faction.journey.FactionJourney fromTag(net.minecraft.nbt.CompoundTag);
+   public java.lang.String toString();
+   public boolean hasTag(java.lang.String);
+
+### com.guzhenrenlibrary.faction.journey.FactionJourney$Phase   [outer]
+   public final class com.guzhenrenlibrary.faction.journey.FactionJourney$Phase extends java.lang.Enum<com.guzhenrenlibrary.faction.journey.FactionJourney$Phase> {
+   public static final com.guzhenrenlibrary.faction.journey.FactionJourney$Phase MARCHING;
+   public static final com.guzhenrenlibrary.faction.journey.FactionJourney$Phase FIGHTING;
+   public static final com.guzhenrenlibrary.faction.journey.FactionJourney$Phase AT_TARGET;
+   public static final com.guzhenrenlibrary.faction.journey.FactionJourney$Phase BATTLE;
+   public static final com.guzhenrenlibrary.faction.journey.FactionJourney$Phase SETTLED;
+   public static final com.guzhenrenlibrary.faction.journey.FactionJourney$Phase FAILED;
+   public static com.guzhenrenlibrary.faction.journey.FactionJourney$Phase[] values();
+   public static com.guzhenrenlibrary.faction.journey.FactionJourney$Phase valueOf(java.lang.String);
+   public static com.guzhenrenlibrary.faction.journey.FactionJourney$Phase byOrdinal(int);
+   public boolean marching();
+   public boolean ended();
+   static {};
+
+### com.guzhenrenlibrary.faction.journey.FactionJourneys   [outer]
+   public final class com.guzhenrenlibrary.faction.journey.FactionJourneys {
+   public static final double SPEED;
+   public static final double MIN_SPEED_MULTIPLIER;
+   public static final double MAX_SPEED_MULTIPLIER;
+   public static final java.lang.String SPEED_PROPERTY;
+   public static final int DONE_KEEP_TICKS;
+   public static final double MAX_PATH;
+   public static final int MIN_DURATION;
+   public static final int MAX_DURATION;
+   private final java.util.List<com.guzhenrenlibrary.faction.journey.FactionJourney> journeys;
+   public com.guzhenrenlibrary.faction.journey.FactionJourneys();
+   public java.util.List<com.guzhenrenlibrary.faction.journey.FactionJourney> all();
+   public int size();
+   public com.guzhenrenlibrary.faction.journey.FactionJourney byId(int);
+   public int activeCount(long);
+   public com.guzhenrenlibrary.faction.journey.FactionJourney inFlight(com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.journey.JourneyKind);
+   public static double speed();
+   public static double multiplier();
+   public static void setDebugSpeedMultiplier(double);
+   public static void resetSpeedMultiplier();
+   public com.guzhenrenlibrary.faction.journey.FactionJourney record(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.journey.JourneyKind, long, long);
+   public com.guzhenrenlibrary.faction.journey.FactionJourney recordTeam(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.FactionDef, com.guzhenrenlibrary.faction.team.FactionTeam, long, long);
+   public static int durationFor(com.guzhenrenlibrary.faction.journey.JourneyKind, double);
+   public void tick(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.faction.FactionTerritory, long);
+   public void settleTeam(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.faction.FactionTerritory, com.guzhenrenlibrary.faction.journey.FactionJourney, long);
+   public void markFailed(com.guzhenrenlibrary.faction.journey.FactionJourney, com.guzhenrenlibrary.faction.FactionTerritory, long);
+   public static double[] shortenedEnds(double, double, double, double);
+   public static double[] pointAt(double, double, double, double, float, long);
+   public net.minecraft.nbt.CompoundTag toTag();
+   public void readTag(net.minecraft.nbt.ListTag);
+   public void readTag(net.minecraft.nbt.CompoundTag);
+   static {};
+
+### com.guzhenrenlibrary.faction.journey.JourneyMaterializer   [outer]
+   public final class com.guzhenrenlibrary.faction.journey.JourneyMaterializer {
+   public static final int VISIBLE_RANGE;
+   public static final java.lang.String TAG;
+   public static void tick(net.minecraft.server.level.ServerLevel, long);
+   public static void sweepOrphans(net.minecraft.server.level.ServerLevel);
+   public static double distanceToPlayer(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.faction.journey.FactionJourney, net.minecraft.server.level.ServerPlayer);
+   public static double[] pointOf(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.faction.journey.FactionJourney);
+   public static void abandon(int);
+   public static int materializedCount();
+   public static int materializedMembers(int);
+   static {};
+======================================================================
+## npc
+
+### com.guzhenrenlibrary.npc.life.Resident   [outer]
+   public final class com.guzhenrenlibrary.npc.life.Resident {
+   public static final int LOG_MAX;
+   public static final int ZHUANSHU_MAX;
+   private final java.util.UUID npcId;
+   private final java.util.List<java.lang.String> gu;
+   private final java.util.List<java.lang.String> guGranted;
+   private final java.util.List<java.util.UUID> partners;
+   private final java.util.List<java.util.UUID> feuds;
+   private final java.util.List<java.lang.String> log;
+   public com.guzhenrenlibrary.npc.life.Resident(java.util.UUID, com.guzhenrenlibrary.npc.NpcPersona, double, long);
+   public java.util.UUID npcId();
+   public com.guzhenrenlibrary.npc.NpcPersona persona();
+   public java.lang.String displayName();
+   public double zhuanshu();
+   public int zhuanshuInt();
+   public int cultivation();
+   public java.lang.String dimension();
+   public double x();
+   public double y();
+   public double z();
+   public boolean positionKnown();
+   public boolean homeKnown();
+   public double homeX();
+   public double homeZ();
+   public void setHome(double, double);
+   public void travelTo(double, double, double);
+   public com.guzhenrenlibrary.npc.life.Resident$State state();
+   public long stateUntil();
+   public long lastSimTick();
+   public long lastSeenTick();
+   public int missingTicks();
+   public boolean deceased();
+   public java.util.List<java.lang.String> gu();
+   public java.util.List<java.util.UUID> partners();
+   public java.util.List<java.lang.String> log();
+   public java.lang.String latestLog();
+   public boolean hasPartner(java.util.UUID);
+   public java.util.List<java.util.UUID> feuds();
+   public boolean hasFeud(java.util.UUID);
+   public java.lang.String household();
+   public boolean isHouseholdLord();
+   public boolean inHousehold();
+   public double householdX();
+   public double householdZ();
+   public double distanceToHousehold(double, double);
+   public java.lang.String describe();
+   public void setPersona(com.guzhenrenlibrary.npc.NpcPersona);
+   public void setZhuanshu(double);
+   public void at(java.lang.String, double, double, double, long);
+   public void setState(com.guzhenrenlibrary.npc.life.Resident$State, long);
+   public void setLastSimTick(long);
+   public void setMissingTicks(int);
+   public void markDeceased();
+   public boolean gainCultivation(int);
+   public void breakthrough();
+   public void rememberGu(java.lang.String);
+   public void forgetGu(java.lang.String);
+   public java.util.List<java.lang.String> guGranted();
+   public boolean guGranted(java.lang.String);
+   public boolean grantGu(java.lang.String);
+   public boolean everKitted();
+   public void addPartner(java.util.UUID);
+   public void removePartner(java.util.UUID);
+   public void addFeud(java.util.UUID);
+   public void removeFeud(java.util.UUID);
+   public void foundHousehold(java.lang.String, double, double);
+   public void joinHousehold(java.lang.String, double, double);
+   public void leaveHousehold();
+   public void remember(java.lang.String, long);
+   public net.minecraft.nbt.CompoundTag toTag();
+   public static com.guzhenrenlibrary.npc.life.Resident fromTag(net.minecraft.nbt.CompoundTag);
+   public java.lang.String toString();
+
+### com.guzhenrenlibrary.npc.life.Resident$State   [outer]
+   public final class com.guzhenrenlibrary.npc.life.Resident$State extends java.lang.Enum<com.guzhenrenlibrary.npc.life.Resident$State> {
+   public static final com.guzhenrenlibrary.npc.life.Resident$State IDLE;
+   public static final com.guzhenrenlibrary.npc.life.Resident$State CULTIVATING;
+   public static final com.guzhenrenlibrary.npc.life.Resident$State TRAVELLING;
+   public static final com.guzhenrenlibrary.npc.life.Resident$State SEEKING_GU;
+   public static final com.guzhenrenlibrary.npc.life.Resident$State VISITING;
+   public static final com.guzhenrenlibrary.npc.life.Resident$State WITH_PARTNER;
+   private final java.lang.String chineseName;
+   public static com.guzhenrenlibrary.npc.life.Resident$State[] values();
+   public static com.guzhenrenlibrary.npc.life.Resident$State valueOf(java.lang.String);
+   public java.lang.String chineseName();
+   public static com.guzhenrenlibrary.npc.life.Resident$State byOrdinal(int);
+   static {};
+
+### com.guzhenrenlibrary.npc.life.ResidentService   [outer]
+   public final class com.guzhenrenlibrary.npc.life.ResidentService {
+   public static final int SPEAK_COOLDOWN_TICKS;
+   public static final double SPEAK_RANGE;
+   public static final double NOTICE_RANGE;
+   public static final java.lang.String GU_GRANT_KEY;
+   public static final int GU_GAIN_CAP;
+   public static com.guzhenrenlibrary.npc.life.ResidentRegistry registry(net.minecraft.world.level.Level);
+   public static com.guzhenrenlibrary.npc.life.Resident residentOf(net.minecraft.world.entity.Entity);
+   public static java.lang.String lastLifeLine(java.util.UUID, net.minecraft.world.level.Level);
+   public static java.lang.String lifeStateName(java.util.UUID, net.minecraft.world.level.Level);
+   public static void enroll(net.minecraft.world.entity.Entity);
+   public static void enrollAll(java.util.List<? extends net.minecraft.world.entity.Entity>);
+   public static void tick(net.minecraft.server.level.ServerLevel);
+   public static void onDeath(net.minecraft.world.entity.Entity);
+   public static void simulate(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.npc.life.Resident, long);
+   public static void simulate(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.npc.life.Resident, long, java.util.Map<java.lang.String, com.guzhenrenlibrary.faction.FactionDef>);
+   public static int householdSize(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.npc.life.Resident);
+   public static java.lang.String householdName(com.guzhenrenlibrary.npc.life.Resident);
+   public static net.minecraft.world.entity.Mob findDuelTarget(net.minecraft.world.entity.Mob);
+   public static java.util.List<net.minecraft.world.entity.Mob> socialTargets(net.minecraft.world.entity.Mob);
+   public static net.minecraft.world.entity.Mob findSocialTarget(net.minecraft.world.entity.Mob);
+   public static void recordSocial(net.minecraft.world.entity.Mob, net.minecraft.world.entity.Mob, boolean);
+   public static void beginDuel(net.minecraft.world.entity.Mob, net.minecraft.world.entity.Mob);
+   public static void keepDuel(net.minecraft.world.entity.Mob, net.minecraft.world.entity.Mob);
+   public static void endDuel(net.minecraft.world.entity.Mob, net.minecraft.world.entity.Mob, net.minecraft.world.entity.Mob, java.lang.String);
+   public static net.minecraft.world.entity.Mob yieldCheck(net.minecraft.world.entity.Mob, net.minecraft.world.entity.Entity, float);
+   public static java.lang.String nameOf(net.minecraft.world.entity.Mob);
+   public static void applyToEntity(com.guzhenrenlibrary.npc.life.Resident, net.minecraft.world.entity.Mob);
+   public static void syncFromEntity(com.guzhenrenlibrary.npc.life.Resident, net.minecraft.world.entity.Mob, long);
+   public static net.minecraft.world.entity.Mob findLive(net.minecraft.server.level.ServerLevel, com.guzhenrenlibrary.npc.life.Resident);
+   public static void ambientTick(net.minecraft.world.entity.Mob);
+   public static boolean heldForCultivation(java.util.UUID);
+   public static boolean wantsToSpeak(net.minecraft.server.level.ServerPlayer, net.minecraft.world.entity.Mob);
+   public static void speakTo(net.minecraft.server.level.ServerPlayer, net.minecraft.world.entity.Mob);
+   public static long lastSpokeAt(java.util.UUID);
+   public static java.lang.String pickGu(int);
+   public static java.lang.String guGrantedList(net.minecraft.world.entity.Mob);
+   public static boolean isGuGranted(net.minecraft.world.entity.Mob, java.lang.String);
+   public static int guGrantedCount(net.minecraft.world.entity.Mob);
+   public static void markGuGranted(net.minecraft.world.entity.Mob, java.lang.String);
+   public static java.lang.String guName(java.lang.String);
+   public static net.minecraft.world.item.ItemStack stackOf(java.lang.String);
+   public static java.lang.String zhuanshuName(int);
+   public static java.lang.String dimensionName(net.minecraft.world.level.Level);
+   public static java.lang.String describeForProbe(net.minecraft.server.level.ServerLevel);
+   static {};
+
+### com.guzhenrenlibrary.npc.life.ResidentData   [outer]
+   public final class com.guzhenrenlibrary.npc.life.ResidentData {
+   public static final net.neoforged.neoforge.registries.DeferredRegister<net.neoforged.neoforge.attachment.AttachmentType<?>> ATTACHMENTS;
+   public static final net.neoforged.neoforge.registries.DeferredHolder<net.neoforged.neoforge.attachment.AttachmentType<?>, net.neoforged.neoforge.attachment.AttachmentType<com.guzhenrenlibrary.npc.life.ResidentRegistry>> REGISTRY;
+   static {};
+
+### com.guzhenrenlibrary.npc.life.ResidentRegistry   [outer]
+   public final class com.guzhenrenlibrary.npc.life.ResidentRegistry {
+   public static final com.mojang.serialization.Codec<com.guzhenrenlibrary.npc.life.ResidentRegistry> CODEC;
+   private final java.util.Map<java.util.UUID, com.guzhenrenlibrary.npc.life.Resident> all;
+   public com.guzhenrenlibrary.npc.life.ResidentRegistry();
+   public static com.guzhenrenlibrary.npc.life.ResidentRegistry of(net.minecraft.world.level.Level);
+   public int size();
+   public boolean isEmpty();
+   public java.util.Collection<com.guzhenrenlibrary.npc.life.Resident> all();
+   public com.guzhenrenlibrary.npc.life.Resident get(java.util.UUID);
+   public boolean contains(java.util.UUID);
+   public long lastSimTick();
+   public void setLastSimTick(long);
+   public int cursor();
+   public int aliveCount();
+   public com.guzhenrenlibrary.npc.life.Resident enroll(java.util.UUID, com.guzhenrenlibrary.npc.NpcPersona, double, long);
+   public void put(com.guzhenrenlibrary.npc.life.Resident);
+   public boolean remove(java.util.UUID);
+   public void clear();
+   public java.util.List<com.guzhenrenlibrary.npc.life.Resident> nextBatch(int);
+   public net.minecraft.nbt.CompoundTag toTag();
+   public static com.guzhenrenlibrary.npc.life.ResidentRegistry fromTag(net.minecraft.nbt.CompoundTag);
+   public java.lang.String toString();
+   static {};
+
+### com.guzhenrenlibrary.npc.life.ResidentRules   [outer]
+   public final class com.guzhenrenlibrary.npc.life.ResidentRules {
+   public static final int MAX_RESIDENTS;
+   public static final int SIM_INTERVAL_TICKS;
+   public static final int SIM_BATCH;
+   public static final int MAX_CATCHUP_DAYS;
+   public static final int DAY_TICKS;
+   public static final int[] BREAKTHROUGH_DAYS;
+   public static final float BREAKTHROUGH_CHANCE;
+   public static final int CULTIVATION_PER_DAY;
+   public static final float CULTIVATING_FACTOR;
+   public static final float IDLE_FACTOR;
+   public static final float EVENT_DAYS;
+   public static final int STATE_MIN_TICKS;
+   public static final int STATE_MAX_TICKS;
+   public static final int TRAVEL_MIN;
+   public static final int TRAVEL_MAX;
+   public static final int HOME_RADIUS;
+   public static final int SEEK_GU_MIN_ZHUANSHU;
+   public static final float SEEK_GU_CHANCE;
+   public static final int GU_LIST_MAX;
+   public static final int PARTNER_ZHUANSHU_GAP;
+   public static final float FIND_PARTNER_CHANCE;
+   public static final int MATERIALIZE_RANGE;
+   public static final int MISSING_GRACE;
+   public static final int ENROLL_RANGE;
+   public static final float FEUD_CHANCE;
+   public static final float DUEL_CHANCE;
+   public static final float FOUND_HOUSEHOLD_CHANCE;
+   public static final int FOUND_HOUSEHOLD_MIN_ZHUANSHU;
+   public static final int FOUND_HOUSEHOLD_MIN_GU;
+   public static final int HOUSEHOLD_MAX_MEMBERS;
+   public static final int FEUD_LIST_MAX;
+   public static final double DUEL_RANGE;
+   public static final int DUEL_TIMEOUT_TICKS;
+   public static final int HOUSEHOLD_RADIUS;
+   public static final float DUEL_YIELD_RATIO;
+   public static int breakthroughNeed(int);
+   public static int maxCatchupTicks();
+   public static int eventIntervalTicks();
+   public static com.guzhenrenlibrary.npc.life.Resident$State rollState(int, boolean, java.util.Random);
+   public static boolean findsGu(com.guzhenrenlibrary.npc.life.Resident$State, java.util.Random);
+   public static boolean seeksPartner(com.guzhenrenlibrary.npc.life.Resident$State, boolean, int, int, java.util.Random);
+   public static boolean feudRoll(boolean, java.util.Random);
+   public static java.lang.String describeForProbe();
+   static {};
+
+### com.guzhenrenlibrary.npc.NpcTrade   [outer]
+   public final class com.guzhenrenlibrary.npc.NpcTrade {
+   public static final net.minecraft.tags.TagKey<net.minecraft.world.item.Item> YUANSHI_TAG;
+   public static final java.lang.String YUANSHI_IN_GU_KEY;
+   public static net.minecraft.world.item.Item currency();
+   public static java.lang.String currencyName();
+   public static int countPlainCurrency(net.minecraft.world.entity.player.Player);
+   public static int countCurrency(net.minecraft.world.entity.player.Player);
+   public static boolean consumeCurrency(net.minecraft.world.entity.player.Player, int);
+   public static int yuanlaoGuValue(net.minecraft.world.item.ItemStack);
+   public static int countYuanlaoGu(net.minecraft.world.entity.player.Player);
+   public static int countYuanlaoGuItems(net.minecraft.world.entity.player.Player);
+   public static java.lang.String walletText(net.minecraft.world.entity.player.Player);
+   public static int[] splitPayment(int[], int);
+   public static boolean covers(int[], int);
+   public static com.guzhenrenlibrary.npc.NpcTrade$Payment pay(net.minecraft.world.entity.player.Player, int);
+   public static int paimaihangPrice(int);
+   public static int[] paimaihangWanTiers();
+   public static com.guzhenrenlibrary.npc.NpcTrade$PaimaihangTier[] paimaihangTiers();
+   public static int[] legacyTiersForCheck();
+   public static int yuanshiPerWan();
+   public static int priceOf(net.minecraft.world.item.Item);
+   public static int auctionPrice(net.minecraft.world.item.Item);
+   public static int legacyPrice(net.minecraft.world.item.Item);
+   public static net.minecraft.tags.TagKey<net.minecraft.world.item.Item>[] auctionPriceTags();
+   public static net.minecraft.tags.TagKey<net.minecraft.world.item.Item>[] legacyPriceTags();
+   public static int discountPercent(com.guzhenrenlibrary.npc.NpcPersona, int);
+   public static java.util.List<com.guzhenrenlibrary.npc.NpcTrade$Offer> shelf(net.minecraft.world.entity.Mob, com.guzhenrenlibrary.npc.NpcPersona, int);
+   public static int countInInventory(net.minecraft.world.entity.Mob, net.minecraft.world.item.Item);
+   public static boolean takeOne(net.minecraft.world.entity.Mob, net.minecraft.world.item.Item);
+   public static int availableKinds(java.util.List<com.guzhenrenlibrary.npc.NpcTrade$Offer>);
+   static {};
+
+### com.guzhenrenlibrary.npc.NpcTrade$Offer   [outer]
+   public final class com.guzhenrenlibrary.npc.NpcTrade$Offer extends java.lang.Record {
+   private final net.minecraft.world.item.Item item;
+   private final int basePrice;
+   private final int price;
+   private final com.guzhenrenlibrary.npc.GiftCategory category;
+   private final int stock;
+   public com.guzhenrenlibrary.npc.NpcTrade$Offer(net.minecraft.world.item.Item, int, int, com.guzhenrenlibrary.npc.GiftCategory, int);
+   public boolean soldOut();
+   public java.lang.String label();
+   public final java.lang.String toString();
+   public final int hashCode();
+   public final boolean equals(java.lang.Object);
+   public net.minecraft.world.item.Item item();
+   public int basePrice();
+   public int price();
+   public com.guzhenrenlibrary.npc.GiftCategory category();
+   public int stock();
+
+### com.guzhenrenlibrary.npc.NpcStock   [outer]
+   public final class com.guzhenrenlibrary.npc.NpcStock {
+   public static final int RESTOCK_INTERVAL_TICKS;
+   public static final int MAX_KINDS_PER_CYCLE;
+   public static final int STACK_MIN;
+   public static final int STACK_MAX;
+   public static final int MAX_USED_MAIN_SLOTS;
+   public static final java.lang.String PROTECTED_KEY;
+   public static final java.lang.String RESTOCK_KEY;
+   public static final java.lang.String LONGEVITY_KEYWORD;
+   public static boolean dueForRestock(long, long);
+   public static boolean longevityName(java.lang.String);
+   public static java.util.Set<java.lang.String> longevityIds();
+   public static boolean protectedId(java.lang.String, java.lang.String);
+   public static int shelfSize(com.guzhenrenlibrary.npc.NpcIdentityType);
+   public static void rememberKit(net.minecraft.world.entity.Mob, java.util.List<net.minecraft.world.item.ItemStack>);
+   public static java.lang.String protectedList(net.minecraft.world.entity.Mob);
+   public static java.lang.String mergeProtectedList(java.lang.String, java.lang.String);
+   public static boolean rememberKitItem(net.minecraft.world.entity.Mob, java.lang.String);
+   public static int rememberKitLegacy(net.minecraft.world.entity.Mob);
+   public static boolean isProtected(net.minecraft.world.entity.Mob, net.minecraft.world.item.ItemStack);
+   public static boolean isLongevityGu(net.minecraft.world.item.ItemStack);
+   public static boolean isCurrency(net.minecraft.world.item.ItemStack);
+   public static boolean isTradeable(net.minecraft.world.entity.Mob, net.minecraft.world.item.ItemStack);
+   public static int tick(net.minecraft.world.entity.Mob);
+   public static int restock(net.minecraft.world.entity.Mob);
+   public static int tradeableKinds(net.minecraft.world.entity.Mob);
+   public static int usedMainSlots(com.guzhenrenlibrary.npc.combat.NpcInventory);
+   public static boolean poolHasGu(net.minecraft.world.entity.Mob);
+   public static boolean isCompleteFormula(net.minecraft.world.item.Item);
+   public static int poolSize(net.minecraft.world.entity.Mob);
+   public static boolean knowsAllLongevityIds(java.lang.String...);
+   static {};
+======================================================================
+## identity
+
+### com.guzhenrenlibrary.identity.IdentityManager   [outer]
+   public final class com.guzhenrenlibrary.identity.IdentityManager {
+   public static final java.lang.String FALLBACK_TITLE;
+   public static com.guzhenrenlibrary.identity.IdentityBook book(net.minecraft.world.entity.player.Player);
+   public static java.util.List<com.guzhenrenlibrary.identity.PlayerIdentity> identities(net.minecraft.world.entity.player.Player);
+   public static com.guzhenrenlibrary.identity.PlayerIdentity active(net.minecraft.world.entity.player.Player);
+   public static java.util.UUID activeId(net.minecraft.world.entity.player.Player);
+   public static java.lang.String activeTitle(net.minecraft.world.entity.player.Player);
+   public static boolean hasIdentity(net.minecraft.world.entity.player.Player);
+   public static com.guzhenrenlibrary.identity.PlayerIdentity find(net.minecraft.world.entity.player.Player, java.util.UUID);
+   public static com.guzhenrenlibrary.identity.PlayerIdentity findByName(net.minecraft.world.entity.player.Player, java.lang.String);
+   public static com.guzhenrenlibrary.identity.PlayerIdentity ensureActive(net.minecraft.server.level.ServerPlayer);
+   public static com.guzhenrenlibrary.identity.PlayerIdentity create(net.minecraft.server.level.ServerPlayer, java.lang.String, com.guzhenrenlibrary.character.CharacterGender, com.guzhenrenlibrary.character.CharacterOrigin);
+   public static boolean switchTo(net.minecraft.server.level.ServerPlayer, java.util.UUID);
+   public static boolean switchToName(net.minecraft.server.level.ServerPlayer, java.lang.String);
+   public static boolean replace(net.minecraft.server.level.ServerPlayer, com.guzhenrenlibrary.identity.PlayerIdentity);
+   public static boolean rename(net.minecraft.server.level.ServerPlayer, java.util.UUID, java.lang.String);
+   public static boolean delete(net.minecraft.server.level.ServerPlayer, java.util.UUID);
+   public static void onTitleChanged(net.minecraft.server.level.ServerPlayer, java.lang.String);
+======================================================================
+## quest
+
+### com.guzhenrenlibrary.quest.QuestLog   [outer]
+   public final class com.guzhenrenlibrary.quest.QuestLog {
+   public static com.guzhenrenlibrary.quest.QuestLedger ledger(net.minecraft.world.entity.player.Player);
+   public static void set(net.minecraft.world.entity.player.Player, com.guzhenrenlibrary.quest.QuestLedger);
+   public static java.util.List<java.util.Map$Entry<com.guzhenrenlibrary.quest.QuestDef, com.guzhenrenlibrary.quest.QuestDef$QuestState>> activeDefs(net.minecraft.server.level.ServerPlayer);
+   public static com.guzhenrenlibrary.quest.QuestDef$QuestState stateOf(net.minecraft.server.level.ServerPlayer, java.lang.String);
+   public static void store(net.minecraft.server.level.ServerPlayer, com.guzhenrenlibrary.quest.QuestDef$QuestState);
+   public static java.lang.String accept(net.minecraft.server.level.ServerPlayer, com.guzhenrenlibrary.quest.QuestDef, net.minecraft.world.entity.Entity);
+   public static java.lang.String accept(net.minecraft.server.level.ServerPlayer, com.guzhenrenlibrary.quest.QuestDef, net.minecraft.world.entity.Entity, com.guzhenrenlibrary.faction.FactionDef);
+   public static java.lang.String acceptForced(net.minecraft.server.level.ServerPlayer, com.guzhenrenlibrary.quest.QuestDef, com.guzhenrenlibrary.faction.FactionDef);
+   public static java.lang.String accept(net.minecraft.server.level.ServerPlayer, com.guzhenrenlibrary.quest.QuestDef, net.minecraft.world.entity.Entity, com.guzhenrenlibrary.faction.FactionDef, boolean);
+   public static java.lang.String acceptHall(net.minecraft.server.level.ServerPlayer, com.guzhenrenlibrary.quest.QuestDef, com.guzhenrenlibrary.faction.FactionDef);
+   static java.lang.String giverKeyOf(com.guzhenrenlibrary.quest.QuestDef, java.util.UUID, com.guzhenrenlibrary.faction.FactionDef);
+   static java.lang.String giverNameOf(com.guzhenrenlibrary.quest.QuestDef, net.minecraft.world.entity.Entity, com.guzhenrenlibrary.faction.FactionDef);
+   public static java.lang.String giverName(net.minecraft.world.entity.Entity, com.guzhenrenlibrary.quest.QuestDef);
+   public static java.lang.String cooldownLeft(net.minecraft.server.level.ServerPlayer, com.guzhenrenlibrary.quest.QuestDef);
+   public static java.lang.String turnIn(net.minecraft.server.level.ServerPlayer, java.lang.String);
+   public static java.lang.String abandon(net.minecraft.server.level.ServerPlayer, java.lang.String);
+   public static java.lang.String revokeForced(net.minecraft.server.level.ServerPlayer);
+   public static java.lang.String forcedId(net.minecraft.server.level.ServerPlayer);
+   public static java.lang.String describeForProbe(net.minecraft.server.level.ServerPlayer);
+   public static java.lang.String debugForce(net.minecraft.server.level.ServerPlayer, java.lang.String);
+   public static int tickGarrison(net.minecraft.server.level.ServerPlayer);
+
+### com.guzhenrenlibrary.quest.QuestLedger   [outer]
+   public final class com.guzhenrenlibrary.quest.QuestLedger {
+   public static final int MAX_ACTIVE;
+   public static final int MAX_COMPLETED;
+   public static final com.guzhenrenlibrary.quest.QuestLedger EMPTY;
+   public static final com.mojang.serialization.Codec<com.guzhenrenlibrary.quest.QuestLedger> CODEC;
+   private final java.util.Map<java.lang.String, com.guzhenrenlibrary.quest.QuestDef$QuestState> active;
+   private final java.util.Map<java.lang.String, java.lang.Long> completed;
+   public java.util.Collection<com.guzhenrenlibrary.quest.QuestDef$QuestState> states();
+   public com.guzhenrenlibrary.quest.QuestDef$QuestState state(java.lang.String);
+   public boolean has(java.lang.String);
+   public int activeCount();
+   public boolean full();
+   public boolean everCompleted(java.lang.String);
+   public long completedAt(java.lang.String);
+   public java.util.List<java.util.Map$Entry<com.guzhenrenlibrary.quest.QuestDef, com.guzhenrenlibrary.quest.QuestDef$QuestState>> activeDefs();
+   public com.guzhenrenlibrary.quest.QuestLedger with(com.guzhenrenlibrary.quest.QuestDef$QuestState);
+   public com.guzhenrenlibrary.quest.QuestLedger without(java.lang.String);
+   public com.guzhenrenlibrary.quest.QuestLedger completedAt(java.lang.String, long);
+   public int completedCount();
+   public net.minecraft.nbt.CompoundTag toTag();
+   public static com.guzhenrenlibrary.quest.QuestLedger fromTag(net.minecraft.nbt.CompoundTag);
+   public java.lang.String toString();
+   static {};
+
+### com.guzhenrenlibrary.quest.QuestLedgerData   [outer]
+   public final class com.guzhenrenlibrary.quest.QuestLedgerData {
+   public static final net.neoforged.neoforge.registries.DeferredRegister<net.neoforged.neoforge.attachment.AttachmentType<?>> ATTACHMENTS;
+   public static final net.neoforged.neoforge.registries.DeferredHolder<net.neoforged.neoforge.attachment.AttachmentType<?>, net.neoforged.neoforge.attachment.AttachmentType<com.guzhenrenlibrary.quest.QuestLedger>> LEDGER;
+   static {};

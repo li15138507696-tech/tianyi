@@ -1,0 +1,2 @@
+package net.guzhenren.init;
+public class GuzhenrenModMobEffects {public static net.minecraft.core.Holder<net.minecraft.world.effect.MobEffect> CHENMO=new net.minecraft.core.Holder<>(new net.minecraft.world.effect.MobEffect());}

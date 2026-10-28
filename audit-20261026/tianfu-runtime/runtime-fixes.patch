@@ -1,0 +1,129 @@
+--- a/src/main/java/net/guzhenren/tianfu/TianfuEffects.java
++++ b/src/main/java/net/guzhenren/tianfu/TianfuEffects.java
+@@ -300,7 +300,7 @@
+ 
+         // ---- 蛊 / 杀招：缩短冷却（本体字段无百分比口径，直接按比例削减剩余 CD）----
+         double guCd = TianfuTalents.guCd(ids);
+-        if (guCd > 0.0 && v.cd > 0.0) {
++        if (guCd != 0.0 && v.cd > 0.0) {
+             v.cd = Math.max(0.0, v.cd - guCd);
+             touched = true;
+         }
+@@ -414,9 +414,11 @@
+                 }
+             } else if (chenmo.getDuration() > 40 && chenmo.getDuration() > floor) {
+                 int target = chenmo.getDuration() / 2;
++                // Same-amplifier addEffect only extends duration; remove before shortening.
++                player.removeEffect(GuzhenrenModMobEffects.CHENMO);
+                 player.addEffect(new net.minecraft.world.effect.MobEffectInstance(
+                         GuzhenrenModMobEffects.CHENMO, target,
+-                        chenmo.getAmplifier(), chenmo.isAmbient(), chenmo.isVisible()));
++                        chenmo.getAmplifier(), chenmo.isAmbient(), chenmo.isVisible(), chenmo.showIcon()));
+                 TianfuData.putLong(player, "chenmo_floor", target);
+             }
+         }
+@@ -429,6 +431,8 @@
+             TianfuAttributes.sync(player);
+             TianfuTalents.maintainEffects(player, ids);   // 常驻药水效果（夜视 / 抗性 / 防火 等）
+         }
++
++        maintainV2(player);
+ 
+         if (touched) {
+             v.markSyncDirty();
+--- a/src/main/java/net/guzhenren/tianfu/TianfuSlay.java
++++ b/src/main/java/net/guzhenren/tianfu/TianfuSlay.java
+@@ -84,8 +84,10 @@
+         boolean slay = isSlay(sp);
+         // 杀神自带「杀怪噬道」；神·吞天噬地（甲等购买）也走本通道，同一套「本体敌对生物」过滤与防刷规则。
+         // 一律走 TianfuApply.effective：确认前未生效的天赋不该开始累积杀戮值 / 触发噬元。
+-        boolean tuntian = slay || TianfuApply.effective(sp).contains("shen_tuntian_shidi");
+-        if (!slay && !tuntian) {
++        var ids = TianfuApply.effective(sp);
++        boolean tuntian = slay || ids.contains("shen_tuntian_shidi");
++        boolean shiyuan = ids.contains("shiyuan_zhixing");
++        if (!slay && !tuntian && !shiyuan) {
+             return;
+         }
+ 
+@@ -167,7 +169,7 @@
+         }
+ 
+         // 噬元之性：击杀灵体回复真元/念头（同样只认已生效的天赋）
+-        if (TianfuApply.effective(sp).contains("shiyuan_zhixing") && victim.getType().is(TEXIAO)) {
++        if (shiyuan && victim.getType().is(TEXIAO)) {
+             v.zhenyuan = Math.min(v.zuida_zhenyuan, v.zhenyuan + v.zuida_zhenyuan * 0.05);
+             v.niantou = Math.min(v.niantou_rongliang, v.niantou + v.niantou_rongliang * 0.05);
+         }
+--- a/src/main/java/net/guzhenren/tianfu/v2/NeoForge1211Adapter.java
++++ b/src/main/java/net/guzhenren/tianfu/v2/NeoForge1211Adapter.java
+@@ -159,6 +159,10 @@
+     @Override
+     public void maintain(ServerPlayer player, TianfuSelection.Snapshot state) {
+         PlayerVariables v = vars(player);
++        double oldLuck = v.qiyun;
++        double oldLuckCap = v.qiyun_shangxian;
++        double oldAptitude = v.kongqiao;
++        double oldLifespan = v.shouyuan;
+ 
+         // 天弃之命：气运与上限持续归零，增益不能抵消。
+         if (state.purchased().contains(NEG_LUCK)) {
+@@ -177,9 +181,16 @@
+         // 命烛残尽：本世寿元不得增加。
+         if (state.purchased().contains(NEG_LIFESPAN)) {
+             double cap = TianfuData.getDouble(player, KEY_LIFESPAN_CAP, -1.0);
+-            if (cap >= 0.0 && v.shouyuan > cap) {
+-                v.shouyuan = cap;
+-            }
++            if (cap >= 0.0) {
++                v.shouyuan = Math.min(v.shouyuan, cap);
++                if (v.shouyuan < cap) {
++                    TianfuData.putDouble(player, KEY_LIFESPAN_CAP, v.shouyuan);
++                }
++            }
++        }
++        if (v.qiyun != oldLuck || v.qiyun_shangxian != oldLuckCap
++                || v.kongqiao != oldAptitude || v.shouyuan != oldLifespan) {
++            v.markSyncDirty();
+         }
+     }
+ 
+--- a/src/main/java/net/guzhenren/tianfu/TianfuCombat.java
++++ b/src/main/java/net/guzhenren/tianfu/TianfuCombat.java
+@@ -367,6 +367,17 @@
+                 net.minecraft.network.chat.Component.literal("§d[天赋] 不死之身：免于一死"), true);
+     }
+ 
++    /** Ordinary respawns preserve the cooldown; a wiped new life starts fresh. */
++    public static void copyCooldownOnClone(ServerPlayer player, Entity original) {
++        if (!TianfuData.isConfirmed(player)) {
++            return;
++        }
++        var oldData = original.getPersistentData();
++        if (oldData.contains(TAG_UNDYING_READY, net.minecraft.nbt.Tag.TAG_LONG)) {
++            player.getPersistentData().putLong(TAG_UNDYING_READY, oldData.getLong(TAG_UNDYING_READY));
++        }
++    }
++
+     /** 玩家下线：清掉恶意联动的内存状态，避免长期残留。 */
+     public static void forget(java.util.UUID id) {
+         COUNTER_TICK.remove(id);
+--- a/src/main/java/net/guzhenren/tianfu/TianfuEvents.java
++++ b/src/main/java/net/guzhenren/tianfu/TianfuEvents.java
+@@ -30,6 +30,8 @@
+     public static void onClone(PlayerEvent.Clone event) {
+         if (event.getEntity() instanceof ServerPlayer player) {
+             TianfuOpening.onClone(player, event.getOriginal());
++            TianfuCombat.copyCooldownOnClone(player, event.getOriginal());
++            TianfuCombat.forget(player.getUUID());
+         }
+     }
+ 
+@@ -46,6 +48,7 @@
+         // 玩家死亡：清掉他的装饰实体（否则会留在死亡点）
+         if (event.getEntity() instanceof ServerPlayer sp) {
+             TianfuVfxEntity.forget(sp);
++            TianfuCombat.forget(sp.getUUID());
+         }
+     }
+ 

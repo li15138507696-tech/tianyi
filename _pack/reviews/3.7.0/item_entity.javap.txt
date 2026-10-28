@@ -1,0 +1,1346 @@
+Compiled from "ItemEntity.java"
+public class net.minecraft.world.entity.item.ItemEntity extends net.minecraft.world.entity.Entity implements net.minecraft.world.entity.TraceableEntity {
+  private static final net.minecraft.network.syncher.EntityDataAccessor<net.minecraft.world.item.ItemStack> DATA_ITEM;
+
+  private static final float FLOAT_HEIGHT;
+
+  public static final float EYE_HEIGHT;
+
+  private static final int LIFETIME;
+
+  private static final int INFINITE_PICKUP_DELAY;
+
+  private static final int INFINITE_LIFETIME;
+
+  private int age;
+
+  private int pickupDelay;
+
+  private int health;
+
+  private java.util.UUID thrower;
+
+  private net.minecraft.world.entity.Entity cachedThrower;
+
+  private java.util.UUID target;
+
+  public final float bobOffs;
+
+  public int lifespan;
+
+  public net.minecraft.world.entity.item.ItemEntity(net.minecraft.world.entity.EntityType<? extends net.minecraft.world.entity.item.ItemEntity>, net.minecraft.world.level.Level);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: aload_2
+       3: invokespecial #1                  // Method net/minecraft/world/entity/Entity."<init>":(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;)V
+       6: aload_0
+       7: iconst_5
+       8: putfield      #7                  // Field health:I
+      11: aload_0
+      12: sipush        6000
+      15: putfield      #13                 // Field lifespan:I
+      18: aload_0
+      19: aload_0
+      20: getfield      #16                 // Field random:Lnet/minecraft/util/RandomSource;
+      23: invokeinterface #20,  1           // InterfaceMethod net/minecraft/util/RandomSource.nextFloat:()F
+      28: ldc           #28                 // float 3.1415927f
+      30: fmul
+      31: fconst_2
+      32: fmul
+      33: putfield      #29                 // Field bobOffs:F
+      36: aload_0
+      37: aload_0
+      38: getfield      #16                 // Field random:Lnet/minecraft/util/RandomSource;
+      41: invokeinterface #20,  1           // InterfaceMethod net/minecraft/util/RandomSource.nextFloat:()F
+      46: ldc           #33                 // float 360.0f
+      48: fmul
+      49: invokevirtual #34                 // Method setYRot:(F)V
+      52: return
+
+  public net.minecraft.world.entity.item.ItemEntity(net.minecraft.world.level.Level, double, double, double, net.minecraft.world.item.ItemStack);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: dload_2
+       3: dload         4
+       5: dload         6
+       7: aload         8
+       9: aload_1
+      10: getfield      #38                 // Field net/minecraft/world/level/Level.random:Lnet/minecraft/util/RandomSource;
+      13: invokeinterface #41,  1           // InterfaceMethod net/minecraft/util/RandomSource.nextDouble:()D
+      18: ldc2_w        #45                 // double 0.2d
+      21: dmul
+      22: ldc2_w        #47                 // double 0.1d
+      25: dsub
+      26: ldc2_w        #45                 // double 0.2d
+      29: aload_1
+      30: getfield      #38                 // Field net/minecraft/world/level/Level.random:Lnet/minecraft/util/RandomSource;
+      33: invokeinterface #41,  1           // InterfaceMethod net/minecraft/util/RandomSource.nextDouble:()D
+      38: ldc2_w        #45                 // double 0.2d
+      41: dmul
+      42: ldc2_w        #47                 // double 0.1d
+      45: dsub
+      46: invokespecial #49                 // Method "<init>":(Lnet/minecraft/world/level/Level;DDDLnet/minecraft/world/item/ItemStack;DDD)V
+      49: return
+
+  public net.minecraft.world.entity.item.ItemEntity(net.minecraft.world.level.Level, double, double, double, net.minecraft.world.item.ItemStack, double, double, double);
+    Code:
+       0: aload_0
+       1: getstatic     #52                 // Field net/minecraft/world/entity/EntityType.ITEM:Lnet/minecraft/world/entity/EntityType;
+       4: aload_1
+       5: invokespecial #58                 // Method "<init>":(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;)V
+       8: aload_0
+       9: dload_2
+      10: dload         4
+      12: dload         6
+      14: invokevirtual #59                 // Method setPos:(DDD)V
+      17: aload_0
+      18: dload         9
+      20: dload         11
+      22: dload         13
+      24: invokevirtual #63                 // Method setDeltaMovement:(DDD)V
+      27: aload_0
+      28: aload         8
+      30: invokevirtual #66                 // Method setItem:(Lnet/minecraft/world/item/ItemStack;)V
+      33: aload_0
+      34: aload         8
+      36: invokevirtual #70                 // Method net/minecraft/world/item/ItemStack.getItem:()Lnet/minecraft/world/item/Item;
+      39: ifnonnull     48
+      42: sipush        6000
+      45: goto          54
+      48: aload         8
+      50: aload_1
+      51: invokevirtual #76                 // Method net/minecraft/world/item/ItemStack.getEntityLifespan:(Lnet/minecraft/world/level/Level;)I
+      54: putfield      #13                 // Field lifespan:I
+      57: return
+
+  private net.minecraft.world.entity.item.ItemEntity(net.minecraft.world.entity.item.ItemEntity);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokevirtual #80                 // Method getType:()Lnet/minecraft/world/entity/EntityType;
+       5: aload_1
+       6: invokevirtual #84                 // Method level:()Lnet/minecraft/world/level/Level;
+       9: invokespecial #1                  // Method net/minecraft/world/entity/Entity."<init>":(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;)V
+      12: aload_0
+      13: iconst_5
+      14: putfield      #7                  // Field health:I
+      17: aload_0
+      18: sipush        6000
+      21: putfield      #13                 // Field lifespan:I
+      24: aload_0
+      25: aload_1
+      26: invokevirtual #88                 // Method getItem:()Lnet/minecraft/world/item/ItemStack;
+      29: invokevirtual #91                 // Method net/minecraft/world/item/ItemStack.copy:()Lnet/minecraft/world/item/ItemStack;
+      32: invokevirtual #66                 // Method setItem:(Lnet/minecraft/world/item/ItemStack;)V
+      35: aload_0
+      36: aload_1
+      37: invokevirtual #94                 // Method copyPosition:(Lnet/minecraft/world/entity/Entity;)V
+      40: aload_0
+      41: aload_1
+      42: getfield      #98                 // Field age:I
+      45: putfield      #98                 // Field age:I
+      48: aload_0
+      49: aload_1
+      50: getfield      #29                 // Field bobOffs:F
+      53: putfield      #29                 // Field bobOffs:F
+      56: aload_0
+      57: aload_1
+      58: getfield      #13                 // Field lifespan:I
+      61: putfield      #13                 // Field lifespan:I
+      64: return
+
+  public boolean dampensVibrations();
+    Code:
+       0: aload_0
+       1: invokevirtual #88                 // Method getItem:()Lnet/minecraft/world/item/ItemStack;
+       4: getstatic     #101                // Field net/minecraft/tags/ItemTags.DAMPENS_VIBRATIONS:Lnet/minecraft/tags/TagKey;
+       7: invokevirtual #107                // Method net/minecraft/world/item/ItemStack.is:(Lnet/minecraft/tags/TagKey;)Z
+      10: ireturn
+
+  public net.minecraft.world.entity.Entity getOwner();
+    Code:
+       0: aload_0
+       1: getfield      #111                // Field cachedThrower:Lnet/minecraft/world/entity/Entity;
+       4: ifnull        22
+       7: aload_0
+       8: getfield      #111                // Field cachedThrower:Lnet/minecraft/world/entity/Entity;
+      11: invokevirtual #115                // Method net/minecraft/world/entity/Entity.isRemoved:()Z
+      14: ifne          22
+      17: aload_0
+      18: getfield      #111                // Field cachedThrower:Lnet/minecraft/world/entity/Entity;
+      21: areturn
+      22: aload_0
+      23: getfield      #119                // Field thrower:Ljava/util/UUID;
+      26: ifnull        63
+      29: aload_0
+      30: invokevirtual #84                 // Method level:()Lnet/minecraft/world/level/Level;
+      33: astore_2
+      34: aload_2
+      35: instanceof    #123                // class net/minecraft/server/level/ServerLevel
+      38: ifeq          63
+      41: aload_2
+      42: checkcast     #123                // class net/minecraft/server/level/ServerLevel
+      45: astore_1
+      46: aload_0
+      47: aload_1
+      48: aload_0
+      49: getfield      #119                // Field thrower:Ljava/util/UUID;
+      52: invokevirtual #125                // Method net/minecraft/server/level/ServerLevel.getEntity:(Ljava/util/UUID;)Lnet/minecraft/world/entity/Entity;
+      55: putfield      #111                // Field cachedThrower:Lnet/minecraft/world/entity/Entity;
+      58: aload_0
+      59: getfield      #111                // Field cachedThrower:Lnet/minecraft/world/entity/Entity;
+      62: areturn
+      63: aconst_null
+      64: areturn
+
+  public void restoreFrom(net.minecraft.world.entity.Entity);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokespecial #129                // Method net/minecraft/world/entity/Entity.restoreFrom:(Lnet/minecraft/world/entity/Entity;)V
+       5: aload_1
+       6: instanceof    #8                  // class net/minecraft/world/entity/item/ItemEntity
+       9: ifeq          25
+      12: aload_1
+      13: checkcast     #8                  // class net/minecraft/world/entity/item/ItemEntity
+      16: astore_2
+      17: aload_0
+      18: aload_2
+      19: getfield      #111                // Field cachedThrower:Lnet/minecraft/world/entity/Entity;
+      22: putfield      #111                // Field cachedThrower:Lnet/minecraft/world/entity/Entity;
+      25: return
+
+  protected net.minecraft.world.entity.Entity$MovementEmission getMovementEmission();
+    Code:
+       0: getstatic     #132                // Field net/minecraft/world/entity/Entity$MovementEmission.NONE:Lnet/minecraft/world/entity/Entity$MovementEmission;
+       3: areturn
+
+  protected void defineSynchedData(net.minecraft.network.syncher.SynchedEntityData$Builder);
+    Code:
+       0: aload_1
+       1: getstatic     #138                // Field DATA_ITEM:Lnet/minecraft/network/syncher/EntityDataAccessor;
+       4: getstatic     #142                // Field net/minecraft/world/item/ItemStack.EMPTY:Lnet/minecraft/world/item/ItemStack;
+       7: invokevirtual #146                // Method net/minecraft/network/syncher/SynchedEntityData$Builder.define:(Lnet/minecraft/network/syncher/EntityDataAccessor;Ljava/lang/Object;)Lnet/minecraft/network/syncher/SynchedEntityData$Builder;
+      10: pop
+      11: return
+
+  protected double getDefaultGravity();
+    Code:
+       0: ldc2_w        #152                // double 0.04d
+       3: dreturn
+
+  public void tick();
+    Code:
+       0: aload_0
+       1: invokevirtual #88                 // Method getItem:()Lnet/minecraft/world/item/ItemStack;
+       4: aload_0
+       5: invokevirtual #154                // Method net/minecraft/world/item/ItemStack.onEntityItemUpdate:(Lnet/minecraft/world/entity/item/ItemEntity;)Z
+       8: ifeq          12
+      11: return
+      12: aload_0
+      13: invokevirtual #88                 // Method getItem:()Lnet/minecraft/world/item/ItemStack;
+      16: invokevirtual #158                // Method net/minecraft/world/item/ItemStack.isEmpty:()Z
+      19: ifeq          29
+      22: aload_0
+      23: invokevirtual #161                // Method discard:()V
+      26: goto          667
+      29: aload_0
+      30: invokespecial #165                // Method net/minecraft/world/entity/Entity.tick:()V
+      33: aload_0
+      34: getfield      #168                // Field pickupDelay:I
+      37: ifle          60
+      40: aload_0
+      41: getfield      #168                // Field pickupDelay:I
+      44: sipush        32767
+      47: if_icmpeq     60
+      50: aload_0
+      51: dup
+      52: getfield      #168                // Field pickupDelay:I
+      55: iconst_1
+      56: isub
+      57: putfield      #168                // Field pickupDelay:I
+      60: aload_0
+      61: aload_0
+      62: invokevirtual #171                // Method getX:()D
+      65: putfield      #174                // Field xo:D
+      68: aload_0
+      69: aload_0
+      70: invokevirtual #178                // Method getY:()D
+      73: putfield      #181                // Field yo:D
+      76: aload_0
+      77: aload_0
+      78: invokevirtual #184                // Method getZ:()D
+      81: putfield      #187                // Field zo:D
+      84: aload_0
+      85: invokevirtual #190                // Method getDeltaMovement:()Lnet/minecraft/world/phys/Vec3;
+      88: astore_1
+      89: aload_0
+      90: invokevirtual #194                // Method getMaxHeightFluidType:()Lnet/neoforged/neoforge/fluids/FluidType;
+      93: astore_2
+      94: aload_2
+      95: invokevirtual #198                // Method net/neoforged/neoforge/fluids/FluidType.isAir:()Z
+      98: ifne          128
+     101: aload_2
+     102: invokevirtual #203                // Method net/neoforged/neoforge/fluids/FluidType.isVanilla:()Z
+     105: ifne          128
+     108: aload_0
+     109: aload_2
+     110: invokevirtual #206                // Method getFluidTypeHeight:(Lnet/neoforged/neoforge/fluids/FluidType;)D
+     113: ldc2_w        #210                // double 0.10000000149011612d
+     116: dcmpl
+     117: ifle          128
+     120: aload_2
+     121: aload_0
+     122: invokevirtual #212                // Method net/neoforged/neoforge/fluids/FluidType.setItemMovement:(Lnet/minecraft/world/entity/item/ItemEntity;)V
+     125: goto          188
+     128: aload_0
+     129: invokevirtual #216                // Method isInWater:()Z
+     132: ifeq          156
+     135: aload_0
+     136: getstatic     #219                // Field net/minecraft/tags/FluidTags.WATER:Lnet/minecraft/tags/TagKey;
+     139: invokevirtual #224                // Method getFluidHeight:(Lnet/minecraft/tags/TagKey;)D
+     142: ldc2_w        #210                // double 0.10000000149011612d
+     145: dcmpl
+     146: ifle          156
+     149: aload_0
+     150: invokevirtual #228                // Method setUnderwaterMovement:()V
+     153: goto          188
+     156: aload_0
+     157: invokevirtual #231                // Method isInLava:()Z
+     160: ifeq          184
+     163: aload_0
+     164: getstatic     #234                // Field net/minecraft/tags/FluidTags.LAVA:Lnet/minecraft/tags/TagKey;
+     167: invokevirtual #224                // Method getFluidHeight:(Lnet/minecraft/tags/TagKey;)D
+     170: ldc2_w        #210                // double 0.10000000149011612d
+     173: dcmpl
+     174: ifle          184
+     177: aload_0
+     178: invokevirtual #237                // Method setUnderLavaMovement:()V
+     181: goto          188
+     184: aload_0
+     185: invokevirtual #240                // Method applyGravity:()V
+     188: aload_0
+     189: invokevirtual #84                 // Method level:()Lnet/minecraft/world/level/Level;
+     192: getfield      #243                // Field net/minecraft/world/level/Level.isClientSide:Z
+     195: ifeq          206
+     198: aload_0
+     199: iconst_0
+     200: putfield      #247                // Field noPhysics:Z
+     203: goto          274
+     206: aload_0
+     207: aload_0
+     208: invokevirtual #84                 // Method level:()Lnet/minecraft/world/level/Level;
+     211: aload_0
+     212: aload_0
+     213: invokevirtual #250                // Method getBoundingBox:()Lnet/minecraft/world/phys/AABB;
+     216: ldc2_w        #254                // double 1.0E-7d
+     219: invokevirtual #256                // Method net/minecraft/world/phys/AABB.deflate:(D)Lnet/minecraft/world/phys/AABB;
+     222: invokevirtual #262                // Method net/minecraft/world/level/Level.noCollision:(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/AABB;)Z
+     225: ifne          232
+     228: iconst_1
+     229: goto          233
+     232: iconst_0
+     233: putfield      #247                // Field noPhysics:Z
+     236: aload_0
+     237: getfield      #247                // Field noPhysics:Z
+     240: ifeq          274
+     243: aload_0
+     244: aload_0
+     245: invokevirtual #171                // Method getX:()D
+     248: aload_0
+     249: invokevirtual #250                // Method getBoundingBox:()Lnet/minecraft/world/phys/AABB;
+     252: getfield      #266                // Field net/minecraft/world/phys/AABB.minY:D
+     255: aload_0
+     256: invokevirtual #250                // Method getBoundingBox:()Lnet/minecraft/world/phys/AABB;
+     259: getfield      #269                // Field net/minecraft/world/phys/AABB.maxY:D
+     262: dadd
+     263: ldc2_w        #272                // double 2.0d
+     266: ddiv
+     267: aload_0
+     268: invokevirtual #184                // Method getZ:()D
+     271: invokevirtual #274                // Method moveTowardsClosestSpace:(DDD)V
+     274: aload_0
+     275: invokevirtual #277                // Method onGround:()Z
+     278: ifeq          309
+     281: aload_0
+     282: invokevirtual #190                // Method getDeltaMovement:()Lnet/minecraft/world/phys/Vec3;
+     285: invokevirtual #280                // Method net/minecraft/world/phys/Vec3.horizontalDistanceSqr:()D
+     288: ldc2_w        #285                // double 9.999999747378752E-6d
+     291: dcmpl
+     292: ifgt          309
+     295: aload_0
+     296: getfield      #287                // Field tickCount:I
+     299: aload_0
+     300: invokevirtual #290                // Method getId:()I
+     303: iadd
+     304: iconst_4
+     305: irem
+     306: ifne          416
+     309: aload_0
+     310: getstatic     #294                // Field net/minecraft/world/entity/MoverType.SELF:Lnet/minecraft/world/entity/MoverType;
+     313: aload_0
+     314: invokevirtual #190                // Method getDeltaMovement:()Lnet/minecraft/world/phys/Vec3;
+     317: invokevirtual #300                // Method move:(Lnet/minecraft/world/entity/MoverType;Lnet/minecraft/world/phys/Vec3;)V
+     320: ldc_w         #304                // float 0.98f
+     323: fstore_3
+     324: aload_0
+     325: invokevirtual #277                // Method onGround:()Z
+     328: ifeq          361
+     331: aload_0
+     332: invokevirtual #305                // Method getBlockPosBelowThatAffectsMyMovement:()Lnet/minecraft/core/BlockPos;
+     335: astore        4
+     337: aload_0
+     338: invokevirtual #84                 // Method level:()Lnet/minecraft/world/level/Level;
+     341: aload         4
+     343: invokevirtual #309                // Method net/minecraft/world/level/Level.getBlockState:(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;
+     346: aload_0
+     347: invokevirtual #84                 // Method level:()Lnet/minecraft/world/level/Level;
+     350: aload         4
+     352: aload_0
+     353: invokevirtual #313                // Method net/minecraft/world/level/block/state/BlockState.getFriction:(Lnet/minecraft/world/level/LevelReader;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/Entity;)F
+     356: ldc_w         #304                // float 0.98f
+     359: fmul
+     360: fstore_3
+     361: aload_0
+     362: aload_0
+     363: invokevirtual #190                // Method getDeltaMovement:()Lnet/minecraft/world/phys/Vec3;
+     366: fload_3
+     367: f2d
+     368: ldc2_w        #319                // double 0.98d
+     371: fload_3
+     372: f2d
+     373: invokevirtual #321                // Method net/minecraft/world/phys/Vec3.multiply:(DDD)Lnet/minecraft/world/phys/Vec3;
+     376: invokevirtual #325                // Method setDeltaMovement:(Lnet/minecraft/world/phys/Vec3;)V
+     379: aload_0
+     380: invokevirtual #277                // Method onGround:()Z
+     383: ifeq          416
+     386: aload_0
+     387: invokevirtual #190                // Method getDeltaMovement:()Lnet/minecraft/world/phys/Vec3;
+     390: astore        4
+     392: aload         4
+     394: getfield      #328                // Field net/minecraft/world/phys/Vec3.y:D
+     397: dconst_0
+     398: dcmpg
+     399: ifge          416
+     402: aload_0
+     403: aload         4
+     405: dconst_1
+     406: ldc2_w        #331                // double -0.5d
+     409: dconst_1
+     410: invokevirtual #321                // Method net/minecraft/world/phys/Vec3.multiply:(DDD)Lnet/minecraft/world/phys/Vec3;
+     413: invokevirtual #325                // Method setDeltaMovement:(Lnet/minecraft/world/phys/Vec3;)V
+     416: aload_0
+     417: getfield      #174                // Field xo:D
+     420: invokestatic  #333                // Method net/minecraft/util/Mth.floor:(D)I
+     423: aload_0
+     424: invokevirtual #171                // Method getX:()D
+     427: invokestatic  #333                // Method net/minecraft/util/Mth.floor:(D)I
+     430: if_icmpne     467
+     433: aload_0
+     434: getfield      #181                // Field yo:D
+     437: invokestatic  #333                // Method net/minecraft/util/Mth.floor:(D)I
+     440: aload_0
+     441: invokevirtual #178                // Method getY:()D
+     444: invokestatic  #333                // Method net/minecraft/util/Mth.floor:(D)I
+     447: if_icmpne     467
+     450: aload_0
+     451: getfield      #187                // Field zo:D
+     454: invokestatic  #333                // Method net/minecraft/util/Mth.floor:(D)I
+     457: aload_0
+     458: invokevirtual #184                // Method getZ:()D
+     461: invokestatic  #333                // Method net/minecraft/util/Mth.floor:(D)I
+     464: if_icmpeq     471
+     467: iconst_1
+     468: goto          472
+     471: iconst_0
+     472: istore_3
+     473: iload_3
+     474: ifeq          481
+     477: iconst_2
+     478: goto          483
+     481: bipush        40
+     483: istore        4
+     485: aload_0
+     486: getfield      #287                // Field tickCount:I
+     489: iload         4
+     491: irem
+     492: ifne          516
+     495: aload_0
+     496: invokevirtual #84                 // Method level:()Lnet/minecraft/world/level/Level;
+     499: getfield      #243                // Field net/minecraft/world/level/Level.isClientSide:Z
+     502: ifne          516
+     505: aload_0
+     506: invokevirtual #339                // Method isMergable:()Z
+     509: ifeq          516
+     512: aload_0
+     513: invokevirtual #342                // Method mergeWithNeighbours:()V
+     516: aload_0
+     517: getfield      #98                 // Field age:I
+     520: sipush        -32768
+     523: if_icmpeq     536
+     526: aload_0
+     527: dup
+     528: getfield      #98                 // Field age:I
+     531: iconst_1
+     532: iadd
+     533: putfield      #98                 // Field age:I
+     536: aload_0
+     537: aload_0
+     538: getfield      #345                // Field hasImpulse:Z
+     541: aload_0
+     542: invokevirtual #348                // Method updateInWaterStateAndDoFluidPushing:()Z
+     545: ior
+     546: putfield      #345                // Field hasImpulse:Z
+     549: aload_0
+     550: invokevirtual #84                 // Method level:()Lnet/minecraft/world/level/Level;
+     553: getfield      #243                // Field net/minecraft/world/level/Level.isClientSide:Z
+     556: ifne          586
+     559: aload_0
+     560: invokevirtual #190                // Method getDeltaMovement:()Lnet/minecraft/world/phys/Vec3;
+     563: aload_1
+     564: invokevirtual #351                // Method net/minecraft/world/phys/Vec3.subtract:(Lnet/minecraft/world/phys/Vec3;)Lnet/minecraft/world/phys/Vec3;
+     567: invokevirtual #355                // Method net/minecraft/world/phys/Vec3.lengthSqr:()D
+     570: dstore        5
+     572: dload         5
+     574: ldc2_w        #358                // double 0.01d
+     577: dcmpl
+     578: ifle          586
+     581: aload_0
+     582: iconst_1
+     583: putfield      #345                // Field hasImpulse:Z
+     586: aload_0
+     587: invokevirtual #88                 // Method getItem:()Lnet/minecraft/world/item/ItemStack;
+     590: astore        5
+     592: aload_0
+     593: invokevirtual #84                 // Method level:()Lnet/minecraft/world/level/Level;
+     596: getfield      #243                // Field net/minecraft/world/level/Level.isClientSide:Z
+     599: ifne          648
+     602: aload_0
+     603: getfield      #98                 // Field age:I
+     606: aload_0
+     607: getfield      #13                 // Field lifespan:I
+     610: if_icmplt     648
+     613: aload_0
+     614: aload_0
+     615: getfield      #13                 // Field lifespan:I
+     618: aload_0
+     619: invokestatic  #360                // Method net/neoforged/neoforge/event/EventHooks.onItemExpire:(Lnet/minecraft/world/entity/item/ItemEntity;)I
+     622: iadd
+     623: iconst_0
+     624: sipush        32766
+     627: invokestatic  #368                // Method net/minecraft/util/Mth.clamp:(III)I
+     630: putfield      #13                 // Field lifespan:I
+     633: aload_0
+     634: getfield      #98                 // Field age:I
+     637: aload_0
+     638: getfield      #13                 // Field lifespan:I
+     641: if_icmplt     648
+     644: aload_0
+     645: invokevirtual #161                // Method discard:()V
+     648: aload         5
+     650: invokevirtual #158                // Method net/minecraft/world/item/ItemStack.isEmpty:()Z
+     653: ifeq          667
+     656: aload_0
+     657: invokevirtual #372                // Method isRemoved:()Z
+     660: ifne          667
+     663: aload_0
+     664: invokevirtual #161                // Method discard:()V
+     667: return
+
+  public net.minecraft.core.BlockPos getBlockPosBelowThatAffectsMyMovement();
+    Code:
+       0: aload_0
+       1: ldc_w         #373                // float 0.999999f
+       4: invokevirtual #374                // Method getOnPos:(F)Lnet/minecraft/core/BlockPos;
+       7: areturn
+
+  private void setUnderwaterMovement();
+    Code:
+       0: aload_0
+       1: invokevirtual #190                // Method getDeltaMovement:()Lnet/minecraft/world/phys/Vec3;
+       4: astore_1
+       5: aload_0
+       6: aload_1
+       7: getfield      #378                // Field net/minecraft/world/phys/Vec3.x:D
+      10: ldc2_w        #381                // double 0.9900000095367432d
+      13: dmul
+      14: aload_1
+      15: getfield      #328                // Field net/minecraft/world/phys/Vec3.y:D
+      18: aload_1
+      19: getfield      #328                // Field net/minecraft/world/phys/Vec3.y:D
+      22: ldc2_w        #383                // double 0.05999999865889549d
+      25: dcmpg
+      26: ifge          35
+      29: ldc_w         #385                // float 5.0E-4f
+      32: goto          36
+      35: fconst_0
+      36: f2d
+      37: dadd
+      38: aload_1
+      39: getfield      #386                // Field net/minecraft/world/phys/Vec3.z:D
+      42: ldc2_w        #381                // double 0.9900000095367432d
+      45: dmul
+      46: invokevirtual #63                 // Method setDeltaMovement:(DDD)V
+      49: return
+
+  private void setUnderLavaMovement();
+    Code:
+       0: aload_0
+       1: invokevirtual #190                // Method getDeltaMovement:()Lnet/minecraft/world/phys/Vec3;
+       4: astore_1
+       5: aload_0
+       6: aload_1
+       7: getfield      #378                // Field net/minecraft/world/phys/Vec3.x:D
+      10: ldc2_w        #389                // double 0.949999988079071d
+      13: dmul
+      14: aload_1
+      15: getfield      #328                // Field net/minecraft/world/phys/Vec3.y:D
+      18: aload_1
+      19: getfield      #328                // Field net/minecraft/world/phys/Vec3.y:D
+      22: ldc2_w        #383                // double 0.05999999865889549d
+      25: dcmpg
+      26: ifge          35
+      29: ldc_w         #385                // float 5.0E-4f
+      32: goto          36
+      35: fconst_0
+      36: f2d
+      37: dadd
+      38: aload_1
+      39: getfield      #386                // Field net/minecraft/world/phys/Vec3.z:D
+      42: ldc2_w        #389                // double 0.949999988079071d
+      45: dmul
+      46: invokevirtual #63                 // Method setDeltaMovement:(DDD)V
+      49: return
+
+  private void mergeWithNeighbours();
+    Code:
+       0: aload_0
+       1: invokevirtual #339                // Method isMergable:()Z
+       4: ifeq          86
+       7: aload_0
+       8: invokevirtual #84                 // Method level:()Lnet/minecraft/world/level/Level;
+      11: ldc           #8                  // class net/minecraft/world/entity/item/ItemEntity
+      13: aload_0
+      14: invokevirtual #250                // Method getBoundingBox:()Lnet/minecraft/world/phys/AABB;
+      17: ldc2_w        #391                // double 0.5d
+      20: dconst_0
+      21: ldc2_w        #391                // double 0.5d
+      24: invokevirtual #393                // Method net/minecraft/world/phys/AABB.inflate:(DDD)Lnet/minecraft/world/phys/AABB;
+      27: aload_0
+      28: invokedynamic #397,  0            // InvokeDynamic #0:test:(Lnet/minecraft/world/entity/item/ItemEntity;)Ljava/util/function/Predicate;
+      33: invokevirtual #401                // Method net/minecraft/world/level/Level.getEntitiesOfClass:(Ljava/lang/Class;Lnet/minecraft/world/phys/AABB;Ljava/util/function/Predicate;)Ljava/util/List;
+      36: invokeinterface #405,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+      41: astore_1
+      42: aload_1
+      43: invokeinterface #411,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+      48: ifeq          86
+      51: aload_1
+      52: invokeinterface #416,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      57: checkcast     #8                  // class net/minecraft/world/entity/item/ItemEntity
+      60: astore_2
+      61: aload_2
+      62: invokevirtual #339                // Method isMergable:()Z
+      65: ifeq          83
+      68: aload_0
+      69: aload_2
+      70: invokevirtual #420                // Method tryToMerge:(Lnet/minecraft/world/entity/item/ItemEntity;)V
+      73: aload_0
+      74: invokevirtual #372                // Method isRemoved:()Z
+      77: ifeq          83
+      80: goto          86
+      83: goto          42
+      86: return
+
+  private boolean isMergable();
+    Code:
+       0: aload_0
+       1: invokevirtual #88                 // Method getItem:()Lnet/minecraft/world/item/ItemStack;
+       4: astore_1
+       5: aload_0
+       6: invokevirtual #423                // Method isAlive:()Z
+       9: ifeq          57
+      12: aload_0
+      13: getfield      #168                // Field pickupDelay:I
+      16: sipush        32767
+      19: if_icmpeq     57
+      22: aload_0
+      23: getfield      #98                 // Field age:I
+      26: sipush        -32768
+      29: if_icmpeq     57
+      32: aload_0
+      33: getfield      #98                 // Field age:I
+      36: sipush        6000
+      39: if_icmpge     57
+      42: aload_1
+      43: invokevirtual #426                // Method net/minecraft/world/item/ItemStack.getCount:()I
+      46: aload_1
+      47: invokevirtual #429                // Method net/minecraft/world/item/ItemStack.getMaxStackSize:()I
+      50: if_icmpge     57
+      53: iconst_1
+      54: goto          58
+      57: iconst_0
+      58: ireturn
+
+  private void tryToMerge(net.minecraft.world.entity.item.ItemEntity);
+    Code:
+       0: aload_0
+       1: invokevirtual #88                 // Method getItem:()Lnet/minecraft/world/item/ItemStack;
+       4: astore_2
+       5: aload_1
+       6: invokevirtual #88                 // Method getItem:()Lnet/minecraft/world/item/ItemStack;
+       9: astore_3
+      10: aload_0
+      11: getfield      #432                // Field target:Ljava/util/UUID;
+      14: aload_1
+      15: getfield      #432                // Field target:Ljava/util/UUID;
+      18: invokestatic  #435                // Method java/util/Objects.equals:(Ljava/lang/Object;Ljava/lang/Object;)Z
+      21: ifeq          60
+      24: aload_2
+      25: aload_3
+      26: invokestatic  #441                // Method areMergable:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)Z
+      29: ifeq          60
+      32: aload_3
+      33: invokevirtual #426                // Method net/minecraft/world/item/ItemStack.getCount:()I
+      36: aload_2
+      37: invokevirtual #426                // Method net/minecraft/world/item/ItemStack.getCount:()I
+      40: if_icmpge     53
+      43: aload_0
+      44: aload_2
+      45: aload_1
+      46: aload_3
+      47: invokestatic  #445                // Method merge:(Lnet/minecraft/world/entity/item/ItemEntity;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/item/ItemEntity;Lnet/minecraft/world/item/ItemStack;)V
+      50: goto          60
+      53: aload_1
+      54: aload_3
+      55: aload_0
+      56: aload_2
+      57: invokestatic  #445                // Method merge:(Lnet/minecraft/world/entity/item/ItemEntity;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/item/ItemEntity;Lnet/minecraft/world/item/ItemStack;)V
+      60: return
+
+  public static boolean areMergable(net.minecraft.world.item.ItemStack, net.minecraft.world.item.ItemStack);
+    Code:
+       0: aload_1
+       1: invokevirtual #426                // Method net/minecraft/world/item/ItemStack.getCount:()I
+       4: aload_0
+       5: invokevirtual #426                // Method net/minecraft/world/item/ItemStack.getCount:()I
+       8: iadd
+       9: aload_1
+      10: invokevirtual #429                // Method net/minecraft/world/item/ItemStack.getMaxStackSize:()I
+      13: if_icmple     20
+      16: iconst_0
+      17: goto          25
+      20: aload_0
+      21: aload_1
+      22: invokestatic  #449                // Method net/minecraft/world/item/ItemStack.isSameItemSameComponents:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)Z
+      25: ireturn
+
+  public static net.minecraft.world.item.ItemStack merge(net.minecraft.world.item.ItemStack, net.minecraft.world.item.ItemStack, int);
+    Code:
+       0: aload_0
+       1: invokevirtual #429                // Method net/minecraft/world/item/ItemStack.getMaxStackSize:()I
+       4: iload_2
+       5: invokestatic  #452                // Method java/lang/Math.min:(II)I
+       8: aload_0
+       9: invokevirtual #426                // Method net/minecraft/world/item/ItemStack.getCount:()I
+      12: isub
+      13: aload_1
+      14: invokevirtual #426                // Method net/minecraft/world/item/ItemStack.getCount:()I
+      17: invokestatic  #452                // Method java/lang/Math.min:(II)I
+      20: istore_3
+      21: aload_0
+      22: aload_0
+      23: invokevirtual #426                // Method net/minecraft/world/item/ItemStack.getCount:()I
+      26: iload_3
+      27: iadd
+      28: invokevirtual #456                // Method net/minecraft/world/item/ItemStack.copyWithCount:(I)Lnet/minecraft/world/item/ItemStack;
+      31: astore        4
+      33: aload_1
+      34: iload_3
+      35: invokevirtual #460                // Method net/minecraft/world/item/ItemStack.shrink:(I)V
+      38: aload         4
+      40: areturn
+
+  private static void merge(net.minecraft.world.entity.item.ItemEntity, net.minecraft.world.item.ItemStack, net.minecraft.world.item.ItemStack);
+    Code:
+       0: aload_1
+       1: aload_2
+       2: bipush        64
+       4: invokestatic  #464                // Method merge:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;I)Lnet/minecraft/world/item/ItemStack;
+       7: astore_3
+       8: aload_0
+       9: aload_3
+      10: invokevirtual #66                 // Method setItem:(Lnet/minecraft/world/item/ItemStack;)V
+      13: return
+
+  private static void merge(net.minecraft.world.entity.item.ItemEntity, net.minecraft.world.item.ItemStack, net.minecraft.world.entity.item.ItemEntity, net.minecraft.world.item.ItemStack);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: aload_3
+       3: invokestatic  #467                // Method merge:(Lnet/minecraft/world/entity/item/ItemEntity;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)V
+       6: aload_0
+       7: aload_0
+       8: getfield      #168                // Field pickupDelay:I
+      11: aload_2
+      12: getfield      #168                // Field pickupDelay:I
+      15: invokestatic  #470                // Method java/lang/Math.max:(II)I
+      18: putfield      #168                // Field pickupDelay:I
+      21: aload_0
+      22: aload_0
+      23: getfield      #98                 // Field age:I
+      26: aload_2
+      27: getfield      #98                 // Field age:I
+      30: invokestatic  #452                // Method java/lang/Math.min:(II)I
+      33: putfield      #98                 // Field age:I
+      36: aload_3
+      37: invokevirtual #158                // Method net/minecraft/world/item/ItemStack.isEmpty:()Z
+      40: ifeq          47
+      43: aload_2
+      44: invokevirtual #161                // Method discard:()V
+      47: return
+
+  public boolean fireImmune();
+    Code:
+       0: aload_0
+       1: invokevirtual #88                 // Method getItem:()Lnet/minecraft/world/item/ItemStack;
+       4: getstatic     #473                // Field net/minecraft/core/component/DataComponents.FIRE_RESISTANT:Lnet/minecraft/core/component/DataComponentType;
+       7: invokevirtual #479                // Method net/minecraft/world/item/ItemStack.has:(Lnet/minecraft/core/component/DataComponentType;)Z
+      10: ifne          20
+      13: aload_0
+      14: invokespecial #483                // Method net/minecraft/world/entity/Entity.fireImmune:()Z
+      17: ifeq          24
+      20: iconst_1
+      21: goto          25
+      24: iconst_0
+      25: ireturn
+
+  public boolean hurt(net.minecraft.world.damagesource.DamageSource, float);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokevirtual #486                // Method isInvulnerableTo:(Lnet/minecraft/world/damagesource/DamageSource;)Z
+       5: ifeq          10
+       8: iconst_0
+       9: ireturn
+      10: aload_0
+      11: invokevirtual #88                 // Method getItem:()Lnet/minecraft/world/item/ItemStack;
+      14: invokevirtual #158                // Method net/minecraft/world/item/ItemStack.isEmpty:()Z
+      17: ifne          45
+      20: aload_0
+      21: invokevirtual #88                 // Method getItem:()Lnet/minecraft/world/item/ItemStack;
+      24: getstatic     #490                // Field net/minecraft/world/item/Items.NETHER_STAR:Lnet/minecraft/world/item/Item;
+      27: invokevirtual #496                // Method net/minecraft/world/item/ItemStack.is:(Lnet/minecraft/world/item/Item;)Z
+      30: ifeq          45
+      33: aload_1
+      34: getstatic     #499                // Field net/minecraft/tags/DamageTypeTags.IS_EXPLOSION:Lnet/minecraft/tags/TagKey;
+      37: invokevirtual #504                // Method net/minecraft/world/damagesource/DamageSource.is:(Lnet/minecraft/tags/TagKey;)Z
+      40: ifeq          45
+      43: iconst_0
+      44: ireturn
+      45: aload_0
+      46: invokevirtual #88                 // Method getItem:()Lnet/minecraft/world/item/ItemStack;
+      49: aload_1
+      50: invokevirtual #507                // Method net/minecraft/world/item/ItemStack.canBeHurtBy:(Lnet/minecraft/world/damagesource/DamageSource;)Z
+      53: ifne          58
+      56: iconst_0
+      57: ireturn
+      58: aload_0
+      59: invokevirtual #84                 // Method level:()Lnet/minecraft/world/level/Level;
+      62: getfield      #243                // Field net/minecraft/world/level/Level.isClientSide:Z
+      65: ifeq          70
+      68: iconst_1
+      69: ireturn
+      70: aload_0
+      71: invokevirtual #510                // Method markHurt:()V
+      74: aload_0
+      75: aload_0
+      76: getfield      #7                  // Field health:I
+      79: i2f
+      80: fload_2
+      81: fsub
+      82: f2i
+      83: putfield      #7                  // Field health:I
+      86: aload_0
+      87: getstatic     #513                // Field net/minecraft/world/level/gameevent/GameEvent.ENTITY_DAMAGE:Lnet/minecraft/core/Holder$Reference;
+      90: aload_1
+      91: invokevirtual #519                // Method net/minecraft/world/damagesource/DamageSource.getEntity:()Lnet/minecraft/world/entity/Entity;
+      94: invokevirtual #522                // Method gameEvent:(Lnet/minecraft/core/Holder;Lnet/minecraft/world/entity/Entity;)V
+      97: aload_0
+      98: getfield      #7                  // Field health:I
+     101: ifgt          117
+     104: aload_0
+     105: invokevirtual #88                 // Method getItem:()Lnet/minecraft/world/item/ItemStack;
+     108: aload_0
+     109: aload_1
+     110: invokevirtual #526                // Method net/minecraft/world/item/ItemStack.onDestroyed:(Lnet/minecraft/world/entity/item/ItemEntity;Lnet/minecraft/world/damagesource/DamageSource;)V
+     113: aload_0
+     114: invokevirtual #161                // Method discard:()V
+     117: iconst_1
+     118: ireturn
+
+  public void addAdditionalSaveData(net.minecraft.nbt.CompoundTag);
+    Code:
+       0: aload_1
+       1: ldc_w         #530                // String Health
+       4: aload_0
+       5: getfield      #7                  // Field health:I
+       8: i2s
+       9: invokevirtual #532                // Method net/minecraft/nbt/CompoundTag.putShort:(Ljava/lang/String;S)V
+      12: aload_1
+      13: ldc_w         #538                // String Age
+      16: aload_0
+      17: getfield      #98                 // Field age:I
+      20: i2s
+      21: invokevirtual #532                // Method net/minecraft/nbt/CompoundTag.putShort:(Ljava/lang/String;S)V
+      24: aload_1
+      25: ldc_w         #540                // String PickupDelay
+      28: aload_0
+      29: getfield      #168                // Field pickupDelay:I
+      32: i2s
+      33: invokevirtual #532                // Method net/minecraft/nbt/CompoundTag.putShort:(Ljava/lang/String;S)V
+      36: aload_1
+      37: ldc_w         #542                // String Lifespan
+      40: aload_0
+      41: getfield      #13                 // Field lifespan:I
+      44: invokevirtual #544                // Method net/minecraft/nbt/CompoundTag.putInt:(Ljava/lang/String;I)V
+      47: aload_0
+      48: getfield      #119                // Field thrower:Ljava/util/UUID;
+      51: ifnull        65
+      54: aload_1
+      55: ldc_w         #548                // String Thrower
+      58: aload_0
+      59: getfield      #119                // Field thrower:Ljava/util/UUID;
+      62: invokevirtual #550                // Method net/minecraft/nbt/CompoundTag.putUUID:(Ljava/lang/String;Ljava/util/UUID;)V
+      65: aload_0
+      66: getfield      #432                // Field target:Ljava/util/UUID;
+      69: ifnull        83
+      72: aload_1
+      73: ldc_w         #554                // String Owner
+      76: aload_0
+      77: getfield      #432                // Field target:Ljava/util/UUID;
+      80: invokevirtual #550                // Method net/minecraft/nbt/CompoundTag.putUUID:(Ljava/lang/String;Ljava/util/UUID;)V
+      83: aload_0
+      84: invokevirtual #88                 // Method getItem:()Lnet/minecraft/world/item/ItemStack;
+      87: invokevirtual #158                // Method net/minecraft/world/item/ItemStack.isEmpty:()Z
+      90: ifne          112
+      93: aload_1
+      94: ldc_w         #556                // String Item
+      97: aload_0
+      98: invokevirtual #88                 // Method getItem:()Lnet/minecraft/world/item/ItemStack;
+     101: aload_0
+     102: invokevirtual #558                // Method registryAccess:()Lnet/minecraft/core/RegistryAccess;
+     105: invokevirtual #562                // Method net/minecraft/world/item/ItemStack.save:(Lnet/minecraft/core/HolderLookup$Provider;)Lnet/minecraft/nbt/Tag;
+     108: invokevirtual #566                // Method net/minecraft/nbt/CompoundTag.put:(Ljava/lang/String;Lnet/minecraft/nbt/Tag;)Lnet/minecraft/nbt/Tag;
+     111: pop
+     112: return
+
+  public void readAdditionalSaveData(net.minecraft.nbt.CompoundTag);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: ldc_w         #530                // String Health
+       5: invokevirtual #570                // Method net/minecraft/nbt/CompoundTag.getShort:(Ljava/lang/String;)S
+       8: putfield      #7                  // Field health:I
+      11: aload_0
+      12: aload_1
+      13: ldc_w         #538                // String Age
+      16: invokevirtual #570                // Method net/minecraft/nbt/CompoundTag.getShort:(Ljava/lang/String;)S
+      19: putfield      #98                 // Field age:I
+      22: aload_1
+      23: ldc_w         #540                // String PickupDelay
+      26: invokevirtual #574                // Method net/minecraft/nbt/CompoundTag.contains:(Ljava/lang/String;)Z
+      29: ifeq          43
+      32: aload_0
+      33: aload_1
+      34: ldc_w         #540                // String PickupDelay
+      37: invokevirtual #570                // Method net/minecraft/nbt/CompoundTag.getShort:(Ljava/lang/String;)S
+      40: putfield      #168                // Field pickupDelay:I
+      43: aload_1
+      44: ldc_w         #542                // String Lifespan
+      47: invokevirtual #574                // Method net/minecraft/nbt/CompoundTag.contains:(Ljava/lang/String;)Z
+      50: ifeq          64
+      53: aload_0
+      54: aload_1
+      55: ldc_w         #542                // String Lifespan
+      58: invokevirtual #578                // Method net/minecraft/nbt/CompoundTag.getInt:(Ljava/lang/String;)I
+      61: putfield      #13                 // Field lifespan:I
+      64: aload_1
+      65: ldc_w         #554                // String Owner
+      68: invokevirtual #582                // Method net/minecraft/nbt/CompoundTag.hasUUID:(Ljava/lang/String;)Z
+      71: ifeq          85
+      74: aload_0
+      75: aload_1
+      76: ldc_w         #554                // String Owner
+      79: invokevirtual #585                // Method net/minecraft/nbt/CompoundTag.getUUID:(Ljava/lang/String;)Ljava/util/UUID;
+      82: putfield      #432                // Field target:Ljava/util/UUID;
+      85: aload_1
+      86: ldc_w         #548                // String Thrower
+      89: invokevirtual #582                // Method net/minecraft/nbt/CompoundTag.hasUUID:(Ljava/lang/String;)Z
+      92: ifeq          111
+      95: aload_0
+      96: aload_1
+      97: ldc_w         #548                // String Thrower
+     100: invokevirtual #585                // Method net/minecraft/nbt/CompoundTag.getUUID:(Ljava/lang/String;)Ljava/util/UUID;
+     103: putfield      #119                // Field thrower:Ljava/util/UUID;
+     106: aload_0
+     107: aconst_null
+     108: putfield      #111                // Field cachedThrower:Lnet/minecraft/world/entity/Entity;
+     111: aload_1
+     112: ldc_w         #556                // String Item
+     115: bipush        10
+     117: invokevirtual #589                // Method net/minecraft/nbt/CompoundTag.contains:(Ljava/lang/String;I)Z
+     120: ifeq          155
+     123: aload_1
+     124: ldc_w         #556                // String Item
+     127: invokevirtual #592                // Method net/minecraft/nbt/CompoundTag.getCompound:(Ljava/lang/String;)Lnet/minecraft/nbt/CompoundTag;
+     130: astore_2
+     131: aload_0
+     132: aload_0
+     133: invokevirtual #558                // Method registryAccess:()Lnet/minecraft/core/RegistryAccess;
+     136: aload_2
+     137: invokestatic  #596                // Method net/minecraft/world/item/ItemStack.parse:(Lnet/minecraft/core/HolderLookup$Provider;Lnet/minecraft/nbt/Tag;)Ljava/util/Optional;
+     140: getstatic     #142                // Field net/minecraft/world/item/ItemStack.EMPTY:Lnet/minecraft/world/item/ItemStack;
+     143: invokevirtual #600                // Method java/util/Optional.orElse:(Ljava/lang/Object;)Ljava/lang/Object;
+     146: checkcast     #71                 // class net/minecraft/world/item/ItemStack
+     149: invokevirtual #66                 // Method setItem:(Lnet/minecraft/world/item/ItemStack;)V
+     152: goto          162
+     155: aload_0
+     156: getstatic     #142                // Field net/minecraft/world/item/ItemStack.EMPTY:Lnet/minecraft/world/item/ItemStack;
+     159: invokevirtual #66                 // Method setItem:(Lnet/minecraft/world/item/ItemStack;)V
+     162: aload_0
+     163: invokevirtual #88                 // Method getItem:()Lnet/minecraft/world/item/ItemStack;
+     166: invokevirtual #158                // Method net/minecraft/world/item/ItemStack.isEmpty:()Z
+     169: ifeq          176
+     172: aload_0
+     173: invokevirtual #161                // Method discard:()V
+     176: return
+
+  public void playerTouch(net.minecraft.world.entity.player.Player);
+    Code:
+       0: aload_0
+       1: invokevirtual #84                 // Method level:()Lnet/minecraft/world/level/Level;
+       4: getfield      #243                // Field net/minecraft/world/level/Level.isClientSide:Z
+       7: ifne          159
+      10: aload_0
+      11: invokevirtual #88                 // Method getItem:()Lnet/minecraft/world/item/ItemStack;
+      14: astore_2
+      15: aload_2
+      16: invokevirtual #70                 // Method net/minecraft/world/item/ItemStack.getItem:()Lnet/minecraft/world/item/Item;
+      19: astore_3
+      20: aload_2
+      21: invokevirtual #426                // Method net/minecraft/world/item/ItemStack.getCount:()I
+      24: istore        4
+      26: aload_0
+      27: aload_1
+      28: invokestatic  #606                // Method net/neoforged/neoforge/event/EventHooks.fireItemPickupPre:(Lnet/minecraft/world/entity/item/ItemEntity;Lnet/minecraft/world/entity/player/Player;)Lnet/neoforged/neoforge/event/entity/player/ItemEntityPickupEvent$Pre;
+      31: invokevirtual #610                // Method net/neoforged/neoforge/event/entity/player/ItemEntityPickupEvent$Pre.canPickup:()Lnet/neoforged/neoforge/common/util/TriState;
+      34: astore        5
+      36: aload         5
+      38: invokevirtual #616                // Method net/neoforged/neoforge/common/util/TriState.isFalse:()Z
+      41: ifeq          45
+      44: return
+      45: aload_2
+      46: invokevirtual #91                 // Method net/minecraft/world/item/ItemStack.copy:()Lnet/minecraft/world/item/ItemStack;
+      49: astore        6
+      51: aload         5
+      53: invokevirtual #621                // Method net/neoforged/neoforge/common/util/TriState.isTrue:()Z
+      56: ifne          87
+      59: aload_0
+      60: getfield      #168                // Field pickupDelay:I
+      63: ifne          159
+      66: aload_0
+      67: getfield      #432                // Field target:Ljava/util/UUID;
+      70: ifnull        87
+      73: aload_0
+      74: getfield      #432                // Field target:Ljava/util/UUID;
+      77: aload_1
+      78: invokevirtual #624                // Method net/minecraft/world/entity/player/Player.getUUID:()Ljava/util/UUID;
+      81: invokevirtual #629                // Method java/util/UUID.equals:(Ljava/lang/Object;)Z
+      84: ifeq          159
+      87: aload_1
+      88: invokevirtual #634                // Method net/minecraft/world/entity/player/Player.getInventory:()Lnet/minecraft/world/entity/player/Inventory;
+      91: aload_2
+      92: invokevirtual #638                // Method net/minecraft/world/entity/player/Inventory.add:(Lnet/minecraft/world/item/ItemStack;)Z
+      95: ifeq          159
+      98: aload_0
+      99: aload_1
+     100: aload         6
+     102: invokestatic  #644                // Method net/neoforged/neoforge/event/EventHooks.fireItemPickupPost:(Lnet/minecraft/world/entity/item/ItemEntity;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/ItemStack;)V
+     105: aload         6
+     107: invokevirtual #426                // Method net/minecraft/world/item/ItemStack.getCount:()I
+     110: aload_2
+     111: invokevirtual #426                // Method net/minecraft/world/item/ItemStack.getCount:()I
+     114: isub
+     115: istore        4
+     117: aload_1
+     118: aload_0
+     119: iload         4
+     121: invokevirtual #648                // Method net/minecraft/world/entity/player/Player.take:(Lnet/minecraft/world/entity/Entity;I)V
+     124: aload_2
+     125: invokevirtual #158                // Method net/minecraft/world/item/ItemStack.isEmpty:()Z
+     128: ifeq          141
+     131: aload_0
+     132: invokevirtual #161                // Method discard:()V
+     135: aload_2
+     136: iload         4
+     138: invokevirtual #652                // Method net/minecraft/world/item/ItemStack.setCount:(I)V
+     141: aload_1
+     142: getstatic     #655                // Field net/minecraft/stats/Stats.ITEM_PICKED_UP:Lnet/minecraft/stats/StatType;
+     145: aload_3
+     146: invokevirtual #661                // Method net/minecraft/stats/StatType.get:(Ljava/lang/Object;)Lnet/minecraft/stats/Stat;
+     149: iload         4
+     151: invokevirtual #667                // Method net/minecraft/world/entity/player/Player.awardStat:(Lnet/minecraft/stats/Stat;I)V
+     154: aload_1
+     155: aload_0
+     156: invokevirtual #671                // Method net/minecraft/world/entity/player/Player.onItemPickup:(Lnet/minecraft/world/entity/item/ItemEntity;)V
+     159: return
+
+  public net.minecraft.network.chat.Component getName();
+    Code:
+       0: aload_0
+       1: invokevirtual #674                // Method getCustomName:()Lnet/minecraft/network/chat/Component;
+       4: astore_1
+       5: aload_1
+       6: ifnull        13
+       9: aload_1
+      10: goto          23
+      13: aload_0
+      14: invokevirtual #88                 // Method getItem:()Lnet/minecraft/world/item/ItemStack;
+      17: invokevirtual #678                // Method net/minecraft/world/item/ItemStack.getDescriptionId:()Ljava/lang/String;
+      20: invokestatic  #682                // InterfaceMethod net/minecraft/network/chat/Component.translatable:(Ljava/lang/String;)Lnet/minecraft/network/chat/MutableComponent;
+      23: areturn
+
+  public boolean isAttackable();
+    Code:
+       0: iconst_0
+       1: ireturn
+
+  public net.minecraft.world.entity.Entity changeDimension(net.minecraft.world.level.portal.DimensionTransition);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokespecial #688                // Method net/minecraft/world/entity/Entity.changeDimension:(Lnet/minecraft/world/level/portal/DimensionTransition;)Lnet/minecraft/world/entity/Entity;
+       5: astore_2
+       6: aload_0
+       7: invokevirtual #84                 // Method level:()Lnet/minecraft/world/level/Level;
+      10: getfield      #243                // Field net/minecraft/world/level/Level.isClientSide:Z
+      13: ifne          32
+      16: aload_2
+      17: instanceof    #8                  // class net/minecraft/world/entity/item/ItemEntity
+      20: ifeq          32
+      23: aload_2
+      24: checkcast     #8                  // class net/minecraft/world/entity/item/ItemEntity
+      27: astore_3
+      28: aload_3
+      29: invokevirtual #342                // Method mergeWithNeighbours:()V
+      32: aload_2
+      33: areturn
+
+  public net.minecraft.world.item.ItemStack getItem();
+    Code:
+       0: aload_0
+       1: invokevirtual #692                // Method getEntityData:()Lnet/minecraft/network/syncher/SynchedEntityData;
+       4: getstatic     #138                // Field DATA_ITEM:Lnet/minecraft/network/syncher/EntityDataAccessor;
+       7: invokevirtual #696                // Method net/minecraft/network/syncher/SynchedEntityData.get:(Lnet/minecraft/network/syncher/EntityDataAccessor;)Ljava/lang/Object;
+      10: checkcast     #71                 // class net/minecraft/world/item/ItemStack
+      13: areturn
+
+  public void setItem(net.minecraft.world.item.ItemStack);
+    Code:
+       0: aload_0
+       1: invokevirtual #692                // Method getEntityData:()Lnet/minecraft/network/syncher/SynchedEntityData;
+       4: getstatic     #138                // Field DATA_ITEM:Lnet/minecraft/network/syncher/EntityDataAccessor;
+       7: aload_1
+       8: invokevirtual #701                // Method net/minecraft/network/syncher/SynchedEntityData.set:(Lnet/minecraft/network/syncher/EntityDataAccessor;Ljava/lang/Object;)V
+      11: return
+
+  public void onSyncedDataUpdated(net.minecraft.network.syncher.EntityDataAccessor<?>);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokespecial #705                // Method net/minecraft/world/entity/Entity.onSyncedDataUpdated:(Lnet/minecraft/network/syncher/EntityDataAccessor;)V
+       5: getstatic     #138                // Field DATA_ITEM:Lnet/minecraft/network/syncher/EntityDataAccessor;
+       8: aload_1
+       9: invokevirtual #709                // Method net/minecraft/network/syncher/EntityDataAccessor.equals:(Ljava/lang/Object;)Z
+      12: ifeq          23
+      15: aload_0
+      16: invokevirtual #88                 // Method getItem:()Lnet/minecraft/world/item/ItemStack;
+      19: aload_0
+      20: invokevirtual #712                // Method net/minecraft/world/item/ItemStack.setEntityRepresentation:(Lnet/minecraft/world/entity/Entity;)V
+      23: return
+
+  public void setTarget(java.util.UUID);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: putfield      #432                // Field target:Ljava/util/UUID;
+       5: return
+
+  public java.util.UUID getTarget();
+    Code:
+       0: aload_0
+       1: getfield      #432                // Field target:Ljava/util/UUID;
+       4: areturn
+
+  public void setThrower(net.minecraft.world.entity.Entity);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokevirtual #715                // Method net/minecraft/world/entity/Entity.getUUID:()Ljava/util/UUID;
+       5: putfield      #119                // Field thrower:Ljava/util/UUID;
+       8: aload_0
+       9: aload_1
+      10: putfield      #111                // Field cachedThrower:Lnet/minecraft/world/entity/Entity;
+      13: return
+
+  public int getAge();
+    Code:
+       0: aload_0
+       1: getfield      #98                 // Field age:I
+       4: ireturn
+
+  public void setDefaultPickUpDelay();
+    Code:
+       0: aload_0
+       1: bipush        10
+       3: putfield      #168                // Field pickupDelay:I
+       6: return
+
+  public void setNoPickUpDelay();
+    Code:
+       0: aload_0
+       1: iconst_0
+       2: putfield      #168                // Field pickupDelay:I
+       5: return
+
+  public void setNeverPickUp();
+    Code:
+       0: aload_0
+       1: sipush        32767
+       4: putfield      #168                // Field pickupDelay:I
+       7: return
+
+  public void setPickUpDelay(int);
+    Code:
+       0: aload_0
+       1: iload_1
+       2: putfield      #168                // Field pickupDelay:I
+       5: return
+
+  public boolean hasPickUpDelay();
+    Code:
+       0: aload_0
+       1: getfield      #168                // Field pickupDelay:I
+       4: ifle          11
+       7: iconst_1
+       8: goto          12
+      11: iconst_0
+      12: ireturn
+
+  public void setUnlimitedLifetime();
+    Code:
+       0: aload_0
+       1: sipush        -32768
+       4: putfield      #98                 // Field age:I
+       7: return
+
+  public void setExtendedLifetime();
+    Code:
+       0: aload_0
+       1: sipush        -6000
+       4: putfield      #98                 // Field age:I
+       7: return
+
+  public void makeFakeItem();
+    Code:
+       0: aload_0
+       1: invokevirtual #716                // Method setNeverPickUp:()V
+       4: aload_0
+       5: aload_0
+       6: invokevirtual #88                 // Method getItem:()Lnet/minecraft/world/item/ItemStack;
+       9: aload_0
+      10: invokevirtual #84                 // Method level:()Lnet/minecraft/world/level/Level;
+      13: invokevirtual #76                 // Method net/minecraft/world/item/ItemStack.getEntityLifespan:(Lnet/minecraft/world/level/Level;)I
+      16: iconst_1
+      17: isub
+      18: putfield      #98                 // Field age:I
+      21: return
+
+  public float getSpin(float);
+    Code:
+       0: aload_0
+       1: invokevirtual #719                // Method getAge:()I
+       4: i2f
+       5: fload_1
+       6: fadd
+       7: ldc_w         #722                // float 20.0f
+      10: fdiv
+      11: aload_0
+      12: getfield      #29                 // Field bobOffs:F
+      15: fadd
+      16: freturn
+
+  public net.minecraft.world.entity.item.ItemEntity copy();
+    Code:
+       0: new           #8                  // class net/minecraft/world/entity/item/ItemEntity
+       3: dup
+       4: aload_0
+       5: invokespecial #723                // Method "<init>":(Lnet/minecraft/world/entity/item/ItemEntity;)V
+       8: areturn
+
+  public net.minecraft.sounds.SoundSource getSoundSource();
+    Code:
+       0: getstatic     #725                // Field net/minecraft/sounds/SoundSource.AMBIENT:Lnet/minecraft/sounds/SoundSource;
+       3: areturn
+
+  public float getVisualRotationYInDegrees();
+    Code:
+       0: ldc_w         #731                // float 180.0f
+       3: aload_0
+       4: ldc_w         #732                // float 0.5f
+       7: invokevirtual #733                // Method getSpin:(F)F
+      10: ldc_w         #737                // float 6.2831855f
+      13: fdiv
+      14: ldc           #33                 // float 360.0f
+      16: fmul
+      17: fsub
+      18: freturn
+
+  public net.minecraft.world.entity.SlotAccess getSlot(int);
+    Code:
+       0: iload_1
+       1: ifne          22
+       4: aload_0
+       5: invokedynamic #738,  0            // InvokeDynamic #1:get:(Lnet/minecraft/world/entity/item/ItemEntity;)Ljava/util/function/Supplier;
+      10: aload_0
+      11: invokedynamic #741,  0            // InvokeDynamic #2:accept:(Lnet/minecraft/world/entity/item/ItemEntity;)Ljava/util/function/Consumer;
+      16: invokestatic  #745                // InterfaceMethod net/minecraft/world/entity/SlotAccess.of:(Ljava/util/function/Supplier;Ljava/util/function/Consumer;)Lnet/minecraft/world/entity/SlotAccess;
+      19: goto          27
+      22: aload_0
+      23: iload_1
+      24: invokespecial #751                // Method net/minecraft/world/entity/Entity.getSlot:(I)Lnet/minecraft/world/entity/SlotAccess;
+      27: areturn
+
+  private boolean lambda$mergeWithNeighbours$0(net.minecraft.world.entity.item.ItemEntity);
+    Code:
+       0: aload_1
+       1: aload_0
+       2: if_acmpeq     16
+       5: aload_1
+       6: invokevirtual #339                // Method isMergable:()Z
+       9: ifeq          16
+      12: iconst_1
+      13: goto          17
+      16: iconst_0
+      17: ireturn
+
+  static {};
+    Code:
+       0: ldc           #8                  // class net/minecraft/world/entity/item/ItemEntity
+       2: getstatic     #755                // Field net/minecraft/network/syncher/EntityDataSerializers.ITEM_STACK:Lnet/minecraft/network/syncher/EntityDataSerializer;
+       5: invokestatic  #761                // Method net/minecraft/network/syncher/SynchedEntityData.defineId:(Ljava/lang/Class;Lnet/minecraft/network/syncher/EntityDataSerializer;)Lnet/minecraft/network/syncher/EntityDataAccessor;
+       8: putstatic     #138                // Field DATA_ITEM:Lnet/minecraft/network/syncher/EntityDataAccessor;
+      11: return
+}

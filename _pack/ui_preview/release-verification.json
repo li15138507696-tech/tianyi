@@ -1,0 +1,13 @@
+{
+  "version": "3.8.4",
+  "bytes": 432391,
+  "sha256": "ac0d15887c1324c723c9b1a377fab81fc94b4888b7fbf7441202495e02b840fe",
+  "packaged_classes": 155,
+  "fresh_class_bytes_match": true,
+  "original_3_8_3_unchanged": true,
+  "offline_assertions": 887,
+  "ui_adapter_checks": 50,
+  "build_audits": 7,
+  "in_game_test": false,
+  "previews": "layout adapter with fixture records and substitute font"
+}

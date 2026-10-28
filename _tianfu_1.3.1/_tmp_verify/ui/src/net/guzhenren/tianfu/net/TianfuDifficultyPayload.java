@@ -1,0 +1,1 @@
+package net.guzhenren.tianfu.net;public record TianfuDifficultyPayload(String id){}

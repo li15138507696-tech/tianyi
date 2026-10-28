@@ -1,0 +1,966 @@
+Compiled from "BenMingGu1Procedure.java"
+public class net.guzhenren.procedures.BenMingGu1Procedure {
+  public net.guzhenren.procedures.BenMingGu1Procedure();
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: return
+
+  public static void execute(net.minecraft.world.level.LevelAccessor, net.minecraft.world.entity.Entity);
+    Code:
+       0: aload_1
+       1: ifnonnull     5
+       4: return
+       5: aload_1
+       6: getstatic     #7                  // Field net/guzhenren/network/GuzhenrenModVariables.PLAYER_VARIABLES:Ljava/util/function/Supplier;
+       9: invokevirtual #13                 // Method net/minecraft/world/entity/Entity.getData:(Ljava/util/function/Supplier;)Ljava/lang/Object;
+      12: checkcast     #19                 // class net/guzhenren/network/GuzhenrenModVariables$PlayerVariables
+      15: getfield      #21                 // Field net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.BenMingGu_1:Z
+      18: ifne          1052
+      21: aload_1
+      22: getstatic     #7                  // Field net/guzhenren/network/GuzhenrenModVariables.PLAYER_VARIABLES:Ljava/util/function/Supplier;
+      25: invokevirtual #13                 // Method net/minecraft/world/entity/Entity.getData:(Ljava/util/function/Supplier;)Ljava/lang/Object;
+      28: checkcast     #19                 // class net/guzhenren/network/GuzhenrenModVariables$PlayerVariables
+      31: getfield      #25                 // Field net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.zhuanshu:D
+      34: dconst_1
+      35: dcmpl
+      36: ifne          113
+      39: aload_1
+      40: instanceof    #29                 // class net/minecraft/world/entity/player/Player
+      43: ifeq          95
+      46: aload_1
+      47: checkcast     #29                 // class net/minecraft/world/entity/player/Player
+      50: astore_2
+      51: aload_2
+      52: getfield      #31                 // Field net/minecraft/world/entity/player/Player.containerMenu:Lnet/minecraft/world/inventory/AbstractContainerMenu;
+      55: astore        12
+      57: aload         12
+      59: instanceof    #35                 // class net/guzhenren/init/GuzhenrenModMenus$MenuAccessor
+      62: ifeq          95
+      65: aload         12
+      67: checkcast     #35                 // class net/guzhenren/init/GuzhenrenModMenus$MenuAccessor
+      70: astore_3
+      71: aload_3
+      72: invokeinterface #37,  1           // InterfaceMethod net/guzhenren/init/GuzhenrenModMenus$MenuAccessor.getSlots:()Ljava/util/Map;
+      77: iconst_0
+      78: invokestatic  #41                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      81: invokeinterface #47,  2           // InterfaceMethod java/util/Map.get:(Ljava/lang/Object;)Ljava/lang/Object;
+      86: checkcast     #53                 // class net/minecraft/world/inventory/Slot
+      89: invokevirtual #55                 // Method net/minecraft/world/inventory/Slot.getItem:()Lnet/minecraft/world/item/ItemStack;
+      92: goto          98
+      95: getstatic     #59                 // Field net/minecraft/world/item/ItemStack.EMPTY:Lnet/minecraft/world/item/ItemStack;
+      98: ldc           #65                 // String guzhenren:z1
+     100: invokestatic  #67                 // Method net/minecraft/resources/ResourceLocation.parse:(Ljava/lang/String;)Lnet/minecraft/resources/ResourceLocation;
+     103: invokestatic  #73                 // Method net/minecraft/tags/ItemTags.create:(Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/tags/TagKey;
+     106: invokevirtual #79                 // Method net/minecraft/world/item/ItemStack.is:(Lnet/minecraft/tags/TagKey;)Z
+     109: iconst_1
+     110: if_icmpeq     505
+     113: aload_1
+     114: getstatic     #7                  // Field net/guzhenren/network/GuzhenrenModVariables.PLAYER_VARIABLES:Ljava/util/function/Supplier;
+     117: invokevirtual #13                 // Method net/minecraft/world/entity/Entity.getData:(Ljava/util/function/Supplier;)Ljava/lang/Object;
+     120: checkcast     #19                 // class net/guzhenren/network/GuzhenrenModVariables$PlayerVariables
+     123: getfield      #25                 // Field net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.zhuanshu:D
+     126: ldc2_w        #83                 // double 2.0d
+     129: dcmpl
+     130: ifne          211
+     133: aload_1
+     134: instanceof    #29                 // class net/minecraft/world/entity/player/Player
+     137: ifeq          193
+     140: aload_1
+     141: checkcast     #29                 // class net/minecraft/world/entity/player/Player
+     144: astore        4
+     146: aload         4
+     148: getfield      #31                 // Field net/minecraft/world/entity/player/Player.containerMenu:Lnet/minecraft/world/inventory/AbstractContainerMenu;
+     151: astore        12
+     153: aload         12
+     155: instanceof    #35                 // class net/guzhenren/init/GuzhenrenModMenus$MenuAccessor
+     158: ifeq          193
+     161: aload         12
+     163: checkcast     #35                 // class net/guzhenren/init/GuzhenrenModMenus$MenuAccessor
+     166: astore        5
+     168: aload         5
+     170: invokeinterface #37,  1           // InterfaceMethod net/guzhenren/init/GuzhenrenModMenus$MenuAccessor.getSlots:()Ljava/util/Map;
+     175: iconst_0
+     176: invokestatic  #41                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     179: invokeinterface #47,  2           // InterfaceMethod java/util/Map.get:(Ljava/lang/Object;)Ljava/lang/Object;
+     184: checkcast     #53                 // class net/minecraft/world/inventory/Slot
+     187: invokevirtual #55                 // Method net/minecraft/world/inventory/Slot.getItem:()Lnet/minecraft/world/item/ItemStack;
+     190: goto          196
+     193: getstatic     #59                 // Field net/minecraft/world/item/ItemStack.EMPTY:Lnet/minecraft/world/item/ItemStack;
+     196: ldc           #85                 // String guzhenren:z2
+     198: invokestatic  #67                 // Method net/minecraft/resources/ResourceLocation.parse:(Ljava/lang/String;)Lnet/minecraft/resources/ResourceLocation;
+     201: invokestatic  #73                 // Method net/minecraft/tags/ItemTags.create:(Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/tags/TagKey;
+     204: invokevirtual #79                 // Method net/minecraft/world/item/ItemStack.is:(Lnet/minecraft/tags/TagKey;)Z
+     207: iconst_1
+     208: if_icmpeq     505
+     211: aload_1
+     212: getstatic     #7                  // Field net/guzhenren/network/GuzhenrenModVariables.PLAYER_VARIABLES:Ljava/util/function/Supplier;
+     215: invokevirtual #13                 // Method net/minecraft/world/entity/Entity.getData:(Ljava/util/function/Supplier;)Ljava/lang/Object;
+     218: checkcast     #19                 // class net/guzhenren/network/GuzhenrenModVariables$PlayerVariables
+     221: getfield      #25                 // Field net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.zhuanshu:D
+     224: ldc2_w        #87                 // double 3.0d
+     227: dcmpl
+     228: ifne          309
+     231: aload_1
+     232: instanceof    #29                 // class net/minecraft/world/entity/player/Player
+     235: ifeq          291
+     238: aload_1
+     239: checkcast     #29                 // class net/minecraft/world/entity/player/Player
+     242: astore        6
+     244: aload         6
+     246: getfield      #31                 // Field net/minecraft/world/entity/player/Player.containerMenu:Lnet/minecraft/world/inventory/AbstractContainerMenu;
+     249: astore        12
+     251: aload         12
+     253: instanceof    #35                 // class net/guzhenren/init/GuzhenrenModMenus$MenuAccessor
+     256: ifeq          291
+     259: aload         12
+     261: checkcast     #35                 // class net/guzhenren/init/GuzhenrenModMenus$MenuAccessor
+     264: astore        7
+     266: aload         7
+     268: invokeinterface #37,  1           // InterfaceMethod net/guzhenren/init/GuzhenrenModMenus$MenuAccessor.getSlots:()Ljava/util/Map;
+     273: iconst_0
+     274: invokestatic  #41                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     277: invokeinterface #47,  2           // InterfaceMethod java/util/Map.get:(Ljava/lang/Object;)Ljava/lang/Object;
+     282: checkcast     #53                 // class net/minecraft/world/inventory/Slot
+     285: invokevirtual #55                 // Method net/minecraft/world/inventory/Slot.getItem:()Lnet/minecraft/world/item/ItemStack;
+     288: goto          294
+     291: getstatic     #59                 // Field net/minecraft/world/item/ItemStack.EMPTY:Lnet/minecraft/world/item/ItemStack;
+     294: ldc           #89                 // String guzhenren:z3
+     296: invokestatic  #67                 // Method net/minecraft/resources/ResourceLocation.parse:(Ljava/lang/String;)Lnet/minecraft/resources/ResourceLocation;
+     299: invokestatic  #73                 // Method net/minecraft/tags/ItemTags.create:(Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/tags/TagKey;
+     302: invokevirtual #79                 // Method net/minecraft/world/item/ItemStack.is:(Lnet/minecraft/tags/TagKey;)Z
+     305: iconst_1
+     306: if_icmpeq     505
+     309: aload_1
+     310: getstatic     #7                  // Field net/guzhenren/network/GuzhenrenModVariables.PLAYER_VARIABLES:Ljava/util/function/Supplier;
+     313: invokevirtual #13                 // Method net/minecraft/world/entity/Entity.getData:(Ljava/util/function/Supplier;)Ljava/lang/Object;
+     316: checkcast     #19                 // class net/guzhenren/network/GuzhenrenModVariables$PlayerVariables
+     319: getfield      #25                 // Field net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.zhuanshu:D
+     322: ldc2_w        #91                 // double 4.0d
+     325: dcmpl
+     326: ifne          407
+     329: aload_1
+     330: instanceof    #29                 // class net/minecraft/world/entity/player/Player
+     333: ifeq          389
+     336: aload_1
+     337: checkcast     #29                 // class net/minecraft/world/entity/player/Player
+     340: astore        8
+     342: aload         8
+     344: getfield      #31                 // Field net/minecraft/world/entity/player/Player.containerMenu:Lnet/minecraft/world/inventory/AbstractContainerMenu;
+     347: astore        12
+     349: aload         12
+     351: instanceof    #35                 // class net/guzhenren/init/GuzhenrenModMenus$MenuAccessor
+     354: ifeq          389
+     357: aload         12
+     359: checkcast     #35                 // class net/guzhenren/init/GuzhenrenModMenus$MenuAccessor
+     362: astore        9
+     364: aload         9
+     366: invokeinterface #37,  1           // InterfaceMethod net/guzhenren/init/GuzhenrenModMenus$MenuAccessor.getSlots:()Ljava/util/Map;
+     371: iconst_0
+     372: invokestatic  #41                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     375: invokeinterface #47,  2           // InterfaceMethod java/util/Map.get:(Ljava/lang/Object;)Ljava/lang/Object;
+     380: checkcast     #53                 // class net/minecraft/world/inventory/Slot
+     383: invokevirtual #55                 // Method net/minecraft/world/inventory/Slot.getItem:()Lnet/minecraft/world/item/ItemStack;
+     386: goto          392
+     389: getstatic     #59                 // Field net/minecraft/world/item/ItemStack.EMPTY:Lnet/minecraft/world/item/ItemStack;
+     392: ldc           #93                 // String guzhenren:z4
+     394: invokestatic  #67                 // Method net/minecraft/resources/ResourceLocation.parse:(Ljava/lang/String;)Lnet/minecraft/resources/ResourceLocation;
+     397: invokestatic  #73                 // Method net/minecraft/tags/ItemTags.create:(Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/tags/TagKey;
+     400: invokevirtual #79                 // Method net/minecraft/world/item/ItemStack.is:(Lnet/minecraft/tags/TagKey;)Z
+     403: iconst_1
+     404: if_icmpeq     505
+     407: aload_1
+     408: getstatic     #7                  // Field net/guzhenren/network/GuzhenrenModVariables.PLAYER_VARIABLES:Ljava/util/function/Supplier;
+     411: invokevirtual #13                 // Method net/minecraft/world/entity/Entity.getData:(Ljava/util/function/Supplier;)Ljava/lang/Object;
+     414: checkcast     #19                 // class net/guzhenren/network/GuzhenrenModVariables$PlayerVariables
+     417: getfield      #25                 // Field net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.zhuanshu:D
+     420: ldc2_w        #95                 // double 5.0d
+     423: dcmpl
+     424: ifne          1013
+     427: aload_1
+     428: instanceof    #29                 // class net/minecraft/world/entity/player/Player
+     431: ifeq          487
+     434: aload_1
+     435: checkcast     #29                 // class net/minecraft/world/entity/player/Player
+     438: astore        10
+     440: aload         10
+     442: getfield      #31                 // Field net/minecraft/world/entity/player/Player.containerMenu:Lnet/minecraft/world/inventory/AbstractContainerMenu;
+     445: astore        12
+     447: aload         12
+     449: instanceof    #35                 // class net/guzhenren/init/GuzhenrenModMenus$MenuAccessor
+     452: ifeq          487
+     455: aload         12
+     457: checkcast     #35                 // class net/guzhenren/init/GuzhenrenModMenus$MenuAccessor
+     460: astore        11
+     462: aload         11
+     464: invokeinterface #37,  1           // InterfaceMethod net/guzhenren/init/GuzhenrenModMenus$MenuAccessor.getSlots:()Ljava/util/Map;
+     469: iconst_0
+     470: invokestatic  #41                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     473: invokeinterface #47,  2           // InterfaceMethod java/util/Map.get:(Ljava/lang/Object;)Ljava/lang/Object;
+     478: checkcast     #53                 // class net/minecraft/world/inventory/Slot
+     481: invokevirtual #55                 // Method net/minecraft/world/inventory/Slot.getItem:()Lnet/minecraft/world/item/ItemStack;
+     484: goto          490
+     487: getstatic     #59                 // Field net/minecraft/world/item/ItemStack.EMPTY:Lnet/minecraft/world/item/ItemStack;
+     490: ldc           #97                 // String guzhenren:z5
+     492: invokestatic  #67                 // Method net/minecraft/resources/ResourceLocation.parse:(Ljava/lang/String;)Lnet/minecraft/resources/ResourceLocation;
+     495: invokestatic  #73                 // Method net/minecraft/tags/ItemTags.create:(Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/tags/TagKey;
+     498: invokevirtual #79                 // Method net/minecraft/world/item/ItemStack.is:(Lnet/minecraft/tags/TagKey;)Z
+     501: iconst_1
+     502: if_icmpne     1013
+     505: aload_1
+     506: instanceof    #29                 // class net/minecraft/world/entity/player/Player
+     509: ifeq          565
+     512: aload_1
+     513: checkcast     #29                 // class net/minecraft/world/entity/player/Player
+     516: astore        12
+     518: aload         12
+     520: getfield      #31                 // Field net/minecraft/world/entity/player/Player.containerMenu:Lnet/minecraft/world/inventory/AbstractContainerMenu;
+     523: astore        14
+     525: aload         14
+     527: instanceof    #35                 // class net/guzhenren/init/GuzhenrenModMenus$MenuAccessor
+     530: ifeq          565
+     533: aload         14
+     535: checkcast     #35                 // class net/guzhenren/init/GuzhenrenModMenus$MenuAccessor
+     538: astore        13
+     540: aload         13
+     542: invokeinterface #37,  1           // InterfaceMethod net/guzhenren/init/GuzhenrenModMenus$MenuAccessor.getSlots:()Ljava/util/Map;
+     547: iconst_0
+     548: invokestatic  #41                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     551: invokeinterface #47,  2           // InterfaceMethod java/util/Map.get:(Ljava/lang/Object;)Ljava/lang/Object;
+     556: checkcast     #53                 // class net/minecraft/world/inventory/Slot
+     559: invokevirtual #55                 // Method net/minecraft/world/inventory/Slot.getItem:()Lnet/minecraft/world/item/ItemStack;
+     562: goto          568
+     565: getstatic     #59                 // Field net/minecraft/world/item/ItemStack.EMPTY:Lnet/minecraft/world/item/ItemStack;
+     568: invokevirtual #99                 // Method net/minecraft/world/item/ItemStack.getItem:()Lnet/minecraft/world/item/Item;
+     571: getstatic     #102                // Field net/minecraft/world/level/block/Blocks.AIR:Lnet/minecraft/world/level/block/Block;
+     574: invokevirtual #108                // Method net/minecraft/world/level/block/Block.asItem:()Lnet/minecraft/world/item/Item;
+     577: if_acmpne     584
+     580: iconst_1
+     581: goto          585
+     584: iconst_0
+     585: ifne          2164
+     588: ldc           #113                // String ����������
+     590: astore        14
+     592: aload_1
+     593: invokevirtual #115                // Method net/minecraft/world/entity/Entity.getStringUUID:()Ljava/lang/String;
+     596: astore        15
+     598: getstatic     #119                // Field net/minecraft/core/component/DataComponents.CUSTOM_DATA:Lnet/minecraft/core/component/DataComponentType;
+     601: aload_1
+     602: instanceof    #29                 // class net/minecraft/world/entity/player/Player
+     605: ifeq          661
+     608: aload_1
+     609: checkcast     #29                 // class net/minecraft/world/entity/player/Player
+     612: astore        17
+     614: aload         17
+     616: getfield      #31                 // Field net/minecraft/world/entity/player/Player.containerMenu:Lnet/minecraft/world/inventory/AbstractContainerMenu;
+     619: astore        18
+     621: aload         18
+     623: instanceof    #35                 // class net/guzhenren/init/GuzhenrenModMenus$MenuAccessor
+     626: ifeq          661
+     629: aload         18
+     631: checkcast     #35                 // class net/guzhenren/init/GuzhenrenModMenus$MenuAccessor
+     634: astore        16
+     636: aload         16
+     638: invokeinterface #37,  1           // InterfaceMethod net/guzhenren/init/GuzhenrenModMenus$MenuAccessor.getSlots:()Ljava/util/Map;
+     643: iconst_0
+     644: invokestatic  #41                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     647: invokeinterface #47,  2           // InterfaceMethod java/util/Map.get:(Ljava/lang/Object;)Ljava/lang/Object;
+     652: checkcast     #53                 // class net/minecraft/world/inventory/Slot
+     655: invokevirtual #55                 // Method net/minecraft/world/inventory/Slot.getItem:()Lnet/minecraft/world/item/ItemStack;
+     658: goto          664
+     661: getstatic     #59                 // Field net/minecraft/world/item/ItemStack.EMPTY:Lnet/minecraft/world/item/ItemStack;
+     664: aload         15
+     666: invokedynamic #125,  0            // InvokeDynamic #0:accept:(Ljava/lang/String;)Ljava/util/function/Consumer;
+     671: invokestatic  #129                // Method net/minecraft/world/item/component/CustomData.update:(Lnet/minecraft/core/component/DataComponentType;Lnet/minecraft/world/item/ItemStack;Ljava/util/function/Consumer;)V
+     674: aload_1
+     675: instanceof    #29                 // class net/minecraft/world/entity/player/Player
+     678: ifeq          734
+     681: aload_1
+     682: checkcast     #29                 // class net/minecraft/world/entity/player/Player
+     685: astore        15
+     687: aload         15
+     689: getfield      #31                 // Field net/minecraft/world/entity/player/Player.containerMenu:Lnet/minecraft/world/inventory/AbstractContainerMenu;
+     692: astore        16
+     694: aload         16
+     696: instanceof    #35                 // class net/guzhenren/init/GuzhenrenModMenus$MenuAccessor
+     699: ifeq          734
+     702: aload         16
+     704: checkcast     #35                 // class net/guzhenren/init/GuzhenrenModMenus$MenuAccessor
+     707: astore        14
+     709: aload         14
+     711: invokeinterface #37,  1           // InterfaceMethod net/guzhenren/init/GuzhenrenModMenus$MenuAccessor.getSlots:()Ljava/util/Map;
+     716: iconst_0
+     717: invokestatic  #41                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     720: invokeinterface #47,  2           // InterfaceMethod java/util/Map.get:(Ljava/lang/Object;)Ljava/lang/Object;
+     725: checkcast     #53                 // class net/minecraft/world/inventory/Slot
+     728: invokevirtual #55                 // Method net/minecraft/world/inventory/Slot.getItem:()Lnet/minecraft/world/item/ItemStack;
+     731: goto          737
+     734: getstatic     #59                 // Field net/minecraft/world/item/ItemStack.EMPTY:Lnet/minecraft/world/item/ItemStack;
+     737: aload_0
+     738: invokeinterface #135,  1          // InterfaceMethod net/minecraft/world/level/LevelAccessor.registryAccess:()Lnet/minecraft/core/RegistryAccess;
+     743: getstatic     #141                // Field net/minecraft/core/registries/Registries.ENCHANTMENT:Lnet/minecraft/resources/ResourceKey;
+     746: invokeinterface #147,  2          // InterfaceMethod net/minecraft/core/RegistryAccess.lookupOrThrow:(Lnet/minecraft/resources/ResourceKey;)Lnet/minecraft/core/HolderLookup$RegistryLookup;
+     751: getstatic     #141                // Field net/minecraft/core/registries/Registries.ENCHANTMENT:Lnet/minecraft/resources/ResourceKey;
+     754: ldc           #153                // String guzhenren:ben_ming_gu
+     756: invokestatic  #67                 // Method net/minecraft/resources/ResourceLocation.parse:(Ljava/lang/String;)Lnet/minecraft/resources/ResourceLocation;
+     759: invokestatic  #155                // Method net/minecraft/resources/ResourceKey.create:(Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/resources/ResourceKey;
+     762: invokeinterface #160,  2          // InterfaceMethod net/minecraft/core/HolderLookup$RegistryLookup.getOrThrow:(Lnet/minecraft/resources/ResourceKey;)Lnet/minecraft/core/Holder$Reference;
+     767: bipush        10
+     769: invokevirtual #166                // Method net/minecraft/world/item/ItemStack.enchant:(Lnet/minecraft/core/Holder;I)V
+     772: aload_1
+     773: getstatic     #7                  // Field net/guzhenren/network/GuzhenrenModVariables.PLAYER_VARIABLES:Ljava/util/function/Supplier;
+     776: invokevirtual #13                 // Method net/minecraft/world/entity/Entity.getData:(Ljava/util/function/Supplier;)Ljava/lang/Object;
+     779: checkcast     #19                 // class net/guzhenren/network/GuzhenrenModVariables$PlayerVariables
+     782: astore        14
+     784: aload         14
+     786: aload_1
+     787: instanceof    #29                 // class net/minecraft/world/entity/player/Player
+     790: ifeq          846
+     793: aload_1
+     794: checkcast     #29                 // class net/minecraft/world/entity/player/Player
+     797: astore        16
+     799: aload         16
+     801: getfield      #31                 // Field net/minecraft/world/entity/player/Player.containerMenu:Lnet/minecraft/world/inventory/AbstractContainerMenu;
+     804: astore        17
+     806: aload         17
+     808: instanceof    #35                 // class net/guzhenren/init/GuzhenrenModMenus$MenuAccessor
+     811: ifeq          846
+     814: aload         17
+     816: checkcast     #35                 // class net/guzhenren/init/GuzhenrenModMenus$MenuAccessor
+     819: astore        15
+     821: aload         15
+     823: invokeinterface #37,  1           // InterfaceMethod net/guzhenren/init/GuzhenrenModMenus$MenuAccessor.getSlots:()Ljava/util/Map;
+     828: iconst_0
+     829: invokestatic  #41                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     832: invokeinterface #47,  2           // InterfaceMethod java/util/Map.get:(Ljava/lang/Object;)Ljava/lang/Object;
+     837: checkcast     #53                 // class net/minecraft/world/inventory/Slot
+     840: invokevirtual #55                 // Method net/minecraft/world/inventory/Slot.getItem:()Lnet/minecraft/world/item/ItemStack;
+     843: goto          849
+     846: getstatic     #59                 // Field net/minecraft/world/item/ItemStack.EMPTY:Lnet/minecraft/world/item/ItemStack;
+     849: invokevirtual #170                // Method net/minecraft/world/item/ItemStack.copy:()Lnet/minecraft/world/item/ItemStack;
+     852: invokevirtual #170                // Method net/minecraft/world/item/ItemStack.copy:()Lnet/minecraft/world/item/ItemStack;
+     855: putfield      #173                // Field net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.BenMingGu:Lnet/minecraft/world/item/ItemStack;
+     858: aload         14
+     860: iconst_1
+     861: putfield      #21                 // Field net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.BenMingGu_1:Z
+     864: aload         14
+     866: invokevirtual #176                // Method net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.markSyncDirty:()V
+     869: aload_1
+     870: instanceof    #29                 // class net/minecraft/world/entity/player/Player
+     873: ifeq          904
+     876: aload_1
+     877: checkcast     #29                 // class net/minecraft/world/entity/player/Player
+     880: astore        14
+     882: aload         14
+     884: invokevirtual #179                // Method net/minecraft/world/entity/player/Player.level:()Lnet/minecraft/world/level/Level;
+     887: invokevirtual #183                // Method net/minecraft/world/level/Level.isClientSide:()Z
+     890: ifne          904
+     893: aload         14
+     895: ldc           #189                // String �����ư󶨳ɹ�
+     897: invokestatic  #191                // InterfaceMethod net/minecraft/network/chat/Component.literal:(Ljava/lang/String;)Lnet/minecraft/network/chat/MutableComponent;
+     900: iconst_0
+     901: invokevirtual #197                // Method net/minecraft/world/entity/player/Player.displayClientMessage:(Lnet/minecraft/network/chat/Component;Z)V
+     904: aload_1
+     905: instanceof    #201                // class net/minecraft/server/level/ServerPlayer
+     908: ifeq          1010
+     911: aload_1
+     912: checkcast     #201                // class net/minecraft/server/level/ServerPlayer
+     915: astore        14
+     917: aload         14
+     919: getfield      #203                // Field net/minecraft/server/level/ServerPlayer.server:Lnet/minecraft/server/MinecraftServer;
+     922: invokevirtual #207                // Method net/minecraft/server/MinecraftServer.getAdvancements:()Lnet/minecraft/server/ServerAdvancementManager;
+     925: ldc           #213                // String guzhenren:cheng_jiu_ben_ming_gu
+     927: invokestatic  #67                 // Method net/minecraft/resources/ResourceLocation.parse:(Ljava/lang/String;)Lnet/minecraft/resources/ResourceLocation;
+     930: invokevirtual #215                // Method net/minecraft/server/ServerAdvancementManager.get:(Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/advancements/AdvancementHolder;
+     933: astore        15
+     935: aload         15
+     937: ifnull        1010
+     940: aload         14
+     942: invokevirtual #220                // Method net/minecraft/server/level/ServerPlayer.getAdvancements:()Lnet/minecraft/server/PlayerAdvancements;
+     945: aload         15
+     947: invokevirtual #223                // Method net/minecraft/server/PlayerAdvancements.getOrStartProgress:(Lnet/minecraft/advancements/AdvancementHolder;)Lnet/minecraft/advancements/AdvancementProgress;
+     950: astore        16
+     952: aload         16
+     954: invokevirtual #229                // Method net/minecraft/advancements/AdvancementProgress.isDone:()Z
+     957: ifne          1010
+     960: aload         16
+     962: invokevirtual #234                // Method net/minecraft/advancements/AdvancementProgress.getRemainingCriteria:()Ljava/lang/Iterable;
+     965: invokeinterface #238,  1          // InterfaceMethod java/lang/Iterable.iterator:()Ljava/util/Iterator;
+     970: astore        17
+     972: aload         17
+     974: invokeinterface #244,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+     979: ifeq          1010
+     982: aload         17
+     984: invokeinterface #249,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     989: checkcast     #253                // class java/lang/String
+     992: astore        18
+     994: aload         14
+     996: invokevirtual #220                // Method net/minecraft/server/level/ServerPlayer.getAdvancements:()Lnet/minecraft/server/PlayerAdvancements;
+     999: aload         15
+    1001: aload         18
+    1003: invokevirtual #255                // Method net/minecraft/server/PlayerAdvancements.award:(Lnet/minecraft/advancements/AdvancementHolder;Ljava/lang/String;)Z
+    1006: pop
+    1007: goto          972
+    1010: goto          2164
+    1013: aload_1
+    1014: instanceof    #29                 // class net/minecraft/world/entity/player/Player
+    1017: ifeq          1049
+    1020: aload_1
+    1021: checkcast     #29                 // class net/minecraft/world/entity/player/Player
+    1024: astore        12
+    1026: aload         12
+    1028: invokevirtual #179                // Method net/minecraft/world/entity/player/Player.level:()Lnet/minecraft/world/level/Level;
+    1031: invokevirtual #183                // Method net/minecraft/world/level/Level.isClientSide:()Z
+    1034: ifne          1049
+    1037: aload         12
+    1039: ldc_w         #259                // String �����ư�ʧ�� �Ƴ�ת����������Ϊ����
+    1042: invokestatic  #191                // InterfaceMethod net/minecraft/network/chat/Component.literal:(Ljava/lang/String;)Lnet/minecraft/network/chat/MutableComponent;
+    1045: iconst_0
+    1046: invokevirtual #197                // Method net/minecraft/world/entity/player/Player.displayClientMessage:(Lnet/minecraft/network/chat/Component;Z)V
+    1049: goto          2164
+    1052: aload_1
+    1053: getstatic     #7                  // Field net/guzhenren/network/GuzhenrenModVariables.PLAYER_VARIABLES:Ljava/util/function/Supplier;
+    1056: invokevirtual #13                 // Method net/minecraft/world/entity/Entity.getData:(Ljava/util/function/Supplier;)Ljava/lang/Object;
+    1059: checkcast     #19                 // class net/guzhenren/network/GuzhenrenModVariables$PlayerVariables
+    1062: getfield      #21                 // Field net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.BenMingGu_1:Z
+    1065: iconst_1
+    1066: if_icmpne     2164
+    1069: aload_1
+    1070: instanceof    #29                 // class net/minecraft/world/entity/player/Player
+    1073: ifeq          1125
+    1076: aload_1
+    1077: checkcast     #29                 // class net/minecraft/world/entity/player/Player
+    1080: astore_2
+    1081: aload_2
+    1082: getfield      #31                 // Field net/minecraft/world/entity/player/Player.containerMenu:Lnet/minecraft/world/inventory/AbstractContainerMenu;
+    1085: astore        4
+    1087: aload         4
+    1089: instanceof    #35                 // class net/guzhenren/init/GuzhenrenModMenus$MenuAccessor
+    1092: ifeq          1125
+    1095: aload         4
+    1097: checkcast     #35                 // class net/guzhenren/init/GuzhenrenModMenus$MenuAccessor
+    1100: astore_3
+    1101: aload_3
+    1102: invokeinterface #37,  1           // InterfaceMethod net/guzhenren/init/GuzhenrenModMenus$MenuAccessor.getSlots:()Ljava/util/Map;
+    1107: iconst_0
+    1108: invokestatic  #41                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+    1111: invokeinterface #47,  2           // InterfaceMethod java/util/Map.get:(Ljava/lang/Object;)Ljava/lang/Object;
+    1116: checkcast     #53                 // class net/minecraft/world/inventory/Slot
+    1119: invokevirtual #55                 // Method net/minecraft/world/inventory/Slot.getItem:()Lnet/minecraft/world/item/ItemStack;
+    1122: goto          1128
+    1125: getstatic     #59                 // Field net/minecraft/world/item/ItemStack.EMPTY:Lnet/minecraft/world/item/ItemStack;
+    1128: getstatic     #119                // Field net/minecraft/core/component/DataComponents.CUSTOM_DATA:Lnet/minecraft/core/component/DataComponentType;
+    1131: getstatic     #261                // Field net/minecraft/world/item/component/CustomData.EMPTY:Lnet/minecraft/world/item/component/CustomData;
+    1134: invokevirtual #264                // Method net/minecraft/world/item/ItemStack.getOrDefault:(Lnet/minecraft/core/component/DataComponentType;Ljava/lang/Object;)Ljava/lang/Object;
+    1137: checkcast     #130                // class net/minecraft/world/item/component/CustomData
+    1140: invokevirtual #268                // Method net/minecraft/world/item/component/CustomData.copyTag:()Lnet/minecraft/nbt/CompoundTag;
+    1143: ldc           #113                // String ����������
+    1145: invokevirtual #272                // Method net/minecraft/nbt/CompoundTag.getString:(Ljava/lang/String;)Ljava/lang/String;
+    1148: aload_1
+    1149: invokevirtual #115                // Method net/minecraft/world/entity/Entity.getStringUUID:()Ljava/lang/String;
+    1152: invokevirtual #278                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+    1155: ifeq          1658
+    1158: ldc           #113                // String ����������
+    1160: astore        4
+    1162: ldc_w         #282                // String
+    1165: astore        5
+    1167: getstatic     #119                // Field net/minecraft/core/component/DataComponents.CUSTOM_DATA:Lnet/minecraft/core/component/DataComponentType;
+    1170: aload_1
+    1171: instanceof    #29                 // class net/minecraft/world/entity/player/Player
+    1174: ifeq          1230
+    1177: aload_1
+    1178: checkcast     #29                 // class net/minecraft/world/entity/player/Player
+    1181: astore        7
+    1183: aload         7
+    1185: getfield      #31                 // Field net/minecraft/world/entity/player/Player.containerMenu:Lnet/minecraft/world/inventory/AbstractContainerMenu;
+    1188: astore        8
+    1190: aload         8
+    1192: instanceof    #35                 // class net/guzhenren/init/GuzhenrenModMenus$MenuAccessor
+    1195: ifeq          1230
+    1198: aload         8
+    1200: checkcast     #35                 // class net/guzhenren/init/GuzhenrenModMenus$MenuAccessor
+    1203: astore        6
+    1205: aload         6
+    1207: invokeinterface #37,  1           // InterfaceMethod net/guzhenren/init/GuzhenrenModMenus$MenuAccessor.getSlots:()Ljava/util/Map;
+    1212: iconst_0
+    1213: invokestatic  #41                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+    1216: invokeinterface #47,  2           // InterfaceMethod java/util/Map.get:(Ljava/lang/Object;)Ljava/lang/Object;
+    1221: checkcast     #53                 // class net/minecraft/world/inventory/Slot
+    1224: invokevirtual #55                 // Method net/minecraft/world/inventory/Slot.getItem:()Lnet/minecraft/world/item/ItemStack;
+    1227: goto          1233
+    1230: getstatic     #59                 // Field net/minecraft/world/item/ItemStack.EMPTY:Lnet/minecraft/world/item/ItemStack;
+    1233: invokedynamic #284,  0            // InvokeDynamic #1:accept:()Ljava/util/function/Consumer;
+    1238: invokestatic  #129                // Method net/minecraft/world/item/component/CustomData.update:(Lnet/minecraft/core/component/DataComponentType;Lnet/minecraft/world/item/ItemStack;Ljava/util/function/Consumer;)V
+    1241: aload_1
+    1242: instanceof    #29                 // class net/minecraft/world/entity/player/Player
+    1245: ifeq          1301
+    1248: aload_1
+    1249: checkcast     #29                 // class net/minecraft/world/entity/player/Player
+    1252: astore        5
+    1254: aload         5
+    1256: getfield      #31                 // Field net/minecraft/world/entity/player/Player.containerMenu:Lnet/minecraft/world/inventory/AbstractContainerMenu;
+    1259: astore        6
+    1261: aload         6
+    1263: instanceof    #35                 // class net/guzhenren/init/GuzhenrenModMenus$MenuAccessor
+    1266: ifeq          1301
+    1269: aload         6
+    1271: checkcast     #35                 // class net/guzhenren/init/GuzhenrenModMenus$MenuAccessor
+    1274: astore        4
+    1276: aload         4
+    1278: invokeinterface #37,  1           // InterfaceMethod net/guzhenren/init/GuzhenrenModMenus$MenuAccessor.getSlots:()Ljava/util/Map;
+    1283: iconst_0
+    1284: invokestatic  #41                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+    1287: invokeinterface #47,  2           // InterfaceMethod java/util/Map.get:(Ljava/lang/Object;)Ljava/lang/Object;
+    1292: checkcast     #53                 // class net/minecraft/world/inventory/Slot
+    1295: invokevirtual #55                 // Method net/minecraft/world/inventory/Slot.getItem:()Lnet/minecraft/world/item/ItemStack;
+    1298: goto          1304
+    1301: getstatic     #59                 // Field net/minecraft/world/item/ItemStack.EMPTY:Lnet/minecraft/world/item/ItemStack;
+    1304: aload_0
+    1305: invokedynamic #287,  0            // InvokeDynamic #2:accept:(Lnet/minecraft/world/level/LevelAccessor;)Ljava/util/function/Consumer;
+    1310: invokestatic  #290                // Method net/minecraft/world/item/enchantment/EnchantmentHelper.updateEnchantments:(Lnet/minecraft/world/item/ItemStack;Ljava/util/function/Consumer;)Lnet/minecraft/world/item/enchantment/ItemEnchantments;
+    1313: pop
+    1314: aload_1
+    1315: getstatic     #7                  // Field net/guzhenren/network/GuzhenrenModVariables.PLAYER_VARIABLES:Ljava/util/function/Supplier;
+    1318: invokevirtual #13                 // Method net/minecraft/world/entity/Entity.getData:(Ljava/util/function/Supplier;)Ljava/lang/Object;
+    1321: checkcast     #19                 // class net/guzhenren/network/GuzhenrenModVariables$PlayerVariables
+    1324: astore        4
+    1326: aload         4
+    1328: new           #60                 // class net/minecraft/world/item/ItemStack
+    1331: dup
+    1332: getstatic     #102                // Field net/minecraft/world/level/block/Blocks.AIR:Lnet/minecraft/world/level/block/Block;
+    1335: invokespecial #296                // Method net/minecraft/world/item/ItemStack."<init>":(Lnet/minecraft/world/level/ItemLike;)V
+    1338: invokevirtual #170                // Method net/minecraft/world/item/ItemStack.copy:()Lnet/minecraft/world/item/ItemStack;
+    1341: putfield      #173                // Field net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.BenMingGu:Lnet/minecraft/world/item/ItemStack;
+    1344: aload         4
+    1346: dconst_0
+    1347: putfield      #299                // Field net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.benminggu:D
+    1350: aload         4
+    1352: iconst_0
+    1353: putfield      #21                 // Field net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.BenMingGu_1:Z
+    1356: aload         4
+    1358: invokevirtual #176                // Method net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.markSyncDirty:()V
+    1361: aload_1
+    1362: instanceof    #29                 // class net/minecraft/world/entity/player/Player
+    1365: ifeq          1397
+    1368: aload_1
+    1369: checkcast     #29                 // class net/minecraft/world/entity/player/Player
+    1372: astore        4
+    1374: aload         4
+    1376: invokevirtual #179                // Method net/minecraft/world/entity/player/Player.level:()Lnet/minecraft/world/level/Level;
+    1379: invokevirtual #183                // Method net/minecraft/world/level/Level.isClientSide:()Z
+    1382: ifne          1397
+    1385: aload         4
+    1387: ldc_w         #302                // String �����ƽ��ɹ�
+    1390: invokestatic  #191                // InterfaceMethod net/minecraft/network/chat/Component.literal:(Ljava/lang/String;)Lnet/minecraft/network/chat/MutableComponent;
+    1393: iconst_0
+    1394: invokevirtual #197                // Method net/minecraft/world/entity/player/Player.displayClientMessage:(Lnet/minecraft/network/chat/Component;Z)V
+    1397: aload_1
+    1398: new           #304                // class net/minecraft/world/damagesource/DamageSource
+    1401: dup
+    1402: aload_0
+    1403: getstatic     #306                // Field net/minecraft/world/damagesource/DamageTypes.GENERIC:Lnet/minecraft/resources/ResourceKey;
+    1406: invokeinterface #311,  2          // InterfaceMethod net/minecraft/world/level/LevelAccessor.holderOrThrow:(Lnet/minecraft/resources/ResourceKey;)Lnet/minecraft/core/Holder;
+    1411: aload_1
+    1412: invokespecial #315                // Method net/minecraft/world/damagesource/DamageSource."<init>":(Lnet/minecraft/core/Holder;Lnet/minecraft/world/entity/Entity;)V
+    1415: aload_1
+    1416: instanceof    #318                // class net/minecraft/world/entity/LivingEntity
+    1419: ifeq          1436
+    1422: aload_1
+    1423: checkcast     #318                // class net/minecraft/world/entity/LivingEntity
+    1426: astore        4
+    1428: aload         4
+    1430: invokevirtual #320                // Method net/minecraft/world/entity/LivingEntity.getMaxHealth:()F
+    1433: goto          1439
+    1436: ldc_w         #324                // float -1.0f
+    1439: f2d
+    1440: dconst_1
+    1441: aload_1
+    1442: getstatic     #7                  // Field net/guzhenren/network/GuzhenrenModVariables.PLAYER_VARIABLES:Ljava/util/function/Supplier;
+    1445: invokevirtual #13                 // Method net/minecraft/world/entity/Entity.getData:(Ljava/util/function/Supplier;)Ljava/lang/Object;
+    1448: checkcast     #19                 // class net/guzhenren/network/GuzhenrenModVariables$PlayerVariables
+    1451: getfield      #25                 // Field net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.zhuanshu:D
+    1454: ldc2_w        #325                // double 0.4d
+    1457: dmul
+    1458: dadd
+    1459: dmul
+    1460: d2f
+    1461: invokevirtual #327                // Method net/minecraft/world/entity/Entity.hurt:(Lnet/minecraft/world/damagesource/DamageSource;F)Z
+    1464: pop
+    1465: aload_1
+    1466: getstatic     #7                  // Field net/guzhenren/network/GuzhenrenModVariables.PLAYER_VARIABLES:Ljava/util/function/Supplier;
+    1469: invokevirtual #13                 // Method net/minecraft/world/entity/Entity.getData:(Ljava/util/function/Supplier;)Ljava/lang/Object;
+    1472: checkcast     #19                 // class net/guzhenren/network/GuzhenrenModVariables$PlayerVariables
+    1475: getfield      #331                // Field net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.kongqiao:D
+    1478: ldc2_w        #87                 // double 3.0d
+    1481: dcmpl
+    1482: ifne          1527
+    1485: aload_1
+    1486: getstatic     #7                  // Field net/guzhenren/network/GuzhenrenModVariables.PLAYER_VARIABLES:Ljava/util/function/Supplier;
+    1489: invokevirtual #13                 // Method net/minecraft/world/entity/Entity.getData:(Ljava/util/function/Supplier;)Ljava/lang/Object;
+    1492: checkcast     #19                 // class net/guzhenren/network/GuzhenrenModVariables$PlayerVariables
+    1495: astore        4
+    1497: aload         4
+    1499: aload_1
+    1500: getstatic     #7                  // Field net/guzhenren/network/GuzhenrenModVariables.PLAYER_VARIABLES:Ljava/util/function/Supplier;
+    1503: invokevirtual #13                 // Method net/minecraft/world/entity/Entity.getData:(Ljava/util/function/Supplier;)Ljava/lang/Object;
+    1506: checkcast     #19                 // class net/guzhenren/network/GuzhenrenModVariables$PlayerVariables
+    1509: getfield      #334                // Field net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.yali:D
+    1512: ldc2_w        #337                // double 50.0d
+    1515: dadd
+    1516: putfield      #334                // Field net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.yali:D
+    1519: aload         4
+    1521: invokevirtual #176                // Method net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.markSyncDirty:()V
+    1524: goto          1580
+    1527: aload_1
+    1528: getstatic     #7                  // Field net/guzhenren/network/GuzhenrenModVariables.PLAYER_VARIABLES:Ljava/util/function/Supplier;
+    1531: invokevirtual #13                 // Method net/minecraft/world/entity/Entity.getData:(Ljava/util/function/Supplier;)Ljava/lang/Object;
+    1534: checkcast     #19                 // class net/guzhenren/network/GuzhenrenModVariables$PlayerVariables
+    1537: astore        4
+    1539: aload         4
+    1541: aload_1
+    1542: getstatic     #7                  // Field net/guzhenren/network/GuzhenrenModVariables.PLAYER_VARIABLES:Ljava/util/function/Supplier;
+    1545: invokevirtual #13                 // Method net/minecraft/world/entity/Entity.getData:(Ljava/util/function/Supplier;)Ljava/lang/Object;
+    1548: checkcast     #19                 // class net/guzhenren/network/GuzhenrenModVariables$PlayerVariables
+    1551: getfield      #339                // Field net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.zuida_zhenyuan:D
+    1554: aload_1
+    1555: getstatic     #7                  // Field net/guzhenren/network/GuzhenrenModVariables.PLAYER_VARIABLES:Ljava/util/function/Supplier;
+    1558: invokevirtual #13                 // Method net/minecraft/world/entity/Entity.getData:(Ljava/util/function/Supplier;)Ljava/lang/Object;
+    1561: checkcast     #19                 // class net/guzhenren/network/GuzhenrenModVariables$PlayerVariables
+    1564: getfield      #339                // Field net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.zuida_zhenyuan:D
+    1567: ldc2_w        #342                // double 0.3d
+    1570: dmul
+    1571: dsub
+    1572: putfield      #339                // Field net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.zuida_zhenyuan:D
+    1575: aload         4
+    1577: invokevirtual #176                // Method net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.markSyncDirty:()V
+    1580: aload_1
+    1581: getstatic     #7                  // Field net/guzhenren/network/GuzhenrenModVariables.PLAYER_VARIABLES:Ljava/util/function/Supplier;
+    1584: invokevirtual #13                 // Method net/minecraft/world/entity/Entity.getData:(Ljava/util/function/Supplier;)Ljava/lang/Object;
+    1587: checkcast     #19                 // class net/guzhenren/network/GuzhenrenModVariables$PlayerVariables
+    1590: astore        4
+    1592: aload         4
+    1594: aload_1
+    1595: getstatic     #7                  // Field net/guzhenren/network/GuzhenrenModVariables.PLAYER_VARIABLES:Ljava/util/function/Supplier;
+    1598: invokevirtual #13                 // Method net/minecraft/world/entity/Entity.getData:(Ljava/util/function/Supplier;)Ljava/lang/Object;
+    1601: checkcast     #19                 // class net/guzhenren/network/GuzhenrenModVariables$PlayerVariables
+    1604: getfield      #344                // Field net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.qiyun:D
+    1607: aload_1
+    1608: getstatic     #7                  // Field net/guzhenren/network/GuzhenrenModVariables.PLAYER_VARIABLES:Ljava/util/function/Supplier;
+    1611: invokevirtual #13                 // Method net/minecraft/world/entity/Entity.getData:(Ljava/util/function/Supplier;)Ljava/lang/Object;
+    1614: checkcast     #19                 // class net/guzhenren/network/GuzhenrenModVariables$PlayerVariables
+    1617: getfield      #25                 // Field net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.zhuanshu:D
+    1620: ldc2_w        #347                // double 10.0d
+    1623: dmul
+    1624: dsub
+    1625: putfield      #344                // Field net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.qiyun:D
+    1628: aload         4
+    1630: aload_1
+    1631: getstatic     #7                  // Field net/guzhenren/network/GuzhenrenModVariables.PLAYER_VARIABLES:Ljava/util/function/Supplier;
+    1634: invokevirtual #13                 // Method net/minecraft/world/entity/Entity.getData:(Ljava/util/function/Supplier;)Ljava/lang/Object;
+    1637: checkcast     #19                 // class net/guzhenren/network/GuzhenrenModVariables$PlayerVariables
+    1640: getfield      #349                // Field net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.shouyuan:D
+    1643: ldc2_w        #95                 // double 5.0d
+    1646: dsub
+    1647: putfield      #349                // Field net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.shouyuan:D
+    1650: aload         4
+    1652: invokevirtual #176                // Method net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.markSyncDirty:()V
+    1655: goto          2164
+    1658: ldc_w         #352                // String ǿ�ƽ��
+    1661: aload_1
+    1662: invokestatic  #354                // Method getEntityScore:(Ljava/lang/String;Lnet/minecraft/world/entity/Entity;)I
+    1665: iconst_2
+    1666: if_icmpge     2164
+    1669: aload_1
+    1670: astore        4
+    1672: aload         4
+    1674: invokevirtual #360                // Method net/minecraft/world/entity/Entity.level:()Lnet/minecraft/world/level/Level;
+    1677: invokevirtual #361                // Method net/minecraft/world/level/Level.getScoreboard:()Lnet/minecraft/world/scores/Scoreboard;
+    1680: astore        5
+    1682: aload         5
+    1684: ldc_w         #352                // String ǿ�ƽ��
+    1687: invokevirtual #365                // Method net/minecraft/world/scores/Scoreboard.getObjective:(Ljava/lang/String;)Lnet/minecraft/world/scores/Objective;
+    1690: astore        6
+    1692: aload         6
+    1694: ifnonnull     1721
+    1697: aload         5
+    1699: ldc_w         #352                // String ǿ�ƽ��
+    1702: getstatic     #371                // Field net/minecraft/world/scores/criteria/ObjectiveCriteria.DUMMY:Lnet/minecraft/world/scores/criteria/ObjectiveCriteria;
+    1705: ldc_w         #352                // String ǿ�ƽ��
+    1708: invokestatic  #191                // InterfaceMethod net/minecraft/network/chat/Component.literal:(Ljava/lang/String;)Lnet/minecraft/network/chat/MutableComponent;
+    1711: getstatic     #377                // Field net/minecraft/world/scores/criteria/ObjectiveCriteria$RenderType.INTEGER:Lnet/minecraft/world/scores/criteria/ObjectiveCriteria$RenderType;
+    1714: iconst_1
+    1715: aconst_null
+    1716: invokevirtual #383                // Method net/minecraft/world/scores/Scoreboard.addObjective:(Ljava/lang/String;Lnet/minecraft/world/scores/criteria/ObjectiveCriteria;Lnet/minecraft/network/chat/Component;Lnet/minecraft/world/scores/criteria/ObjectiveCriteria$RenderType;ZLnet/minecraft/network/chat/numbers/NumberFormat;)Lnet/minecraft/world/scores/Objective;
+    1719: astore        6
+    1721: aload         5
+    1723: aload         4
+    1725: invokevirtual #387                // Method net/minecraft/world/entity/Entity.getScoreboardName:()Ljava/lang/String;
+    1728: invokestatic  #390                // InterfaceMethod net/minecraft/world/scores/ScoreHolder.forNameOnly:(Ljava/lang/String;)Lnet/minecraft/world/scores/ScoreHolder;
+    1731: aload         6
+    1733: invokevirtual #396                // Method net/minecraft/world/scores/Scoreboard.getOrCreatePlayerScore:(Lnet/minecraft/world/scores/ScoreHolder;Lnet/minecraft/world/scores/Objective;)Lnet/minecraft/world/scores/ScoreAccess;
+    1736: ldc_w         #352                // String ǿ�ƽ��
+    1739: aload_1
+    1740: invokestatic  #354                // Method getEntityScore:(Ljava/lang/String;Lnet/minecraft/world/entity/Entity;)I
+    1743: iconst_1
+    1744: iadd
+    1745: invokeinterface #400,  2          // InterfaceMethod net/minecraft/world/scores/ScoreAccess.set:(I)V
+    1750: aload_1
+    1751: instanceof    #29                 // class net/minecraft/world/entity/player/Player
+    1754: ifeq          1810
+    1757: aload_1
+    1758: checkcast     #29                 // class net/minecraft/world/entity/player/Player
+    1761: astore        5
+    1763: aload         5
+    1765: getfield      #31                 // Field net/minecraft/world/entity/player/Player.containerMenu:Lnet/minecraft/world/inventory/AbstractContainerMenu;
+    1768: astore        6
+    1770: aload         6
+    1772: instanceof    #35                 // class net/guzhenren/init/GuzhenrenModMenus$MenuAccessor
+    1775: ifeq          1810
+    1778: aload         6
+    1780: checkcast     #35                 // class net/guzhenren/init/GuzhenrenModMenus$MenuAccessor
+    1783: astore        4
+    1785: aload         4
+    1787: invokeinterface #37,  1           // InterfaceMethod net/guzhenren/init/GuzhenrenModMenus$MenuAccessor.getSlots:()Ljava/util/Map;
+    1792: iconst_0
+    1793: invokestatic  #41                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+    1796: invokeinterface #47,  2           // InterfaceMethod java/util/Map.get:(Ljava/lang/Object;)Ljava/lang/Object;
+    1801: checkcast     #53                 // class net/minecraft/world/inventory/Slot
+    1804: invokevirtual #55                 // Method net/minecraft/world/inventory/Slot.getItem:()Lnet/minecraft/world/item/ItemStack;
+    1807: goto          1813
+    1810: getstatic     #59                 // Field net/minecraft/world/item/ItemStack.EMPTY:Lnet/minecraft/world/item/ItemStack;
+    1813: aload_0
+    1814: invokedynamic #406,  0            // InvokeDynamic #3:accept:(Lnet/minecraft/world/level/LevelAccessor;)Ljava/util/function/Consumer;
+    1819: invokestatic  #290                // Method net/minecraft/world/item/enchantment/EnchantmentHelper.updateEnchantments:(Lnet/minecraft/world/item/ItemStack;Ljava/util/function/Consumer;)Lnet/minecraft/world/item/enchantment/ItemEnchantments;
+    1822: pop
+    1823: aload_1
+    1824: getstatic     #7                  // Field net/guzhenren/network/GuzhenrenModVariables.PLAYER_VARIABLES:Ljava/util/function/Supplier;
+    1827: invokevirtual #13                 // Method net/minecraft/world/entity/Entity.getData:(Ljava/util/function/Supplier;)Ljava/lang/Object;
+    1830: checkcast     #19                 // class net/guzhenren/network/GuzhenrenModVariables$PlayerVariables
+    1833: astore        4
+    1835: aload         4
+    1837: new           #60                 // class net/minecraft/world/item/ItemStack
+    1840: dup
+    1841: getstatic     #102                // Field net/minecraft/world/level/block/Blocks.AIR:Lnet/minecraft/world/level/block/Block;
+    1844: invokespecial #296                // Method net/minecraft/world/item/ItemStack."<init>":(Lnet/minecraft/world/level/ItemLike;)V
+    1847: invokevirtual #170                // Method net/minecraft/world/item/ItemStack.copy:()Lnet/minecraft/world/item/ItemStack;
+    1850: putfield      #173                // Field net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.BenMingGu:Lnet/minecraft/world/item/ItemStack;
+    1853: aload         4
+    1855: dconst_0
+    1856: putfield      #299                // Field net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.benminggu:D
+    1859: aload         4
+    1861: iconst_0
+    1862: putfield      #21                 // Field net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.BenMingGu_1:Z
+    1865: aload         4
+    1867: invokevirtual #176                // Method net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.markSyncDirty:()V
+    1870: aload_1
+    1871: instanceof    #29                 // class net/minecraft/world/entity/player/Player
+    1874: ifeq          1906
+    1877: aload_1
+    1878: checkcast     #29                 // class net/minecraft/world/entity/player/Player
+    1881: astore        4
+    1883: aload         4
+    1885: invokevirtual #179                // Method net/minecraft/world/entity/player/Player.level:()Lnet/minecraft/world/level/Level;
+    1888: invokevirtual #183                // Method net/minecraft/world/level/Level.isClientSide:()Z
+    1891: ifne          1906
+    1894: aload         4
+    1896: ldc_w         #302                // String �����ƽ��ɹ�
+    1899: invokestatic  #191                // InterfaceMethod net/minecraft/network/chat/Component.literal:(Ljava/lang/String;)Lnet/minecraft/network/chat/MutableComponent;
+    1902: iconst_0
+    1903: invokevirtual #197                // Method net/minecraft/world/entity/player/Player.displayClientMessage:(Lnet/minecraft/network/chat/Component;Z)V
+    1906: aload_1
+    1907: new           #304                // class net/minecraft/world/damagesource/DamageSource
+    1910: dup
+    1911: aload_0
+    1912: getstatic     #306                // Field net/minecraft/world/damagesource/DamageTypes.GENERIC:Lnet/minecraft/resources/ResourceKey;
+    1915: invokeinterface #311,  2          // InterfaceMethod net/minecraft/world/level/LevelAccessor.holderOrThrow:(Lnet/minecraft/resources/ResourceKey;)Lnet/minecraft/core/Holder;
+    1920: aload_1
+    1921: invokespecial #315                // Method net/minecraft/world/damagesource/DamageSource."<init>":(Lnet/minecraft/core/Holder;Lnet/minecraft/world/entity/Entity;)V
+    1924: aload_1
+    1925: instanceof    #318                // class net/minecraft/world/entity/LivingEntity
+    1928: ifeq          1945
+    1931: aload_1
+    1932: checkcast     #318                // class net/minecraft/world/entity/LivingEntity
+    1935: astore        4
+    1937: aload         4
+    1939: invokevirtual #320                // Method net/minecraft/world/entity/LivingEntity.getMaxHealth:()F
+    1942: goto          1948
+    1945: ldc_w         #324                // float -1.0f
+    1948: f2d
+    1949: dconst_1
+    1950: aload_1
+    1951: getstatic     #7                  // Field net/guzhenren/network/GuzhenrenModVariables.PLAYER_VARIABLES:Ljava/util/function/Supplier;
+    1954: invokevirtual #13                 // Method net/minecraft/world/entity/Entity.getData:(Ljava/util/function/Supplier;)Ljava/lang/Object;
+    1957: checkcast     #19                 // class net/guzhenren/network/GuzhenrenModVariables$PlayerVariables
+    1960: getfield      #25                 // Field net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.zhuanshu:D
+    1963: ldc2_w        #407                // double 0.8d
+    1966: dmul
+    1967: dadd
+    1968: dmul
+    1969: d2f
+    1970: invokevirtual #327                // Method net/minecraft/world/entity/Entity.hurt:(Lnet/minecraft/world/damagesource/DamageSource;F)Z
+    1973: pop
+    1974: aload_1
+    1975: getstatic     #7                  // Field net/guzhenren/network/GuzhenrenModVariables.PLAYER_VARIABLES:Ljava/util/function/Supplier;
+    1978: invokevirtual #13                 // Method net/minecraft/world/entity/Entity.getData:(Ljava/util/function/Supplier;)Ljava/lang/Object;
+    1981: checkcast     #19                 // class net/guzhenren/network/GuzhenrenModVariables$PlayerVariables
+    1984: getfield      #331                // Field net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.kongqiao:D
+    1987: ldc2_w        #87                 // double 3.0d
+    1990: dcmpl
+    1991: ifne          2036
+    1994: aload_1
+    1995: getstatic     #7                  // Field net/guzhenren/network/GuzhenrenModVariables.PLAYER_VARIABLES:Ljava/util/function/Supplier;
+    1998: invokevirtual #13                 // Method net/minecraft/world/entity/Entity.getData:(Ljava/util/function/Supplier;)Ljava/lang/Object;
+    2001: checkcast     #19                 // class net/guzhenren/network/GuzhenrenModVariables$PlayerVariables
+    2004: astore        4
+    2006: aload         4
+    2008: aload_1
+    2009: getstatic     #7                  // Field net/guzhenren/network/GuzhenrenModVariables.PLAYER_VARIABLES:Ljava/util/function/Supplier;
+    2012: invokevirtual #13                 // Method net/minecraft/world/entity/Entity.getData:(Ljava/util/function/Supplier;)Ljava/lang/Object;
+    2015: checkcast     #19                 // class net/guzhenren/network/GuzhenrenModVariables$PlayerVariables
+    2018: getfield      #334                // Field net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.yali:D
+    2021: ldc2_w        #409                // double 80.0d
+    2024: dadd
+    2025: putfield      #334                // Field net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.yali:D
+    2028: aload         4
+    2030: invokevirtual #176                // Method net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.markSyncDirty:()V
+    2033: goto          2089
+    2036: aload_1
+    2037: getstatic     #7                  // Field net/guzhenren/network/GuzhenrenModVariables.PLAYER_VARIABLES:Ljava/util/function/Supplier;
+    2040: invokevirtual #13                 // Method net/minecraft/world/entity/Entity.getData:(Ljava/util/function/Supplier;)Ljava/lang/Object;
+    2043: checkcast     #19                 // class net/guzhenren/network/GuzhenrenModVariables$PlayerVariables
+    2046: astore        4
+    2048: aload         4
+    2050: aload_1
+    2051: getstatic     #7                  // Field net/guzhenren/network/GuzhenrenModVariables.PLAYER_VARIABLES:Ljava/util/function/Supplier;
+    2054: invokevirtual #13                 // Method net/minecraft/world/entity/Entity.getData:(Ljava/util/function/Supplier;)Ljava/lang/Object;
+    2057: checkcast     #19                 // class net/guzhenren/network/GuzhenrenModVariables$PlayerVariables
+    2060: getfield      #339                // Field net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.zuida_zhenyuan:D
+    2063: aload_1
+    2064: getstatic     #7                  // Field net/guzhenren/network/GuzhenrenModVariables.PLAYER_VARIABLES:Ljava/util/function/Supplier;
+    2067: invokevirtual #13                 // Method net/minecraft/world/entity/Entity.getData:(Ljava/util/function/Supplier;)Ljava/lang/Object;
+    2070: checkcast     #19                 // class net/guzhenren/network/GuzhenrenModVariables$PlayerVariables
+    2073: getfield      #339                // Field net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.zuida_zhenyuan:D
+    2076: ldc2_w        #411                // double 0.6d
+    2079: dmul
+    2080: dsub
+    2081: putfield      #339                // Field net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.zuida_zhenyuan:D
+    2084: aload         4
+    2086: invokevirtual #176                // Method net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.markSyncDirty:()V
+    2089: aload_1
+    2090: getstatic     #7                  // Field net/guzhenren/network/GuzhenrenModVariables.PLAYER_VARIABLES:Ljava/util/function/Supplier;
+    2093: invokevirtual #13                 // Method net/minecraft/world/entity/Entity.getData:(Ljava/util/function/Supplier;)Ljava/lang/Object;
+    2096: checkcast     #19                 // class net/guzhenren/network/GuzhenrenModVariables$PlayerVariables
+    2099: astore        4
+    2101: aload         4
+    2103: aload_1
+    2104: getstatic     #7                  // Field net/guzhenren/network/GuzhenrenModVariables.PLAYER_VARIABLES:Ljava/util/function/Supplier;
+    2107: invokevirtual #13                 // Method net/minecraft/world/entity/Entity.getData:(Ljava/util/function/Supplier;)Ljava/lang/Object;
+    2110: checkcast     #19                 // class net/guzhenren/network/GuzhenrenModVariables$PlayerVariables
+    2113: getfield      #344                // Field net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.qiyun:D
+    2116: aload_1
+    2117: getstatic     #7                  // Field net/guzhenren/network/GuzhenrenModVariables.PLAYER_VARIABLES:Ljava/util/function/Supplier;
+    2120: invokevirtual #13                 // Method net/minecraft/world/entity/Entity.getData:(Ljava/util/function/Supplier;)Ljava/lang/Object;
+    2123: checkcast     #19                 // class net/guzhenren/network/GuzhenrenModVariables$PlayerVariables
+    2126: getfield      #25                 // Field net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.zhuanshu:D
+    2129: ldc2_w        #413                // double 15.0d
+    2132: dmul
+    2133: dsub
+    2134: putfield      #344                // Field net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.qiyun:D
+    2137: aload         4
+    2139: aload_1
+    2140: getstatic     #7                  // Field net/guzhenren/network/GuzhenrenModVariables.PLAYER_VARIABLES:Ljava/util/function/Supplier;
+    2143: invokevirtual #13                 // Method net/minecraft/world/entity/Entity.getData:(Ljava/util/function/Supplier;)Ljava/lang/Object;
+    2146: checkcast     #19                 // class net/guzhenren/network/GuzhenrenModVariables$PlayerVariables
+    2149: getfield      #349                // Field net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.shouyuan:D
+    2152: ldc2_w        #95                 // double 5.0d
+    2155: dsub
+    2156: putfield      #349                // Field net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.shouyuan:D
+    2159: aload         4
+    2161: invokevirtual #176                // Method net/guzhenren/network/GuzhenrenModVariables$PlayerVariables.markSyncDirty:()V
+    2164: return
+
+  private static int getEntityScore(java.lang.String, net.minecraft.world.entity.Entity);
+    Code:
+       0: aload_1
+       1: invokevirtual #360                // Method net/minecraft/world/entity/Entity.level:()Lnet/minecraft/world/level/Level;
+       4: invokevirtual #361                // Method net/minecraft/world/level/Level.getScoreboard:()Lnet/minecraft/world/scores/Scoreboard;
+       7: astore_2
+       8: aload_2
+       9: aload_0
+      10: invokevirtual #365                // Method net/minecraft/world/scores/Scoreboard.getObjective:(Ljava/lang/String;)Lnet/minecraft/world/scores/Objective;
+      13: astore_3
+      14: aload_3
+      15: ifnull        36
+      18: aload_2
+      19: aload_1
+      20: invokevirtual #387                // Method net/minecraft/world/entity/Entity.getScoreboardName:()Ljava/lang/String;
+      23: invokestatic  #390                // InterfaceMethod net/minecraft/world/scores/ScoreHolder.forNameOnly:(Ljava/lang/String;)Lnet/minecraft/world/scores/ScoreHolder;
+      26: aload_3
+      27: invokevirtual #396                // Method net/minecraft/world/scores/Scoreboard.getOrCreatePlayerScore:(Lnet/minecraft/world/scores/ScoreHolder;Lnet/minecraft/world/scores/Objective;)Lnet/minecraft/world/scores/ScoreAccess;
+      30: invokeinterface #415,  1          // InterfaceMethod net/minecraft/world/scores/ScoreAccess.get:()I
+      35: ireturn
+      36: iconst_0
+      37: ireturn
+
+  private static void lambda$execute$5(net.minecraft.world.level.LevelAccessor, net.minecraft.world.item.enchantment.ItemEnchantments$Mutable);
+    Code:
+       0: aload_1
+       1: aload_0
+       2: invokedynamic #418,  0            // InvokeDynamic #4:test:(Lnet/minecraft/world/level/LevelAccessor;)Ljava/util/function/Predicate;
+       7: invokevirtual #422                // Method net/minecraft/world/item/enchantment/ItemEnchantments$Mutable.removeIf:(Ljava/util/function/Predicate;)V
+      10: return
+
+  private static boolean lambda$execute$4(net.minecraft.world.level.LevelAccessor, net.minecraft.core.Holder);
+    Code:
+       0: aload_1
+       1: aload_0
+       2: invokeinterface #135,  1          // InterfaceMethod net/minecraft/world/level/LevelAccessor.registryAccess:()Lnet/minecraft/core/RegistryAccess;
+       7: getstatic     #141                // Field net/minecraft/core/registries/Registries.ENCHANTMENT:Lnet/minecraft/resources/ResourceKey;
+      10: invokeinterface #147,  2          // InterfaceMethod net/minecraft/core/RegistryAccess.lookupOrThrow:(Lnet/minecraft/resources/ResourceKey;)Lnet/minecraft/core/HolderLookup$RegistryLookup;
+      15: getstatic     #141                // Field net/minecraft/core/registries/Registries.ENCHANTMENT:Lnet/minecraft/resources/ResourceKey;
+      18: ldc           #153                // String guzhenren:ben_ming_gu
+      20: invokestatic  #67                 // Method net/minecraft/resources/ResourceLocation.parse:(Ljava/lang/String;)Lnet/minecraft/resources/ResourceLocation;
+      23: invokestatic  #155                // Method net/minecraft/resources/ResourceKey.create:(Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/resources/ResourceKey;
+      26: invokeinterface #160,  2          // InterfaceMethod net/minecraft/core/HolderLookup$RegistryLookup.getOrThrow:(Lnet/minecraft/resources/ResourceKey;)Lnet/minecraft/core/Holder$Reference;
+      31: invokeinterface #428,  2          // InterfaceMethod net/minecraft/core/Holder.is:(Lnet/minecraft/core/Holder;)Z
+      36: ireturn
+
+  private static void lambda$execute$3(net.minecraft.world.level.LevelAccessor, net.minecraft.world.item.enchantment.ItemEnchantments$Mutable);
+    Code:
+       0: aload_1
+       1: aload_0
+       2: invokedynamic #433,  0            // InvokeDynamic #5:test:(Lnet/minecraft/world/level/LevelAccessor;)Ljava/util/function/Predicate;
+       7: invokevirtual #422                // Method net/minecraft/world/item/enchantment/ItemEnchantments$Mutable.removeIf:(Ljava/util/function/Predicate;)V
+      10: return
+
+  private static boolean lambda$execute$2(net.minecraft.world.level.LevelAccessor, net.minecraft.core.Holder);
+    Code:
+       0: aload_1
+       1: aload_0
+       2: invokeinterface #135,  1          // InterfaceMethod net/minecraft/world/level/LevelAccessor.registryAccess:()Lnet/minecraft/core/RegistryAccess;
+       7: getstatic     #141                // Field net/minecraft/core/registries/Registries.ENCHANTMENT:Lnet/minecraft/resources/ResourceKey;
+      10: invokeinterface #147,  2          // InterfaceMethod net/minecraft/core/RegistryAccess.lookupOrThrow:(Lnet/minecraft/resources/ResourceKey;)Lnet/minecraft/core/HolderLookup$RegistryLookup;
+      15: getstatic     #141                // Field net/minecraft/core/registries/Registries.ENCHANTMENT:Lnet/minecraft/resources/ResourceKey;
+      18: ldc           #153                // String guzhenren:ben_ming_gu
+      20: invokestatic  #67                 // Method net/minecraft/resources/ResourceLocation.parse:(Ljava/lang/String;)Lnet/minecraft/resources/ResourceLocation;
+      23: invokestatic  #155                // Method net/minecraft/resources/ResourceKey.create:(Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/resources/ResourceKey;
+      26: invokeinterface #160,  2          // InterfaceMethod net/minecraft/core/HolderLookup$RegistryLookup.getOrThrow:(Lnet/minecraft/resources/ResourceKey;)Lnet/minecraft/core/Holder$Reference;
+      31: invokeinterface #428,  2          // InterfaceMethod net/minecraft/core/Holder.is:(Lnet/minecraft/core/Holder;)Z
+      36: ireturn
+
+  private static void lambda$execute$1(net.minecraft.nbt.CompoundTag);
+    Code:
+       0: aload_0
+       1: ldc           #113                // String ����������
+       3: ldc_w         #282                // String
+       6: invokevirtual #434                // Method net/minecraft/nbt/CompoundTag.putString:(Ljava/lang/String;Ljava/lang/String;)V
+       9: return
+
+  private static void lambda$execute$0(java.lang.String, net.minecraft.nbt.CompoundTag);
+    Code:
+       0: aload_1
+       1: ldc           #113                // String ����������
+       3: aload_0
+       4: invokevirtual #434                // Method net/minecraft/nbt/CompoundTag.putString:(Ljava/lang/String;Ljava/lang/String;)V
+       7: return
+}

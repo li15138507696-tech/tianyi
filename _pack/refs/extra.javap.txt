@@ -1,0 +1,381 @@
+### com.guzhenrenlibrary.faction.FactionDef   [outer]
+Compiled from "FactionDef.java"
+public final class com.guzhenrenlibrary.faction.FactionDef {
+  private final java.lang.String id;
+  private final java.lang.String baseName;
+  private final com.guzhenrenlibrary.faction.FactionKind kind;
+  private final com.guzhenrenlibrary.wuyu.WuyuLayout$Domain domain;
+  private final int indexInDomain;
+  private final com.guzhenrenlibrary.faction.FactionTier tier;
+  private java.lang.String displayName;
+  public com.guzhenrenlibrary.faction.FactionDef(java.lang.String, java.lang.String, com.guzhenrenlibrary.faction.FactionKind, com.guzhenrenlibrary.wuyu.WuyuLayout$Domain, int, com.guzhenrenlibrary.faction.FactionTier);
+  public com.guzhenrenlibrary.faction.FactionDef(java.lang.String, java.lang.String, com.guzhenrenlibrary.faction.FactionKind, com.guzhenrenlibrary.wuyu.WuyuLayout$Domain, int);
+  public java.lang.String id();
+  public java.lang.String baseName();
+  public java.lang.String chineseName();
+  void setDisplayName(java.lang.String);
+  public boolean renamed();
+  public com.guzhenrenlibrary.faction.FactionKind kind();
+  public com.guzhenrenlibrary.wuyu.WuyuLayout$Domain domain();
+  public int indexInDomain();
+  public com.guzhenrenlibrary.faction.FactionTier tier();
+  public java.lang.String key();
+  public java.lang.String fullName();
+  public java.lang.String title();
+  public java.lang.String monumentName();
+  public int globalIndex();
+  public static com.guzhenrenlibrary.faction.FactionDef byName(java.lang.String);
+  public boolean equals(java.lang.Object);
+  public int hashCode();
+  public java.lang.String toString();
+}
+
+### com.guzhenrenlibrary.faction.FactionStance   [outer]
+Compiled from "FactionStance.java"
+public final class com.guzhenrenlibrary.faction.FactionStance extends java.lang.Enum<com.guzhenrenlibrary.faction.FactionStance> {
+  public static final com.guzhenrenlibrary.faction.FactionStance NEUTRAL;
+  public static final com.guzhenrenlibrary.faction.FactionStance FRIENDLY;
+  public static final com.guzhenrenlibrary.faction.FactionStance ALLIED;
+  public static final com.guzhenrenlibrary.faction.FactionStance COLD;
+  public static final com.guzhenrenlibrary.faction.FactionStance HOSTILE;
+  public static final com.guzhenrenlibrary.faction.FactionStance WAR;
+  private final java.lang.String chineseName;
+  private final int baseScore;
+  private static final com.guzhenrenlibrary.faction.FactionStance[] $VALUES;
+  public static com.guzhenrenlibrary.faction.FactionStance[] values();
+  public static com.guzhenrenlibrary.faction.FactionStance valueOf(java.lang.String);
+  private com.guzhenrenlibrary.faction.FactionStance(java.lang.String, int);
+  public java.lang.String chineseName();
+  public int baseScore();
+  public boolean isHostile();
+  public boolean isAllied();
+  public static com.guzhenrenlibrary.faction.FactionStance ofScore(int);
+  public static int decay(int, int);
+  public java.lang.String labelKey();
+  public static com.guzhenrenlibrary.faction.FactionStance byOrdinal(int);
+  public static com.guzhenrenlibrary.faction.FactionStance byName(java.lang.String);
+  public static java.lang.String[] completions();
+  private static com.guzhenrenlibrary.faction.FactionStance[] $values();
+  static {};
+}
+
+### com.guzhenrenlibrary.faction.FactionRank   [outer]
+Compiled from "FactionRank.java"
+public final class com.guzhenrenlibrary.faction.FactionRank extends java.lang.Enum<com.guzhenrenlibrary.faction.FactionRank> {
+  public static final com.guzhenrenlibrary.faction.FactionRank LOWEST;
+  public static final com.guzhenrenlibrary.faction.FactionRank MEMBER;
+  public static final com.guzhenrenlibrary.faction.FactionRank ELDER;
+  public static final com.guzhenrenlibrary.faction.FactionRank LEADER;
+  public static final com.guzhenrenlibrary.faction.FactionRank GRAND_ELDER;
+  public static final int TICKS_PER_DAY;
+  public static final int PAY_INTERVAL_TICKS;
+  private final java.lang.String sectName;
+  private final java.lang.String familyName;
+  private final int sectSalary;
+  private final int familySalary;
+  private static final com.guzhenrenlibrary.faction.FactionRank[] $VALUES;
+  public static com.guzhenrenlibrary.faction.FactionRank[] values();
+  public static com.guzhenrenlibrary.faction.FactionRank valueOf(java.lang.String);
+  private com.guzhenrenlibrary.faction.FactionRank(java.lang.String, java.lang.String, int, int);
+  public java.lang.String sectName();
+  public java.lang.String familyName();
+  public java.lang.String displayName(com.guzhenrenlibrary.faction.FactionKind);
+  public int sectSalary();
+  public int familySalary();
+  public int salary(com.guzhenrenlibrary.faction.FactionKind);
+  public int tier();
+  public boolean canManage(com.guzhenrenlibrary.faction.FactionBuilding);
+  public boolean isElder();
+  public boolean isLeader();
+  public boolean isGrandElder();
+  public java.lang.String labelKey(com.guzhenrenlibrary.faction.FactionKind);
+  public static com.guzhenrenlibrary.faction.FactionRank byOrdinal(int);
+  public static com.guzhenrenlibrary.faction.FactionRank byTier(int);
+  public static com.guzhenrenlibrary.faction.FactionRank byName(java.lang.String);
+  public static java.lang.String[] completions();
+  private static com.guzhenrenlibrary.faction.FactionRank[] $values();
+  static {};
+}
+
+### com.guzhenrenlibrary.faction.FactionChronicle   [outer]
+Compiled from "FactionChronicle.java"
+public final class com.guzhenrenlibrary.faction.FactionChronicle {
+  public static final int MAX_ENTRIES;
+  private final java.util.Map<java.lang.Long, com.guzhenrenlibrary.faction.FactionChronicle$Entry> entries;
+  private long nextId;
+  private final java.util.Map<java.util.UUID, java.lang.Long> readUpTo;
+  private static final java.time.format.DateTimeFormatter STAMP;
+  public com.guzhenrenlibrary.faction.FactionChronicle();
+  public com.guzhenrenlibrary.faction.FactionChronicle$Entry append(com.guzhenrenlibrary.faction.FactionChronicle$Scope, com.guzhenrenlibrary.faction.FactionDef, long, java.lang.String);
+  public java.util.List<com.guzhenrenlibrary.faction.FactionChronicle$Entry> recent(com.guzhenrenlibrary.faction.FactionDef, boolean, com.guzhenrenlibrary.faction.FactionDef, int);
+  public static boolean visible(com.guzhenrenlibrary.faction.FactionChronicle$Entry, com.guzhenrenlibrary.faction.FactionDef, boolean, com.guzhenrenlibrary.faction.FactionDef);
+  public int unread(java.util.UUID, com.guzhenrenlibrary.faction.FactionDef, boolean, com.guzhenrenlibrary.faction.FactionDef);
+  public long readUpTo(java.util.UUID);
+  public int clearVisible(com.guzhenrenlibrary.faction.FactionDef, boolean, com.guzhenrenlibrary.faction.FactionDef);
+  public void markRead(java.util.UUID);
+  public boolean isUnread(java.util.UUID, com.guzhenrenlibrary.faction.FactionChronicle$Entry);
+  public int size();
+  public static java.lang.String stamp(com.guzhenrenlibrary.faction.FactionChronicle$Entry);
+  public static java.lang.String ago(long, long);
+  void mergeFrom(com.guzhenrenlibrary.faction.FactionChronicle);
+  public net.minecraft.nbt.CompoundTag toTag();
+  public static com.guzhenrenlibrary.faction.FactionChronicle fromTag(net.minecraft.nbt.CompoundTag);
+  static {};
+}
+
+### com.guzhenrenlibrary.faction.journey.JourneyKind   [outer]
+Compiled from "JourneyKind.java"
+public final class com.guzhenrenlibrary.faction.journey.JourneyKind extends java.lang.Enum<com.guzhenrenlibrary.faction.journey.JourneyKind> {
+  public static final com.guzhenrenlibrary.faction.journey.JourneyKind ARMY;
+  public static final com.guzhenrenlibrary.faction.journey.JourneyKind ENVOY;
+  public static final com.guzhenrenlibrary.faction.journey.JourneyKind CARAVAN;
+  public final java.lang.String prefix;
+  public final java.lang.String label;
+  public final int minMembers;
+  public final int maxMembers;
+  public final int baseDuration;
+  private static final com.guzhenrenlibrary.faction.journey.JourneyKind[] $VALUES;
+  public static com.guzhenrenlibrary.faction.journey.JourneyKind[] values();
+  public static com.guzhenrenlibrary.faction.journey.JourneyKind valueOf(java.lang.String);
+  private com.guzhenrenlibrary.faction.journey.JourneyKind(java.lang.String, java.lang.String, int, int, int);
+  public static com.guzhenrenlibrary.faction.journey.JourneyKind byOrdinal(int);
+  public boolean settlesOnArrival();
+  public int membersFor(long);
+  private static com.guzhenrenlibrary.faction.journey.JourneyKind[] $values();
+  static {};
+}
+
+### com.guzhenrenlibrary.faction.team.FactionTeam   [outer]
+Compiled from "FactionTeam.java"
+public final class com.guzhenrenlibrary.faction.team.FactionTeam {
+  public static final int NO_JOURNEY;
+  private final int id;
+  private final java.lang.String factionKey;
+  private final com.guzhenrenlibrary.faction.team.TeamKind kind;
+  private java.lang.String name;
+  private final java.util.List<java.lang.String> members;
+  private int activeJourney;
+  public com.guzhenrenlibrary.faction.team.FactionTeam(int, java.lang.String, com.guzhenrenlibrary.faction.team.TeamKind, java.lang.String);
+  public int id();
+  public java.lang.String factionKey();
+  public com.guzhenrenlibrary.faction.team.TeamKind kind();
+  public com.guzhenrenlibrary.faction.FactionBuilding hall();
+  public java.lang.String name();
+  public void setName(java.lang.String);
+  public java.util.List<java.lang.String> memberNames();
+  public int activeJourneyId();
+  public boolean idle();
+  public boolean onMission();
+  public int size();
+  public boolean contains(java.lang.String);
+  public boolean addMember(java.lang.String);
+  public boolean removeMember(java.lang.String);
+  public void setActiveJourney(int);
+  public void onJourneyEnd(boolean, java.util.List<java.lang.String>);
+  public net.minecraft.nbt.CompoundTag toTag();
+  public static com.guzhenrenlibrary.faction.team.FactionTeam fromTag(net.minecraft.nbt.CompoundTag);
+  public java.lang.String toString();
+  private static boolean lambda$onJourneyEnd$0(java.util.List, java.lang.String);
+}
+
+### com.guzhenrenlibrary.npc.NpcPersona   [outer]
+Compiled from "NpcPersona.java"
+public final class com.guzhenrenlibrary.npc.NpcPersona extends java.lang.Record {
+  private final java.lang.String name;
+  private final com.guzhenrenlibrary.npc.NpcIdentityType identity;
+  private final com.guzhenrenlibrary.npc.NpcPersonality personality;
+  private final com.guzhenrenlibrary.character.CharacterGender gender;
+  private final com.guzhenrenlibrary.npc.NpcHobby hobby;
+  public static final com.guzhenrenlibrary.npc.NpcPersona EMPTY;
+  public static final int NAME_MAX_LENGTH;
+  public static final com.mojang.serialization.Codec<com.guzhenrenlibrary.npc.NpcPersona> CODEC;
+  public static final net.minecraft.network.codec.StreamCodec<io.netty.buffer.ByteBuf, com.guzhenrenlibrary.npc.NpcPersona> STREAM_CODEC;
+  public com.guzhenrenlibrary.npc.NpcPersona(java.lang.String, com.guzhenrenlibrary.npc.NpcIdentityType, com.guzhenrenlibrary.npc.NpcPersonality, com.guzhenrenlibrary.character.CharacterGender, com.guzhenrenlibrary.npc.NpcHobby);
+  public boolean assigned();
+  public java.lang.String displayName();
+  public com.guzhenrenlibrary.npc.NpcPersona withName(java.lang.String);
+  public com.guzhenrenlibrary.npc.NpcPersona withIdentity(com.guzhenrenlibrary.npc.NpcIdentityType);
+  public com.guzhenrenlibrary.npc.NpcPersona withPersonality(com.guzhenrenlibrary.npc.NpcPersonality);
+  public com.guzhenrenlibrary.npc.NpcPersona withGender(com.guzhenrenlibrary.character.CharacterGender);
+  public com.guzhenrenlibrary.npc.NpcPersona withHobby(com.guzhenrenlibrary.npc.NpcHobby);
+  public java.lang.String traitLine();
+  public java.lang.String selfIntroduction();
+  public java.lang.String toString();
+  public net.minecraft.nbt.CompoundTag toTag();
+  public static com.guzhenrenlibrary.npc.NpcPersona fromTag(net.minecraft.nbt.CompoundTag);
+  private static com.guzhenrenlibrary.npc.NpcIdentityType identityByName(java.lang.String);
+  private static com.guzhenrenlibrary.npc.NpcPersonality personalityByName(java.lang.String);
+  private static com.guzhenrenlibrary.npc.NpcHobby hobbyByName(java.lang.String);
+  private static com.guzhenrenlibrary.character.CharacterGender genderByName(java.lang.String);
+  public static java.lang.String sanitizeName(java.lang.String);
+  public boolean equals(java.lang.Object);
+  public int hashCode();
+  public java.lang.String name();
+  public com.guzhenrenlibrary.npc.NpcIdentityType identity();
+  public com.guzhenrenlibrary.npc.NpcPersonality personality();
+  public com.guzhenrenlibrary.character.CharacterGender gender();
+  public com.guzhenrenlibrary.npc.NpcHobby hobby();
+  static {};
+}
+
+### com.guzhenrenlibrary.npc.NpcIdentityType   [outer]
+Compiled from "NpcIdentityType.java"
+public final class com.guzhenrenlibrary.npc.NpcIdentityType extends java.lang.Enum<com.guzhenrenlibrary.npc.NpcIdentityType> {
+  public static final com.guzhenrenlibrary.npc.NpcIdentityType WILD;
+  public static final com.guzhenrenlibrary.npc.NpcIdentityType FAMILY;
+  public static final com.guzhenrenlibrary.npc.NpcIdentityType SECT;
+  private final java.lang.String chineseName;
+  private final java.lang.String shortName;
+  private final java.lang.String asciiName;
+  private final java.lang.String pinyin;
+  private static final com.guzhenrenlibrary.npc.NpcIdentityType[] $VALUES;
+  public static com.guzhenrenlibrary.npc.NpcIdentityType[] values();
+  public static com.guzhenrenlibrary.npc.NpcIdentityType valueOf(java.lang.String);
+  private com.guzhenrenlibrary.npc.NpcIdentityType(java.lang.String, java.lang.String, java.lang.String, java.lang.String);
+  public java.lang.String chineseName();
+  public java.lang.String shortName();
+  public java.lang.String labelKey();
+  public static com.guzhenrenlibrary.npc.NpcIdentityType byOrdinal(int);
+  public static com.guzhenrenlibrary.npc.NpcIdentityType byName(java.lang.String);
+  public static java.lang.String[] completions();
+  private static com.guzhenrenlibrary.npc.NpcIdentityType[] $values();
+  static {};
+}
+
+### com.guzhenrenlibrary.npc.combat.NpcInventory   [outer]
+Compiled from "NpcInventory.java"
+public final class com.guzhenrenlibrary.npc.combat.NpcInventory {
+  public static final int MAIN_SLOTS;
+  public static final int ARMOR_SLOTS;
+  public static final int OFFHAND_SLOTS;
+  public static final int TOTAL_SLOTS;
+  public static final int ARMOR_START;
+  public static final int OFFHAND_INDEX;
+  public static final int UNIT_PER_SLOT;
+  public static final int MATERIAL_SLOTS;
+  public static final int MATERIAL_SLOT_START;
+  public static final int CANPO_SLOT_MAX;
+  public static final int MATERIAL_STACK_LIMIT;
+  public static final int MATERIAL_STACK_MIN;
+  private static final net.minecraft.world.entity.EquipmentSlot[] ARMOR_ORDER;
+  private net.neoforged.neoforge.items.ItemStackHandler handler;
+  private net.minecraft.world.entity.Mob owner;
+  private net.minecraft.world.Container view;
+  public static final int DEATH_GU_MIN;
+  public static final int DEATH_GU_MAX;
+  public static int slotLimitFor(int, net.minecraft.world.item.ItemStack);
+  public static boolean isMaterialSlot(int);
+  public com.guzhenrenlibrary.npc.combat.NpcInventory(net.minecraft.world.entity.Mob);
+  public void attach(net.minecraft.world.entity.Mob);
+  public net.minecraft.world.entity.Mob owner();
+  public net.minecraft.world.Container container();
+  public net.neoforged.neoforge.items.ItemStackHandler handler();
+  public boolean stillValid(net.minecraft.world.entity.player.Player);
+  public int size();
+  public boolean isItemValid(int, net.minecraft.world.item.ItemStack);
+  public net.minecraft.world.item.ItemStack get(int);
+  public void set(int, net.minecraft.world.item.ItemStack);
+  private void spread(net.minecraft.world.item.ItemStack);
+  public boolean isEmpty();
+  public net.minecraft.world.item.ItemStack add(net.minecraft.world.item.ItemStack);
+  private net.minecraft.world.item.ItemStack fillSlots(net.minecraft.world.item.ItemStack, int, int);
+  public net.minecraft.world.item.ItemStack remove(int);
+  public net.minecraft.world.item.ItemStack firstGuChong();
+  public java.util.List<net.minecraft.world.item.ItemStack> guChongList();
+  public boolean hasGuChong();
+  public static boolean keepsGift(net.minecraft.world.item.ItemStack);
+  public void syncEquipment();
+  public static long deathDropSeed(java.util.UUID, long);
+  public static int guDropCount(long);
+  public com.guzhenrenlibrary.npc.combat.NpcInventory$DropResult dropOnDeath(long);
+  public void dropAll();
+  public void clear();
+  public net.minecraft.nbt.CompoundTag serializeNBT(net.minecraft.core.HolderLookup$Provider);
+  public void deserializeNBT(net.minecraft.core.HolderLookup$Provider, net.minecraft.nbt.CompoundTag);
+  public int normalizeToOne();
+  static {};
+}
+
+### com.guzhenrenlibrary.identity.PlayerIdentity   [outer]
+Compiled from "PlayerIdentity.java"
+public final class com.guzhenrenlibrary.identity.PlayerIdentity extends java.lang.Record {
+  private final java.util.UUID id;
+  private final java.lang.String title;
+  private final com.guzhenrenlibrary.character.CharacterGender gender;
+  private final com.guzhenrenlibrary.character.CharacterOrigin origin;
+  private final long createdAt;
+  public static final com.mojang.serialization.Codec<com.guzhenrenlibrary.identity.PlayerIdentity> CODEC;
+  public com.guzhenrenlibrary.identity.PlayerIdentity(java.util.UUID, java.lang.String, com.guzhenrenlibrary.character.CharacterGender, com.guzhenrenlibrary.character.CharacterOrigin, long);
+  public boolean isValid();
+  public static com.guzhenrenlibrary.identity.PlayerIdentity create(java.lang.String, com.guzhenrenlibrary.character.CharacterGender, com.guzhenrenlibrary.character.CharacterOrigin, long);
+  public com.guzhenrenlibrary.identity.PlayerIdentity withTitle(java.lang.String);
+  public com.guzhenrenlibrary.identity.PlayerIdentity withGender(com.guzhenrenlibrary.character.CharacterGender);
+  public com.guzhenrenlibrary.identity.PlayerIdentity withOrigin(com.guzhenrenlibrary.character.CharacterOrigin);
+  public java.lang.String summary();
+  public net.minecraft.nbt.CompoundTag toTag();
+  public static com.guzhenrenlibrary.identity.PlayerIdentity fromTag(net.minecraft.nbt.CompoundTag);
+  private static com.guzhenrenlibrary.character.CharacterGender genderByName(java.lang.String);
+  private static com.guzhenrenlibrary.character.CharacterOrigin originByName(java.lang.String);
+  public boolean equals(java.lang.Object);
+  public int hashCode();
+  public java.lang.String toString();
+  public java.util.UUID id();
+  public java.lang.String title();
+  public com.guzhenrenlibrary.character.CharacterGender gender();
+  public com.guzhenrenlibrary.character.CharacterOrigin origin();
+  public long createdAt();
+  static {};
+}
+
+### com.guzhenrenlibrary.identity.IdentityBook   [outer]
+Compiled from "IdentityBook.java"
+public final class com.guzhenrenlibrary.identity.IdentityBook extends java.lang.Record {
+  private final java.util.List<com.guzhenrenlibrary.identity.PlayerIdentity> identities;
+  private final java.util.UUID activeId;
+  public static final int MAX_IDENTITIES;
+  public static final com.guzhenrenlibrary.identity.IdentityBook EMPTY;
+  public static final com.mojang.serialization.Codec<com.guzhenrenlibrary.identity.IdentityBook> CODEC;
+  public com.guzhenrenlibrary.identity.IdentityBook(java.util.List<com.guzhenrenlibrary.identity.PlayerIdentity>, java.util.UUID);
+  public int size();
+  public boolean isEmpty();
+  public com.guzhenrenlibrary.identity.PlayerIdentity find(java.util.UUID);
+  public com.guzhenrenlibrary.identity.PlayerIdentity findByTitle(java.lang.String);
+  public com.guzhenrenlibrary.identity.PlayerIdentity active();
+  public java.lang.String activeTitle();
+  public boolean titleTaken(java.lang.String, java.util.UUID);
+  public com.guzhenrenlibrary.identity.IdentityBook withAdded(com.guzhenrenlibrary.identity.PlayerIdentity);
+  public com.guzhenrenlibrary.identity.IdentityBook withReplaced(com.guzhenrenlibrary.identity.PlayerIdentity);
+  public com.guzhenrenlibrary.identity.IdentityBook withRemoved(java.util.UUID);
+  public com.guzhenrenlibrary.identity.IdentityBook withActive(java.util.UUID);
+  public net.minecraft.nbt.CompoundTag toTag();
+  public static com.guzhenrenlibrary.identity.IdentityBook fromTag(net.minecraft.nbt.CompoundTag);
+  public java.lang.String toString();
+  public final int hashCode();
+  public final boolean equals(java.lang.Object);
+  public java.util.List<com.guzhenrenlibrary.identity.PlayerIdentity> identities();
+  public java.util.UUID activeId();
+  private static boolean lambda$withRemoved$0(java.util.UUID, com.guzhenrenlibrary.identity.PlayerIdentity);
+  static {};
+}
+
+### com.guzhenrenlibrary.terrain.TerrainKind
+  !! 不存在 !!
+
+### net.guzhenren.network.GuzhenrenModVariables   [inner]
+Compiled from "GuzhenrenModVariables.java"
+public class net.guzhenren.network.GuzhenrenModVariables {
+  public static final net.neoforged.neoforge.registries.DeferredRegister<net.neoforged.neoforge.attachment.AttachmentType<?>> ATTACHMENT_TYPES;
+  public static final java.util.function.Supplier<net.neoforged.neoforge.attachment.AttachmentType<net.guzhenren.network.GuzhenrenModVariables$PlayerVariables>> PLAYER_VARIABLES;
+  public net.guzhenren.network.GuzhenrenModVariables();
+  public static void onPlayerLoggedInSyncPlayerVariables(net.neoforged.neoforge.event.entity.player.PlayerEvent$PlayerLoggedInEvent);
+  public static void onPlayerRespawnedSyncPlayerVariables(net.neoforged.neoforge.event.entity.player.PlayerEvent$PlayerRespawnEvent);
+  public static void onPlayerChangedDimensionSyncPlayerVariables(net.neoforged.neoforge.event.entity.player.PlayerEvent$PlayerChangedDimensionEvent);
+  public static void onPlayerTickUpdateSyncPlayerVariables(net.neoforged.neoforge.event.tick.PlayerTickEvent$Post);
+  public static void clonePlayer(net.neoforged.neoforge.event.entity.player.PlayerEvent$Clone);
+  public static void onPlayerLoggedIn(net.neoforged.neoforge.event.entity.player.PlayerEvent$PlayerLoggedInEvent);
+  public static void onPlayerChangedDimension(net.neoforged.neoforge.event.entity.player.PlayerEvent$PlayerChangedDimensionEvent);
+  public static void onWorldTick(net.neoforged.neoforge.event.tick.LevelTickEvent$Post);
+  private static net.neoforged.neoforge.attachment.AttachmentType lambda$static$1();
+  private static net.guzhenren.network.GuzhenrenModVariables$PlayerVariables lambda$static$0();
+  static {};
+}

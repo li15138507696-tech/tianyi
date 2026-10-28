@@ -1,0 +1,25 @@
+﻿# 构建产物与本地缓存，不进版本库
+build/
+_pack/javac_out/
+_pack/_testout/
+_pack/probes/*-out/
+_pack/probes/finite-persistence-out/
+_pack/probes/site-service-out/
+_pack/encounter_persistence_probe_out/
+.staging/
+_backup/
+_stage/
+_pack/_pack.log
+
+# 本体与前置的大 jar：用 ensure_upstream.py 的 SHA256 复现，不提交文件（GitHub 单文件上限 100 MB）
+_pack/libs/*.jar
+_pack/_decomp*/
+_pack/reviews/**/compiled/
+*.log
+
+# 编辑器/系统
+.idea/
+.vscode/
+*.iml
+Thumbs.db
+desktop.ini

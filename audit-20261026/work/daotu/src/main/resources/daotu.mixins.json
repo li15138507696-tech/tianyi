@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.guzhenren.daotu.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "UikongqiaoquedingProcedureMixin",
+    "JingJieBaoCunProcedureMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 0
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "artifact": "D:\\daima\\mcmod\\天意\\build\\libs\\tianyi-3.7.0.jar",
+  "sha256": "40883824aa46685d7fba55588d81c79f2e152842da2f6e396a1f2b828a2d0ff6",
+  "artifact_unchanged": true,
+  "compile_exit": 0,
+  "comparison": {
+    "classes_in_jar": 131,
+    "fresh_classes": 131,
+    "changed": [],
+    "only_jar": [],
+    "only_source": []
+  },
+  "jar_classpath_compile_exit": 2,
+  "repro_exit": 0,
+  "state_roundtrip_exit": 0
+}

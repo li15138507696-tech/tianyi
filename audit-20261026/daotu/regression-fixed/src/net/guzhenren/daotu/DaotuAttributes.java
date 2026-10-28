@@ -1,0 +1,1 @@
+package net.guzhenren.daotu;public class DaotuAttributes{public static void sync(net.minecraft.world.entity.player.Player p){}}

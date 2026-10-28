@@ -1,1 +1,0 @@
-package net.minecraft.world.phys; public class Vec3 {public double horizontalDistanceSqr(){return 0;}}

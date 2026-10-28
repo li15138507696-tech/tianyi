@@ -1,1 +1,0 @@
-package net.minecraft.world.entity.boss.enderdragon; public class EnderDragon extends net.minecraft.world.entity.LivingEntity {}

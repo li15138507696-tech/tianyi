@@ -1,2 +1,0 @@
-package net.minecraft.nbt;
-public class ListTag extends Tag { final java.util.List<Tag> values=new java.util.ArrayList<>(); public void add(Tag t){values.add(t);} public int size(){return values.size();} public void remove(int i){values.remove(i);} public String getString(int i){return ((StringTag)values.get(i)).value;} public ListTag copy(){ListTag out=new ListTag(); for(Tag t:values)out.add(t instanceof CompoundTag c?c.copy():t);return out;} }

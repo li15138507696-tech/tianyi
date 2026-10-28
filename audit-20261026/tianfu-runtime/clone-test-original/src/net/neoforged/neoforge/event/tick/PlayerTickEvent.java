@@ -1,2 +1,0 @@
-package net.neoforged.neoforge.event.tick;
-public class PlayerTickEvent {public record Post(net.minecraft.world.entity.player.Player entity){public net.minecraft.world.entity.player.Player getEntity(){return entity;}}}

@@ -1,1 +1,0 @@
-package net.minecraft.util; public class RandomSource extends java.util.Random {}

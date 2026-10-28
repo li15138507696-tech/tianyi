@@ -1,1 +1,0 @@
-package net.minecraft.world.entity.monster; public class Monster extends net.minecraft.world.entity.LivingEntity {}

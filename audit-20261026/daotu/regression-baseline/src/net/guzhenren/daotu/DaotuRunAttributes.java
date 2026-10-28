@@ -1,1 +1,0 @@
-package net.guzhenren.daotu;public class DaotuRunAttributes{public static void grant(net.minecraft.world.entity.player.Player p,String k,double d,boolean b){DaotuRun.setAttr(p,k,DaotuRun.attr(p,k)+d);}}

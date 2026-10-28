@@ -1,2 +1,0 @@
-package net.minecraft.server;
-public class MinecraftServer {public boolean isSameThread(){return true;}public final Board board=new Board();public Board getScoreboard(){return board;}public static class Board {public int score;public Object getObjective(String s){return new Object();}public Score getOrCreatePlayerScore(Object p,Object o){return new Score(score);} }public record Score(int value){public int get(){return value;}}}

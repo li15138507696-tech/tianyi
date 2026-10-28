@@ -1,1 +1,0 @@
-package net.minecraft.world.scores; public class ScoreAccess{private int value;public void set(int v){value=v;}public int value(){return value;}}

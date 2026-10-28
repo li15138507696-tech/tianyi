@@ -1,2 +1,0 @@
-package net.minecraft.world.level;
-public class Level {public boolean isClientSide(){return false;}public long getGameTime(){return 20;}public Biome getBiome(net.minecraft.core.BlockPos p){return new Biome();} public Key dimension(){return new Key();} public static class Biome{public java.util.Optional<Key> unwrapKey(){return java.util.Optional.of(new Key());}}public static class Key{public String location(){return "minecraft:plains";}}}

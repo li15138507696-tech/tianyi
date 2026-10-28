@@ -1,1 +1,0 @@
-package net.minecraft.world.entity; public class LivingEntity extends Entity {public float getMaxHealth(){return 20;}public net.minecraft.network.chat.Component getName(){return net.minecraft.network.chat.Component.literal("test");}}

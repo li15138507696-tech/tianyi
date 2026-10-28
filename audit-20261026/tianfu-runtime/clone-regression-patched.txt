@@ -1,8 +1,0 @@
-PASS counter initially active
-PASS death clears old counter memory
-PASS ordinary clone retains confirmed talents
-PASS ordinary clone retains future undying cooldown
-PASS respawn counter not permanently active
-PASS end return clears stale counter memory
-PASS end return retains undying cooldown
-PASS new life does not inherit old cooldown

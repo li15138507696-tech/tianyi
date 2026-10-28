@@ -1,2 +1,0 @@
-package net.guzhenren.tianfu.v2;
-public class TianfuV2Store {public static TianfuSelection.Snapshot read(net.minecraft.server.level.ServerPlayer p){return new TianfuSelection.Snapshot(p.confirmed,p.ids,null);}}

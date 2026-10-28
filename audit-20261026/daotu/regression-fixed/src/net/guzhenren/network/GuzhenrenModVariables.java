@@ -1,1 +1,0 @@
-package net.guzhenren.network;public class GuzhenrenModVariables{public static final Object PLAYER_VARIABLES=new Object();public static class PlayerVariables{public double zhuanshu=1;public void markSyncDirty(){}}}

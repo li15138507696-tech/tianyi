@@ -1,1 +1,0 @@
-package net.minecraft.world.entity; public class Entity {public net.minecraft.world.level.Level level(){return new net.minecraft.world.level.Level();}}

@@ -1,1 +1,0 @@
-package net.minecraft.commands; public class CommandSourceStack {public net.minecraft.server.level.ServerPlayer getPlayer(){return null;}public void sendFailure(net.minecraft.network.chat.Component c){}public void sendSuccess(java.util.function.Supplier<net.minecraft.network.chat.Component> s,boolean b){}}

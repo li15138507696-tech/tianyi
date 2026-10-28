@@ -1,1 +1,0 @@
-package net.neoforged.neoforge.network; public class PacketDistributor {public static void sendToPlayer(net.minecraft.server.level.ServerPlayer player,net.minecraft.network.protocol.common.custom.CustomPacketPayload payload,net.minecraft.network.protocol.common.custom.CustomPacketPayload... rest){}}

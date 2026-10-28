@@ -1,1 +1,0 @@
-package net.minecraft.world.entity.boss.wither; public class WitherBoss extends net.minecraft.world.entity.LivingEntity {}

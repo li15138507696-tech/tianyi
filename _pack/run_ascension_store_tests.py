@@ -17,6 +17,7 @@ JAVA = os.environ.get("TIANYI_JAVA", os.path.join(JDK21, "java.exe" if os.name =
 SUITES = (
     "net.guzhenren.tianyi.world.AscensionStoreNbtTest",
     "net.guzhenren.tianyi.world.GuEscrowServiceTest",
+    "net.guzhenren.tianyi.world.PlayerInventoryGuEscrowSourceTest",
 )
 
 

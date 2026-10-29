@@ -39,5 +39,6 @@ public interface GuEscrowSource {
 
     SourceCheck remove(ServerPlayer player, String sourceRef, String expectedFingerprint);
 
-    SourceCheck restore(ServerPlayer player, String sourceRef, CompoundTag stackTag);
+    SourceCheck restore(ServerPlayer player, String sourceRef, String expectedFingerprint,
+                        CompoundTag stackTag);
 }

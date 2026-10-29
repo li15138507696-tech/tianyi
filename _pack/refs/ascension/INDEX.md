@@ -39,9 +39,10 @@
 - `src/main/java/net/guzhenren/tianyi/world/WillState.java` 使用 Overworld `SavedData`，schema 当前为 1。已保存的 `apertures` 是 `Map<UUID, Immortal.Aperture>`：每名玩家只有一条记录，尚无空窍 ID、多空窍归属、升仙会话、碎窍提交位或蛊虫托管记录。
 - `src/main/java/net/guzhenren/tianyi/world/AscensionStore.java` 使用独立的 Overworld `SavedData` schema 4 保存升仙会话、蛊托管记录、完整物品栈 NBT、隔离证据、有限师法自然知识账本和可恢复的气机状态。schema 1/2/3 可迁移；无法证明托管关系的活动记录原样隔离；未知未来 schema 只读保留。会话与蛊记录可在同一账本调用中配对 CAS，但这不等于玩家附件、背包和磁盘之间的跨文件原子提交。
 - `AscensionProgressionReader` 只在本体玩家附件已经存在时读取六个数值字段并构造不可变快照，不创建附件、不写回字段。该读取器不证明六转境界、真元单位、寿元行为或 UI/成长流程兼容；`AscensionService.ORDINARY_PROFILE` 仍关闭，阻止原因会分别列出上游 rank 适配、仙窍空间、唯一蛊托管和实物未核验。
-- `AscensionService.recover` 已由登录与重生事件调用，但当前没有稳定来源适配器，故恢复证据固定为 `SOURCE_UNAVAILABLE`，不推进或修改会话、蛊记录和物品。纯 reducer 与配对 CAS 只在未来取得服务端来源证据后才可应用安全迁移；现在不扫描未加载容器或世界。
+- `AscensionService.recover` 已由登录与重生事件调用，但尚未接入来源核验，故恢复证据仍固定为 `SOURCE_UNAVAILABLE`，不推进或修改会话、蛊记录和物品。新增的 `PlayerInventoryGuEscrowSource` 仅可按 owner UUID + 41 格库存索引检查、移除与恢复唯一匹配栈；尚未接入 `GuEscrowService`，也不证明上游缓存或其它容器没有可用副本。
 - `InsightCatalog` 目前只记录章节支持的“研究力道”主题 ID，不生成蛊方/配方文本；预算和三气相对容差是显式游戏映射。`AscensionService.seekInsight` 校验主人、会话 revision 和序号，并先 CAS 保存 grant 再返回；当前没有客户端/网络入口，普通 profile 仍关闭。
 - `QiRegulator` 将外部天地气储量、已纳三气、人气储备、失衡刻数及服务端刻分别保存；每步吸收量受 profile 调参限制，重复刻拒绝，人气只能从储备移入已纳人气。纯逻辑控制已校验主人、启用 profile、阶段和 revision，并允许后续按 revision 顺序提交求知与调气；环境采样、世界刻服务接线、持久化 CAS handler 和玩家 UI 尚未实现，因此不是可操作的纳气流程。
+- `PlayerInventoryGuEscrowSource` 用稳定库存索引和完整物品 NBT 指纹检查单件、库存内唯一性，并在原槽位执行移除/恢复；恢复使用严格完整 Codec 解码，拒绝 partial 组件结果。`BenMingGu3Procedure` 仍直接读取本体缓存栈，`clonePlayer` 也复制该缓存。由于这两条路径尚未封闭，适配器暂不接入托管 admission，`UNIQUE_GU_ESCROW` 继续关闭。
 - `src/main/java/net/guzhenren/tianyi/net/JournalNet.java` 展示当前 NeoForge payload 注册与服务端动作复核模式；`src/main/java/net/guzhenren/tianyi/TianyiEvents.java` 已在登录/重生时调用升仙恢复服务。尚无升仙 payload、客户端入口或逐刻推进接线。
 - `src/main/java/net/guzhenren/tianyi/will/Immortal.java` 的 `Ascension` 以概率、观察累积和可重复 attempt 计算结果；项目内没有调用者。它不能作为真实升仙链路，也不应迁移为已成仙状态。
 - 资源和源码搜索未发现已注册的自有仙窍维度或传送实现。运行时 profile/传送注册尚未冻结；因此仙窍入口、空间缩尺与多空窍隔离是实现阻塞，不可先承诺已有支持。

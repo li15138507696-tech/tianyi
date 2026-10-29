@@ -110,6 +110,8 @@
 - [ ] 建立退出时过程载体及伤害归属；区块卸载挂起；停服清理内存缓存。技术挂起不清除已碎状态或已领悟记录。
 - [ ] 重跑测试；编译 `& $PythonExe _pack/javac_check.py`，期望退出码 0。独立服务器和真实死亡流程留给 Task 8 实测，不能用假接口测试替代。
 
+**进度记录（2026-10-29）：** 新增 `PlayerInventoryGuEscrowSource`，按主人 UUID 与固定玩家库存槽索引检查单件、库存内重复、指纹移除和原槽恢复；真实 NBT 回归覆盖重复副本、改动栈、错误指纹、恢复及损坏组件的 partial 解码拒绝。全源码 111 个 Java 文件编译成功，三项 Minecraft 测试通过。适配器尚未接入 `GuEscrowService`：本体 `BenMingGu3Procedure` 读取缓存栈，`clonePlayer` 复制该缓存，且玩家库存之外的路径未审完，故唯一托管能力仍关闭，Task 3 未完成。
+
 ### Task 4：纳气与师法自然并发运行
 
 **Files:** 完善 `AscensionMachine.java`；新建 `InsightCatalog.java`、`InsightTest.java`；接入 `AscensionService.java`。

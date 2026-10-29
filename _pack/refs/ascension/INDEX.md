@@ -51,7 +51,7 @@
 
 复核 `_pack/libs/guzhenren-0.1-neoforge-1.21.1.jar` 的 `UilianhuaguchongButtonMessage` 后，按钮动作 4 会调用 `BenMingGu1Procedure.execute`。绑定过程从当前玩家菜单 `MenuAccessor.getSlots().get(0)` 读取栈；菜单类 `UilianhuaguchongMenu` 在构造时可把 0 号槽绑定到手持物品的 ItemHandler、实体 ItemHandler、方块容器，或菜单自身新建的临时 `ItemStackHandler`。该 0 号键只标识当前菜单映射中的槽对象，不包含可跨断线恢复的唯一所有者和持久容器定位。绑定过程复制栈进 `PlayerVariables.BenMingGu`，没有从来源槽移除原物品。
 
-结论：不能把该菜单槽或 `PlayerVariables.BenMingGu` 当作本命蛊托管的唯一真实来源；现有本体路径不能证明物品唯一性和重连后的可定位性。`UNIQUE_GU_ESCROW` 保持关闭，不实现 `PlayerGuEscrowSource`，也不允许升仙服务改变物品。以后若本体提供有明确所有者且跨重连稳定的持久来源，再重新审计。
+结论：不能把该菜单槽或 `PlayerVariables.BenMingGu` 当作本命蛊托管的唯一真实来源；现有本体路径不能证明物品唯一性和重连后的可定位性。2026-10-29 已新增 `PlayerInventoryGuEscrowSource`，能验证固定玩家库存槽，但只证明 41 格玩家库存内唯一。ASM 交叉引用还显示 `BenMingGu3Procedure` 读取该缓存，`BenMingGu1Procedure`、`BenMing11Procedure`、`BenMingGuLianZhiProcedure`、`SxProcedure` 与 `Uilianhuaguchong*Procedure` 会读写缓存/标记，且 `clonePlayer` 会复制缓存。缓存清理和这些写入口尚未受托管事务约束，因此适配器不接入生产服务，`UNIQUE_GU_ESCROW` 保持关闭，也不允许升仙服务改变物品。未来需要先给这些入口建立可验证的阻断/恢复机制，并复查库存之外的容器路径。
 
 ### 已复核的本体写入点
 

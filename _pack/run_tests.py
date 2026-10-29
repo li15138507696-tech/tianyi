@@ -43,6 +43,12 @@ PURE_SRC = sorted(
 )
 SRC_CORE = [
     os.path.join(ROOT, 'src', 'main', 'java', 'net', 'guzhenren', 'tianyi', 'ledger', 'TianyiLedgerCore.java'),
+    os.path.join(ROOT, 'src', 'main', 'java', 'net', 'guzhenren', 'tianyi', 'ascension', 'AscensionModel.java'),
+    os.path.join(ROOT, 'src', 'main', 'java', 'net', 'guzhenren', 'tianyi', 'ascension', 'AscensionRules.java'),
+    os.path.join(ROOT, 'src', 'main', 'java', 'net', 'guzhenren', 'tianyi', 'ascension', 'AscensionMachine.java'),
+    os.path.join(ROOT, 'src', 'main', 'java', 'net', 'guzhenren', 'tianyi', 'ascension', 'ProgressionSnapshot.java'),
+    os.path.join(ROOT, 'src', 'main', 'java', 'net', 'guzhenren', 'tianyi', 'ascension', 'GuEscrow.java'),
+    os.path.join(ROOT, 'src', 'main', 'java', 'net', 'guzhenren', 'tianyi', 'ascension', 'AscensionRecovery.java'),
 ] + WILL_SRC + PURE_SRC
 #: 与 javac_check.py 相同的 JDK（Java 21）
 JDK21 = r'C:\Users\ADMIN\.jdks\temurin-21'
@@ -53,6 +59,11 @@ RUN_KW = dict(capture_output=True, text=True, encoding='utf-8', errors='replace'
 
 SUITES = [
     'net.guzhenren.tianyi.ledger.TianyiLedgerCoreTest',
+    'net.guzhenren.tianyi.ascension.ProgressionSnapshotTest',
+    'net.guzhenren.tianyi.ascension.GuEscrowTest',
+    'net.guzhenren.tianyi.ascension.AscensionMachineTest',
+    'net.guzhenren.tianyi.ascension.AscensionRulesTest',
+    'net.guzhenren.tianyi.ascension.AscensionRecoveryTest',
     'net.guzhenren.tianyi.will.WillCoreTest',
     'net.guzhenren.tianyi.fact.IntelCoreTest',
     'net.guzhenren.tianyi.action.ActionLedgerTest',

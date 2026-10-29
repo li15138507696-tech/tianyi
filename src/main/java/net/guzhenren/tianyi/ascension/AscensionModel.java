@@ -20,7 +20,8 @@ public final class AscensionModel {
         ABSORBING,
         FORMING,
         IMMORTAL,
-        FAILED
+        FAILED,
+        CANCELLED
     }
 
     public enum Outcome {
@@ -29,11 +30,13 @@ public final class AscensionModel {
         FAILED_ALIVE,
         DEAD,
         SUSPENDED,
-        QUARANTINED
+        QUARANTINED,
+        CANCELLED
     }
 
     public enum Action {
         START_BREAKING,
+        CANCEL_PREPARATION,
         COMMIT_BROKEN,
         BEGIN_ABSORPTION,
         UPDATE_QI,
@@ -58,6 +61,9 @@ public final class AscensionModel {
     public enum Blocker {
         UNSUPPORTED_PROFILE,
         MISSING_CAPABILITY,
+        MISSING_UPSTREAM_RANK_ADAPTER,
+        MISSING_APERTURE_SPACE,
+        MISSING_GU_ESCROW,
         UNKNOWN_APERTURE,
         APERTURE_ALREADY_BROKEN,
         NOT_TURN_FIVE_PEAK,
@@ -166,13 +172,17 @@ public final class AscensionModel {
                     && outcome != Outcome.DEAD && outcome != Outcome.QUARANTINED) {
                 throw new IllegalArgumentException("failed phase requires a terminal failure outcome");
             }
+            if ((phase == Phase.CANCELLED) != (outcome == Outcome.CANCELLED)
+                    || (phase == Phase.CANCELLED && brokenCommitted)) {
+                throw new IllegalArgumentException("cancelled session must be terminal and unbroken");
+            }
             if (phase != Phase.FAILED && (outcome == Outcome.FAILED_ALIVE || outcome == Outcome.DEAD)) {
                 throw new IllegalArgumentException("failure outcome requires failed phase");
             }
         }
 
         public boolean terminal() {
-            return phase == Phase.IMMORTAL || phase == Phase.FAILED;
+            return phase == Phase.IMMORTAL || phase == Phase.FAILED || phase == Phase.CANCELLED;
         }
     }
 

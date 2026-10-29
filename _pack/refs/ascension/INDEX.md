@@ -22,7 +22,7 @@
 | `GuzhenrenModVariables-signatures.javap.txt`、`GuzhenrenModVariables.javap.txt` | 玩家变量注册、登录/重生/跨维度/刻同步、Clone | 本体有同步和克隆钩子；应避免在天意模组中复制第二套同步逻辑 | 不证明六转可以被现有培养 UI 和全套本体逻辑正确处理 |
 | `UIxiuliananjianProcedure.javap.txt` | 培养按钮的服务端过程 | 当 `zhuanshu >= 5` 且 `jieduan >= 4` 时，普通培养按钮提前返回；`zhuanshu` 是浮点值 | 不能称全局角色等级上限已被完整查明；其它突破和刻更新入口仍须核对 |
 | `JingJieBaoCunProcedure.javap.txt` | 本体死亡事件处理 | 死亡过程会重置转数、阶段、空窍、培养进度、体质及多个修炼相关值 | 不代表所有重生或特殊复活路线都采用相同规则 |
-| `BenMingGu1Procedure.javap.txt` | 本命蛊绑定/处理过程 | 过程读取本体菜单的 0 号槽和转数对应蛊虫标签；绑定后把槽中 `ItemStack` 连续复制两次保存进 `PlayerVariables.BenMingGu`，再置 `BenMingGu_1` 并标记同步 | 缓存副本不能作为唯一物品来源；单凭此过程不能证明其它空窍或其它绑定过程的物品托管语义 |
+| `BenMingGu1Procedure.javap.txt` | 本命蛊绑定/处理过程 | 过程读取当前 `Player.containerMenu` 的 `MenuAccessor.getSlots().get(0)` 和转数对应蛊虫标签；绑定后把槽中 `ItemStack` 连续复制两次保存进 `PlayerVariables.BenMingGu`，再置 `BenMingGu_1` 并标记同步 | 菜单槽引用不是稳定的玩家物品位置；缓存副本不能作为唯一物品来源 |
 | `BenMingGu3Procedure.javap.txt` | 本命蛊相关耐久/恢复过程 | 部分行为操作玩家变量中缓存的 `BenMingGu` 栈 | 不能用缓存副本替代真实库存、唯一蛊虫托管或消耗 |
 | `TupochenggonglvProcedure.javap.txt` | 突破概率文本/数值过程 | 本体有概率相关展示过程 | 不是升仙状态变更流程，也不证明升仙应以一次概率掷骰结算 |
 | `KongqiaoProcedure.javap.txt`、`RenqiProcedure.javap.txt`、`ZhenyuanliangzengzhangProcedure.javap.txt` | 空窍、人气、真元相关过程 | 作为进一步追踪这些变量的入口 | 字段可被直接套用为原著单位或仙元实现 |
@@ -37,9 +37,18 @@
 ## 工程侧接口
 
 - `src/main/java/net/guzhenren/tianyi/world/WillState.java` 使用 Overworld `SavedData`，schema 当前为 1。已保存的 `apertures` 是 `Map<UUID, Immortal.Aperture>`：每名玩家只有一条记录，尚无空窍 ID、多空窍归属、升仙会话、碎窍提交位或蛊虫托管记录。
-- `src/main/java/net/guzhenren/tianyi/net/JournalNet.java` 展示当前 NeoForge payload 注册与服务端动作复核模式；`src/main/java/net/guzhenren/tianyi/TianyiEvents.java` 展示事件入口。当前未找到升仙 payload/service/tick 接线。
+- `src/main/java/net/guzhenren/tianyi/world/AscensionStore.java` 使用独立的 Overworld `SavedData` schema 2 保存升仙会话、蛊托管记录、完整物品栈 NBT 和隔离证据。schema 1 的终态历史保留；无法证明托管关系的活动记录原样隔离；未知 schema 只读保留。会话与蛊记录可在同一账本调用中配对 CAS，但这不等于玩家附件、背包和磁盘之间的跨文件原子提交。
+- `AscensionProgressionReader` 只在本体玩家附件已经存在时读取六个数值字段并构造不可变快照，不创建附件、不写回字段。该读取器不证明六转境界、真元单位、寿元行为或 UI/成长流程兼容；`AscensionService.ORDINARY_PROFILE` 仍关闭，阻止原因会分别列出上游 rank 适配、仙窍空间、唯一蛊托管和实物未核验。
+- `AscensionService.recover` 已由登录与重生事件调用，但当前没有稳定来源适配器，故恢复证据固定为 `SOURCE_UNAVAILABLE`，不推进或修改会话、蛊记录和物品。纯 reducer 与配对 CAS 只在未来取得服务端来源证据后才可应用安全迁移；现在不扫描未加载容器或世界。
+- `src/main/java/net/guzhenren/tianyi/net/JournalNet.java` 展示当前 NeoForge payload 注册与服务端动作复核模式；`src/main/java/net/guzhenren/tianyi/TianyiEvents.java` 已在登录/重生时调用升仙恢复服务。尚无升仙 payload、客户端入口或逐刻推进接线。
 - `src/main/java/net/guzhenren/tianyi/will/Immortal.java` 的 `Ascension` 以概率、观察累积和可重复 attempt 计算结果；项目内没有调用者。它不能作为真实升仙链路，也不应迁移为已成仙状态。
 - 资源和源码搜索未发现已注册的自有仙窍维度或传送实现。运行时 profile/传送注册尚未冻结；因此仙窍入口、空间缩尺与多空窍隔离是实现阻塞，不可先承诺已有支持。
+
+### 本命蛊来源槽审计（2026-10-29）
+
+复核 `_pack/libs/guzhenren-0.1-neoforge-1.21.1.jar` 的 `UilianhuaguchongButtonMessage` 后，按钮动作 4 会调用 `BenMingGu1Procedure.execute`。绑定过程从当前玩家菜单 `MenuAccessor.getSlots().get(0)` 读取栈；菜单类 `UilianhuaguchongMenu` 在构造时可把 0 号槽绑定到手持物品的 ItemHandler、实体 ItemHandler、方块容器，或菜单自身新建的临时 `ItemStackHandler`。该 0 号键只标识当前菜单映射中的槽对象，不包含可跨断线恢复的唯一所有者和持久容器定位。绑定过程复制栈进 `PlayerVariables.BenMingGu`，没有从来源槽移除原物品。
+
+结论：不能把该菜单槽或 `PlayerVariables.BenMingGu` 当作本命蛊托管的唯一真实来源；现有本体路径不能证明物品唯一性和重连后的可定位性。`UNIQUE_GU_ESCROW` 保持关闭，不实现 `PlayerGuEscrowSource`，也不允许升仙服务改变物品。以后若本体提供有明确所有者且跨重连稳定的持久来源，再重新审计。
 
 ### 已复核的本体写入点
 
@@ -66,4 +75,4 @@
 
 ## 当前结论
 
-普通路线的主步骤有章节依据；量化规则、特殊体质、仙窍空间、六转本体兼容与真实蛊虫托管尚不齐。只能说“已冻结部分普通路线规则并发现本体冲突”，不能称已实现或完全还原原著。
+普通路线的主步骤有章节依据；schema 2 世界账本、不可变修为快照、托管状态模型和保守恢复 reducer 已实现并接入登录/重生事件。由于事件侧没有可靠的蛊来源证据，当前恢复只等待，不会执行物品或会话迁移；本体六转适配、真实仙窍空间和唯一蛊源能力仍关闭。只能说“已建立封闭的升仙会话与托管基础设施”，不能称升仙流程已开放、已实机验证或完全还原原著。

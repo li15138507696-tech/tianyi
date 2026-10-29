@@ -23,6 +23,11 @@ public final class AscensionMachine {
     }
 
     public static Session start(UUID sessionId, UUID ownerId, StartFacts facts, long serverTick) {
+        return start(sessionId, ownerId, facts, "", serverTick);
+    }
+
+    public static Session start(UUID sessionId, UUID ownerId, StartFacts facts,
+                                String guEscrowId, long serverTick) {
         if (serverTick < 0) {
             throw new IllegalArgumentException("server tick must be non-negative");
         }
@@ -31,7 +36,8 @@ public final class AscensionMachine {
             throw new IllegalStateException("ascension start blocked: " + decision.blockers());
         }
         return new Session(sessionId, ownerId, facts.apertureId(), facts.profile().id(),
-                Phase.PREPARING, Outcome.RUNNING, serverTick, false, QiState.empty(), "", "", 0L);
+                Phase.PREPARING, Outcome.RUNNING, serverTick, false, QiState.empty(),
+                guEscrowId, "", 0L);
     }
 
     public static Transition advance(Session current, Command command) {
@@ -47,7 +53,7 @@ public final class AscensionMachine {
         }
 
         if (command.action() == Action.QUARANTINE) {
-            if (current.outcome() == Outcome.IMMORTAL || current.outcome() == Outcome.DEAD
+            if (current.terminal() || current.outcome() == Outcome.IMMORTAL || current.outcome() == Outcome.DEAD
                     || current.outcome() == Outcome.FAILED_ALIVE
                     || current.outcome() == Outcome.QUARANTINED) {
                 return reject(current, Rejection.INVALID_OUTCOME);
@@ -85,6 +91,10 @@ public final class AscensionMachine {
         }
 
         return switch (command.action()) {
+            case CANCEL_PREPARATION -> current.phase() == Phase.PREPARING && !current.brokenCommitted()
+                    ? accept(copy(current, Phase.CANCELLED, Outcome.CANCELLED, command.serverTick(),
+                    false, current.qi(), current.guEscrowId(), current.apertureResultId()))
+                    : reject(current, Rejection.INVALID_PHASE);
             case START_BREAKING -> current.phase() == Phase.PREPARING
                     ? accept(copy(current, Phase.BREAKING, Outcome.RUNNING, command.serverTick(),
                     false, current.qi(), current.guEscrowId(), current.apertureResultId()))

@@ -29,11 +29,14 @@ public final class AscensionRules {
             blockers.add(Blocker.UNSUPPORTED_PROFILE);
         }
 
-        boolean missingCapability = !profile.has(Capability.UPSTREAM_RANK_ADAPTER)
-                || !profile.has(Capability.IMMORTAL_APERTURE_SPACE)
-                || !profile.has(Capability.UNIQUE_GU_ESCROW);
-        if (missingCapability) {
-            blockers.add(Blocker.MISSING_CAPABILITY);
+        if (!profile.has(Capability.UPSTREAM_RANK_ADAPTER)) {
+            blockers.add(Blocker.MISSING_UPSTREAM_RANK_ADAPTER);
+        }
+        if (!profile.has(Capability.IMMORTAL_APERTURE_SPACE)) {
+            blockers.add(Blocker.MISSING_APERTURE_SPACE);
+        }
+        if (!profile.has(Capability.UNIQUE_GU_ESCROW)) {
+            blockers.add(Blocker.MISSING_GU_ESCROW);
         }
 
         if (facts.apertureId().isBlank() || !facts.apertureVerified()) {

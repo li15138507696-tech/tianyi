@@ -55,6 +55,7 @@ public final class TianyiEvents {
         if (event.getEntity() instanceof ServerPlayer player) {
             net.guzhenren.tianyi.world.EncounterService.respawn(player);
             net.guzhenren.tianyi.net.JournalNet.sync(player);
+            net.guzhenren.tianyi.world.AscensionService.recover(player);
         }
     }
 
@@ -95,6 +96,8 @@ public final class TianyiEvents {
             net.guzhenren.tianyi.world.EncounterService.sync(player);
             // 宿命蛊：登录只核对自己背包里的实物（不扫世界、不发物品）
             net.guzhenren.tianyi.world.DestinyCustodyService.onLogin(player);
+            // 升仙恢复只接受服务端账本；当前无稳定蛊源时保留原记录，不改物品。
+            net.guzhenren.tianyi.world.AscensionService.recover(player);
         }
     }
 

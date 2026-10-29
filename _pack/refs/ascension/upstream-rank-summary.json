@@ -1,0 +1,1511 @@
+{
+  "schema": 1,
+  "upstreamSha256": "b6d314d3810b8bc5fcfdbc4f588db8721f0efdfc14d27a0a06d88143a01fe2bc",
+  "asmLibrary": "org.ow2.asm:asm:9.10.1",
+  "fieldTuples": 9814,
+  "fields": {
+    "BenMingGu": {
+      "GETFIELD": {
+        "classes": 4,
+        "tuples": 4
+      },
+      "PUTFIELD": {
+        "classes": 6,
+        "tuples": 7
+      }
+    },
+    "BenMingGu_1": {
+      "GETFIELD": {
+        "classes": 5,
+        "tuples": 5
+      },
+      "PUTFIELD": {
+        "classes": 6,
+        "tuples": 7
+      }
+    },
+    "benminggu": {
+      "GETFIELD": {
+        "classes": 49,
+        "tuples": 49
+      },
+      "PUTFIELD": {
+        "classes": 41,
+        "tuples": 42
+      }
+    },
+    "jieduan": {
+      "GETFIELD": {
+        "classes": 1836,
+        "tuples": 1836
+      },
+      "PUTFIELD": {
+        "classes": 55,
+        "tuples": 56
+      }
+    },
+    "kongqiao": {
+      "GETFIELD": {
+        "classes": 28,
+        "tuples": 28
+      },
+      "PUTFIELD": {
+        "classes": 9,
+        "tuples": 10
+      }
+    },
+    "renqi": {
+      "GETFIELD": {
+        "classes": 6,
+        "tuples": 6
+      },
+      "PUTFIELD": {
+        "classes": 3,
+        "tuples": 4
+      }
+    },
+    "shouyuan": {
+      "GETFIELD": {
+        "classes": 67,
+        "tuples": 68
+      },
+      "PUTFIELD": {
+        "classes": 34,
+        "tuples": 36
+      }
+    },
+    "tizhi": {
+      "GETFIELD": {
+        "classes": 33,
+        "tuples": 33
+      },
+      "PUTFIELD": {
+        "classes": 6,
+        "tuples": 7
+      }
+    },
+    "zhenyuan": {
+      "GETFIELD": {
+        "classes": 1833,
+        "tuples": 1834
+      },
+      "PUTFIELD": {
+        "classes": 1849,
+        "tuples": 1850
+      }
+    },
+    "zhuanshu": {
+      "GETFIELD": {
+        "classes": 3568,
+        "tuples": 3618
+      },
+      "PUTFIELD": {
+        "classes": 155,
+        "tuples": 156
+      }
+    },
+    "zuida_zhenyuan": {
+      "GETFIELD": {
+        "classes": 89,
+        "tuples": 89
+      },
+      "PUTFIELD": {
+        "classes": 68,
+        "tuples": 69
+      }
+    }
+  },
+  "rankStageWriterClasses": 165,
+  "rankStageWriterMethods": 166,
+  "potentialCallerReferences": 328,
+  "referenceKinds": {
+    "INDY_HANDLE": 25,
+    "INVOKESPECIAL": 3,
+    "INVOKESTATIC": 202,
+    "INVOKEVIRTUAL": 98
+  },
+  "writerMethods": [
+    {
+      "class": "net.guzhenren.network.GuzhenrenModVariables",
+      "method": "clonePlayer(Lnet/neoforged/neoforge/event/entity/player/PlayerEvent$Clone;)V",
+      "fields": [
+        "jieduan",
+        "zhuanshu"
+      ],
+      "inJarReferences": 0
+    },
+    {
+      "class": "net.guzhenren.network.GuzhenrenModVariables$PlayerVariables",
+      "method": "<init>()V",
+      "fields": [
+        "jieduan",
+        "zhuanshu"
+      ],
+      "inJarReferences": 3
+    },
+    {
+      "class": "net.guzhenren.network.GuzhenrenModVariables$PlayerVariables",
+      "method": "deserializeNBT(Lnet/minecraft/core/HolderLookup$Provider;Lnet/minecraft/nbt/CompoundTag;)V",
+      "fields": [
+        "jieduan",
+        "zhuanshu"
+      ],
+      "inJarReferences": 3
+    },
+    {
+      "class": "net.guzhenren.procedures.AnduodiaoShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.AnqingShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "jieduan",
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.BaiGuCheLunShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.BaiXiangXianSheShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.BaiYinSheLiGuDangYouJiKongQiShiShiTiDeWeiZhiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "jieduan"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.BaoShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.BiaoShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.BingJiaoShaShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.BingLinShaShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.BingPoLongWenShaShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.BishuilingShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.BumiexuanwuShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.CangyuelingjunShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.ChiTieSheLiGuDangYouJiKongQiShiShiTiDeWeiZhiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "jieduan"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.ChuanyuqingbaoShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.CitengzhongziShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.DaochixuefuShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.DianLangShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.DianXiongShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.DilaoleiguantoulangShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.DutengzhongziShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.FengHuoYingShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.FengleidianlanghuangShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.FengyunHeShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.GangjiaguiShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.GongBingYiShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.GuXiuShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "jieduan",
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.HanYuanBingShaShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.HaoDianLangShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.HhongtaofuhailingShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.HongXiongShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.HuShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.HuaXieLuGuYouJiKongQiShiShiTiDeWeiZhiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;Lnet/minecraft/world/item/ItemStack;)V",
+      "fields": [
+        "jieduan",
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.HuangJinSheLiGuYouJiKongQiShiShiTiDeWeiZhiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "jieduan"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.HuashimingShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "jieduan",
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.HuiXiongShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.HuishangaoShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.Huli0ShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.Huli1ShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.Huli2ShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.Huli3ShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.Huli4ShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.Huli5ShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.Hunshou1ShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.Hunshou2ShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.Hunshou3ShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.Hunshou4ShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.HunshouShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.HuoyanxiongShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.JiFengLveYunDiaoShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.JiangJunYiShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.JinfenghuShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.JingJieBaoCunProcedure",
+      "method": "execute(Lnet/neoforged/bus/api/Event;Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "jieduan",
+        "zhuanshu"
+      ],
+      "inJarReferences": 2
+    },
+    {
+      "class": "net.guzhenren.procedures.JinhuomoyanxiongShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.JinrenwanghuShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.JiuChongJinLianZhenYuanDangXiaoGuoJieShuProcedure",
+      "method": "execute(Lnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "jieduan"
+      ],
+      "inJarReferences": 2
+    },
+    {
+      "class": "net.guzhenren.procedures.JiuChongJinLianZhenYuanDangYaoShuiXiaoGuoKaiShiYingYongShiProcedure",
+      "method": "execute(Lnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "jieduan"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.JiwujiuShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "jieduan",
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.KE1Procedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "jieduan"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.KE3Procedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "jieduan"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.KeWenSheShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.KongxiaohuaShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "jieduan",
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.LanFengSunShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.LeiDianLangShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.LeiGuanTouLangShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.LiZhanXueQiGuYouJiKongQiShiShiTiDeWeiZhiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;Lnet/minecraft/world/item/ItemStack;)V",
+      "fields": [
+        "jieduan"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.LianchenluShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.LiandingjieluShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.LiaoyuanhuoxiongShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.LiaoyuanhuoxiongdilaoShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.LieGangFengYingShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.LieyanxiongShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.LingboheShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.LingdongziShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "jieduan",
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.LiufeixiaoShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "jieduan",
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.LixuemofuShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.LuShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.LueshiyingShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.LuohuguYouJiKongQiShiShiTiDeWeiZhiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;Lnet/minecraft/world/item/ItemStack;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.MaominShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "jieduan",
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.Mumeishujing1ShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.Mumeishujing2ShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.Mumeishujing3ShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.Mumeishujing4ShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.Mumeishujing5ShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.QianlianguichenluShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.QianshuiyuanShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "jieduan",
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.QiebaoxuanyingShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.QiliuHeShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.QingTongSheLiGuDangYouJiKongQiShiShiTiDeWeiZhiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "jieduan"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.RenShouZangShengGuDangYouJiKongQiShiShiTiDeWeiZhiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "jieduan",
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.Renwunoc14ShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "jieduan",
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.Renwunpc10ShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "jieduan",
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.Renwunpc11BWanJiaYuGaiShiTiFaShengPengZhuangShiProcedure",
+      "method": "execute(Lnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "jieduan",
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.Renwunpc15ShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "jieduan",
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.Renwunpc16ShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "jieduan",
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.Renwunpc17ShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "jieduan",
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.Renwunpc20ShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "jieduan",
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.Renwunpc21bShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "jieduan",
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.Renwunpc22bossShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "jieduan",
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.Renwunpc23bShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "jieduan",
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.Renwunpc25ShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "jieduan",
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.Renwunpc26ShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "jieduan",
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.Renwunpc3ShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "jieduan",
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.Renwunpc4ShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "jieduan",
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.Renwunpc5ShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "jieduan",
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.Renwunpc6ShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "jieduan",
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.Renwunpc7ShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "jieduan",
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.Renwunpc8ShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "jieduan",
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.Renwunpc9ShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "jieduan",
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.RongwenluShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.ShanMaiDiYanQuanShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.ShangjianxuanguiShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.ShengJieDangYouJiKongQiShiShiTiDeWeiZhiProcedure",
+      "method": "execute(Lnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "jieduan",
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.ShentouguiduoxiaoShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.ShiKongZhenYuMangShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.ShiQiaoGuDangYouJiKongQiShiShiTiDeWeiZhiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "jieduan",
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.ShiYingSheShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.ShuilingyangShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.SuHuiSheShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.SuLingXiShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "jieduan",
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.TuLangShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.TuQuanShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.UIxiuliananjianProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "jieduan",
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.UikongqiaoguanbiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "jieduan",
+        "zhuanshu"
+      ],
+      "inJarReferences": 2
+    },
+    {
+      "class": "net.guzhenren.procedures.WangYiShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.WanleidianyurongdiShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 2
+    },
+    {
+      "class": "net.guzhenren.procedures.WanleidianyurongdiShiTiYouXiKeGengXinShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.WuYuYaZhiDangXiaoGuoJieShuProcedure",
+      "method": "execute(Lnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.WuYuYaZhiDangYaoShuiXiaoGuoKaiShiYingYongShiProcedure",
+      "method": "execute(Lnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.XieLuGu5YouJiKongQiShiShiTiDeWeiZhiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;Lnet/minecraft/world/item/ItemStack;)V",
+      "fields": [
+        "jieduan",
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.XingJunYiShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.XiongShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.XiongshabaihuShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.XiuWei2Procedure",
+      "method": "execute(Lcom/mojang/brigadier/context/CommandContext;)V",
+      "fields": [
+        "jieduan",
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.XuanShuangBingShaShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.XuanxiziShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "jieduan",
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.XuanxiziliuzhuanShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "jieduan",
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.XuanxizishengxianShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.XueHeMangShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.XuefuShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.Xueshaguanding5Procedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "jieduan",
+        "zhuanshu"
+      ],
+      "inJarReferences": 4
+    },
+    {
+      "class": "net.guzhenren.procedures.XueyingxiongheShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.XueyuxingfuShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.XunjiejinbaoShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.XuxuyifuShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.YanWuChangGuXiu2ShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "jieduan",
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.YanWuChangGuXiu3ShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "jieduan",
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.YanXuQuanShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.YaoGuangFengSunShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.YaoYaQuanShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.YaotengzhongziShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 3
+    },
+    {
+      "class": "net.guzhenren.procedures.YingkeguiShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.YinyangshengsiheShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.YinyangshengsihedilaoShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.YuanyuelinShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.YueAoYanQuanShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.ZangFuRunXue6XiaoGuoChiXuShiMeiKeFaShengProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.ZhenbaoxuanguiShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.ZhouShiLingRanShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.ZiJinSheLiGuYouJiKongQiShiShiTiDeWeiZhiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "jieduan"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.ZixiaojiebaoShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    },
+    {
+      "class": "net.guzhenren.procedures.ZiyaojiexingbaoShiTiChuShiShengChengShiProcedure",
+      "method": "execute(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+      "fields": [
+        "zhuanshu"
+      ],
+      "inJarReferences": 1
+    }
+  ],
+  "limitations": [
+    "Only direct field instructions for the exact PlayerVariables owner are inventoried.",
+    "References are potential routes, not proof of execution or an entity argument's runtime type.",
+    "Method owners and descriptors match exactly; inherited/interface dispatch is not resolved.",
+    "Reflection, external JAR callers and registration by strings are not resolved.",
+    "Repeated identical class/method/op/field tuples and reference edges are deduplicated.",
+    "No rank-six, essence, UI or inventory compatibility capability is enabled by this report."
+  ]
+}

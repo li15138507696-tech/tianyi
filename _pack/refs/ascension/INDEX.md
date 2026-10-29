@@ -1,6 +1,6 @@
 # 升仙实现审计证据索引
 
-审计日期：2026-10-26。本文记录当前工作树中与 10.20 本体升仙兼容有关的可复核证据。字节码来自本体 JAR，不能单凭字段名推断语义；无法从字节码和已核章节确定的部分均标为“阻塞”。
+审计日期：2026-10-29。本文记录当前工作树中与 10.20 本体升仙兼容有关的可复核证据。rank/stage 潜在调用图另见 `docs/升仙-六转兼容审计.md`。字节码来自本体 JAR，不能单凭字段名推断语义；无法从字节码和已核章节确定的部分均标为“阻塞”。
 
 ## 输入与运行环境
 
@@ -12,7 +12,7 @@
 | 工程缓存 | `_pack/libs/guzhenren-0.1-neoforge-1.21.1.jar`，哈希与上述内层 JAR 相同 |
 | 运行配置 | MC 1.21.1、NeoForge 21.1.263、NeoForm 20240808.144430，profile 位于 `D:\game\mcmod\1\.minecraft\versions\1.21.1-NeoForge_21.1.263\1.21.1-NeoForge_21.1.263.json` |
 | JDK 工具 | `C:\Users\ADMIN\.jdks\temurin-21\bin\javap.exe` |
-| 构建/测试入口 | `_pack/javac_check.py`、`_pack/run_tests.py`、`_pack/build.py`；当前 Python 3.13 可执行文件在 `C:\Users\ADMIN\AppData\Local\Programs\Python\Python313\python.exe`，但本环境拒绝启动；工程没有 Gradle Wrapper |
+| 构建/测试入口 | `_pack/javac_check.py`、`_pack/run_tests.py`、`_pack/build.py`；Python 3.13.15 可执行文件为 `C:\Users\ADMIN\AppData\Local\Programs\Python\Python313\python.exe`，普通受限命令启动返回 Win32 Access is denied，提升权限调用可运行；工程没有 Gradle Wrapper |
 
 ## 字节码证据
 
@@ -27,12 +27,12 @@
 | `TupochenggonglvProcedure.javap.txt` | 突破概率文本/数值过程 | 本体有概率相关展示过程 | 不是升仙状态变更流程，也不证明升仙应以一次概率掷骰结算 |
 | `KongqiaoProcedure.javap.txt`、`RenqiProcedure.javap.txt`、`ZhenyuanliangzengzhangProcedure.javap.txt` | 空窍、人气、真元相关过程 | 作为进一步追踪这些变量的入口 | 字段可被直接套用为原著单位或仙元实现 |
 | `progression-candidates.javap.txt` | 一组候选过程的合并反汇编，包含培养、开窍、空窍初始化、真元持续过程等类 | 可定位普通修炼、界面编码、人气/真元与境界持续过程中的字段读写 | 文件名含“candidate”，不代表覆盖本体所有调用点；仍须继续从整个 JAR 追写入引用 |
-| `PlayerVariableFieldScanner.java` + `upstream-field-uses.txt` | 对缓存内固定哈希的内层 JAR 逐个 class 做 ASM 字段指令扫描，只匹配玩家变量 owner 的 GETFIELD/PUTFIELD | 覆盖所有直接字节码字段引用；记录按“类/方法/操作/字段”元组去重 | 不识别反射、序列化键字符串或间接调用；同一方法内多次相同字段操作会合并；扫描命中不等于该方法运行时一定作用于玩家 |
+| `PlayerVariableFieldScanner.java` + `upstream-field-uses.txt`、`upstream-rank-callers.tsv`、`upstream-rank-summary.json` | 对缓存内固定哈希的内层 JAR 逐个 class 做 ASM 字段指令扫描，并反向记录 rank/stage writer 的 JAR 内方法调用和方法句柄 | 直接字段元组、写入方法数量与潜在调用边可由 `_pack/audit_ascension_upstream.py --check` 重现；生成字节码测试覆盖直接/传递/方法句柄边及旧报告稳定性 | 只匹配精确字段 owner；调用边不是运行时执行证明；不识别反射、外部 JAR、继承/接口动态派发或实体参数运行时类型 |
 | `zhuanshu-procedure-writers.javap.txt` | 对所有直接写入 `zhuanshu` 的 16 个非生成过程类执行 `javap -c -p` | 把高风险审计范围缩到本体培养/空窍 UI、`XiuWei2Procedure` 命令入口、`JingJieBaoCunProcedure` 死亡/克隆处理，以及 12 个实体交互/效果过程 | 其余 137 个类名带 `ShiTiChuShiShengChengShiProcedure`，但命名不等于已证明不会作用到玩家；逐一核对实体类型门槛、调用方和实际游戏路径仍未完成 |
 
-直接字段引用扫描结果（写入类数/不同类方法字段元组数；字段名按大小写区分）：`zhuanshu` 155/156、`jieduan` 55/56、`kongqiao` 9/10、`renqi` 3/4、`shouyuan` 34/36、`zhenyuan` 1849/1850、`zuida_zhenyuan` 68/69、`BenMingGu` 6/7、`BenMingGu_1` 6/7、`benminggu` 41/42、`tizhi` 6/7。它说明 rank 写入分散在大量过程类中；逐类的角色/实体边界分类仍未完成。
+直接字段引用扫描结果（写入类数/不同类方法字段元组数；字段名按大小写区分）：`zhuanshu` 155/156、`jieduan` 55/56、`kongqiao` 9/10、`renqi` 3/4、`shouyuan` 34/36、`zhenyuan` 1849/1850、`zuida_zhenyuan` 68/69、`BenMingGu` 6/7、`BenMingGu_1` 6/7、`benminggu` 41/42、`tizhi` 6/7。rank/stage 合计有 165 个写入类、166 个写入方法；扫描器另发现 328 条 JAR 内候选引用边，细节和适用边界见 `docs/升仙-六转兼容审计.md`。
 
-`zhuanshu` 的 155 个不同写入类初步分为：137 个实体生成初始化过程、16 个其它过程类、2 个变量宿主/注册类。这个是按类名和 owner 的初筛，不是已完成的运行时角色分类。上述 16 个过程类已另存字节码；其中培养 UI、空窍 UI 初始化、命令入口、死亡/克隆过程明确涉及玩家进度。剩余实体交互/效果过程仍需追调用方与目标类型。故当前不能安全地仅靠天意在升仙后写 `zhuanshu = 6`；本体所有相关消费者还没确认支持六转。
+`zhuanshu` 的 155 个不同写入类中，137 个类名以 `ShiTiChuShiShengChengShiProcedure` 结尾。新增调用图确认 rank/stage 路径还可由培养 UI、12 个玩家用蛊过程、按键消息、命令、死亡/克隆和效果回调触达；另有实体 `finalizeSpawn` 初始化边。这个分类仍不等于所有路径均已按运行时角色完成复核。故当前不能安全地仅靠天意在升仙后写 `zhuanshu = 6`；本体所有相关消费者还没确认支持六转。
 
 ## 工程侧接口
 

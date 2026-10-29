@@ -6,6 +6,7 @@ import net.guzhenren.tianyi.ascension.AscensionModel.Action;
 import net.guzhenren.tianyi.ascension.AscensionModel.Command;
 import net.guzhenren.tianyi.ascension.AscensionModel.Outcome;
 import net.guzhenren.tianyi.ascension.AscensionModel.Phase;
+import net.guzhenren.tianyi.ascension.AscensionModel.QiState;
 import net.guzhenren.tianyi.ascension.AscensionModel.Rejection;
 import net.guzhenren.tianyi.ascension.AscensionModel.InsightState;
 import net.guzhenren.tianyi.ascension.AscensionModel.Session;
@@ -13,7 +14,6 @@ import net.guzhenren.tianyi.ascension.AscensionModel.StartDecision;
 import net.guzhenren.tianyi.ascension.AscensionModel.StartFacts;
 import net.guzhenren.tianyi.ascension.AscensionModel.Transition;
 import net.guzhenren.tianyi.ascension.AscensionModel.Validation;
-import net.guzhenren.tianyi.ascension.AscensionModel.QiState;
 
 /**
  * 纯逻辑升仙阶段机。它只决定状态迁移，不生成蛊虫、实体、仙窍或客户端效果；
@@ -108,7 +108,6 @@ public final class AscensionMachine {
                     ? accept(copy(current, Phase.ABSORBING, Outcome.RUNNING, command.serverTick(),
                     true, current.qi(), current.guEscrowId(), current.apertureResultId()))
                     : reject(current, Rejection.INVALID_PHASE);
-            case UPDATE_QI -> updateQi(current, command);
             case PLACE_GU -> placeGu(current, command, validation);
             case COMPLETE_FORMATION -> completeFormation(current, command, validation);
             case FAIL_ALIVE -> accept(copy(current, Phase.FAILED, Outcome.FAILED_ALIVE,
@@ -119,18 +118,6 @@ public final class AscensionMachine {
                     current.guEscrowId(), ""));
             case SUSPEND, RESUME, QUARANTINE -> reject(current, Rejection.INVALID_OUTCOME);
         };
-    }
-
-    private static Transition updateQi(Session current, Command command) {
-        if (current.phase() != Phase.ABSORBING) {
-            return reject(current, Rejection.INVALID_PHASE);
-        }
-        if (command.qi() == null) {
-            return reject(current, Rejection.QI_NOT_READY);
-        }
-        return accept(copy(current, current.phase(), current.outcome(), current.phaseStartedAt(),
-                current.brokenCommitted(), command.qi(), current.guEscrowId(),
-                current.apertureResultId()));
     }
 
     private static Transition placeGu(Session current, Command command, Validation validation) {

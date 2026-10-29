@@ -31,9 +31,10 @@ import net.minecraft.world.level.saveddata.SavedData;
  */
 public final class AscensionStore extends SavedData {
     public static final String NAME = "tianyi_ascension";
-    public static final int SCHEMA = 3;
+    public static final int SCHEMA = 4;
     private static final int LEGACY_SCHEMA = 1;
     private static final int ESCROW_SCHEMA = 2;
+    private static final int INSIGHT_SCHEMA = 3;
 
     private final Map<UUID, Session> sessions = new LinkedHashMap<>();
     private final Map<UUID, EscrowEntry> escrows = new LinkedHashMap<>();
@@ -284,8 +285,10 @@ public final class AscensionStore extends SavedData {
             store.loadSchemaOne(tag);
         } else if (schema == ESCROW_SCHEMA) {
             store.loadSchemaTwo(tag, registries);
-        } else if (schema == SCHEMA) {
+        } else if (schema == INSIGHT_SCHEMA) {
             store.loadSchemaThree(tag, registries);
+        } else if (schema == SCHEMA) {
+            store.loadSchemaFour(tag, registries);
         } else {
             store.futureSchemaSnapshot = tag.copy();
         }
@@ -300,7 +303,7 @@ public final class AscensionStore extends SavedData {
         for (Tag raw : tag.getList("sessions", Tag.TAG_COMPOUND)) {
             CompoundTag record = (CompoundTag) raw;
             try {
-                Session session = decode(record, true);
+                Session session = decode(record, true, true);
                 if (session.terminal() && !sessions.containsKey(session.sessionId())) {
                     sessions.put(session.sessionId(), session);
                 } else {
@@ -316,16 +319,21 @@ public final class AscensionStore extends SavedData {
     }
 
     private void loadSchemaTwo(CompoundTag tag, HolderLookup.Provider registries) {
-        loadSchemaTwoOrThree(tag, registries, true);
+        loadSchema(tag, registries, true, true);
         setDirty();
     }
 
     private void loadSchemaThree(CompoundTag tag, HolderLookup.Provider registries) {
-        loadSchemaTwoOrThree(tag, registries, false);
+        loadSchema(tag, registries, false, true);
+        setDirty();
     }
 
-    private void loadSchemaTwoOrThree(CompoundTag tag, HolderLookup.Provider registries,
-                                     boolean allowMissingInsight) {
+    private void loadSchemaFour(CompoundTag tag, HolderLookup.Provider registries) {
+        loadSchema(tag, registries, false, false);
+    }
+
+    private void loadSchema(CompoundTag tag, HolderLookup.Provider registries,
+                            boolean allowMissingInsight, boolean allowMissingQiFlow) {
         if (!hasCompoundList(tag, "sessions") || !hasCompoundList(tag, "escrows")
                 || !hasCompoundList(tag, "quarantined")) {
             futureSchemaSnapshot = tag.copy();
@@ -342,7 +350,7 @@ public final class AscensionStore extends SavedData {
             try { sessionCounts.merge(UUID.fromString(record.getString("session")), 1, Integer::sum); }
             catch (RuntimeException ignored) { }
             try {
-                Session session = decode(record, allowMissingInsight);
+                Session session = decode(record, allowMissingInsight, allowMissingQiFlow);
                 if (!session.terminal()) activeCounts.merge(session.ownerId() + "\u0000" + session.apertureId(), 1, Integer::sum);
             } catch (RuntimeException ignored) { }
         }
@@ -353,7 +361,7 @@ public final class AscensionStore extends SavedData {
         for (Tag raw : tag.getList("sessions", Tag.TAG_COMPOUND)) {
             CompoundTag record = (CompoundTag) raw;
             try {
-                Session session = decode(record, allowMissingInsight);
+                Session session = decode(record, allowMissingInsight, allowMissingQiFlow);
                 if (sessionCounts.getOrDefault(session.sessionId(), 0) > 1
                         || (!session.terminal() && activeCounts.getOrDefault(session.ownerId() + "\u0000" + session.apertureId(), 0) > 1)) {
                     quarantinedRecords.add(record.copy());
@@ -468,6 +476,11 @@ public final class AscensionStore extends SavedData {
         qi.putDouble("tian", session.qi().tian());
         qi.putDouble("di", session.qi().di());
         qi.putDouble("ren", session.qi().ren());
+        qi.putDouble("externalTian", session.qi().externalTian());
+        qi.putDouble("externalDi", session.qi().externalDi());
+        qi.putDouble("humanReserve", session.qi().humanReserve());
+        qi.putLong("imbalanceTicks", session.qi().imbalanceTicks());
+        qi.putLong("lastTick", session.qi().lastTick());
         record.put("qi", qi);
         return record;
     }
@@ -486,7 +499,8 @@ public final class AscensionStore extends SavedData {
         return record;
     }
 
-    private static Session decode(CompoundTag record, boolean allowMissingInsight) {
+    private static Session decode(CompoundTag record, boolean allowMissingInsight,
+                                  boolean allowMissingQiFlow) {
         requireTag(record, "session", Tag.TAG_STRING);
         requireTag(record, "owner", Tag.TAG_STRING);
         requireTag(record, "aperture", Tag.TAG_STRING);
@@ -506,18 +520,39 @@ public final class AscensionStore extends SavedData {
         requireTag(qi, "tian", Tag.TAG_DOUBLE);
         requireTag(qi, "di", Tag.TAG_DOUBLE);
         requireTag(qi, "ren", Tag.TAG_DOUBLE);
+        String[] qiFlowDoubleFields = {"externalTian", "externalDi", "humanReserve"};
+        String[] qiFlowLongFields = {"imbalanceTicks", "lastTick"};
+        int qiFlowFields = 0;
+        for (String field : qiFlowDoubleFields) {
+            if (qi.contains(field, Tag.TAG_DOUBLE)) qiFlowFields++;
+            else if (qi.contains(field)) throw new IllegalArgumentException("invalid qi flow field: " + field);
+        }
+        for (String field : qiFlowLongFields) {
+            if (qi.contains(field, Tag.TAG_LONG)) qiFlowFields++;
+            else if (qi.contains(field)) throw new IllegalArgumentException("invalid qi flow field: " + field);
+        }
+        QiState qiState;
+        if (qiFlowFields == 5) {
+            qiState = new QiState(qi.getDouble("tian"), qi.getDouble("di"), qi.getDouble("ren"),
+                    qi.getDouble("externalTian"), qi.getDouble("externalDi"), qi.getDouble("humanReserve"),
+                    qi.getLong("imbalanceTicks"), qi.getLong("lastTick"));
+        } else if (qiFlowFields == 0 && allowMissingQiFlow) {
+            qiState = new QiState(qi.getDouble("tian"), qi.getDouble("di"), qi.getDouble("ren"));
+        } else {
+            throw new IllegalArgumentException("schema 4 session is missing qi flow state");
+        }
         InsightState insight;
         if (record.contains("insight", Tag.TAG_COMPOUND)) {
             insight = decodeInsight(record.getCompound("insight"));
         } else if (allowMissingInsight) {
             insight = InsightState.initial(0.0, record.getLong("phaseStartedAt"));
         } else {
-            throw new IllegalArgumentException("schema 3 session is missing insight ledger");
+            throw new IllegalArgumentException("session is missing insight ledger");
         }
         return new Session(sessionId, ownerId, record.getString("aperture"), record.getString("profile"),
                 Phase.valueOf(record.getString("phase")), Outcome.valueOf(record.getString("outcome")),
                 record.getLong("phaseStartedAt"), record.getBoolean("brokenCommitted"),
-                new QiState(qi.getDouble("tian"), qi.getDouble("di"), qi.getDouble("ren")),
+                qiState,
                 record.getString("guEscrow"), record.getString("apertureResult"),
                 record.getLong("revision"), insight);
     }

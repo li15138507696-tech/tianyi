@@ -105,13 +105,16 @@ public final class InsightCatalogTest {
         Session session = absorbing(2.0);
         Session learned = InsightCatalog.resolve(session,
                 new InsightCatalog.Request(0L, 0L, 21L, "common_topic"), QUESTIONS, PROFILE, true).session();
-        var transition = AscensionMachine.advance(learned,
-                new AscensionModel.Command(AscensionModel.Action.UPDATE_QI, learned.revision(), 22L,
-                        new QiState(4.0, 2.0, 1.0),
-                        new AscensionModel.Validation(true, true, false, false), "", ""));
+        var transition = QiControlService.advance(learned, OWNER,
+                new QiControlService.Request(learned.revision(), 22L,
+                        new QiRegulator.Control(1.0, 0.0, 0.0)),
+                new QiRegulator.Environment(1.0, 0.0),
+                new QiRegulator.Tuning(10.0, 10.0, 1.0, 1.0, 1.0, 0.75, 10L), PROFILE);
         check(transition.accepted(), "qi updates continue after parallel insight");
         check(transition.session().insight().equals(learned.insight()),
                 "main phase updates preserve persisted grants and budget");
+        check(transition.session().qi().tian() > learned.qi().tian(),
+                "server-validated qi regulation changes the live gas state");
     }
 
     private static Session absorbing(double budget) {

@@ -50,6 +50,8 @@ SRC_CORE = [
     os.path.join(ROOT, 'src', 'main', 'java', 'net', 'guzhenren', 'tianyi', 'ascension', 'GuEscrow.java'),
     os.path.join(ROOT, 'src', 'main', 'java', 'net', 'guzhenren', 'tianyi', 'ascension', 'AscensionRecovery.java'),
     os.path.join(ROOT, 'src', 'main', 'java', 'net', 'guzhenren', 'tianyi', 'ascension', 'InsightCatalog.java'),
+    os.path.join(ROOT, 'src', 'main', 'java', 'net', 'guzhenren', 'tianyi', 'ascension', 'QiRegulator.java'),
+    os.path.join(ROOT, 'src', 'main', 'java', 'net', 'guzhenren', 'tianyi', 'ascension', 'QiControlService.java'),
 ] + WILL_SRC + PURE_SRC
 #: 与 javac_check.py 相同的 JDK（Java 21）
 JDK21 = r'C:\Users\ADMIN\.jdks\temurin-21'
@@ -66,6 +68,8 @@ SUITES = [
     'net.guzhenren.tianyi.ascension.AscensionRulesTest',
     'net.guzhenren.tianyi.ascension.AscensionRecoveryTest',
     'net.guzhenren.tianyi.ascension.InsightCatalogTest',
+    'net.guzhenren.tianyi.ascension.QiRegulatorTest',
+    'net.guzhenren.tianyi.ascension.QiControlServiceTest',
     'net.guzhenren.tianyi.will.WillCoreTest',
     'net.guzhenren.tianyi.fact.IntelCoreTest',
     'net.guzhenren.tianyi.action.ActionLedgerTest',

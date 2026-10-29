@@ -47,8 +47,10 @@ public final class AscensionStoreNbtTest {
         quarantinesConflictsAndInvalidStacks();
         migratesSchemaOneAndQuarantinesUnrecoverableRecords();
         migratesSchemaTwoWithEmptyInsightLedger();
+        migratesSchemaThreeQiSnapshot();
         preservesFutureSchemaReadOnly();
         quarantinesSchemaThreeMissingInsightLedger();
+        quarantinesSchemaFourMissingQiFlowFields();
         System.out.println("PASS ascension store schema, migration, and item NBT");
     }
 
@@ -150,7 +152,7 @@ public final class AscensionStoreNbtTest {
                 "non-singular source stack is rejected");
 
         CompoundTag saved = store.save(new CompoundTag(), null);
-        check(saved.getInt("schema") == 3, "schema is 3");
+        check(saved.getInt("schema") == 4, "schema is 4");
         check(saved.contains("sessions", Tag.TAG_LIST), "sessions list is saved");
         check(saved.contains("escrows", Tag.TAG_LIST), "escrows list is saved");
         AscensionStore loaded = AscensionStore.load(saved, registries);
@@ -239,7 +241,7 @@ public final class AscensionStoreNbtTest {
                 "active schema 1 session without an escrow cannot resume");
         check(!migrated.isReadOnly(), "schema 1 migration remains writable");
         CompoundTag saved = migrated.save(new CompoundTag(), null);
-        check(saved.getInt("schema") == 3, "migrated save uses schema 3");
+        check(saved.getInt("schema") == 4, "migrated save uses schema 4");
         ListTag migratedQuarantine = saved.getList("quarantined", Tag.TAG_COMPOUND);
         check(migratedQuarantine.size() == 3, "legacy, malformed, and prior quarantine records remain");
         check(containsExact(migratedQuarantine, activeTag), "active legacy evidence is retained exactly");
@@ -261,8 +263,32 @@ public final class AscensionStoreNbtTest {
         check(migrated.insight().totalBudget() == 0.0 && migrated.insight().grants().isEmpty(),
                 "schema 2 session receives an empty insight ledger");
         check(loaded.findEscrow(ESCROW_ID).isPresent(), "schema 2 escrow remains linked");
-        check(loaded.save(new CompoundTag(), registries).getInt("schema") == 3,
-                "schema 2 is rewritten as schema 3");
+        check(loaded.save(new CompoundTag(), registries).getInt("schema") == 4,
+                "schema 2 is rewritten as schema 4");
+    }
+
+    private static void migratesSchemaThreeQiSnapshot() {
+        Session session = preparing(SESSION_ID, OWNER, ESCROW_ID.toString());
+        Record escrow = new Record(ESCROW_ID, OWNER, SESSION_ID, "source", "fingerprint", State.PREPARED, 0L);
+        AscensionStore fixture = new AscensionStore();
+        check(fixture.createWithEscrow(session, escrow, 1, stackTag(), registries), "schema 3 fixture");
+        CompoundTag schemaThree = fixture.save(new CompoundTag(), registries);
+        schemaThree.putInt("schema", 3);
+        CompoundTag qi = schemaThree.getList("sessions", Tag.TAG_COMPOUND).getCompound(0).getCompound("qi");
+        qi.remove("externalTian");
+        qi.remove("externalDi");
+        qi.remove("humanReserve");
+        qi.remove("imbalanceTicks");
+        qi.remove("lastTick");
+
+        AscensionStore loaded = AscensionStore.load(schemaThree, registries);
+        QiState migratedQi = loaded.find(SESSION_ID).orElseThrow().qi();
+        check(migratedQi.tian() == 1.0 && migratedQi.di() == 2.0 && migratedQi.ren() == 3.0
+                        && migratedQi.externalTian() == 0.0 && migratedQi.externalDi() == 0.0
+                        && migratedQi.humanReserve() == 0.0 && migratedQi.lastTick() == 0L,
+                "schema 3 gathered qi receives empty external reservoirs and tick state");
+        check(loaded.save(new CompoundTag(), registries).getInt("schema") == 4,
+                "schema 3 is rewritten as schema 4");
     }
 
     private static void preservesFutureSchemaReadOnly() {
@@ -300,6 +326,24 @@ public final class AscensionStoreNbtTest {
                 "corrupt record remains available for inspection");
     }
 
+    private static void quarantinesSchemaFourMissingQiFlowFields() {
+        CompoundTag schemaFour = new CompoundTag();
+        schemaFour.putInt("schema", 4);
+        ListTag sessions = new ListTag();
+        CompoundTag corrupt = encodeSession(preparing(SESSION_ID, OWNER, ESCROW_ID.toString()));
+        corrupt.getCompound("qi").remove("humanReserve");
+        sessions.add(corrupt.copy());
+        schemaFour.put("sessions", sessions);
+        schemaFour.put("escrows", new ListTag());
+        schemaFour.put("quarantined", new ListTag());
+
+        AscensionStore loaded = AscensionStore.load(schemaFour, null);
+        check(loaded.quarantinedCount() == 1,
+                "schema 4 session without required qi flow state is isolated");
+        check(containsExact(loaded.save(new CompoundTag(), null).getList("quarantined", Tag.TAG_COMPOUND), corrupt),
+                "schema 4 qi evidence remains available for inspection");
+    }
+
     private static void roundTripsInsightLedger() {
         KnowledgeGrant grant = new KnowledgeGrant(0L, "study_strength_path", "knowledge.strength_path.topic",
                 "第三卷第二百二十三章《枭雄黑楼兰》", 0.5, 0.5, 25L);
@@ -313,11 +357,13 @@ public final class AscensionStoreNbtTest {
         AscensionStore store = new AscensionStore();
         check(store.createWithEscrow(preparing, escrow, 1, stackTag(), registries), "linked session fixture");
         Session session = new Session(sessionId, OWNER, "insight-aperture", "test", Phase.ABSORBING,
-                Outcome.RUNNING, 10L, true, new QiState(3.0, 2.0, 1.0), escrowId.toString(), "", 1L, insight);
+                Outcome.RUNNING, 10L, true, new QiState(3.0, 2.0, 1.0, 7.0, 8.0,
+                9.0, 2L, 24L), escrowId.toString(), "", 1L, insight);
         check(store.compareAndSet(sessionId, 0L, session), "insight session revision is stored");
         CompoundTag saved = store.save(new CompoundTag(), registries);
         Session loaded = AscensionStore.load(saved, registries).find(session.sessionId()).orElseThrow();
         check(loaded.equals(session), "insight budget, sequence, topic and completeness round-trip");
+        check(loaded.qi().equals(session.qi()), "external reservoirs, human reserve, and qi tick round-trip");
         var profile = new net.guzhenren.tianyi.ascension.AscensionModel.RuleProfile(
                 "test", "test evidence", true, java.util.Set.of(), 2.0, 0.75);
         var questions = net.guzhenren.tianyi.ascension.InsightCatalog.evidenceBackedTopics();
@@ -368,6 +414,11 @@ public final class AscensionStoreNbtTest {
         qi.putDouble("tian", session.qi().tian());
         qi.putDouble("di", session.qi().di());
         qi.putDouble("ren", session.qi().ren());
+        qi.putDouble("externalTian", session.qi().externalTian());
+        qi.putDouble("externalDi", session.qi().externalDi());
+        qi.putDouble("humanReserve", session.qi().humanReserve());
+        qi.putLong("imbalanceTicks", session.qi().imbalanceTicks());
+        qi.putLong("lastTick", session.qi().lastTick());
         record.put("qi", qi);
         return record;
     }

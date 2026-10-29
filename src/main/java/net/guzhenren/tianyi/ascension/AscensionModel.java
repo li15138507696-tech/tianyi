@@ -39,7 +39,6 @@ public final class AscensionModel {
         CANCEL_PREPARATION,
         COMMIT_BROKEN,
         BEGIN_ABSORPTION,
-        UPDATE_QI,
         PLACE_GU,
         COMPLETE_FORMATION,
         FAIL_ALIVE,
@@ -142,15 +141,27 @@ public final class AscensionModel {
     /**
      * 会话内已纳入的三气快照。比例与容差不在数据类型中固化，由已审计 profile 解释。
      */
-    public record QiState(double tian, double di, double ren) {
+    public record QiState(double tian, double di, double ren, double externalTian, double externalDi,
+                          double humanReserve, long imbalanceTicks, long lastTick) {
         public QiState {
             requireFiniteNonNegative(tian, "tian qi");
             requireFiniteNonNegative(di, "di qi");
             requireFiniteNonNegative(ren, "ren qi");
+            requireFiniteNonNegative(externalTian, "external tian qi");
+            requireFiniteNonNegative(externalDi, "external di qi");
+            requireFiniteNonNegative(humanReserve, "human qi reserve");
+            if (imbalanceTicks < 0 || lastTick < 0) {
+                throw new IllegalArgumentException("negative qi counter or tick");
+            }
+        }
+
+        /** Compatibility constructor for schema 1-3 snapshots, which stored only gathered qi. */
+        public QiState(double tian, double di, double ren) {
+            this(tian, di, ren, 0.0, 0.0, 0.0, 0L, 0L);
         }
 
         public static QiState empty() {
-            return new QiState(0.0, 0.0, 0.0);
+            return new QiState(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0L, 0L);
         }
     }
 

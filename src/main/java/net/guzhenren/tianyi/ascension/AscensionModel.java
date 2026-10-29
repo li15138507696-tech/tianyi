@@ -88,11 +88,26 @@ public final class AscensionModel {
      * 特定升仙路线的证据与能力声明。未知路线必须保持 disabled；没有自动退回普通路线。
      */
     public record RuleProfile(String id, String evidenceRef, boolean enabled,
-                              Set<Capability> capabilities) {
+                              Set<Capability> capabilities, double insightBudget,
+                              double resonanceTolerance) {
         public RuleProfile {
             id = requireText(id, "profile id");
             evidenceRef = requireText(evidenceRef, "evidence reference");
             capabilities = Set.copyOf(Objects.requireNonNull(capabilities, "capabilities"));
+            requireFiniteNonNegative(insightBudget, "insight budget");
+            requireFiniteNonNegative(resonanceTolerance, "qi resonance tolerance");
+            if (resonanceTolerance > 1.0) {
+                throw new IllegalArgumentException("qi resonance tolerance must be at most one");
+            }
+        }
+
+        public RuleProfile(String id, String evidenceRef, boolean enabled, Set<Capability> capabilities) {
+            this(id, evidenceRef, enabled, capabilities, 0.0, 0.0);
+        }
+
+        public RuleProfile(String id, String evidenceRef, boolean enabled,
+                           Set<Capability> capabilities, double insightBudget) {
+            this(id, evidenceRef, enabled, capabilities, insightBudget, 0.0);
         }
 
         public boolean has(Capability capability) {
@@ -139,13 +154,72 @@ public final class AscensionModel {
         }
     }
 
+    /** Immutable finite budget and durable grants for the concurrent insight sub-process. */
+    public record InsightState(double totalBudget, double spentBudget, long nextSequence,
+                               long lastRequestTick, List<KnowledgeGrant> grants) {
+        public InsightState {
+            requireFiniteNonNegative(totalBudget, "total insight budget");
+            requireFiniteNonNegative(spentBudget, "spent insight budget");
+            if (spentBudget > totalBudget || nextSequence < 0 || lastRequestTick < 0) {
+                throw new IllegalArgumentException("invalid insight ledger counters");
+            }
+            grants = List.copyOf(Objects.requireNonNull(grants, "insight grants"));
+            if (grants.size() > 128 || nextSequence < grants.size()) {
+                throw new IllegalArgumentException("insight ledger exceeds its bounded history");
+            }
+            Set<String> questions = new java.util.HashSet<>();
+            long expectedSequence = 0L;
+            long previousTick = -1L;
+            double recordedSpend = 0.0;
+            for (KnowledgeGrant grant : grants) {
+                if (grant.sequence() != expectedSequence || grant.grantedAt() < previousTick
+                        || grant.grantedAt() > lastRequestTick || !questions.add(grant.questionId())) {
+                    throw new IllegalArgumentException("duplicate or unordered insight grant");
+                }
+                expectedSequence++;
+                previousTick = grant.grantedAt();
+                recordedSpend += grant.budgetSpent();
+            }
+            if (nextSequence != expectedSequence || Math.abs(recordedSpend - spentBudget) > 1.0e-8) {
+                throw new IllegalArgumentException("insight counters do not match grant history");
+            }
+        }
+
+        public static InsightState initial(double totalBudget, long tick) {
+            return new InsightState(totalBudget, 0.0, 0L, tick, List.of());
+        }
+
+        public double availableBudget() {
+            return Math.max(0.0, totalBudget - spentBudget);
+        }
+    }
+
+    /** A durable topic grant, not free-form generated knowledge or an item reward. */
+    public record KnowledgeGrant(long sequence, String questionId, String knowledgeId,
+                                 String evidenceRef, double budgetSpent, double completeness,
+                                 long grantedAt) {
+        public KnowledgeGrant {
+            if (sequence < 0 || grantedAt < 0) {
+                throw new IllegalArgumentException("negative insight sequence or tick");
+            }
+            questionId = requireText(questionId, "insight question id");
+            knowledgeId = requireText(knowledgeId, "knowledge id");
+            evidenceRef = requireText(evidenceRef, "knowledge evidence reference");
+            requireFiniteNonNegative(budgetSpent, "insight grant cost");
+            if (budgetSpent <= 0.0 || !Double.isFinite(completeness)
+                    || completeness <= 0.0 || completeness > 1.0) {
+                throw new IllegalArgumentException("invalid insight grant amount or completeness");
+            }
+        }
+    }
+
     /**
      * 本状态不是物品本身。guEscrowId 必须指向服务端持久托管记录，不能用 ItemStack 副本冒充。
      */
     public record Session(UUID sessionId, UUID ownerId, String apertureId, String profileId,
                           Phase phase, Outcome outcome, long phaseStartedAt,
                           boolean brokenCommitted, QiState qi, String guEscrowId,
-                          String apertureResultId, long revision) {
+                          String apertureResultId, long revision, InsightState insight) {
         public Session {
             Objects.requireNonNull(sessionId, "sessionId");
             Objects.requireNonNull(ownerId, "ownerId");
@@ -154,6 +228,7 @@ public final class AscensionModel {
             Objects.requireNonNull(phase, "phase");
             Objects.requireNonNull(outcome, "outcome");
             Objects.requireNonNull(qi, "qi");
+            Objects.requireNonNull(insight, "insight");
             guEscrowId = guEscrowId == null ? "" : guEscrowId.trim();
             apertureResultId = apertureResultId == null ? "" : apertureResultId.trim();
             if (phaseStartedAt < 0 || revision < 0) {
@@ -179,6 +254,14 @@ public final class AscensionModel {
             if (phase != Phase.FAILED && (outcome == Outcome.FAILED_ALIVE || outcome == Outcome.DEAD)) {
                 throw new IllegalArgumentException("failure outcome requires failed phase");
             }
+        }
+
+        public Session(UUID sessionId, UUID ownerId, String apertureId, String profileId,
+                       Phase phase, Outcome outcome, long phaseStartedAt, boolean brokenCommitted,
+                       QiState qi, String guEscrowId, String apertureResultId, long revision) {
+            this(sessionId, ownerId, apertureId, profileId, phase, outcome, phaseStartedAt,
+                    brokenCommitted, qi, guEscrowId, apertureResultId, revision,
+                    InsightState.initial(0.0, phaseStartedAt));
         }
 
         public boolean terminal() {

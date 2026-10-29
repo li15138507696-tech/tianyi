@@ -55,7 +55,8 @@ public final class GuEscrowService {
         verifiedCapabilities.addAll(profile.capabilities());
         verifiedCapabilities.remove(Capability.UNIQUE_GU_ESCROW);
         RuleProfile gatedProfile = new RuleProfile(profile.id(), profile.evidenceRef(),
-                profile.enabled(), Set.copyOf(verifiedCapabilities));
+                profile.enabled(), Set.copyOf(verifiedCapabilities), profile.insightBudget(),
+                profile.resonanceTolerance());
         StartFacts facts = new StartFacts(context.apertureId(), snapshot.rank(), snapshot.stage(),
                 context.apertureVerified(), context.apertureBroken(), "", gatedProfile);
         StartDecision decision = AscensionRules.validateStart(facts);

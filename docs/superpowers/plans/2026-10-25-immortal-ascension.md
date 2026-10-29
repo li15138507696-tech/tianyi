@@ -114,12 +114,14 @@
 
 **Files:** 完善 `AscensionMachine.java`；新建 `InsightCatalog.java`、`InsightTest.java`；接入 `AscensionService.java`。
 
-**Interfaces:** `InsightCatalog.resolve(Session, String questionId, RuleProfile): InsightDecision`，`InsightDecision` 包含知识条目 ID、实际预算支出及残缺程度；结果先写会话再应用授予。
+**Interfaces:** `InsightCatalog.resolve(Session, Request, List<Question>, RuleProfile, serverValidated): Decision`；窗口从服务端会话三气快照与档案容差计算，request 只含序号、期望 revision、服务端采样 tick 和白名单问题 ID。`Decision` 包含更新会话和知识 grant；服务层 CAS 保存后才返回 grant。
 
 - [ ] 写失败测试：非窗口不可求知；重复序号不重领；断线不刷新预算；稀缺问题不能返回无限完整知识；求知同刻气量仍变化、灾劫时钟继续。
 - [ ] 执行测试得到有效失败，实现有依据的知识目录和明确成本。没有原著/本体条目的知识不能自由生成；不借外部 AI 代替天意知识规则。
 - [ ] 测试本人控制三气、他人动作无权改变；人气调动不创造总量；长时间离线没有新输入时不会自动获得最佳调控。
 - [ ] 重跑测试与编译，记录交感窗口、额度算法中哪些是原著、哪些是游戏参数。
+
+**进度记录（2026-10-29）：** 已实现 schema 3 的有限求知账本、章节支持的“研究力道”主题 ID、profile 预算/三气相对容差、部分完整度、序号/问题去重和 owner/revision 服务端 CAS；schema 1/2 迁移已覆盖。纯逻辑及真实 NBT 回归、108 源码 javac 通过。当前没有客户端/网络入口，知识正文、逐刻交感窗口、本人调气/人气守恒和灾劫同刻推进仍未接入；Task 4 继续保持未完成。
 
 ### Task 5：真实灾劫、反噬与护道
 

@@ -3,6 +3,8 @@ package net.guzhenren.tianyi.world;
 import java.util.UUID;
 
 import net.guzhenren.tianyi.ascension.AscensionModel.Outcome;
+import net.guzhenren.tianyi.ascension.AscensionModel.InsightState;
+import net.guzhenren.tianyi.ascension.AscensionModel.KnowledgeGrant;
 import net.guzhenren.tianyi.ascension.AscensionModel.Phase;
 import net.guzhenren.tianyi.ascension.AscensionModel.QiState;
 import net.guzhenren.tianyi.ascension.AscensionModel.Session;
@@ -39,12 +41,14 @@ public final class AscensionStoreNbtTest {
         check(ItemStack.parse(registries, encoded).orElseThrow().getCount() == 1,
                 "real registered vanilla stack decodes");
         roundTripsEscrowAndStackTag();
+        roundTripsInsightLedger();
         rejectsInvalidSerializedStack();
         quarantinesDuplicateSessions();
         quarantinesConflictsAndInvalidStacks();
         migratesSchemaOneAndQuarantinesUnrecoverableRecords();
+        migratesSchemaTwoWithEmptyInsightLedger();
         preservesFutureSchemaReadOnly();
-        quarantinesCorruptSchemaTwoRecords();
+        quarantinesSchemaThreeMissingInsightLedger();
         System.out.println("PASS ascension store schema, migration, and item NBT");
     }
 
@@ -117,7 +121,7 @@ public final class AscensionStoreNbtTest {
         ListTag sessions = new ListTag();
         sessions.add(raw.copy()); sessions.add(raw.copy()); sessions.add(raw.copy());
         CompoundTag schema = new CompoundTag();
-        schema.putInt("schema", 2); schema.put("sessions", sessions);
+        schema.putInt("schema", 3); schema.put("sessions", sessions);
         AscensionStore fixture = new AscensionStore();
         Record escrow = new Record(ESCROW_ID, OWNER, SESSION_ID, "source", "fingerprint", State.PREPARED, 0);
         check(fixture.createWithEscrow(session, escrow, 1, stackTag(), registries), "fixture created");
@@ -146,7 +150,7 @@ public final class AscensionStoreNbtTest {
                 "non-singular source stack is rejected");
 
         CompoundTag saved = store.save(new CompoundTag(), null);
-        check(saved.getInt("schema") == 2, "schema is 2");
+        check(saved.getInt("schema") == 3, "schema is 3");
         check(saved.contains("sessions", Tag.TAG_LIST), "sessions list is saved");
         check(saved.contains("escrows", Tag.TAG_LIST), "escrows list is saved");
         AscensionStore loaded = AscensionStore.load(saved, registries);
@@ -211,6 +215,8 @@ public final class AscensionStoreNbtTest {
         Session activeWithoutEscrow = preparing(UUID.randomUUID(), OWNER, "");
         CompoundTag completedTag = encodeSession(completed);
         CompoundTag activeTag = encodeSession(activeWithoutEscrow);
+        completedTag.remove("insight");
+        activeTag.remove("insight");
         CompoundTag malformedTag = new CompoundTag();
         CompoundTag existingQuarantine = new CompoundTag();
         existingQuarantine.putString("reason", "old evidence");
@@ -233,12 +239,30 @@ public final class AscensionStoreNbtTest {
                 "active schema 1 session without an escrow cannot resume");
         check(!migrated.isReadOnly(), "schema 1 migration remains writable");
         CompoundTag saved = migrated.save(new CompoundTag(), null);
-        check(saved.getInt("schema") == 2, "migrated save uses schema 2");
+        check(saved.getInt("schema") == 3, "migrated save uses schema 3");
         ListTag migratedQuarantine = saved.getList("quarantined", Tag.TAG_COMPOUND);
         check(migratedQuarantine.size() == 3, "legacy, malformed, and prior quarantine records remain");
         check(containsExact(migratedQuarantine, activeTag), "active legacy evidence is retained exactly");
         check(containsExact(migratedQuarantine, malformedTag), "malformed legacy evidence is retained exactly");
         check(containsExact(migratedQuarantine, existingQuarantine), "existing quarantine evidence is retained");
+    }
+
+    private static void migratesSchemaTwoWithEmptyInsightLedger() {
+        Session session = preparing(SESSION_ID, OWNER, ESCROW_ID.toString());
+        Record escrow = new Record(ESCROW_ID, OWNER, SESSION_ID, "source", "fingerprint", State.PREPARED, 0L);
+        AscensionStore fixture = new AscensionStore();
+        check(fixture.createWithEscrow(session, escrow, 1, stackTag(), registries), "schema 2 fixture");
+        CompoundTag schemaTwo = fixture.save(new CompoundTag(), registries);
+        schemaTwo.putInt("schema", 2);
+        schemaTwo.getList("sessions", Tag.TAG_COMPOUND).getCompound(0).remove("insight");
+
+        AscensionStore loaded = AscensionStore.load(schemaTwo, registries);
+        Session migrated = loaded.find(SESSION_ID).orElseThrow();
+        check(migrated.insight().totalBudget() == 0.0 && migrated.insight().grants().isEmpty(),
+                "schema 2 session receives an empty insight ledger");
+        check(loaded.findEscrow(ESCROW_ID).isPresent(), "schema 2 escrow remains linked");
+        check(loaded.save(new CompoundTag(), registries).getInt("schema") == 3,
+                "schema 2 is rewritten as schema 3");
     }
 
     private static void preservesFutureSchemaReadOnly() {
@@ -258,12 +282,12 @@ public final class AscensionStoreNbtTest {
         check(!loaded.create(preparing(UUID.randomUUID(), OWNER, "")), "future schema refuses writes");
     }
 
-    private static void quarantinesCorruptSchemaTwoRecords() {
+    private static void quarantinesSchemaThreeMissingInsightLedger() {
         CompoundTag schemaTwo = new CompoundTag();
-        schemaTwo.putInt("schema", 2);
+        schemaTwo.putInt("schema", 3);
         ListTag sessions = new ListTag();
-        CompoundTag corrupt = new CompoundTag();
-        corrupt.putString("session", "not-a-valid-record");
+        CompoundTag corrupt = encodeSession(preparing(SESSION_ID, OWNER, ESCROW_ID.toString()));
+        corrupt.remove("insight");
         sessions.add(corrupt.copy());
         schemaTwo.put("sessions", sessions);
         schemaTwo.put("escrows", new ListTag());
@@ -274,6 +298,40 @@ public final class AscensionStoreNbtTest {
                 "corrupt record is isolated without rejecting other schema data");
         check(containsExact(loaded.save(new CompoundTag(), null).getList("quarantined", Tag.TAG_COMPOUND), corrupt),
                 "corrupt record remains available for inspection");
+    }
+
+    private static void roundTripsInsightLedger() {
+        KnowledgeGrant grant = new KnowledgeGrant(0L, "study_strength_path", "knowledge.strength_path.topic",
+                "第三卷第二百二十三章《枭雄黑楼兰》", 0.5, 0.5, 25L);
+        InsightState insight = new InsightState(2.0, 0.5, 1L, 25L, java.util.List.of(grant));
+        UUID sessionId = UUID.randomUUID();
+        UUID escrowId = UUID.randomUUID();
+        Session preparing = new Session(sessionId, OWNER, "insight-aperture", "test", Phase.PREPARING,
+                Outcome.RUNNING, 10L, false, QiState.empty(), escrowId.toString(), "", 0L,
+                InsightState.initial(2.0, 10L));
+        Record escrow = new Record(escrowId, OWNER, sessionId, "source", "fingerprint", State.PREPARED, 0L);
+        AscensionStore store = new AscensionStore();
+        check(store.createWithEscrow(preparing, escrow, 1, stackTag(), registries), "linked session fixture");
+        Session session = new Session(sessionId, OWNER, "insight-aperture", "test", Phase.ABSORBING,
+                Outcome.RUNNING, 10L, true, new QiState(3.0, 2.0, 1.0), escrowId.toString(), "", 1L, insight);
+        check(store.compareAndSet(sessionId, 0L, session), "insight session revision is stored");
+        CompoundTag saved = store.save(new CompoundTag(), registries);
+        Session loaded = AscensionStore.load(saved, registries).find(session.sessionId()).orElseThrow();
+        check(loaded.equals(session), "insight budget, sequence, topic and completeness round-trip");
+        var profile = new net.guzhenren.tianyi.ascension.AscensionModel.RuleProfile(
+                "test", "test evidence", true, java.util.Set.of(), 2.0, 0.75);
+        var questions = net.guzhenren.tianyi.ascension.InsightCatalog.evidenceBackedTopics();
+        var replay = net.guzhenren.tianyi.ascension.InsightCatalog.resolve(loaded,
+                new net.guzhenren.tianyi.ascension.InsightCatalog.Request(1L, 0L, 26L, "study_strength_path"),
+                questions, profile, true);
+        check(replay.rejection() == net.guzhenren.tianyi.ascension.InsightCatalog.Rejection.INVALID_SEQUENCE,
+                "reload does not reset the insight request sequence");
+        var duplicate = net.guzhenren.tianyi.ascension.InsightCatalog.resolve(loaded,
+                new net.guzhenren.tianyi.ascension.InsightCatalog.Request(1L, 1L, 26L, "study_strength_path"),
+                questions, profile, true);
+        check(duplicate.rejection()
+                == net.guzhenren.tianyi.ascension.InsightCatalog.Rejection.QUESTION_ALREADY_GRANTED,
+                "reload preserves the already granted topic");
     }
 
     private static Session preparing(UUID sessionId, UUID ownerId, String escrowId) {
@@ -298,6 +356,14 @@ public final class AscensionStoreNbtTest {
         record.putLong("revision", session.revision());
         record.putString("guEscrow", session.guEscrowId());
         record.putString("apertureResult", session.apertureResultId());
+        InsightState insight = session.insight();
+        CompoundTag insightTag = new CompoundTag();
+        insightTag.putDouble("totalBudget", insight.totalBudget());
+        insightTag.putDouble("spentBudget", insight.spentBudget());
+        insightTag.putLong("nextSequence", insight.nextSequence());
+        insightTag.putLong("lastRequestTick", insight.lastRequestTick());
+        insightTag.put("grants", new ListTag());
+        record.put("insight", insightTag);
         CompoundTag qi = new CompoundTag();
         qi.putDouble("tian", session.qi().tian());
         qi.putDouble("di", session.qi().di());

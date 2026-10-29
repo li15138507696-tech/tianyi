@@ -12,6 +12,7 @@ import net.guzhenren.tianyi.ascension.AscensionModel.RuleProfile;
 import net.guzhenren.tianyi.ascension.AscensionModel.Session;
 import net.guzhenren.tianyi.ascension.AscensionModel.StartDecision;
 import net.guzhenren.tianyi.ascension.ProgressionSnapshot;
+import net.guzhenren.tianyi.ascension.InsightCatalog;
 import net.minecraft.server.level.ServerPlayer;
 
 /** Server-only admission checks. This stage never creates a session or changes inventory. */
@@ -50,6 +51,26 @@ public final class AscensionService {
         }
     }
 
+    public enum InsightStatus {
+        COMMITTED,
+        NO_PLAYER,
+        SESSION_NOT_FOUND,
+        WRONG_OWNER,
+        REJECTED,
+        STORE_CONFLICT
+    }
+
+    /** The grant is returned only after its updated session revision has been stored. */
+    public record InsightResult(InsightStatus status, Optional<InsightCatalog.Decision> decision) {
+        public InsightResult {
+            Objects.requireNonNull(status, "status");
+            decision = Objects.requireNonNull(decision, "decision");
+            if ((status == InsightStatus.COMMITTED) != decision.filter(InsightCatalog.Decision::accepted).isPresent()) {
+                throw new IllegalArgumentException("committed insight requires an accepted persisted decision");
+            }
+        }
+    }
+
     public static StartResult begin(ServerPlayer player, StartContext context,
                                     RuleProfile profile, long serverTick) {
         Objects.requireNonNull(context, "context");
@@ -64,6 +85,42 @@ public final class AscensionService {
                 .begin(player, context, snapshot, profile, serverTick);
         return new StartResult(AscensionProgressionReader.Status.OK,
                 Optional.of(begin.decision()), begin.session());
+    }
+
+    /**
+     * Apply a finite catalog query for the session owner. Window state is derived from the stored qi
+     * snapshot and server-owned profile; the updated ledger is CAS-stored before a grant is returned.
+     */
+    public static InsightResult seekInsight(ServerPlayer player, UUID sessionId, long expectedRevision,
+                                            long sequence, String questionId) {
+        if (player == null || player.getServer() == null || sessionId == null) {
+            return new InsightResult(InsightStatus.NO_PLAYER, Optional.empty());
+        }
+        AscensionStore store = AscensionStore.get(player.getServer());
+        Optional<Session> stored = store.find(sessionId);
+        if (stored.isEmpty()) {
+            return new InsightResult(InsightStatus.SESSION_NOT_FOUND, Optional.empty());
+        }
+        Session current = stored.orElseThrow();
+        if (!current.ownerId().equals(player.getUUID())) {
+            return new InsightResult(InsightStatus.WRONG_OWNER, Optional.empty());
+        }
+        long serverTick = player.getServer().overworld().getGameTime();
+        InsightCatalog.Decision decision;
+        try {
+            decision = InsightCatalog.resolve(current,
+                    new InsightCatalog.Request(expectedRevision, sequence, serverTick, questionId),
+                    InsightCatalog.evidenceBackedTopics(), ORDINARY_PROFILE, true);
+        } catch (IllegalArgumentException invalidRequest) {
+            return new InsightResult(InsightStatus.REJECTED, Optional.empty());
+        }
+        if (!decision.accepted()) {
+            return new InsightResult(InsightStatus.REJECTED, Optional.of(decision));
+        }
+        if (!store.compareAndSet(sessionId, expectedRevision, decision.session())) {
+            return new InsightResult(InsightStatus.STORE_CONFLICT, Optional.empty());
+        }
+        return new InsightResult(InsightStatus.COMMITTED, Optional.of(decision));
     }
 
     /**

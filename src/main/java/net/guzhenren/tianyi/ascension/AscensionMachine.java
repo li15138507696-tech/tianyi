@@ -7,6 +7,7 @@ import net.guzhenren.tianyi.ascension.AscensionModel.Command;
 import net.guzhenren.tianyi.ascension.AscensionModel.Outcome;
 import net.guzhenren.tianyi.ascension.AscensionModel.Phase;
 import net.guzhenren.tianyi.ascension.AscensionModel.Rejection;
+import net.guzhenren.tianyi.ascension.AscensionModel.InsightState;
 import net.guzhenren.tianyi.ascension.AscensionModel.Session;
 import net.guzhenren.tianyi.ascension.AscensionModel.StartDecision;
 import net.guzhenren.tianyi.ascension.AscensionModel.StartFacts;
@@ -37,7 +38,7 @@ public final class AscensionMachine {
         }
         return new Session(sessionId, ownerId, facts.apertureId(), facts.profile().id(),
                 Phase.PREPARING, Outcome.RUNNING, serverTick, false, QiState.empty(),
-                guEscrowId, "", 0L);
+                guEscrowId, "", 0L, InsightState.initial(facts.profile().insightBudget(), serverTick));
     }
 
     public static Transition advance(Session current, Command command) {
@@ -178,6 +179,6 @@ public final class AscensionMachine {
                                 String apertureResultId) {
         return new Session(old.sessionId(), old.ownerId(), old.apertureId(), old.profileId(),
                 phase, outcome, phaseStartedAt, brokenCommitted, qi, guEscrowId,
-                apertureResultId, old.revision() + 1);
+                apertureResultId, old.revision() + 1, old.insight());
     }
 }

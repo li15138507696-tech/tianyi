@@ -9,6 +9,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 import net.guzhenren.tianyi.ascension.AscensionModel.Outcome;
+import net.guzhenren.tianyi.ascension.AscensionModel.InsightState;
+import net.guzhenren.tianyi.ascension.AscensionModel.KnowledgeGrant;
 import net.guzhenren.tianyi.ascension.AscensionModel.Phase;
 import net.guzhenren.tianyi.ascension.AscensionModel.QiState;
 import net.guzhenren.tianyi.ascension.AscensionModel.Session;
@@ -29,8 +31,9 @@ import net.minecraft.world.level.saveddata.SavedData;
  */
 public final class AscensionStore extends SavedData {
     public static final String NAME = "tianyi_ascension";
-    public static final int SCHEMA = 2;
+    public static final int SCHEMA = 3;
     private static final int LEGACY_SCHEMA = 1;
+    private static final int ESCROW_SCHEMA = 2;
 
     private final Map<UUID, Session> sessions = new LinkedHashMap<>();
     private final Map<UUID, EscrowEntry> escrows = new LinkedHashMap<>();
@@ -279,8 +282,10 @@ public final class AscensionStore extends SavedData {
         int schema = tag.getInt("schema");
         if (schema == LEGACY_SCHEMA) {
             store.loadSchemaOne(tag);
-        } else if (schema == SCHEMA) {
+        } else if (schema == ESCROW_SCHEMA) {
             store.loadSchemaTwo(tag, registries);
+        } else if (schema == SCHEMA) {
+            store.loadSchemaThree(tag, registries);
         } else {
             store.futureSchemaSnapshot = tag.copy();
         }
@@ -295,7 +300,7 @@ public final class AscensionStore extends SavedData {
         for (Tag raw : tag.getList("sessions", Tag.TAG_COMPOUND)) {
             CompoundTag record = (CompoundTag) raw;
             try {
-                Session session = decode(record);
+                Session session = decode(record, true);
                 if (session.terminal() && !sessions.containsKey(session.sessionId())) {
                     sessions.put(session.sessionId(), session);
                 } else {
@@ -311,6 +316,16 @@ public final class AscensionStore extends SavedData {
     }
 
     private void loadSchemaTwo(CompoundTag tag, HolderLookup.Provider registries) {
+        loadSchemaTwoOrThree(tag, registries, true);
+        setDirty();
+    }
+
+    private void loadSchemaThree(CompoundTag tag, HolderLookup.Provider registries) {
+        loadSchemaTwoOrThree(tag, registries, false);
+    }
+
+    private void loadSchemaTwoOrThree(CompoundTag tag, HolderLookup.Provider registries,
+                                     boolean allowMissingInsight) {
         if (!hasCompoundList(tag, "sessions") || !hasCompoundList(tag, "escrows")
                 || !hasCompoundList(tag, "quarantined")) {
             futureSchemaSnapshot = tag.copy();
@@ -327,7 +342,7 @@ public final class AscensionStore extends SavedData {
             try { sessionCounts.merge(UUID.fromString(record.getString("session")), 1, Integer::sum); }
             catch (RuntimeException ignored) { }
             try {
-                Session session = decode(record);
+                Session session = decode(record, allowMissingInsight);
                 if (!session.terminal()) activeCounts.merge(session.ownerId() + "\u0000" + session.apertureId(), 1, Integer::sum);
             } catch (RuntimeException ignored) { }
         }
@@ -338,7 +353,7 @@ public final class AscensionStore extends SavedData {
         for (Tag raw : tag.getList("sessions", Tag.TAG_COMPOUND)) {
             CompoundTag record = (CompoundTag) raw;
             try {
-                Session session = decode(record);
+                Session session = decode(record, allowMissingInsight);
                 if (sessionCounts.getOrDefault(session.sessionId(), 0) > 1
                         || (!session.terminal() && activeCounts.getOrDefault(session.ownerId() + "\u0000" + session.apertureId(), 0) > 1)) {
                     quarantinedRecords.add(record.copy());
@@ -428,6 +443,27 @@ public final class AscensionStore extends SavedData {
         record.putString("guEscrow", session.guEscrowId());
         record.putString("apertureResult", session.apertureResultId());
 
+        InsightState insight = session.insight();
+        CompoundTag insightTag = new CompoundTag();
+        insightTag.putDouble("totalBudget", insight.totalBudget());
+        insightTag.putDouble("spentBudget", insight.spentBudget());
+        insightTag.putLong("nextSequence", insight.nextSequence());
+        insightTag.putLong("lastRequestTick", insight.lastRequestTick());
+        ListTag grants = new ListTag();
+        for (KnowledgeGrant grant : insight.grants()) {
+            CompoundTag grantTag = new CompoundTag();
+            grantTag.putLong("sequence", grant.sequence());
+            grantTag.putString("question", grant.questionId());
+            grantTag.putString("knowledge", grant.knowledgeId());
+            grantTag.putString("evidence", grant.evidenceRef());
+            grantTag.putDouble("budgetSpent", grant.budgetSpent());
+            grantTag.putDouble("completeness", grant.completeness());
+            grantTag.putLong("grantedAt", grant.grantedAt());
+            grants.add(grantTag);
+        }
+        insightTag.put("grants", grants);
+        record.put("insight", insightTag);
+
         CompoundTag qi = new CompoundTag();
         qi.putDouble("tian", session.qi().tian());
         qi.putDouble("di", session.qi().di());
@@ -450,7 +486,7 @@ public final class AscensionStore extends SavedData {
         return record;
     }
 
-    private static Session decode(CompoundTag record) {
+    private static Session decode(CompoundTag record, boolean allowMissingInsight) {
         requireTag(record, "session", Tag.TAG_STRING);
         requireTag(record, "owner", Tag.TAG_STRING);
         requireTag(record, "aperture", Tag.TAG_STRING);
@@ -470,12 +506,52 @@ public final class AscensionStore extends SavedData {
         requireTag(qi, "tian", Tag.TAG_DOUBLE);
         requireTag(qi, "di", Tag.TAG_DOUBLE);
         requireTag(qi, "ren", Tag.TAG_DOUBLE);
+        InsightState insight;
+        if (record.contains("insight", Tag.TAG_COMPOUND)) {
+            insight = decodeInsight(record.getCompound("insight"));
+        } else if (allowMissingInsight) {
+            insight = InsightState.initial(0.0, record.getLong("phaseStartedAt"));
+        } else {
+            throw new IllegalArgumentException("schema 3 session is missing insight ledger");
+        }
         return new Session(sessionId, ownerId, record.getString("aperture"), record.getString("profile"),
                 Phase.valueOf(record.getString("phase")), Outcome.valueOf(record.getString("outcome")),
                 record.getLong("phaseStartedAt"), record.getBoolean("brokenCommitted"),
                 new QiState(qi.getDouble("tian"), qi.getDouble("di"), qi.getDouble("ren")),
                 record.getString("guEscrow"), record.getString("apertureResult"),
-                record.getLong("revision"));
+                record.getLong("revision"), insight);
+    }
+
+    private static InsightState decodeInsight(CompoundTag tag) {
+        requireTag(tag, "totalBudget", Tag.TAG_DOUBLE);
+        requireTag(tag, "spentBudget", Tag.TAG_DOUBLE);
+        requireTag(tag, "nextSequence", Tag.TAG_LONG);
+        requireTag(tag, "lastRequestTick", Tag.TAG_LONG);
+        requireTag(tag, "grants", Tag.TAG_LIST);
+        Tag allGrantTags = tag.get("grants");
+        if (!(allGrantTags instanceof ListTag allGrants)) {
+            throw new IllegalArgumentException("insight grants must be a list");
+        }
+        ListTag rawGrants = tag.getList("grants", Tag.TAG_COMPOUND);
+        if (rawGrants.size() != allGrants.size()) {
+            throw new IllegalArgumentException("insight grants must be compounds");
+        }
+        List<KnowledgeGrant> grants = new ArrayList<>();
+        for (Tag raw : rawGrants) {
+            CompoundTag grant = (CompoundTag) raw;
+            requireTag(grant, "sequence", Tag.TAG_LONG);
+            requireTag(grant, "question", Tag.TAG_STRING);
+            requireTag(grant, "knowledge", Tag.TAG_STRING);
+            requireTag(grant, "evidence", Tag.TAG_STRING);
+            requireTag(grant, "budgetSpent", Tag.TAG_DOUBLE);
+            requireTag(grant, "completeness", Tag.TAG_DOUBLE);
+            requireTag(grant, "grantedAt", Tag.TAG_LONG);
+            grants.add(new KnowledgeGrant(grant.getLong("sequence"), grant.getString("question"),
+                    grant.getString("knowledge"), grant.getString("evidence"), grant.getDouble("budgetSpent"),
+                    grant.getDouble("completeness"), grant.getLong("grantedAt")));
+        }
+        return new InsightState(tag.getDouble("totalBudget"), tag.getDouble("spentBudget"),
+                tag.getLong("nextSequence"), tag.getLong("lastRequestTick"), grants);
     }
 
     private static EscrowEntry decodeEscrow(CompoundTag record, HolderLookup.Provider registries) {

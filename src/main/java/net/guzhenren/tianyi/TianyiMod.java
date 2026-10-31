@@ -1,6 +1,5 @@
 package net.guzhenren.tianyi;
 
-import net.guzhenren.tianyi.legacy.LegacyItems;
 import net.guzhenren.tianyi.world.WillServer;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;

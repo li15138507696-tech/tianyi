@@ -153,7 +153,6 @@ probes = [
     'net/guzhenren/tianyi/TianyiMod.class',
     'net/guzhenren/tianyi/TianyiEvents.class',
     'net/guzhenren/tianyi/TianyiCommands.class',
-    'net/guzhenren/tianyi/legacy/LegacyItems.class',
     # 纯逻辑核心（will/）：必须真的进包，不能只在源码里
     'net/guzhenren/tianyi/will/WillConfig.class',
     'net/guzhenren/tianyi/will/Knowledge.class',

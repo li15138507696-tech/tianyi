@@ -92,7 +92,6 @@ with zipfile.ZipFile(JAR) as z:
     for probe in ('net/guzhenren/tianyi/TianyiMod.class',
                   'net/guzhenren/tianyi/TianyiEvents.class',
                   'net/guzhenren/tianyi/TianyiCommands.class',
-                  'net/guzhenren/tianyi/legacy/LegacyItems.class',
                   'net/guzhenren/tianyi/will/WillCore.class',
                   'net/guzhenren/tianyi/will/Knowledge.class',
                   'net/guzhenren/tianyi/will/Assessment.class',

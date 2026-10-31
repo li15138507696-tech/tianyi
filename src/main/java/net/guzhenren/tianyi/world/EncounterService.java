@@ -48,15 +48,17 @@ public final class EncounterService {
     private static final Map<UUID, Long> LAST_ACTION = new HashMap<>();
     private static final Map<UUID, Integer> MISSING_ENTITY = new HashMap<>();
     private static final Set<UUID> SPAWNING = new HashSet<>();
+    /** 3.14.1：上一次真正发给该玩家的相遇状态包，用于轮询去重（离线/停服清空）。 */
+    private static final Map<UUID, EncounterSyncPayload> LAST_SENT = new HashMap<>();
     private static boolean stopping;
     private static int tick;
     private EncounterService() {}
 
-    public static void started() { stopping = false; tick = 0; LAST_ACTION.clear(); MISSING_ENTITY.clear(); SPAWNING.clear(); }
+    public static void started() { stopping = false; tick = 0; LAST_ACTION.clear(); MISSING_ENTITY.clear(); SPAWNING.clear(); LAST_SENT.clear(); }
     public static void stopping(MinecraftServer server) {
         stopping = true;
         EncounterState.get(server).setDirty();
-        LAST_ACTION.clear(); MISSING_ENTITY.clear(); SPAWNING.clear();
+        LAST_ACTION.clear(); MISSING_ENTITY.clear(); SPAWNING.clear(); LAST_SENT.clear();
     }
     private static boolean survival(ServerPlayer p) { return p.gameMode.getGameModeForPlayer() == GameType.SURVIVAL; }
     private static String dimension(ServerPlayer p) { return p.level().dimension().location().toString(); }
@@ -121,7 +123,7 @@ public final class EncounterService {
                         pos.getX() + .5, pos.getY() + 1.2, pos.getZ() + .5, 2, .2, .15, .2, .005);
             }
             state.setDirty();
-            sync(p);
+            syncIfChanged(p);
         }
     }
 
@@ -316,6 +318,8 @@ public final class EncounterService {
     }
     public static void logout(ServerPlayer p) {
         LAST_ACTION.remove(p.getUUID()); MISSING_ENTITY.remove(p.getUUID());
+        // 3.14.1：重连后客户端状态是空的，必须重新发一次，所以下线时丢掉去重记录。
+        LAST_SENT.remove(p.getUUID());
         if (stopping || !EncounterSettings.enabled()) return;
         EncounterRun r = EncounterState.get(p.getServer()).existing(p.getUUID());
         if (r != null && r.phase == Phase.FIGHT) fail(p, r, "退出游戏", false);
@@ -374,16 +378,41 @@ public final class EncounterService {
         // Unloaded tagged entities are removed on EntityJoinLevel, never force-loaded.
     }
     public static void sync(ServerPlayer p) {
-        if (p == null || p.connection == null || stopping) return;
+        EncounterSyncPayload payload = payloadOf(p);
+        if (payload == null) return;
+        // 显式路径一律发，并把「刚发出去的那份」记进去重表：这样重连/重生后紧接着的
+        // 轮询对比的是客户端**刚刚收到**的内容，不会因为旧记录而误判成"不用发"。
+        LAST_SENT.put(p.getUUID(), payload);
+        PacketDistributor.sendToPlayer(p, payload);
+    }
+
+    /**
+     * 3.14.1：给 {@link #tick} 的每秒轮询用。
+     *
+     * <p>{@link EncounterSyncPayload} 是客户端这份状态的<b>唯一</b>来源（客户端 handler 只是整份替换），
+     * 所以「内容完全相同的包」等价于「不发」。以前每个在线玩家每秒都无条件收一包，WAITING/SEEK 阶段
+     * 内容几乎不变（{@code remainingTicks} 在 SEEK/READY 根本不递减），纯属白跑 codec + 网络写。
+     * 登录、重生、切维度、动作回执这些显式路径仍然走 {@link #sync}，一定发。
+     */
+    private static void syncIfChanged(ServerPlayer p) {
+        EncounterSyncPayload payload = payloadOf(p);
+        if (payload == null) return;
+        if (payload.equals(LAST_SENT.get(p.getUUID()))) return;
+        LAST_SENT.put(p.getUUID(), payload);
+        PacketDistributor.sendToPlayer(p, payload);
+    }
+
+    private static EncounterSyncPayload payloadOf(ServerPlayer p) {
+        if (p == null || p.connection == null || stopping) return null;
         EncounterRun r = EncounterState.get(p.getServer()).of(p.getUUID());
-        if (r == null) return;
+        if (r == null) return null;
         String phase = r.phase.name();
         String message = r.message;
         if (!EncounterSettings.enabled()) { phase = "WAITING"; message = "机缘玩法已由服务器关闭。"; }
         if (r.phase == Phase.READY) message += " " + r.warning;
         if (message.length() > 1024) message = message.substring(0, 1024);
-        PacketDistributor.sendToPlayer(p, new EncounterSyncPayload(r.id, phase, r.dimension, r.position,
+        return new EncounterSyncPayload(r.id, phase, r.dimension, r.position,
                 Math.max(0, (r.remainingTicks + 19) / 20), r.enemyId, r.enemyName,
-                r.baseReward, r.stake, r.bonus, message));
+                r.baseReward, r.stake, r.bonus, message);
     }
 }

@@ -1,8 +1,11 @@
 package net.guzhenren.tianyi.world;
 
 import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 import net.guzhenren.network.GuzhenrenModVariables;
@@ -54,6 +57,17 @@ public final class Observation {
             "daohen_fengdao", "daohen_bingdao", "daohen_bingxuedao", "dahen_nudao",
             "dahen_xingdao", "dahen_tiandao", "daohen_dudao", "daohen_dandao",
     };
+
+    /**
+     * 3.14.1：解析过的反射字段（名字 → Field）。
+     *
+     * <p>{@code Class.getField} 每次调用都要搜索并拷贝一个 Field 对象；一次 {@link #probe} 要读 28 个
+     * 道痕字段，决策轮里每个在线玩家、每条布局/灾劫都要 probe 一次。缓存后只剩 {@code Field.get}。
+     * 字段集合对同一个类永远稳定，缓存不需要失效。
+     */
+    private static final Map<String, java.lang.reflect.Field> FIELDS = new HashMap<>();
+    /** 确认不存在的字段名：同样只尝试一次，避免反复抛/接异常。 */
+    private static final Set<String> MISSING = new HashSet<>();
 
     /** 一个玩家的实测画像（只读，不写入本体）。 */
     public record Probe(double power, double resources, double morality, double luck,
@@ -208,8 +222,25 @@ public final class Observation {
 
     /** 反射读本体字段。字段名由 javap 核对；取不到就按 0 处理，不猜语义。 */
     private static double field(PlayerVariables v, String name) {
+        java.lang.reflect.Field f = FIELDS.get(name);
+        if (f == null) {
+            if (MISSING.contains(name)) {
+                return 0.0;
+            }
+            try {
+                f = PlayerVariables.class.getField(name);
+            } catch (ReflectiveOperationException | RuntimeException e) {
+                // 3.14.1：以前这里静默返回 0，字段名打错就永远算成 0 道痕，没人知道。
+                // 现在按名字只告警一次（最多 DAOHEN_KEYS.length 行），行为不变。
+                MISSING.add(name);
+                net.guzhenren.tianyi.TianyiMod.LOGGER.warn(
+                        "[天意] 道痕字段 {} 在本体 PlayerVariables 里不存在，按 0 计；"
+                                + "请用 javap 核对字段名（静默 0 会直接压低实力评估）", name);
+                return 0.0;
+            }
+            FIELDS.put(name, f);
+        }
         try {
-            var f = PlayerVariables.class.getField(name);
             Object o = f.get(v);
             return o instanceof Number n ? n.doubleValue() : 0.0;
         } catch (ReflectiveOperationException | RuntimeException e) {

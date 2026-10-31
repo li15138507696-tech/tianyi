@@ -67,6 +67,11 @@ public final class ActionLedger {
 
     /** 到点可跑的步骤，按创建时间升序。 */
     public List<ActionPlan> due(long now) {
+        // 3.14.1：本方法每 tick 都被 IntelState.onTick 调一次。账本空的时候（绝大多数时间）
+        // 不值得为一个空 ArrayList 加一次对象分配 + 一次空排序，直接返回不可变空表。
+        if (byId.isEmpty()) {
+            return List.of();
+        }
         List<ActionPlan> out = new ArrayList<>();
         for (ActionPlan p : byId.values()) {
             if (p.open(now)) {

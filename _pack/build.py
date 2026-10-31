@@ -35,6 +35,8 @@ RUN_KW = dict(capture_output=True, text=True, encoding='utf-8', errors='replace'
 AUDITS = [
     'verify_jar', 'verify_version', 'check_bom',
     'audit_mixins', 'audit_bestiary', 'audit_no_ai', 'audit_will', 'audit_sites',
+    # 3.14.1：热路径不许重新长出「每 tick 全量遍历」，已登记的节流不许被改快
+    'audit_perf',
 ]
 
 

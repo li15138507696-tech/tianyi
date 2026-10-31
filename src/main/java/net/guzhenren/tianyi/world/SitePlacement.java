@@ -399,9 +399,19 @@ public final class SitePlacement {
                 site.inventory().initial(),site.inventory().lifetimeGrowthBudget(),site.phase()));
     }
     static boolean matchesOwned(ServerLevel level, FiniteSite site, BlockPos p) {
-        if (!level.hasChunkAt(p)) return false;
-        var slot=site.slots().stream().filter(s -> s.materialized() && pos(s).equals(p)).findFirst().orElse(null);
-        if (slot==null || !fingerprint(level.getBlockState(p)).equals(physicalState(slot))) return false;
+        // 3.14.1：这个方法在 32 格球壳里被每个位置调用一次（约 1.3×10^5 次/次扫描）。
+        // 原写法 site.slots().stream().filter(s -> pos(s).equals(p)) 会为每个槽位 new 一个 BlockPos，
+        // 单次扫描就是 10^7 级别的临时对象。改成整数比较，语义完全不变（pos(s).equals(p) 即 x/y/z 相等），
+        // 并且把 hasChunkAt 挪到"确实命中槽位"之后，没命中的位置不再付区块查询。
+        FiniteSite.Slot slot = null;
+        for (FiniteSite.Slot s : site.slots()) {
+            if (s.materialized() && s.x() == p.getX() && s.y() == p.getY() && s.z() == p.getZ()) {
+                slot = s;
+                break;
+            }
+        }
+        if (slot == null || !level.hasChunkAt(p)) return false;
+        if (!fingerprint(level.getBlockState(p)).equals(physicalState(slot))) return false;
         if (site.kind()!=FiniteSite.Kind.GUARDED) return level.getBlockEntity(p)==null && rootMatches(level,slot);
         return level.getBlockEntity(p) instanceof BarrelBlockEntity barrel && barrel.getPersistentData().hasUUID(MARKER)
                 && site.siteId().equals(barrel.getPersistentData().getUUID(MARKER));

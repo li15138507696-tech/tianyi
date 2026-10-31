@@ -37,16 +37,30 @@ public final class SiteEvidence {
     /** 玩家 UUID → 本进程已经写过的 key。停服清空；超过上限整体清空，不做无界增长。 */
     private static final Map<UUID, Set<String>> WRITTEN = new HashMap<>();
     private static final int MAX_KEYS = 8192;
+    /**
+     * {@link #WRITTEN} 里所有集合大小之和的滚动计数。
+     *
+     * <p>3.14.1：以前每次 {@link #remember} 都用 {@code WRITTEN.values().stream().mapToInt(Set::size).sum()}
+     * 现算一遍——每写一条见闻就把全体玩家×全部 key 数一遍。计数只在 add 成功时 +1、clear 时归零，
+     * 结果与现算完全相同，但不再是热路径上的 O(玩家×key)。
+     */
+    private static int writtenKeys;
 
     private SiteEvidence() {}
 
     public static void forget() {
         WRITTEN.clear();
+        writtenKeys = 0;
     }
 
     /** 走到跟前：现场确实有属于本站的实物。 */
     public static boolean arrived(ServerPlayer player, FiniteSite site) {
         if (!nearSite(player, site)) return false;
+        // 3.14.1：先查本进程写过的 key，再决定要不要做现场扫描（visible 要逐个槽位读方块/方块实体）。
+        // emit 里对同一个 key 本来就会直接 return false，所以顺序调整不改变结果。
+        if (alreadyWritten(player, SiteNotice.key(site.siteId(), SiteNotice.Event.ARRIVED, site.revision()))) {
+            return false;
+        }
         if (!(player.level() instanceof ServerLevel level) || !visible(level, site)) return false;
         return emit(player, site, SiteNotice.Event.ARRIVED, 0);
     }
@@ -60,6 +74,10 @@ public final class SiteEvidence {
     /** 亲眼看见看守的兽（实体真的在、真的是本站那只、真的在视野距离内）。 */
     public static boolean guardianSeen(ServerPlayer player, FiniteSite site) {
         if (player == null || site == null || site.guardians().isEmpty()) return false;
+        // 3.14.1：同上，先查写过的 key，避免每 10 秒重复做一次实体/方块查询。
+        if (alreadyWritten(player, SiteNotice.key(site.siteId(), SiteNotice.Event.GUARDIAN_SEEN, site.revision()))) {
+            return false;
+        }
         if (!(player.level() instanceof ServerLevel level)) return false;
         if (SitePlacement.guardianStatus(level, site) != SitePlacement.GuardianStatus.ALIVE_LOADED) return false;
         Entity guardian = level.getEntity(site.guardians().get(0));
@@ -122,8 +140,12 @@ public final class SiteEvidence {
     }
 
     private static void remember(ServerPlayer player, String key) {
-        int total = WRITTEN.values().stream().mapToInt(Set::size).sum();
-        if (total > MAX_KEYS) WRITTEN.clear();
-        WRITTEN.computeIfAbsent(player.getUUID(), id -> new HashSet<>()).add(key);
+        if (writtenKeys > MAX_KEYS) {
+            WRITTEN.clear();
+            writtenKeys = 0;
+        }
+        if (WRITTEN.computeIfAbsent(player.getUUID(), id -> new HashSet<>()).add(key)) {
+            writtenKeys++;
+        }
     }
 }

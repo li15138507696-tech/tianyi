@@ -90,6 +90,8 @@ SUITES = [
     'net.guzhenren.tianyi.will.DestinyVesselTest',
     # 3.14 天意强度：档位表、阈值单调、幂等窗口、诱饵比例、兽潮不凭空
     'net.guzhenren.tianyi.will.WillForceTest',
+    # 3.14.1 性能：节流契约（周期/预算/窗口整除/容量上限）+ 空账本 due() 快速返回
+    'net.guzhenren.tianyi.perf.ThrottleContractTest',
 ]
 
 

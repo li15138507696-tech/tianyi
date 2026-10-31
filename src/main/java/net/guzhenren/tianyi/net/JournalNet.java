@@ -39,6 +39,9 @@ public final class JournalNet {
     private static final java.util.Set<java.util.UUID> PENDING = java.util.concurrent.ConcurrentHashMap.newKeySet();
 
     public static void tick(net.minecraft.server.MinecraftServer server) {
+        // 3.14.1：每 tick 都会进来，绝大多数 tick 没有待发对象。空集直接返回，
+        // 省掉 Set.copyOf 的每刻一次分配（20 次/秒）。PENDING 非空时行为完全不变。
+        if (PENDING.isEmpty()) return;
         for (java.util.UUID id : java.util.Set.copyOf(PENDING)) {
             ServerPlayer player = server.getPlayerList().getPlayer(id);
             if (player == null) forget(id); else sync(player);

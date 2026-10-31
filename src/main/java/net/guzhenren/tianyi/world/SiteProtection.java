@@ -160,6 +160,10 @@ public final class SiteProtection {
 
     /** Terrain block entities (beehives, brushable sand) are not player property; containers still deny. */
     private static boolean benignBlockEntity(ServerLevel level, BlockPos p, BlockState state) {
+        // 3.14.1：32 格球壳里绝大多数位置是泥土/石头/草方块，它们不可能持有方块实体。
+        // 先做这个判断，可以省掉每位置一次 getChunkAt + 方块实体表查询（单次扫描约 1.3×10^5 次）。
+        // 语义不变：LevelChunk#getBlockEntity 对"不是 EntityBlock 且没有登记记录"的位置本来就返回 null。
+        if (!(state.getBlock() instanceof net.minecraft.world.level.block.EntityBlock)) return true;
         if (level.getBlockEntity(p) == null) return true;
         return NATURAL_BLOCK_ENTITIES.contains(path(state));
     }

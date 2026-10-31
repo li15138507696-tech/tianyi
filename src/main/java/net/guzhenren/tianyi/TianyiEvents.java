@@ -1,6 +1,5 @@
 package net.guzhenren.tianyi;
 
-import net.guzhenren.tianyi.world.LegacyRetire;
 import net.guzhenren.tianyi.world.Observation;
 import net.guzhenren.tianyi.world.WillState;
 import net.minecraft.server.level.ServerPlayer;
@@ -88,8 +87,8 @@ public final class TianyiEvents {
     @SubscribeEvent
     public static void onLogin(PlayerEvent.PlayerLoggedInEvent event) {
         if (event.getEntity() instanceof ServerPlayer player) {
-            // 旧系统退场：归档一次，之后幂等返回
-            LegacyRetire.migrate(player, TianyiMod.LOGGER);
+            // 本次清理：旧数据归档器已删除，登录不再做任何迁移/归档。
+            // 老玩家数据里的旧键一律原样保留，本模组不读也不写。
             TianyiMod.SERVER.onPlayerLogin(player);
             // 登录即同步一次见闻录（服务端按玩家筛选后下发）
             net.guzhenren.tianyi.net.JournalNet.sync(player);

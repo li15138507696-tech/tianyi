@@ -14,23 +14,26 @@ import org.slf4j.Logger;
  *
  * <h2>这里只做「现象」，不做「说明」</h2>
  * 本类<b>不给玩家发任何文字</b>：不聊天栏、不标题、不弹窗、不下发后台评分。
- * 玩家能知道的只有三件事：
+ * 玩家能知道的只有两件事：
  * <ol>
  *   <li>天变了（转阴、闷雷、偏离的落雷）；</li>
- *   <li>最近那处产地忽然枯了（{@link net.guzhenren.tianyi.will.ResourceSite#scramble} 真的扣了储量）；</li>
  *   <li>兽群朝这边挪了过来（从 {@link net.guzhenren.tianyi.will.BeastHerd} 的种群账上赶出来的，
  *       赶一只少一只）。</li>
  * </ol>
- * 这三件事都会进<b>玩家自己的</b>《见闻录》({@link JournalStore#notePressure}) ——
+ * 这两件事都会进<b>玩家自己的</b>《见闻录》({@link JournalStore#notePressure}) ——
  * 是「他自己观察到的」，不是天意告诉他的。
  *
  * <h2>不做的事（硬约束）</h2>
  * <ul>
- *   <li>不刷物品、不给钱、不写玩家背包：产地枯损只减储量，兽群只搬已有的个体；</li>
+ *   <li>不刷物品、不给钱、不写玩家背包：兽群只搬已有的个体；</li>
  *   <li>不强制加载区块、不全地图扫描：只看已加载位置里、被载体覆盖的在线玩家；</li>
  *   <li>不新增灾劫种类、不新增兽种：兽只从 {@link BeastHerds} 走；灾劫只在
  *       {@link WorldExec} 里开既有四等。</li>
  * </ul>
+ *
+ * <p>本次清理：旧产地枯损现象（原第 ③ 条）随产地系统一起删除 —— 世界里的资源点
+ * 现在由有限资源点（{@link FiniteSiteService}）自己维护储量，档位的
+ * {@code spoil*} 参数暂时没有消费者（保留在 {@link WillForce} 的档位表里，未接入）。
  *
  * <h2>幂等</h2>
  * 每一次现象都由 {@link WillForce#fires} 决定「是不是本窗口唯一的那一次」，
@@ -105,22 +108,7 @@ public final class WillPressure {
                 out++;
             }
         }
-        // ③ 产地枯损（档位 ≥ 2 更常见）：只打散**真的存在**的产地的储量
-        if (force.spoilChance() > 0.0
-                && force.fires("spoil", id, now, WillForce.SPOIL_WINDOW)
-                && WillForce.roll("spoil", id, now / WillForce.SPOIL_WINDOW)
-                < force.spoilChance() * authority) {
-            int hit = state.sites().scrambleNear(dim, pos.asLong(),
-                    force.spoilRadius(), force.spoilRatio(), now);
-            if (hit > 0) {
-                state.core().note("force.spoil " + hit + " sites near " + id);
-                if (JournalStore.notePressure(player, "spoil", "那片蛊材忽然枯了", now)) {
-                    net.guzhenren.tianyi.net.JournalNet.sync(player);
-                }
-                out++;
-            }
-        }
-        // ④ 兽潮（档位 3）：只能从真实兽群里赶，种群不够就是 0，绝无凭空生成
+        // ③ 兽潮（档位 3）：只能从真实兽群里赶，种群不够就是 0，绝无凭空生成
         if (force.beastWaveEnabled()
                 && force.fires("wave", id, now, WillForce.WAVE_WINDOW)
                 && WillForce.roll("wave", id, now / WillForce.WAVE_WINDOW)

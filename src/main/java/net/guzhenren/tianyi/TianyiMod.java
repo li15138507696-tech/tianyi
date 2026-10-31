@@ -44,9 +44,9 @@ public class TianyiMod {
         container.registerConfig(net.neoforged.fml.config.ModConfig.Type.SERVER,
                 net.guzhenren.tianyi.world.WillForceSettings.SPEC,
                 net.guzhenren.tianyi.world.WillForceSettings.CONFIG_FILE);
-        // 3.13.0：旧商店的 shenshang:yuanshengu / yuanshengu_gu_fang 空壳注册已移除。
-        // 原因：整合包里若装了旧 shenshang 附属，两边注册同一物品 ID 会在加载时崩溃
-        // （Duplicate registration: shenshang:yuanshengu）。天意不再占用别人的命名空间。
+        // 3.13.0：旧商店的空壳物品注册已移除。
+        // 原因：整合包里若装了占同一命名空间的老附属，两边注册同一物品 ID 会在加载时崩溃
+        // （Duplicate registration）。天意不再占用别人的命名空间。
         // LegacyItems 类保留但不再注册，旧代码引用它不会受影响。
         // 3.13.0 宿命蛊的承载物 tianyi:suminggu（不可堆叠；只装凭证，真伪问世界账本）
         net.guzhenren.tianyi.item.TianyiItems.register(modBus);
@@ -64,14 +64,6 @@ public class TianyiMod {
             net.guzhenren.tianyi.client.JournalClientSetup.init(modBus);
         }
 
-        // 旧附属残留检测：它们与本模组共用注册命名空间，留着只会互相顶掉
-        for (String old : new String[]{"daotu", "tianfu", "shenshang"}) {
-            if (net.neoforged.fml.ModList.get().isLoaded(old)) {
-                LOGGER.error("[天意] 检测到旧附属「{}」仍在加载：请从 mods/ 删除对应的旧 jar"
-                        + "（daotu-*.jar / tianfu-*.jar / shenshang-*.jar），"
-                        + "否则按键与注册 id 会冲突，游戏可能连启动画面都进不去。", old);
-            }
-        }
         // 版本号从 mods.toml 读，不要硬编码（3.8.0 之前这里一直写着 3.0.0，日志对不上产物）
         String ver = net.neoforged.fml.ModList.get().getModContainerById(MODID)
                 .map(c -> c.getModInfo().getVersion().toString())

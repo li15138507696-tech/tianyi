@@ -1,5 +1,39 @@
 # 当前有效计划：3.13.0 宿命蛊机制重做
 
+## 本次清理记录：旧产地 / 物流 / 两个旧开关整体删除（版本号不变，仍 3.14.0）
+
+用户要求「全删」3.11 之前那套自动资源产出与物流。本次按「先删调用点、再删类」的顺序落地，
+原则是：**天意是否动手只由强度档位决定；世界是否有产地只由有限资源点决定。**
+
+**整文件删除（4 个，不得回潮）**
+
+| 文件 | 原职责 | 现在由谁承担 |
+|---|---|---|
+| `world/WorldSites.java` | 旧产地的世界侧：定时吐物、自动归属、物流发货、搅乱道痕 | 有限资源点 `world/FiniteSiteService` |
+| `will/ResourceSite.java` | 旧产地五本账（储量/恢复/上限/归属/破坏） | `resource/FiniteSite` + `resource/SiteInventory` |
+| `will/CargoBatch.java` | 旧物流批次与幂等结算簿 | 无（不重建：有限资源点直接有库存） |
+| `world/LegacyRetire.java` | 登录时的旧数据归档器 | 无（旧键原样保留） |
+
+**保留文件内的删除点**
+
+- `world/WillState`：`sites()` / `cargo()` 访问器，以及 `sites` / `cargo` / `cargoSettled` 的读写分支。
+  读到旧键**静默忽略**（不解析、不抛异常、不隔离整档），写回不再写这三个键。
+- `world/WillServer`：`produce` / `deliver` 周期、旧产地拾取归属与掠夺分支、`legacyResources` 闸门。
+- `world/WillPressure`：旧产地枯损现象（原第 ③ 条）；`WillForce` 的 `spoil*` 参数暂留但无消费者。
+- `world/WorldExec`：`ResourceSite.Kind` 选择与 `scrambleOwnedBy` 分支；机缘兑现改为
+  「落一件带 `tianyi_offer` 标签的地表实物」（仍可截取、仍只记一次）。
+- `world/EncounterSettings`：`legacyAutomaticPressure` / `legacyAutomaticResources` 及两个 getter。
+- `world/WillForceSettings`：`pressureOn()` 不再并入旧开关，`resourcesOn()` 删除。
+- `TianyiMod`：遍历 daotu / tianfu / shenshang 的旧附属 jar 检测警告。
+- `TianyiEvents` / `TianyiCommands`：`LegacyRetire` 调用、`/tianyi archive`、`/tianyi sites`。
+- `_pack`：`run_tests.py` 编译清单、`pack_jar.py` 探针；`audit_will.py` / `audit_sites.py`
+  里「旧开关默认 false」「produce/deliver 有守卫」的断言**反转为「必须不存在」**，其余断言原样保留。
+- `_pack/tests/.../WillCoreTest`：删 `testResourceSiteLedger` / `testCargoBatchIdempotentSettlement`
+  （被测类已删除，不是为通过而删）。
+
+**明确保留**：机缘与斗兽、妖兽名录、有限资源点与地形资源、见闻录与《见闻录》UI、宿命蛊账本、
+天意强度档位、灾劫、情报、载体、回溯。**未改动**注册 ID、payload ID、版本号，未引入新依赖。
+
 ## 核对结论（本地实际读取 3.12.0 源码）
 
 | 旧模型 | 定义 | 外部调用者 | 游戏事件接线 |

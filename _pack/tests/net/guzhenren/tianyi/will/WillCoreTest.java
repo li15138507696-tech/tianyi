@@ -43,8 +43,6 @@ public final class WillCoreTest {
         testOpportunityInterceptAndBaitCap();
         testLifespanSupplyNeverTouchesInventory();
         testShouGuSourceAudit();
-        testResourceSiteLedger();
-        testCargoBatchIdempotentSettlement();
         testBeastHerdEcology();
         testAlchemyEvidenceBinding();
         testIdentityEvidenceChain();
@@ -572,110 +570,11 @@ public final class WillCoreTest {
         check("审计后仍然不碰库存", sup.neverTouchesInventory());
     }
 
-    // ---------------------------------------------------------------- 资源产地
+    // ---------------------------------------------------------------- 旧产地/物流
 
-    /**
-     * 资源产地五本账：储量 / 恢复 / 上限 / 归属 / 破坏。
-     *
-     * <p>最关键的一条是最后那个「总量守恒」断言：无论怎么采、怎么恢复，
-     * 吐出来的总数不可能超过「初始储量 + 期间恢复量」—— 这就是不可能刷物品的证明。
-     */
-    private static void testResourceSiteLedger() {
-        String dim = "guzhenren:zhongzhou";
-        long pos = pack(100, 64, 200);
-
-        ResourceSite s = new ResourceSite("site-1", ResourceSite.Kind.WILD_GU, dim, pos,
-                24.0, "guzhenren:wei_lian_hua_yu_she_gu", 10.0, 2.0, 1000L);
-        check("新产地不是满的", s.stock() > 0 && s.stock() < s.maxStock());
-        check("新产地状态正常", s.state() == ResourceSite.State.PRODUCTIVE);
-        check("产地初始无归属", !s.owned());
-
-        // 储量硬约束：采不出超过储量的量
-        int before = (int) Math.floor(s.stock());
-        int got = s.harvest(P_A, 999, 2000L);
-        check("采集量不超过储量", got == before);
-        check("采完储量真的减少", (int) Math.floor(s.stock()) == 0);
-        check("第一个采集者成为归属人", s.ownedBy(P_A));
-
-        // 别人来采 → 记掠夺，不改归属
-        s.regen(5.0); // 恢复 10（封顶到 maxStock）
-        check("恢复不超过上限", s.stock() <= s.maxStock() + 1e-9);
-        int gotB = s.harvest(P_B, 2, 3000L);
-        check("非归属人也能采（可以被截取）", gotB > 0);
-        check("掠夺被记下来", s.poached() == gotB);
-        check("归属没有被抢走", s.ownedBy(P_A));
-
-        // 破坏：归零且不再恢复
-        check("可以被破坏", s.destroy("will:daohen_scramble", 4000L));
-        check("破坏后储量为零", s.stock() == 0.0);
-        check("破坏后不可采", s.harvest(P_A, 5, 5000L) == 0);
-        check("破坏后不再恢复", s.regen(100.0) == 0.0);
-        check("破坏后状态为已毁", s.state() == ResourceSite.State.DESTROYED);
-        check("破坏原因可查", s.lastCause().contains("daohen_scramble"));
-        check("已毁的产地不能再毁一次", !s.destroy("again", 6000L));
-
-        // 采尽且无恢复 → 荒
-        ResourceSite barren = new ResourceSite("site-barren", ResourceSite.Kind.GU_FANG, dim,
-                pos + 1, 24.0, "guzhenren:suoshigu_gu_fang", 3.0, 0.0, 1000L);
-        while (barren.harvest(P_A, 1, 2000L) > 0) {
-            // 采到采不动为止
-        }
-        check("采尽且无恢复会变成荒", barren.state() == ResourceSite.State.DEPLETED);
-        check("荒了的产地采不出东西", barren.harvest(P_A, 1, 3000L) == 0);
-
-        // 天意搅乱道痕：储量与恢复同时下降，但不是立刻全毁
-        ResourceSite scrambled = new ResourceSite("site-3", ResourceSite.Kind.WILD_GU, dim,
-                pos + 2, 24.0, "guzhenren:yuan_lao_gu_1", 20.0, 4.0, 1000L);
-        double stockBefore = scrambled.stock();
-        double regenBefore = scrambled.regenPerDay();
-        check("搅乱成功", scrambled.scramble(0.5, 2000L));
-        check("搅乱后储量下降", scrambled.stock() < stockBefore);
-        check("搅乱后恢复变慢", scrambled.regenPerDay() < regenBefore);
-        check("搅乱不是立刻全毁", scrambled.state() != ResourceSite.State.DESTROYED);
-        check("搅乱原因可查", scrambled.lastCause().contains("scramble"));
-
-        // 注册 ID 必须是完整的
-        boolean rejected = false;
-        try {
-            new ResourceSite("bad", ResourceSite.Kind.WILD_GU, dim, pos, 24.0,
-                    "裸名字", 5.0, 1.0, 0L);
-        } catch (IllegalArgumentException e) {
-            rejected = true;
-        }
-        check("产地拒绝非完整注册 ID", rejected);
-
-        // ---- 总量守恒：不可能刷
-        ResourceSite c = new ResourceSite("site-c", ResourceSite.Kind.WILD_GU, dim, pos + 3,
-                24.0, "guzhenren:yuan_lao_gu_1", 8.0, 1.0, 0L);
-        double initial = c.stock();
-        double regenTotal = 0.0;
-        int harvested = 0;
-        long now = 1000L;
-        for (int i = 0; i < 50; i++) {
-            now += 1000L;
-            regenTotal += c.regen(0.0416); // 约每 1000 刻
-            harvested += c.harvest(P_A, 3, now);
-        }
-        check("总量守恒：吐出的不超过初始+恢复",
-                harvested <= Math.floor(initial + regenTotal) + 1);
-
-        // ---- 产地簿
-        ResourceSite.Book book = new ResourceSite.Book();
-        check("建簿成功", book.add(s) != null);
-        book.add(barren);
-        check("按坐标找得到产地", book.at(dim, pos, 8.0) == s);
-        check("跨维度找不到", book.at("guzhenren:beimo", pos, 8.0) == null);
-        check("按归属查得到", book.ownedBy(P_A).size() == 2);
-        check("未毁的才计入 active", book.active(dim).size() == 1); // s 已毁、barren 未毁
-        int scrambledNear = book.scrambleNear(dim, pos, 64.0, 0.4, 9000L);
-        check("区域搅乱能命中附近产地", scrambledNear >= 1);
-
-        // 退货不能绕过上限（否则「发出去再退回」等于刷）
-        ResourceSite full = new ResourceSite("site-full", ResourceSite.Kind.WILD_GU, dim,
-                pos + 4, 24.0, "guzhenren:yuan_lao_gu_1", 5.0, 1.0, 0L);
-        int accepted = full.returnStock(999, 5000L);
-        check("退货量受上限约束", accepted <= 5 && full.stock() <= full.maxStock() + 1e-9);
-    }
+    // 本次清理：testResourceSiteLedger / testCargoBatchIdempotentSettlement 已删除。
+    // 被测类（ResourceSite / CargoBatch）随旧产地与物流系统整体退场，
+    // 覆盖关系由 resource/FiniteSite + SiteInventory 的测试套件接管。
 
     // ---------------------------------------------------------------- B01 / B05 回归
 
@@ -734,75 +633,6 @@ public final class WillCoreTest {
         check("重新开炼后可以炼成",
                 t.observe(100.0, "fang:1", "guzhenren:shou_gu", 1).completed());
         check("计数为 1", t.completions() == 1);
-    }
-
-    /**
-     * 货物批次的幂等结算：同一批货只能发一次，且「已结算」要能过重启。
-     *
-     * <p>这一条防的是最严重的 bug：玩家在结算瞬间重连/重启，货被发两遍。
-     */
-    private static void testCargoBatchIdempotentSettlement() {
-        CargoBatch b = new CargoBatch("b-1", "guzhenren:zhongzhou", 1000L,
-                "guzhenren:zhongzhou", 2000L, P_A, 100L, 500L);
-        b.load("guzhenren:wei_lian_hua_yu_she_gu", 3);
-        b.load("guzhenren:yuan_lao_gu_1", 2);
-        check("装货后总数正确", b.totalCount() == 5);
-        check("未到点不能结算", b.settle(400L, "early").isEmpty());
-        check("未到点时仍是在途", b.state() == CargoBatch.State.IN_TRANSIT);
-
-        var first = b.settle(600L, "delivered");
-        check("到点结算拿到全部货", first.size() == 2
-                && first.get("guzhenren:wei_lian_hua_yu_she_gu") == 3);
-        check("结算后状态为已送达", b.state() == CargoBatch.State.DELIVERED);
-        check("第二次结算拿不到任何东西（幂等）", b.settle(700L, "again").isEmpty());
-        check("第三次同样为空", b.settle(800L, "again").isEmpty());
-
-        CargoBatch cut = new CargoBatch("b-2", "d", 0L, "d", 1L, P_B, 0L, 100L);
-        cut.load("guzhenren:yuan_lao_gu_1", 4);
-        var back = cut.block(200L, "channel-lost");
-        check("被切断后退回全部货", back.get("guzhenren:yuan_lao_gu_1") == 4);
-        check("切断后不再结算", cut.settle(300L, "x").isEmpty());
-
-        CargoBatch robbed = new CargoBatch("b-3", "d", 0L, "d", 1L, P_A, 0L, 100L);
-        robbed.load("guzhenren:yuan_lao_gu_1", 2);
-        var lost = robbed.lose(200L, P_C);
-        check("被劫的货归劫货者", lost.get("guzhenren:yuan_lao_gu_1") == 2);
-        check("被劫后原因可查", robbed.cause().contains(P_C));
-
-        CargoBatch.Book book = new CargoBatch.Book();
-        var opened = book.open("b-9", "d", 0L, "d", 1L, P_A, 0L, 100L);
-        check("开批成功", opened != null);
-        opened.load("guzhenren:yuan_lao_gu_1", 1);
-        check("同 id 再开返回同一批", book.open("b-9", "d", 0L, "d", 1L, P_A, 0L, 100L) == opened);
-        check("开批时未结算", !book.alreadySettled("b-9"));
-
-        var deliveries = book.tick(200L, id -> true);
-        check("到点交付一次", deliveries.size() == 1 && deliveries.get(0).delivered());
-        check("交付后记入结算簿", book.alreadySettled("b-9"));
-        check("再 tick 不会发第二次", book.tick(300L, id -> true).isEmpty());
-
-        CargoBatch.Book book2 = new CargoBatch.Book();
-        var offline = book2.open("b-10", "d", 0L, "d", 1L, P_B, 0L, 50L);
-        offline.load("guzhenren:yuan_lao_gu_1", 3);
-        var d2 = book2.tick(100L, id -> P_A.equals(id));
-        check("收货人不在则不算送达", d2.size() == 1 && !d2.get(0).delivered());
-        check("退回的货在结果里", d2.get(0).goods().get("guzhenren:yuan_lao_gu_1") == 3);
-        check("路线断的批次也已结算（不会重发）", book2.alreadySettled("b-10"));
-
-        // 重启模拟：新簿子只靠结算簿判断，绝不会重发
-        CargoBatch.Book restarted = new CargoBatch.Book();
-        restarted.markSettled("b-9");
-        var again = restarted.open("b-9", "d", 0L, "d", 1L, P_A, 0L, 100L);
-        again.load("guzhenren:yuan_lao_gu_1", 1);
-        check("重启后同一批不会再发货", restarted.tick(999L, id -> true).isEmpty());
-
-        boolean rejected = false;
-        try {
-            b.load("裸名字", 1);
-        } catch (IllegalArgumentException e) {
-            rejected = true;
-        }
-        check("物流拒绝非完整注册 ID", rejected);
     }
 
     // ---------------------------------------------------------------- 兽群

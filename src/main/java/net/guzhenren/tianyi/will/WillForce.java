@@ -4,10 +4,10 @@ package net.guzhenren.tianyi.will;
  * 天意强度（档位）—— 纯逻辑，不碰 Minecraft。
  *
  * <h2>为什么要一个强度档位</h2>
- * 3.13 之前，天意的压制、灾劫、兽群三条渠道都由旧开关
- * {@code legacyAutomaticPressure} 单独控制，而它默认关闭 —— 结果是「天意」在实机里
+ * 3.13 之前，天意的压制、灾劫、兽群三条渠道都由一个默认关闭的旧开关
+ * 单独控制 —— 结果是「天意」在实机里
  * 几乎不出手，玩家感觉不到世界在针对自己。3.14 把「出不出手、出多重的手」收拢成
- * 一个 0..3 的档位。
+ * 一个 0..3 的档位；本次清理又把那个旧开关整体删掉了，档位成为唯一入口。
  *
  * <p><b>档位只做乘数与阈值，不复制第二套系统</b>：决策、压制、布局、灾劫、机缘、兽群
  * 仍然是原来那一套类，档位只改它们读到的数。这样「强度」永远不会变成一个
@@ -17,10 +17,10 @@ package net.guzhenren.tianyi.will;
  * <table border="1">
  *   <tr><th>档位</th><th>实际会发生什么</th></tr>
  *   <tr><td>0 关闭</td><td>零干预：不决策、不施压、不推进灾劫、不落任何天象</td></tr>
- *   <tr><td>1 温和（默认）</td><td>只有世界现象：天象转阴、远雷、产地枯损、小规模兽群迁徙；
+ *   <tr><td>1 温和（默认）</td><td>只有世界现象：天象转阴、远雷、小规模兽群迁徙；
  *       不主动压制、不降灾劫</td></tr>
  *   <tr><td>2 严厉</td><td>放开既有压制渠道（SUPPRESS / HOLD_HEAVEN / 人劫 Ploy），
- *       灾劫真的会发生（仍是原有四等四阶段），产地更容易枯</td></tr>
+ *       灾劫真的会发生（仍是原有四等四阶段）</td></tr>
  *   <tr><td>3 天倾</td><td>压制更密、灾劫更重、允许兽潮 —— 兽潮只能从
  *       {@link BeastHerd} 的真实种群账里「赶」出来，种群不够就生不出来</td></tr>
  * </table>
@@ -50,7 +50,13 @@ public final class WillForce {
     public static final long OMEN_WINDOW = 6_000L;
     /** 雷击窗口（刻）。 */
     public static final long BOLT_WINDOW = 6_000L;
-    /** 产地枯损窗口（刻）：一个游戏日内最多一次。 */
+    /**
+     * 「产地枯损」窗口（刻）：一个游戏日内最多一次。
+     *
+     * <p>本次清理起旧产地系统已删除，这条现象暂时没有消费者；窗口与
+     * {@code spoil*} 倍率仍留在档位表里（{@code ThrottleContractTest} 锁着它），
+     * 但世界里不会再有东西被扣。要么接回有限资源点，要么下一次清理掉。
+     */
     public static final long SPOIL_WINDOW = 24_000L;
     /** 兽潮窗口（刻）：半个游戏日。 */
     public static final long WAVE_WINDOW = 12_000L;

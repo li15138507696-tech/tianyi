@@ -13,7 +13,6 @@ import net.guzhenren.tianyi.will.DestinyRules;
 import net.guzhenren.tianyi.will.Immortal;
 import net.guzhenren.tianyi.world.DestinyCustodyService;
 import net.guzhenren.tianyi.world.DestinyCustodyState;
-import net.guzhenren.tianyi.world.LegacyRetire;
 import net.guzhenren.tianyi.world.Observation;
 import net.guzhenren.tianyi.world.SnapshotService;
 import net.guzhenren.tianyi.world.WillState;
@@ -78,9 +77,6 @@ public final class TianyiCommands {
                 .then(Commands.literal("shougu")
                         .requires(s -> s.hasPermission(OP))
                         .executes(TianyiCommands::shougu))
-                .then(Commands.literal("sites")
-                        .requires(s -> s.hasPermission(OP))
-                        .executes(TianyiCommands::sites))
                 .then(Commands.literal("herds")
                         .requires(s -> s.hasPermission(OP))
                         .executes(TianyiCommands::herds))
@@ -90,9 +86,6 @@ public final class TianyiCommands {
                 .then(Commands.literal("aperture")
                         .requires(CommandSourceStack::isPlayer)
                         .executes(TianyiCommands::aperture))
-                .then(Commands.literal("archive")
-                        .requires(CommandSourceStack::isPlayer)
-                        .executes(TianyiCommands::archive))
                 .then(Commands.literal("counter")
                         .requires(s -> s.hasPermission(OP))
                         .then(Commands.argument("kind", StringArgumentType.word())
@@ -319,17 +312,6 @@ public final class TianyiCommands {
         return 1;
     }
 
-    /** 资源产地清点：储量 / 恢复 / 上限 / 归属 / 破坏原因。 */
-    private static int sites(CommandContext<CommandSourceStack> ctx) {
-        MinecraftServer server = ctx.getSource().getServer();
-        WillState state = WillState.get(server);
-        long now = server.overworld().getGameTime();
-        for (String line : net.guzhenren.tianyi.world.WorldSites.lines(state, now)) {
-            reply(ctx, line);
-        }
-        return 1;
-    }
-
     /** 野生兽群清点：栖息地 / 种群 / 承载力 / 捕猎 / 迁徙。 */
     private static int herds(CommandContext<CommandSourceStack> ctx) {
         MinecraftServer server = ctx.getSource().getServer();
@@ -353,13 +335,6 @@ public final class TianyiCommands {
             reply(ctx, "  （还没有证据：有载体看着的当众行为才会写进身份案）");
         }
         reply(ctx, "  规则：至少 3 类独立证据且可信 ≥6.0 才识破；重复流言折价；矛盾压低但不抹除");
-        return 1;
-    }
-
-    private static int archive(CommandContext<CommandSourceStack> ctx)
-            throws CommandSyntaxException {
-        ServerPlayer p = ctx.getSource().getPlayerOrException();
-        reply(ctx, LegacyRetire.describe(p));
         return 1;
     }
 

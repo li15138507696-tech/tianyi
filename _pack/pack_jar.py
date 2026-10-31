@@ -173,7 +173,6 @@ probes = [
     'net/guzhenren/tianyi/world/Observation.class',
     'net/guzhenren/tianyi/world/WorldExec.class',
     'net/guzhenren/tianyi/world/SnapshotService.class',
-    'net/guzhenren/tianyi/world/LegacyRetire.class',
 
     # 元数据与资源
     'META-INF/neoforge.mods.toml',

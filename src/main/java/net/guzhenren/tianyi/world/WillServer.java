@@ -118,10 +118,10 @@ public final class WillServer {
         Assessment.Situation s = Observation.observe(server, state, now);
         s.withForce(force);
 
-        // B01：先把已经成熟的机缘兑现掉 —— 旧机缘要有东西管，不靠"有人被扶持的那一轮"
+        // B01：先把已经成熟的机缘兑现掉 —— 旧机缘要有东西管，不靠"有人被扶持的那一轮"。
+        // 本次清理：不再受旧资源开关约束；档位关闭时上面已经 return，所以这里只随档位走。
         try {
-            int settled = EncounterSettings.legacyResources()
-                    ? WorldExec.settleDueOpportunities(server, state, now) : 0;
+            int settled = WorldExec.settleDueOpportunities(server, state, now);
             if (settled > 0 && log.isDebugEnabled()) {
                 log.debug("[天意] 兑现成熟机缘 {} 处", settled);
             }
@@ -382,12 +382,8 @@ public final class WillServer {
         ShouGuSupply.tick(server, state, now, log);
         // 野生兽群：种群增长与迁徙（生成一只就少一只，绝不凭空刷）
         BeastHerds.census(server, state, now, log);
-        // 资源产地：按周期把储量变成地上的货（没人靠近就不产，储量攒到上限）
-        if (now % WorldSites.PRODUCE_PERIOD < 200L) {
-            WorldSites.produce(server, state, now, log);
-            // 物流：到点的批次结算（幂等，重启也不会发两遍）
-            WorldSites.deliver(server, state, now, log);
-        }
+        // 本次清理：旧产地的定时吐物与物流发货已删除。
+        // 世界里的资源只由有限资源点（FiniteSiteService）按自己的周期推进。
         if (removed > 0) {
             log.debug("[天意] 收回 {} 名人劫执行者", removed);
         }
@@ -476,46 +472,20 @@ public final class WillServer {
     // ---------------------------------------------------------------- 机缘被捡走
 
     /**
-     * 捡走某个「机缘」：登记领取者，并在诱饵被识破时给出天象反应。
+     * 捡走某个「机缘」：登记领取者。
      *
-     * <p>两件事在这里同时发生：
+     * <p>两条纪律：
      * <ol>
      *   <li><b>机缘可被截取</b>：谁的 UUID 先登记上就是谁的，天意原本想给的人拿不到。</li>
-     *   <li><b>道破即震怒</b>（原著：有人道破天意布局 → 悍雷闪电）：诱饵被捡走意味着
-     *       棋路被看穿，天意以局部天象回应。注意这只是<b>天象</b>，不是直接劈死玩家。</li>
+     *   <li><b>拾取不等于识破</b>：这里只记「谁拿到了实物」，不触发雷雨、不损宿命。
+     *       旧产地出货物的归属 / 掠夺分支已随产地系统一起删除。</li>
      * </ol>
      */
     public void onItemPickedUp(ServerPlayer player, Entity item) {
         WillState state = WillState.get(player.getServer());
         long now = player.serverLevel().getGameTime();
 
-        // ① 产地出产的货：登记归属/掠夺，并在诱饵第一批被捡走时给出天象反应
-        String siteId = item.getPersistentData().getString("tianyi_site");
-        if (!siteId.isEmpty() && EncounterSettings.legacyResources()) {
-            var site = state.sites().get(siteId);
-            if (site != null) {
-                if (!site.owned()) {
-                    site.reassign(player.getUUID().toString(), now);
-                } else if (!site.ownedBy(player.getUUID().toString())) {
-                    state.core().note("site.poach " + siteId + " by=" + player.getUUID());
-                }
-                // 观象·亲见：只有产地归属人本人，才把「这次出货」记进自己的见闻录
-                if (item instanceof net.minecraft.world.entity.item.ItemEntity ie
-                        && site.ownedBy(player.getUUID().toString())) {
-                    var stack = ie.getItem();
-                    var jkey = net.minecraft.core.registries.BuiltInRegistries.ITEM
-                            .getKey(stack.getItem());
-                    if (jkey != null && JournalStore.noteSiteYield(player, siteId,
-                            jkey.toString(), Math.max(1, stack.getCount()), now)) {
-                        net.guzhenren.tianyi.net.JournalNet.sync(player);
-                    }
-                }
-                // 拾取只证明取得物品，不证明道破诱饵；不触发雷雨。
-                state.setDirty();
-            }
-            return;
-        }
-        // ② 一次性机缘（旧路径）：登记领取者，诱饵被识破同样有天象反应
+        // 一次性机缘：只登记领取者，不触发雷雨
         String offerId = item.getPersistentData().getString("tianyi_offer");
         if (offerId.isEmpty()) {
             return;

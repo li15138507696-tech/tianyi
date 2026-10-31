@@ -64,15 +64,19 @@ def main():
     catalog = source('resource/SiteCatalog.java')
     terrain = source('resource/SiteTerrain.java')
 
-    # ---- 3.10.2 仍然有效的老边界 ----------------------------------------
+    # ---- 3.10.2 的老边界在本次清理后全部反过来了 ------------------------------
+    # 旧产地（WorldSites / ResourceSite / CargoBatch）与两个旧开关已整体删除；
+    # 有限资源点是世界里唯一的产地来源。断言「不许存在」，而不是「默认关闭」。
     encounter = source('world/EncounterSettings.java')
-    checks.append(('legacy output and pressure default off', all(
-        re.search(r'\.define\("' + key + r'",\s*false\)', encounter)
-        for key in ('legacyAutomaticResources', 'legacyAutomaticPressure'))))
-    sites = source('world/WorldSites.java')
-    for name in ('produce', 'deliver'):
-        checks.append((name + ' guarded at boundary', bool(re.search(
-            r'public static int ' + name + r'\([^\n]+\)\s*\{\s*if \(!EncounterSettings\.legacyResources\(\)\) return 0;', sites))))
+    checks.append(('legacy automatic output and pressure switches are gone', lacks_all(
+        encounter, ('legacyAutomaticResources', 'legacyAutomaticPressure',
+                    'legacyResources', 'legacyPressure'))))
+    checks.append(('legacy site and cargo classes are gone', all(
+        not (JAVA / p).exists() for p in (
+            'world/WorldSites.java', 'will/ResourceSite.java', 'will/CargoBatch.java',
+            'world/LegacyRetire.java'))))
+    checks.append(('the force intensity is the only switch left', lacks_all(
+        source('world/WillForceSettings.java'), ('EncounterSettings', 'legacy', 'resourcesOn'))))
     server = source('world/WillServer.java')
     kill = server.split('public void onPlayerKill(', 1)[1].split('public void onPlayerDeath(', 1)[0]
     pickup = server.split('public void onItemPickedUp(', 1)[1].split('private void thunder(', 1)[0]

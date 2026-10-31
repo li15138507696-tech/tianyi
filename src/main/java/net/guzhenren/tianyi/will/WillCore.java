@@ -309,7 +309,7 @@ public final class WillCore {
         WillForce f = s.force == null ? WillForce.gentle() : s.force;
         // ---- 3.14：强度 ≥ 2 时，既有灾劫渠道真的会被选到 ----
         // 灾劫不是新渠道，而是 Assessment.Channel.CALAMITY 原本就存在、
-        // 只是在默认档位下几乎不会被选中（历史上还被 legacyAutomaticPressure 整段关掉）。
+        // 只是在默认档位下几乎不会被选中（历史上还被那个默认关闭的旧压制开关整段关掉）。
         // 这里只对「头号威胁 / 失衡的头号对象」加一条确定性取舍，且同一窗口内结论不变。
         if (f.calamityChance() > 0.0 && s.channels.contains(Assessment.Channel.CALAMITY)) {
             boolean priority = a.id.equals(r.topThreat) || a.id.equals(r.dominant);

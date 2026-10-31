@@ -242,61 +242,51 @@ for f in java_files(WILL):
         if bad in txt:
             problems.append(f'{os.path.relpath(f, SRC)} 出现 AI/网络痕迹（{bad}）')
 
-# ---------------------------------------------------------------- 12. 资源产地五本账
+# ---------------------------------------------------------------- 12. 旧产地/物流已整体删除
 
-site_path = os.path.join(WILL, 'ResourceSite.java')
-if not os.path.isfile(site_path):
-    problems.append('will/ 缺少 ResourceSite（资源产地的储量/恢复/上限/归属/破坏）')
-else:
-    site = read(site_path)
-    for need in ('public int harvest(', 'public double regen(', 'public boolean destroy(',
-                 'maxStock', 'owner', 'DEPLETED', 'DESTROYED'):
-        if need not in site:
-            problems.append(f'ResourceSite 缺少「{need}」')
-    # 采集必须夹在储量以内（防刷物品的算法锁）
-    if 'Math.min(can, want)' not in site:
-        problems.append('ResourceSite.harvest 没有把采集量夹在储量以内（可能被刷物品）')
-    # 已毁的产地不能再恢复
-    if 'state == State.DESTROYED || regenPerDay <= 0.0' not in site:
-        problems.append('ResourceSite.regen 没有拦住已毁的产地')
+# 本次清理：旧产地（ResourceSite / WorldSites）与旧物流（CargoBatch）被有限资源点取代，
+# 连同 world/LegacyRetire 一起整体退场。3.10.x 的「五本账 + 幂等结算」断言全部**反过来**：
+# 文件不许在、标识符不许出现、存档不许再读写旧键。这是「功能已被删除」的证据，
+# 不是为了让别的检查变绿。
 
-sites_world = os.path.join(WORLD, 'WorldSites.java')
-if not os.path.isfile(sites_world):
-    problems.append('world/ 缺少 WorldSites（产地没有接到世界里）')
-else:
-    sw = read(sites_world)
-    for need in ('harvest(', 'scrambleOwnedBy(', 'isLoaded('):
-        if need not in sw:
-            problems.append(f'WorldSites 缺少「{need}」')
-    if 'addItem(' in sw or 'setItem(' in sw:
-        problems.append('WorldSites 直接写玩家背包（产出必须只落地）')
+RETIRED_SITE_FILES = [
+    os.path.join(WILL, 'ResourceSite.java'),
+    os.path.join(WILL, 'CargoBatch.java'),
+    os.path.join(WORLD, 'WorldSites.java'),
+    os.path.join(WORLD, 'LegacyRetire.java'),
+]
+for _p in RETIRED_SITE_FILES:
+    if os.path.isfile(_p):
+        problems.append(f'旧产地/物流类 {os.path.basename(_p)} 仍在源码里（本次清理已整体删除）')
 
+# 这些标识符一个都不许再出现（注释也算：留一句「以前由 X 做」就会让人以为还能开回来）
+RETIRED_SITE_IDS = ('ResourceSite', 'CargoBatch', 'WorldSites', 'LegacyRetire',
+                    'scrambleNear', 'scrambleOwnedBy',
+                    'legacyAutomaticPressure', 'legacyAutomaticResources',
+                    'legacyPressure(', 'legacyResources(')
+for f in java_files(SRC):
+    txt = read(f)
+    for bad in RETIRED_SITE_IDS:
+        if bad in txt:
+            problems.append(f'{os.path.relpath(f, SRC)} 仍引用已删除的 {bad}')
+
+# 旧档兼容：读旧键必须静默忽略，写回不得再写（不许因为字段消失而抛异常/整档隔离）
 state_txt = read(os.path.join(WORLD, 'WillState.java'))
-if '"sites"' not in state_txt:
-    problems.append('WillState 没有持久化资源产地（重启会丢）')
+for key in ('tag.put("sites"', 'tag.put("cargo"', 'tag.put("cargoSettled"',
+            'getList("sites"', 'getList("cargo"'):
+    if key in state_txt:
+        problems.append(f'WillState 仍在读写旧产地/物流键（{key}）')
 
-# ---------------------------------------------------------------- 13. 物流幂等结算
-
-cargo_path = os.path.join(WILL, 'CargoBatch.java')
-if not os.path.isfile(cargo_path):
-    problems.append('will/ 缺少 CargoBatch（物流与幂等结算）')
+# 产地只能有一个来源：有限资源点账本必须在，且旧账本不在
+finite_state = os.path.join(WORLD, 'FiniteSiteState.java')
+if not os.path.isfile(finite_state):
+    problems.append('world/ 缺少 FiniteSiteState（有限资源点是唯一产地来源）')
 else:
-    cargo = read(cargo_path)
-    for need in ('public Map<String, Integer> settle(', 'public Map<String, Integer> block(',
-                 'public Map<String, Integer> lose(', 'markSettled(', 'alreadySettled('):
-        if need not in cargo:
-            problems.append(f'CargoBatch 缺少「{need}」')
-    # 幂等闸门：只有「在途且在点」才允许结算
-    if 'if (state != State.IN_TRANSIT || !arrived(now))' not in cargo:
-        problems.append('CargoBatch.settle 没有落「在途 + 到点」的幂等闸门')
-    # 结算前必须查结算簿
-    if 'if (settled.contains(b.id))' not in cargo:
-        problems.append('CargoBatch.Book.tick 结算前没有查结算簿（可能重复发货）')
-
-if '"cargoSettled"' not in state_txt:
-    problems.append('WillState 没有持久化物流结算簿（重启后可能重复发货）')
-if '"cargo"' not in state_txt:
-    problems.append('WillState 没有持久化在途批次')
+    fs = read(finite_state)
+    for need in ('tianyi_finite_sites', 'SCHEMA_VERSION = 1',
+                 'public Map<UUID, FiniteSite> sites()'):
+        if need not in fs:
+            problems.append(f'FiniteSiteState 缺少「{need}」（有限资源点账本不完整）')
 
 # ---------------------------------------------------------------- 14. 野生兽群
 
@@ -781,15 +771,18 @@ _serv2 = read(os.path.join(WORLD, 'WillServer.java'))
 if 'force.isOff()' not in _serv2:
     problems.append('WillServer.runDecision 没有拦住强度 0（关闭档仍会观测/执行）')
 
-# 22.2 强度 ≥ 2 时既有压制渠道真的可达（并且旧开关仍然有效）
+# 22.2 强度 ≥ 2 时既有压制渠道真的可达（本次清理起旧开关已删除：只剩档位一个入口）
 if os.path.isfile(FSET):
     _fset = read(FSET)
-    if 'legacyPressure()' not in _fset:
-        problems.append('WillForceSettings 没有把旧开关 legacyAutomaticPressure 并入（旧整合包会变行为）')
+    # 反向锁：压制渠道不允许再被第二个开关旁路，也不许回头去读遭遇配置
+    if 'EncounterSettings' in _fset:
+        problems.append('WillForceSettings 又去读 EncounterSettings（压制只能由档位决定）')
+    if '||' in _fset.split('public static boolean pressureOn()', 1)[-1]:
+        problems.append('WillForceSettings.pressureOn 又出现了第二个「或」入口（旧开关回潮）')
     if 'intensity' not in _fset:
         problems.append('WillForceSettings 没有 intensity 配置项')
 if 'WillForceSettings.pressureOn()' not in _serv2:
-    problems.append('WillServer 没有用「旧开关或强度≥2」决定压制渠道（强度≥2 也压不动）')
+    problems.append('WillServer 没有用档位决定压制渠道（强度≥2 也压不动）')
 if 'pressureOn()' not in _serv2:
     problems.append('WillServer 不再读压制开关（压制渠道会被永久关闭）')
 
@@ -813,8 +806,9 @@ if os.path.isfile(PRESSURE):
         problems.append('WillPressure 的兽潮没有走 BeastHerds.driveToward（必须扣真实种群）')
     if 'fires(' not in _pw or 'roll(' not in _pw:
         problems.append('WillPressure 没有用幂等窗口判定（同一事件会在同窗口重复发生）')
-    if 'scrambleNear(' not in _pw:
-        problems.append('WillPressure 的产地枯损没有落到真实产地的储量账上')
+    # 本次清理：旧产地枯损现象必须已删除（产地只剩有限资源点，档位不再「枯」任何东西）
+    if 'SPOIL_WINDOW' in _pw or 'spoilChance' in _pw or 'spoilRadius' in _pw:
+        problems.append('WillPressure 仍在做旧产地枯损（本次清理已删除该现象）')
     for bad in ('addItem(', 'setItem(', 'spawnEntity(', 'sendSystemMessage',
                 'displayClientMessage', 'TianyiVoice', 'spawnParticle('):
         if bad in _pw:
@@ -844,8 +838,8 @@ if problems:
     sys.exit(1)
 print('天意硬约束 OK（核心分离 / 隐性 / 不塞背包 / 寿蛊只动供给 / 针对性上限 / '
       '天外不免疫 / 回溯边界 / 运行期不写档 / 旧系统退场 / 身份规范 / 无 AI 依赖 / '
-      '产地五本账 / 采集夹储量 / 产地持久化 / 物流幂等结算 / 兽群生成即扣 / 炼蛊精确满值 / '
-      '身份双门槛 / 载体统一状态 / 炼蛊产物推断 / 3.7.1 审查修复回归锁 B01-B11 / '
+      '旧产地与物流已整体删除 / 有限资源点是唯一产地来源 / 旧档键静默忽略 / 兽群生成即扣 / '
+      '炼蛊精确满值 / 身份双门槛 / 载体统一状态 / 炼蛊产物推断 / 3.7.1 审查修复回归锁 B01-B11 / '
       '玩家知识独立 / 客户端不碰世界账本 / 炼蛊只记未核实 / '
       '宿命实物只装凭证 / 无全世界扫描 / 无强制加载 / 载体丢失与复制不改阶段 / '
       '普通死亡不损宿命 / 复制不得产生第二正品 / 快照含宿命账本 / '

@@ -56,12 +56,9 @@ public final class WillState extends net.minecraft.world.level.saveddata.SavedDa
     private final Map<String, Double> lastPower = new HashMap<>();
     /** 寿蛊自然供给（3.1.x：真正接到世界里，不再是纯模型）。 */
     private Immortal.LifespanSupply shouGu;
-    /** 资源产地簿（3.2.0：储量 / 恢复 / 上限 / 归属 / 破坏）。 */
-    private final net.guzhenren.tianyi.will.ResourceSite.Book sites =
-            new net.guzhenren.tianyi.will.ResourceSite.Book();
-    /** 物流批次簿 + 结算簿（3.2.0：幂等结算，必须过重启）。 */
-    private final net.guzhenren.tianyi.will.CargoBatch.Book cargo =
-            new net.guzhenren.tianyi.will.CargoBatch.Book();
+    // 本次清理：旧产地簿（sites）与物流批次簿（cargo）已删。存档里残留的 "sites" /
+    // "cargo" / "cargoSettled" 键在 load 时被**静默忽略**（不解析、不清档、不抛异常），
+    // 写回时也不再写这些键。世界里真实的资源只由有限资源点（FiniteSiteState）承担。
     /** 野生兽群账（3.4.0：栖息地 / 种群 / 承载力 / 捕猎 / 迁徙）。 */
     private final net.guzhenren.tianyi.will.BeastHerd.Book herds =
             new net.guzhenren.tianyi.will.BeastHerd.Book();
@@ -116,16 +113,6 @@ public final class WillState extends net.minecraft.world.level.saveddata.SavedDa
             shouGu = new Immortal.LifespanSupply(now);
         }
         return shouGu;
-    }
-
-    /** 资源产地簿。 */
-    public net.guzhenren.tianyi.will.ResourceSite.Book sites() {
-        return sites;
-    }
-
-    /** 物流批次簿（含幂等结算簿）。 */
-    public net.guzhenren.tianyi.will.CargoBatch.Book cargo() {
-        return cargo;
     }
 
     /** 野生兽群账。 */
@@ -349,58 +336,8 @@ public final class WillState extends net.minecraft.world.level.saveddata.SavedDa
             tag.put("shougu", sg);
         }
 
-        // 资源产地
-        ListTag siteList = new ListTag();
-        for (net.guzhenren.tianyi.will.ResourceSite s : sites.all()) {
-            CompoundTag c = new CompoundTag();
-            c.putString("id", s.id);
-            c.putString("kind", s.kind.name());
-            c.putString("dim", s.dim);
-            c.putLong("pos", s.pos);
-            c.putDouble("radius", s.radius);
-            c.putString("rid", s.registryId);
-            c.putLong("created", s.createdAt);
-            c.putDouble("stock", s.stock());
-            c.putDouble("max", s.maxStock());
-            c.putDouble("regen", s.regenPerDay());
-            c.putString("owner", s.owner());
-            c.putString("state", s.state().name());
-            c.putString("cause", s.lastCause());
-            c.putLong("changed", s.lastChangeAt());
-            c.putInt("yields", s.yields());
-            c.putInt("poached", s.poached());
-            c.putBoolean("bait", s.isBait());
-            c.putBoolean("revealed", s.revealed());
-            siteList.add(c);
-        }
-        tag.put("sites", siteList);
-
-        // 物流批次 + 幂等结算簿（结算簿是防「重连重发」的持久依据）
-        ListTag batchList = new ListTag();
-        for (net.guzhenren.tianyi.will.CargoBatch b : cargo.all()) {
-            CompoundTag c = new CompoundTag();
-            c.putString("id", b.id);
-            c.putString("fdim", b.fromDim);
-            c.putLong("fpos", b.fromPos);
-            c.putString("tdim", b.toDim);
-            c.putLong("tpos", b.toPos);
-            c.putString("consignee", b.consignee);
-            c.putLong("created", b.createdAt);
-            c.putLong("arrive", b.arriveAt);
-            c.putString("state", b.state().name());
-            c.putLong("settledAt", b.settledAt());
-            c.putString("cause", b.cause());
-            CompoundTag goods = new CompoundTag();
-            b.manifest().forEach(goods::putInt);
-            c.put("goods", goods);
-            batchList.add(c);
-        }
-        tag.put("cargo", batchList);
-        ListTag settledCargo = new ListTag();
-        for (String id : cargo.settledIds()) {
-            settledCargo.add(StringTag.valueOf(id));
-        }
-        tag.put("cargoSettled", settledCargo);
+        // 本次清理：旧产地（"sites"）与物流（"cargo" / "cargoSettled"）不再写回。
+        // 老存档里的这三个键保持原样躺在 NBT 里，本模组既不读也不再覆盖它。
 
         // 野生兽群账
         ListTag herdList = new ListTag();
@@ -624,62 +561,10 @@ public final class WillState extends net.minecraft.world.level.saveddata.SavedDa
             sup.produced = sg.getInt("produced");
             s.shouGu = sup;
         }
-        // 资源产地（未知枚举跳过、不阻断加载：跨版本旧档也能读）
-        for (Tag t : tag.getList("sites", Tag.TAG_COMPOUND)) {
-            CompoundTag c = (CompoundTag) t;
-            try {
-                net.guzhenren.tianyi.will.ResourceSite.Kind kind =
-                        net.guzhenren.tianyi.will.ResourceSite.Kind.valueOf(c.getString("kind"));
-                net.guzhenren.tianyi.will.ResourceSite.State st =
-                        net.guzhenren.tianyi.will.ResourceSite.State.valueOf(c.getString("state"));
-                net.guzhenren.tianyi.will.ResourceSite site =
-                        new net.guzhenren.tianyi.will.ResourceSite(
-                                c.getString("id"), kind, c.getString("dim"), c.getLong("pos"),
-                                c.getDouble("radius"), c.getString("rid"),
-                                c.getDouble("max"), c.getDouble("regen"), c.getLong("created"));
-                site.restore(c.getDouble("stock"), c.getDouble("regen"),
-                        c.getString("owner"), 0L, st, c.getString("cause"),
-                        c.getLong("changed"), c.getInt("yields"), c.getInt("poached"));
-                site.bait(c.getBoolean("bait"));
-                if (c.getBoolean("revealed")) {
-                    site.reveal();
-                }
-                s.sites.add(site);
-            } catch (IllegalArgumentException ignored) {
-                // 无法解析的条目（版本差异 / 手工改档）直接跳过，不清空其余数据
-            }
-        }
-        // 物流批次（先恢复结算簿，再恢复批次：幂等判断依赖结算簿）
-        for (Tag t : tag.getList("cargoSettled", Tag.TAG_STRING)) {
-            s.cargo.markSettled(((StringTag) t).getAsString());
-        }
-        for (Tag t : tag.getList("cargo", Tag.TAG_COMPOUND)) {
-            CompoundTag c = (CompoundTag) t;
-            try {
-                net.guzhenren.tianyi.will.CargoBatch b =
-                        new net.guzhenren.tianyi.will.CargoBatch(c.getString("id"),
-                                c.getString("fdim"), c.getLong("fpos"),
-                                c.getString("tdim"), c.getLong("tpos"),
-                                c.getString("consignee"), c.getLong("created"),
-                                c.getLong("arrive"));
-                java.util.Map<String, Integer> goods = new java.util.LinkedHashMap<>();
-                CompoundTag g = c.getCompound("goods");
-                for (String k : g.getAllKeys()) {
-                    goods.put(k, g.getInt(k));
-                }
-                net.guzhenren.tianyi.will.CargoBatch.State st =
-                        net.guzhenren.tianyi.will.CargoBatch.State.valueOf(c.getString("state"));
-                b.restore(goods, st, c.getLong("settledAt"), c.getString("cause"));
-                s.cargo.open(b.id, b.fromDim, b.fromPos, b.toDim, b.toPos, b.consignee,
-                        b.createdAt, b.arriveAt - b.createdAt);
-                var live = s.cargo.get(b.id);
-                if (live != null && live != b) {
-                    live.restore(goods, st, c.getLong("settledAt"), c.getString("cause"));
-                }
-            } catch (IllegalArgumentException ignored) {
-                // 损坏/跨版本条目跳过，不影响其余数据
-            }
-        }
+        // 本次清理：旧产地 / 物流的读取分支已删除。
+        // 老存档里若还有 "sites" / "cargo" / "cargoSettled" 这三个键，这里**根本不解析**：
+        // 缺键与坏条目都不会抛异常，也不会把整档隔离；写回时也不再写它们。
+        // 想查历史存量请用外部 NBT 工具，模组内不再提供入口。
 
         // 野生兽群账
         for (Tag t : tag.getList("herds", Tag.TAG_COMPOUND)) {

@@ -146,7 +146,12 @@ public final class JournalStore {
         return added;
     }
 
-    /** 观象·亲见：自己名下的产地出货。 */
+    /**
+     * 观象·亲见：自己名下的产地出货。
+     *
+     * <p>本次清理：旧产地删除后这里暂时没有调用者（旧条目仍按原格式读得出来）。
+     * 要么接回有限资源点的取物路径，要么下一次清理时删掉。
+     */
     public static boolean noteSiteYield(ServerPlayer player, String siteId, String itemId,
                                         int count, long now) {
         PlayerJournal j = load(player);

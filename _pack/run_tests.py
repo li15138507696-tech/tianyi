@@ -21,7 +21,7 @@ WILL_SRC = [
     for n in ('WillConfig.java', 'Knowledge.java', 'Assessment.java', 'Intent.java',
               'WillCore.java', 'Ploy.java', 'Opportunity.java', 'Calamity.java',
               'Immortal.java', 'Destiny.java', 'Carrier.java', 'Counter.java',
-              'History.java', 'ResourceSite.java', 'CargoBatch.java', 'BeastHerd.java',
+              'History.java', 'BeastHerd.java',
               'AlchemyTracker.java', 'IdentityCase.java',
               'BeastCatalog.java',
               # 3.13.0 宿命蛊重做：保管账本 / 规则查询 / 旧档迁移（全部纯逻辑）

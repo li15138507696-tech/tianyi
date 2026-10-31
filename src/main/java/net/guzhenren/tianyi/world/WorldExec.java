@@ -188,8 +188,12 @@ public final class WorldExec {
     /**
      * 兑现一条已经成熟的机缘（按受益人；{@code beneficiary} 为空表示任意）。
      *
-     * <p>只有<b>真的在地表开出产地</b>才算兑现；开不出来（区块没加载、位置被占）
-     * 就保持未兑现状态，下一轮再试 —— 不会重复产出，也不会静默丢掉。
+     * <p>本次清理后不再在世界上开产地（旧产地系统已整体删除）：成熟的机缘直接落成
+     * <b>一件地表实物</b>，带上 {@code tianyi_offer} 标签 —— 谁先捡到就是谁的，
+     * 所以仍然可被截取；标签指向唯一那条机缘，所以也只能记一次。
+     *
+     * <p>开不出来（区块没加载 / 池子里这一轮拿不到 id）就保持未兑现状态，下一轮再试：
+     * 不会重复产出，也不会静默丢掉。
      */
     static boolean settleOne(WillState state, ServerLevel level, String beneficiary, long now) {
         for (Opportunity.Offer o : state.core().opportunities().due(now)) {
@@ -204,16 +208,21 @@ public final class WorldExec {
             if (pos == null || !level.isLoaded(pos)) {
                 continue;
             }
-            var kind = o.kind == Opportunity.Kind.INHERITANCE_LEAD
-                    ? net.guzhenren.tianyi.will.ResourceSite.Kind.GU_FANG
-                    : net.guzhenren.tianyi.will.ResourceSite.Kind.WILD_GU;
-            var site = WorldSites.create(state, level, pos, kind, now);
-            if (site == null) {
-                continue; // 位置被占/注册 id 不可用 → 下一轮再试
+            // 传承线索落蛊方，其余落野外蛊材；池子里的 id 都已核对过存在
+            String id = pick(o.kind == Opportunity.Kind.INHERITANCE_LEAD ? GU_FANG_POOL : WILD_GU_POOL,
+                    now);
+            Item item = BuiltInRegistries.ITEM.get(ResourceLocation.parse(id));
+            if (item == null) {
+                continue; // 拿不到实物 → 下一轮再试，不降级成别的东西
             }
-            site.bait(o.bait);
+            ItemStack stack = new ItemStack(item, 1);
+            ItemEntity drop = new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 0.5,
+                    pos.getZ() + 0.5, stack);
+            drop.setDefaultPickUpDelay();
+            drop.getPersistentData().putString("tianyi_offer", o.id);
+            level.addFreshEntity(drop);
             o.markSettled(now);
-            state.core().note("opportunity.settle " + o.id + " → site=" + site.id);
+            state.core().note("opportunity.settle " + o.id + " → drop=" + id);
             state.setDirty();
             return true;
         }
@@ -221,7 +230,7 @@ public final class WorldExec {
     }
 
     /**
-     * 全量兑现：把各处已成熟的机缘都变成真实产地。
+     * 全量兑现：把各处已成熟的机缘都落成地表实物（本次清理后不再开产地）。
      *
      * <p>由调度器每轮调用一次 —— 这是 B01 的核心：<b>旧的成熟机缘要有东西管</b>，
      * 不能只在「有人被扶持的那一轮」才检查。
@@ -272,12 +281,9 @@ public final class WorldExec {
             case RUMOR -> openRenjiePloy(state, target, now);
             case CALAMITY -> openCalamity(level, state, intent, target, now);
             // 原著：天意剿不掉目标时，会借天道「改易道痕」的权限把资源点搅烂。
-            // 优先搅目标名下的产地（世界里真有这处东西，痕迹也查得到）；
-            // 目标还没有产地时，退回到扰动他仙窍里的资源账。
-            case RESOURCE -> {
-                int hit = WorldSites.scrambleOwnedBy(state, target.getUUID().toString(), now);
-                yield hit > 0 || degradeResourcePoint(state, target, now);
-            }
+            // 本次清理：旧地表产地已删除（新资源点是有限资源点，归 FiniteSiteService 管），
+            // 这条渠道只剩「扰动他仙窍里的资源账」一条真实可达的路。
+            case RESOURCE -> degradeResourcePoint(state, target, now);
             case FACTION -> factionPin(level, target, now);
             default -> beaSTDrive(level, state, target, now);
         };

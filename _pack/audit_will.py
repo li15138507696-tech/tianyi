@@ -833,6 +833,94 @@ if 'WillForce.java' not in _rt:
 if 'WillForceTest' not in _rt:
     problems.append('WillForceTest 没有登记进 run_tests.py 的 SUITES')
 
+# ---------------------------------------------------------------- 23. 宿命蛊取得路径（3.14.2）
+# 锁的是「唯一入口 / 真实前置 / 真扣材料 / 不写背包 / 防重复发放 / 站点命令不越权」，
+# 不是这套价目好不好玩。价目只允许改 resource/DestinySeek.COSTS 一处。
+SEEK_PURE = os.path.join(SRC, 'resource', 'DestinySeek.java')
+SEEK_ARGS = os.path.join(SRC, 'resource', 'SiteCommandArgs.java')
+SEEK_SVC = os.path.join(WORLD, 'DestinySeekService.java')
+SEEK_STATE = os.path.join(WORLD, 'DestinySeekState.java')
+
+for p in (SEEK_PURE, SEEK_ARGS, SEEK_SVC, SEEK_STATE):
+    if not os.path.isfile(p):
+        problems.append(f'3.14.2 取得路径缺少文件 {os.path.relpath(p, SRC)}')
+
+if os.path.isfile(SEEK_SVC):
+    _seek = code_only(read(SEEK_SVC))
+    # 23.1 实体化只走既有单一世界级事务，不许自己 issue、不许自己造物品
+    if 'DestinyCustodyService.materializeAt(' not in _seek:
+        problems.append('取得路径没有走 DestinyCustodyService.materializeAt（实体化入口不唯一）')
+    if '.issue(' in _seek:
+        problems.append('DestinySeekService 自己调用了 issue（实体化只能走唯一事务）')
+    for bad in ('new ItemStack(', 'new ItemEntity(', 'TianyiItems.newVessel'):
+        if bad in _seek:
+            problems.append(f'DestinySeekService 自己造了实物（{bad}）——实物只能由账本事务产生')
+    # 23.2 前置全部复用既有系统：守护地 / 地形映射 / UUID 匹配的死亡 / 现场容器
+    for need in ('FiniteSite.Kind.GUARDED', 'SiteTerrain.hasTerrainGuardian(',
+                 'DestinySeek.terrainGuardianMatches(', 'site.matchesGuardianDeath(',
+                 'SitePlacement.clue(', 'SiteBudget.WITNESS_RADIUS'):
+        if need not in _seek:
+            problems.append(f'取得路径缺少既有前置「{need}」（不得另造一套判定）')
+    # 23.3 真扣材料 + 缺口说清 + 幂等键 + 本人见闻
+    for need in ('DestinySeek.materialsComplete(', 'DestinySeek.shortfall(',
+                 'DestinySeek.key(', 'seekState.claim(', 'JournalStore.noteDestinySeek(',
+                 'JournalNet.sync(player)'):
+        if need not in _seek:
+            problems.append(f'取得路径缺少「{need}」')
+    # 背包只被扣：置空消耗之外不许出现任何写背包入口
+    _probe = re.sub(r'\.setItem\([^;()]*ItemStack\.EMPTY\)', '/*consume*/', _seek)
+    for bad in ('.addItem(', 'getInventory().setItem(', 'inventory.setItem(', '.setCount('):
+        if bad in _probe:
+            problems.append(f'DestinySeekService 出现 {bad}（只能扣除，不得发放/写入背包）')
+    if 'ItemStack.EMPTY' not in _seek:
+        problems.append('DestinySeekService 没有用置空方式扣材料（材料必须真的从背包消失）')
+    # 世界层不回话（与第 2 节同口径，这里对取得路径再点名一次）
+    for bad in ('displayClientMessage(', 'sendSystemMessage', 'TianyiVoice'):
+        if bad in _seek:
+            problems.append(f'DestinySeekService 出现 {bad}（取得路径也不许在世界层播报）')
+
+if os.path.isfile(SEEK_STATE):
+    _st = read(SEEK_STATE)
+    for need in ('STORAGE_KEY = "tianyi_destiny_seek"', 'SCHEMA_VERSION = 1',
+                 'MAX_KILLS', 'MAX_CLAIMS'):
+        if need not in _st:
+            problems.append(f'取得路径账本缺少「{need}」')
+    if 'setDirty()' not in _st:
+        problems.append('取得路径账本改了不落盘（缺少 setDirty）')
+    for bad in ('.issue(', 'addItem(', 'setItem(', 'spawnEntity('):
+        if bad in code_only(_st):
+            problems.append(f'DestinySeekState 出现 {bad}（小账本只记事实，不发东西）')
+
+if os.path.isfile(SEEK_PURE):
+    _pure = read(SEEK_PURE)
+    for need in ('public enum Reject', 'public static Reject firstReject(',
+                 'public static String shortfall(', 'public static String key(',
+                 'public static boolean terrainGuardianMatches('):
+        if need not in _pure:
+            problems.append(f'DestinySeek 缺少可测的纯逻辑「{need}」')
+    if 'net.minecraft' in code_only(_pure) or 'net.neoforged' in code_only(_pure):
+        problems.append('DestinySeek 引用了 Minecraft 类型（必须能离线单测）')
+
+# 23.4 命令入口：站点四项运维 + 玩家取得入口，且站点命令不物化、不补货
+for need in ('literal("site")', 'literal("list")', 'literal("retire")', 'literal("--note")',
+             'literal("seek")', 'literal("suminggu")', 'TianyiCommands::seekSumingGu'):
+    if need not in cmds:
+        problems.append(f'命令里缺少 3.14.2 入口 {need}')
+if 'SitePlacement.materialize(' in cmds:
+    problems.append('站点命令自己去物化槽位（运维命令只能查/退役/解隔离）')
+# 取得入口是玩家路径：注册块里不得挂 OP 门槛（否则正常玩法仍然拿不到）
+_seek_node = cmds.split('literal("seek")', 1)[1].split('.then(Commands.literal("carriers")', 1)[0] \
+    if 'literal("seek")' in cmds else ''
+if _seek_node and '.requires' in _seek_node:
+    problems.append('取得入口挂了权限门槛（正常玩法必须能走到）')
+if 'resolveFailure(' not in cmds:
+    problems.append('站点命令没有把「id 打错」和「前缀有歧义」分开说')
+
+# 23.5 纯逻辑测试必须登记，否则「只是加了两个类」
+_rt2 = read(os.path.join(ROOT, '_pack', 'run_tests.py'))
+if 'DestinySeekTest' not in _rt2:
+    problems.append('DestinySeekTest 没有登记进 run_tests.py 的 SUITES')
+
 if problems:
     print('\n'.join('FAIL ' + p for p in problems))
     sys.exit(1)

@@ -82,6 +82,8 @@ SUITES = [
     'net.guzhenren.tianyi.resource.SiteBudgetTest',
     'net.guzhenren.tianyi.resource.SiteTerrainTest',
     'net.guzhenren.tianyi.journal.SiteNoticeTest',
+    # 3.14.2 宿命蛊取得路径：材料价目、缺口文案、幂等键、前置判定顺序、站点命令参数解析
+    'net.guzhenren.tianyi.resource.DestinySeekTest',
     # 3.13.0 宿命蛊重做
     'net.guzhenren.tianyi.will.DestinyCustodyTest',
     'net.guzhenren.tianyi.will.DestinyRulesTest',

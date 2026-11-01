@@ -15,6 +15,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -413,12 +414,37 @@ public final class DestinyCustodyService {
      *
      * <p>这是「单一世界级初始化事务」：账本上已经有正品时必定失败
      * （{@code ALREADY_EXISTS}）；旧凭证在实体化时随代次/保管版本一起作废。
-     * 默认<b>不</b>自动执行——只有管理员命令会调到这里。
+     * 默认<b>不</b>自动执行——只有管理员命令（{@code custody recover}）与取得路径
+     * （{@link #materializeAt}）会走到这里。落点是执行者脚下。
      */
     public static DestinyCustody.Result materialize(ServerPlayer player, String note) {
         if (player == null || player.getServer() == null) {
             return DestinyCustody.Result.fail(DestinyCustody.Reject.BAD_TARGET,
                     "实体化需要一名在场的执行者（载体要落进世界）");
+        }
+        return materializeAt(player, note, player.serverLevel(),
+                player.getX(), player.getY() + 0.2, player.getZ());
+    }
+
+    /**
+     * 3.14.2：把载体实体化到<b>指定的世界位置</b>（仍然是掉落物，仍然只走账本这一条事务）。
+     *
+     * <p>唯一的新用途是「取得路径」（{@code world/DestinySeekService}）：实物必须落在该资源点的容器上方，
+     * 而不是执行者脚下——否则「必须在地点取得」就成了摆设。除了落点，判定顺序与
+     * {@link #materialize(ServerPlayer, String)} 完全一致：账本不可写、隔离中、已有正品，一律拒绝，
+     * 且拒绝时世界里不会多出任何实体。
+     *
+     * <p>本方法<b>不</b>决定寿命/转数/阶段，也不推进任何阶段。
+     */
+    public static DestinyCustody.Result materializeAt(ServerPlayer player, String note,
+            ServerLevel level, double x, double y, double z) {
+        if (player == null || player.getServer() == null) {
+            return DestinyCustody.Result.fail(DestinyCustody.Reject.BAD_TARGET,
+                    "实体化需要一名在场的执行者（载体要落进世界）");
+        }
+        if (level == null) {
+            return DestinyCustody.Result.fail(DestinyCustody.Reject.BAD_TARGET,
+                    "实体化需要一个已加载的世界来落点");
         }
         DestinyCustodyState st = state(player.getServer());
         if (!st.mutationReady()) {
@@ -435,8 +461,9 @@ public final class DestinyCustodyService {
         }
         long now = player.serverLevel().getGameTime();
         ItemStack stack = TianyiItems.newVessel();
-        ItemEntity entity = new ItemEntity(player.serverLevel(),
-                player.getX(), player.getY() + 0.2, player.getZ(), stack);
+        // 落点由调用方给定（管理员命令＝执行者脚下；取得路径＝该资源点容器上方），
+        // 但「先算实体 UUID、再让账本决定」的顺序不变：账本拒绝时世界里不会多出任何东西。
+        ItemEntity entity = new ItemEntity(level, x, y, z, stack);
         // 先用实体 UUID 当保管位置，再决定实体化：账本拒绝时世界里不会多出任何东西
         DestinyCustody.Holder holder = DestinyCustody.Holder.entity(entity.getUUID().toString());
         String txn = st.nextTxnId("materialize", now);
@@ -448,7 +475,7 @@ public final class DestinyCustodyService {
         stamp(stack, new DestinyVessel.Vessel(st.custody().token(), st.custody().generation(),
                 st.custody().custodyRevision(), serial), isScarred(player.getServer(), st),
                 st.custody().state().name());
-        player.serverLevel().addFreshEntity(entity);
+        level.addFreshEntity(entity);
         st.bind(serial, st.custody().custodyRevision());
         st.noteCheck("刚实体化（" + (note == null || note.isBlank() ? "未注明" : note)
                 + "），等待拾取", now, 1);

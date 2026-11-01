@@ -173,6 +173,11 @@ probes = [
     'net/guzhenren/tianyi/world/Observation.class',
     'net/guzhenren/tianyi/world/WorldExec.class',
     'net/guzhenren/tianyi/world/SnapshotService.class',
+    # 3.14.2 宿命蛊取得路径：纯逻辑 + 世界侧 + 小账本 + 命令参数解析都必须真的进包
+    'net/guzhenren/tianyi/resource/DestinySeek.class',
+    'net/guzhenren/tianyi/resource/SiteCommandArgs.class',
+    'net/guzhenren/tianyi/world/DestinySeekService.class',
+    'net/guzhenren/tianyi/world/DestinySeekState.class',
 
     # 元数据与资源
     'META-INF/neoforge.mods.toml',

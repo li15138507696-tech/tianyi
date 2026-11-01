@@ -169,6 +169,34 @@ public final class JournalStore {
         return added;
     }
 
+    /**
+     * 观象·亲见：亲手取得宿命蛊（3.14.2 取得路径）。
+     *
+     * <p>只写本人一条，复用<b>既有</b>条目格式与既有同步（{@code JournalNet.sync}），
+     * 不新增 payload、不改协议、不加字段：位置给的是玩家自己站的地方，不是全图信息。
+     *
+     * <p>同一天同一站点只记一次（{@code now / 12_000} 的窗口），因为幂等键本身已经保证
+     * 「同一地点同一人只发放一次」，这里只是不让见闻录重复。
+     */
+    public static boolean noteDestinySeek(ServerPlayer player, String siteId, String dim,
+                                          long pos, long now) {
+        String site = siteId == null || siteId.isBlank() ? "unknown" : siteId.trim();
+        String shortSite = site.length() <= 8 ? site : site.substring(0, 8);
+        PlayerJournal j = load(player);
+        boolean added = j.add(new PlayerJournal.Entry(
+                "sight-destiny-" + now + "-" + shortSite,
+                "destiny-seek|" + site + "|" + (now / 12_000L),
+                PlayerJournal.Kind.SIGHT, PlayerJournal.Source.WITNESSED,
+                "取得宿命蛊",
+                "守护兽倒在你手上，供物从你袋里交出；桶还是那只桶，"
+                        + "只是这回落在外面的东西不是蛊材。",
+                dim, pos, now, "", "", ""));
+        if (added) {
+            save(player, j);
+        }
+        return added;
+    }
+
     /** 观象·亲见：天象异变。 */
     public static boolean noteOmen(ServerPlayer player, String what, long now) {
         PlayerJournal j = load(player);

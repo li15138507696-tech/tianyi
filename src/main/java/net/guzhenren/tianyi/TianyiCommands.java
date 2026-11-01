@@ -5,6 +5,15 @@ import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.UUID;
+
+import net.guzhenren.tianyi.resource.DestinySeek;
+import net.guzhenren.tianyi.resource.FiniteSite;
+import net.guzhenren.tianyi.resource.SiteCommandArgs;
+import net.guzhenren.tianyi.resource.SiteInventory;
 import net.guzhenren.tianyi.will.Assessment;
 import net.guzhenren.tianyi.will.Counter;
 import net.guzhenren.tianyi.will.Destiny;
@@ -13,13 +22,18 @@ import net.guzhenren.tianyi.will.DestinyRules;
 import net.guzhenren.tianyi.will.Immortal;
 import net.guzhenren.tianyi.world.DestinyCustodyService;
 import net.guzhenren.tianyi.world.DestinyCustodyState;
+import net.guzhenren.tianyi.world.DestinySeekService;
+import net.guzhenren.tianyi.world.FiniteSiteService;
+import net.guzhenren.tianyi.world.FiniteSiteState;
 import net.guzhenren.tianyi.world.Observation;
+import net.guzhenren.tianyi.world.SitePlacement;
 import net.guzhenren.tianyi.world.SnapshotService;
 import net.guzhenren.tianyi.world.WillState;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 
@@ -71,6 +85,31 @@ public final class TianyiCommands {
                         .then(Commands.literal("refine")
                                 .requires(s -> s.hasPermission(OP))
                                 .executes(TianyiCommands::destinyRefine)))
+                // 3.14.2 有限资源点运维：查/退役/解除单点隔离。只动账本与隔离状态，
+                // 不补货、不改阶段语义、不写任何玩家背包。
+                .then(Commands.literal("site")
+                        .requires(s -> s.hasPermission(OP))
+                        .executes(TianyiCommands::siteList)
+                        .then(Commands.literal("list")
+                                .executes(TianyiCommands::siteList))
+                        .then(Commands.literal("status")
+                                .then(Commands.argument("id", StringArgumentType.word())
+                                        .executes(TianyiCommands::siteStatus)))
+                        .then(Commands.literal("retire")
+                                .then(Commands.argument("id", StringArgumentType.word())
+                                        .executes(TianyiCommands::siteRetire)))
+                        .then(Commands.literal("release")
+                                .then(Commands.argument("id", StringArgumentType.word())
+                                        .executes(TianyiCommands::siteReleaseNoNote)
+                                        .then(Commands.literal("--note")
+                                                .then(Commands.argument("text",
+                                                                StringArgumentType.greedyString())
+                                                        .executes(TianyiCommands::siteRelease))))))
+                // 3.14.2 宿命蛊取得路径：玩家入口（不设权限门槛）。
+                // 前置全部在服务端判定，命令层只负责转述——不给跳过前置的后门。
+                .then(Commands.literal("seek")
+                        .then(Commands.literal("suminggu")
+                                .executes(TianyiCommands::seekSumingGu)))
                 .then(Commands.literal("carriers")
                         .requires(s -> s.hasPermission(OP))
                         .executes(TianyiCommands::carriers))
@@ -272,6 +311,279 @@ public final class TianyiCommands {
         reply(ctx, "缺：炼制流程本体、分发对象与数量的真实事务、分发后的保管与回收账目");
         reply(ctx, "只读规则查询：" + DestinyRules.describe(a) + "；当前阶段=" + stage.name());
         return 1;
+    }
+
+    // ---------------------------------------------------------------- 有限资源点（3.14.2）
+
+    /**
+     * {@code /tianyi site [list]}：最多 {@link SiteCommandArgs#MAX_LIST} 条，按维度/坐标排序。
+     *
+     * <p>只报账本事实（id / 模板 / 坐标 / 阶段 / 剩余实物 / 守护数量），
+     * 不输出全图，也不输出任何幕后评分——那属于后台，不属于任何人的可见信息。
+     */
+    private static int siteList(CommandContext<CommandSourceStack> ctx) {
+        FiniteSiteState ledger = FiniteSiteState.get(ctx.getSource().getServer());
+        if (!ledger.mutationReady()) {
+            reply(ctx, "资源点账本当前不可写：" + ledger.failureReason());
+            return 0;
+        }
+        List<FiniteSite> all = new ArrayList<>(ledger.sites().values());
+        all.sort(Comparator.comparing(FiniteSite::dimension)
+                .thenComparingInt(FiniteSite::x)
+                .thenComparingInt(FiniteSite::y)
+                .thenComparingInt(FiniteSite::z));
+        int shown = Math.min(SiteCommandArgs.MAX_LIST, all.size());
+        reply(ctx, "有限资源点：共 " + all.size() + " 处，按维度/坐标列出前 " + shown
+                + " 处（另有墓碑 " + ledger.tombstones().size() + " 处）");
+        for (int i = 0; i < shown; i++) {
+            FiniteSite s = all.get(i);
+            reply(ctx, "  " + SiteCommandArgs.shortId(s.siteId().toString())
+                    + " 模板=" + s.template()
+                    + " 坐标=" + s.dimension() + " " + s.x() + "," + s.y() + "," + s.z()
+                    + " 阶段=" + s.phase()
+                    + " 剩余实物=" + s.inventory().physicalRemaining()
+                    + " 守护=" + s.guardians().size());
+        }
+        if (all.size() > shown) {
+            reply(ctx, "  （其余 " + (all.size() - shown) + " 处未列出：用 site status <id 或唯一前缀> 单点查看）");
+        }
+        reply(ctx, "这里只是账本事实：真实方块/容器/守护兽是否还在要进游戏看；不输出全图与幕后评分");
+        return 1;
+    }
+
+    /**
+     * {@code /tianyi site status <id>}：阶段、revision、库存各项、槽位物化进度、
+     * {@code SitePlacement.guardianStatus}、最近失败原因。
+     */
+    private static int siteStatus(CommandContext<CommandSourceStack> ctx) {
+        MinecraftServer server = ctx.getSource().getServer();
+        FiniteSiteState ledger = FiniteSiteState.get(server);
+        String token = StringArgumentType.getString(ctx, "id");
+        UUID id = resolveSite(ledger, token);
+        if (id == null) {
+            reply(ctx, resolveFailure(ledger, token));
+            return 0;
+        }
+        FiniteSite site = ledger.sites().get(id);
+        if (site == null) {
+            reply(ctx, "该点已退役：id=" + id + " 墓碑记号="
+                    + ledger.tombstones().getOrDefault(id, "（无）")
+                    + "（记号保留，同一区域不再生成第二处）");
+            return 1;
+        }
+        reply(ctx, "资源点 " + id);
+        reply(ctx, "  模板=" + site.template() + " v" + site.templateVersion()
+                + " 类型=" + site.kind() + " 阶段=" + site.phase() + " revision=" + site.revision());
+        reply(ctx, "  坐标=" + site.dimension() + " " + site.x() + "," + site.y() + "," + site.z()
+                + " 记号码=" + site.regionMarker() + " 根基完好=" + site.rootIntact());
+        SiteInventory inv = site.inventory();
+        reply(ctx, "  库存：初始=" + inv.initial() + " 成长=" + inv.verifiedPlantGrowth()
+                + "/" + inv.lifetimeGrowthBudget() + " 未物化=" + inv.unmaterialized()
+                + " 剩余实物=" + inv.physicalRemaining() + " 已转出=" + inv.transferredOut()
+                + " 已毁=" + inv.destroyed());
+        int materialized = 0;
+        for (FiniteSite.Slot slot : site.slots()) {
+            if (slot.materialized()) materialized++;
+        }
+        reply(ctx, "  槽位物化：" + materialized + "/" + site.slots().size()
+                + " 已加载成长刻=" + site.loadedGrowthTicks());
+        ServerLevel level = levelOf(server, site.dimension());
+        reply(ctx, "  守护兽状态=" + (level == null ? "维度未加载（无法核对）"
+                : SitePlacement.guardianStatus(level, site).name())
+                + " 绑定=" + site.guardians().size() + " 只"
+                + (site.guardians().isEmpty() ? "" : " 首只 UUID=" + site.guardians().get(0)));
+        int pending = 0;
+        for (FiniteSite.Transaction tx : ledger.transactions().values()) {
+            if (tx.siteId().equals(id) && tx.phase() != FiniteSite.TxPhase.COMMITTED) pending++;
+        }
+        reply(ctx, "  未完成事务=" + pending + "（>0 时退役/解除隔离都会被拒绝，先核对实物）");
+        reply(ctx, "  最近失败原因=" + (FiniteSiteService.lastFailure().isBlank()
+                ? "（本进程没有记录）" : FiniteSiteService.lastFailure()));
+        if (site.phase() == FiniteSite.Phase.QUARANTINED) {
+            reply(ctx, "  该点已隔离停发：确认现场后可 /tianyi site release "
+                    + SiteCommandArgs.shortId(id.toString()) + " --note <理由>");
+        }
+        reply(ctx, "边界：本命令只读账本与一个已加载点的守护兽状态，不改世界、不补货、不动阶段语义");
+        return 1;
+    }
+
+    /**
+     * {@code /tianyi site retire <id>}：<b>只在安全条件下</b>退役。
+     *
+     * <p>安全条件＝{@code DEPLETED} / {@code DESTROYED}，或 {@code MATERIALIZING} 且剩余实物为 0
+     * （槽位再也放不下去的卡死点）。复用既有 {@link FiniteSiteState#retire}；
+     * 卡死点先用 {@link FiniteSite#abandon} 把未物化的虚拟库存收尾（记为 destroyed），再退役。
+     * <b>不补货、不改阶段语义、不重放任何写入。</b>
+     */
+    private static int siteRetire(CommandContext<CommandSourceStack> ctx) {
+        MinecraftServer server = ctx.getSource().getServer();
+        FiniteSiteState ledger = FiniteSiteState.get(server);
+        if (!ledger.mutationReady()) {
+            reply(ctx, "资源点账本当前不可写：" + ledger.failureReason());
+            return 0;
+        }
+        String token = StringArgumentType.getString(ctx, "id");
+        UUID id = resolveSite(ledger, token);
+        if (id == null) {
+            reply(ctx, resolveFailure(ledger, token));
+            return 0;
+        }
+        FiniteSite site = ledger.sites().get(id);
+        if (site == null) {
+            reply(ctx, ledger.tombstones().containsKey(id)
+                    ? "该点早已退役（墓碑记号=" + ledger.tombstones().get(id) + "）"
+                    : "找不到资源点：" + token);
+            return 0;
+        }
+        int pending = 0;
+        for (FiniteSite.Transaction tx : ledger.transactions().values()) {
+            if (tx.siteId().equals(id) && tx.phase() != FiniteSite.TxPhase.COMMITTED) pending++;
+        }
+        if (pending > 0) {
+            reply(ctx, "拒绝退役：该点还有 " + pending + " 条未完成事务，退役会让未核对的写入消失。先核对现场");
+            return 0;
+        }
+        if (site.phase() == FiniteSite.Phase.MATERIALIZING && site.inventory().physicalRemaining() == 0) {
+            // 卡死点：槽位再也放不下去。按模型收尾（未物化的虚拟库存记为 destroyed），再退役。
+            FiniteSite abandoned;
+            try {
+                abandoned = site.abandon();
+            } catch (IllegalStateException e) {
+                reply(ctx, "拒绝退役：这个点的阶段不允许收尾（" + e.getMessage() + "）");
+                return 0;
+            }
+            if (!ledger.replace(site, abandoned)) {
+                reply(ctx, "拒绝退役：账本比对失败（这个点刚被别的流程改过），请重试");
+                return 0;
+            }
+            TianyiMod.LOGGER.info("[天意·资源点] 卡死点收尾 id={} 未物化={} 剩余实物={}",
+                    id, site.inventory().unmaterialized(), site.inventory().physicalRemaining());
+            reply(ctx, "已按未物化收尾：虚拟库存 " + site.inventory().unmaterialized()
+                    + " 份记为 destroyed（不补货、不重放写入、不改阶段语义）");
+        } else if (site.phase() != FiniteSite.Phase.DEPLETED && site.phase() != FiniteSite.Phase.DESTROYED) {
+            reply(ctx, "拒绝退役：只在安全条件下退役（DEPLETED / DESTROYED，"
+                    + "或 MATERIALIZING 且剩余实物=0）。当前阶段=" + site.phase()
+                    + " 剩余实物=" + site.inventory().physicalRemaining());
+            return 0;
+        }
+        if (!ledger.retire(id)) {
+            reply(ctx, "退役失败：账本拒绝（墓碑已满，或仍有未提交事务）");
+            return 0;
+        }
+        TianyiMod.LOGGER.info("[天意·资源点] 退役 id={} 进入时阶段={}", id, site.phase());
+        reply(ctx, "已退役：" + SiteCommandArgs.shortId(id.toString())
+                + "（记号留在墓碑里，同一区域不再生成第二处；不补货、不回滚已发生的采集）");
+        return 1;
+    }
+
+    /** {@code /tianyi site release <id>}（没写 --note）：只回用法，不做任何事。 */
+    private static int siteReleaseNoNote(CommandContext<CommandSourceStack> ctx) {
+        reply(ctx, "用法：/tianyi site release <id> --note <理由>");
+        reply(ctx, "解除单点隔离必须写明理由：核验要留证据（会记进服务端日志与本回话，不改账本 schema）");
+        return 0;
+    }
+
+    /**
+     * {@code /tianyi site release <id> --note <text>}：解除<b>单点</b>隔离。
+     *
+     * <p>复用既有 {@link FiniteSiteState#releaseQuarantine} 语义：回到账本能证明的那一档，
+     * 不补货、不重放写入、不动阶段语义；仍有未完成事务时拒绝。
+     */
+    private static int siteRelease(CommandContext<CommandSourceStack> ctx) {
+        String note = DestinySeek.note(StringArgumentType.getString(ctx, "text"));
+        if (note.isEmpty()) {
+            reply(ctx, "解除隔离必须写明理由（--note）：核验要留证据");
+            return 0;
+        }
+        MinecraftServer server = ctx.getSource().getServer();
+        FiniteSiteState ledger = FiniteSiteState.get(server);
+        if (!ledger.mutationReady()) {
+            reply(ctx, "资源点账本当前不可写：" + ledger.failureReason());
+            return 0;
+        }
+        String token = StringArgumentType.getString(ctx, "id");
+        UUID id = resolveSite(ledger, token);
+        if (id == null) {
+            reply(ctx, resolveFailure(ledger, token));
+            return 0;
+        }
+        FiniteSite site = ledger.sites().get(id);
+        if (site == null) {
+            reply(ctx, "该点已退役（墓碑里的点没有隔离可解）");
+            return 0;
+        }
+        if (site.phase() != FiniteSite.Phase.QUARANTINED) {
+            reply(ctx, "这个点没有处于隔离状态，无需解除（当前阶段=" + site.phase() + "）");
+            return 0;
+        }
+        ServerPlayer player = ctx.getSource().getPlayer();
+        String reviewer = player == null ? "console" : player.getUUID().toString();
+        if (!ledger.releaseQuarantine(id)) {
+            reply(ctx, "解除隔离被拒绝：该点仍有未完成事务，或版本号已耗尽（先 site status 看清）");
+            return 0;
+        }
+        TianyiMod.LOGGER.info("[天意·资源点] 解除隔离 id={} reviewer={} note={}", id, reviewer, note);
+        reply(ctx, "已解除隔离：" + SiteCommandArgs.shortId(id.toString())
+                + " 阶段=" + ledger.sites().get(id).phase()
+                + "（回到账本能证明的那一档；不补货、不重放写入）");
+        reply(ctx, "核验人=" + reviewer + " 理由=" + note);
+        return 1;
+    }
+
+    /** 玩家入口：{@code /tianyi seek suminggu}。判定全在服务端，命令层只转述。 */
+    private static int seekSumingGu(CommandContext<CommandSourceStack> ctx) {
+        ServerPlayer player = ctx.getSource().getPlayer();
+        if (player == null) {
+            reply(ctx, "取得宿命蛊必须由在场的玩家执行：实物要落进世界，控制台没有位置可落");
+            return 0;
+        }
+        DestinySeekService.Result r = DestinySeekService.seek(player);
+        if (!r.ok()) {
+            reply(ctx, "取得被拒绝：" + r.detail());
+            if (r.reject() == DestinySeek.Reject.MATERIALS_MISSING) {
+                reply(ctx, "材料清单：" + String.join("、", DestinySeek.describeCosts())
+                        + "（数量是平衡参数，见 docs/3.14.2）");
+            }
+            return 0;
+        }
+        for (String line : r.lines()) {
+            reply(ctx, line);
+        }
+        return 1;
+    }
+
+    /** 维度名 → 已加载的 {@link ServerLevel}（找不到就返回 null，绝不为了查询去加载世界）。 */
+    private static ServerLevel levelOf(MinecraftServer server, String dimension) {
+        for (ServerLevel level : server.getAllLevels()) {
+            if (level.dimension().location().toString().equals(dimension)) return level;
+        }
+        return null;
+    }
+
+    /** token → 站点 UUID：完整 id 或唯一前缀；歧义/找不到都返回 null。 */
+    private static UUID resolveSite(FiniteSiteState ledger, String token) {
+        String full = SiteCommandArgs.siteId(token, knownIds(ledger));
+        if (full.isEmpty()) return null;
+        try {
+            return UUID.fromString(full);
+        } catch (IllegalArgumentException bad) {
+            return null;
+        }
+    }
+
+    /** 账本里全部 id（含墓碑）：解析前缀时两者都算，退役的点也要能用 id 查到。 */
+    private static List<String> knownIds(FiniteSiteState ledger) {
+        List<String> known = new ArrayList<>();
+        for (UUID id : ledger.sites().keySet()) known.add(id.toString());
+        for (UUID id : ledger.tombstones().keySet()) known.add(id.toString());
+        return known;
+    }
+
+    /** 解析失败时说清楚是「打错了」还是「打少了」——猜一个点去动手比报错危险得多。 */
+    private static String resolveFailure(FiniteSiteState ledger, String token) {
+        return SiteCommandArgs.ambiguous(token, knownIds(ledger))
+                ? "id 前缀有歧义：" + token + "（请多打几位，或直接给完整 id）"
+                : "找不到资源点：" + token + "（可用完整 id 或其唯一前缀）";
     }
 
     private static int carriers(CommandContext<CommandSourceStack> ctx) {

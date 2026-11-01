@@ -77,6 +77,16 @@ public final class FiniteSiteService {
         SiteEvidence.forget();
     }
 
+    /**
+     * 最近一次<b>被去重记录</b>的服务失败原因（空串＝本进程还没记过失败）。
+     *
+     * <p>3.14.2 管理命令 {@code /tianyi site status} 用；只读，不改任何状态，
+     * 也不把失败原因写进玩家可见的任何通道（命令层回话由命令自己负责）。
+     */
+    public static String lastFailure() {
+        return lastFailure;
+    }
+
     // ---------------------------------------------------------------- 主循环
 
     public static void tick(MinecraftServer server) {

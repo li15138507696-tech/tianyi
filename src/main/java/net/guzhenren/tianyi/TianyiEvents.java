@@ -183,6 +183,10 @@ public final class TianyiEvents {
         net.guzhenren.tianyi.world.EncounterService.onDeath(event.getEntity());
         // 有限资源点：只有匹配 UUID 的守护兽死亡算确认；确认后不补生、不给奖励。
         net.guzhenren.tianyi.world.FiniteSiteService.onGuardianDeath(event.getEntity());
+        // 3.14.2 取得路径：把「这只守护兽被谁亲手打死」记进取得路径自己的账本。
+        // 与上面同一套 UUID 门槛，只是多认一个凶手——现场到取的时候早就查不出实体了。
+        net.guzhenren.tianyi.world.DestinySeekService.onGuardianDeath(
+                event.getEntity(), event.getSource());
         if (event.getEntity() instanceof ServerPlayer player) {
             TianyiMod.SERVER.onPlayerDeath(player);
         }
